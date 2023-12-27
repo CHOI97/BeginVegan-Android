@@ -67,10 +67,19 @@
 
     <!--    Recipe Filter -->
     <string name="recipe_filter_all">전체보기</string>
-    <string name="recipe_filter_lacto">락토</string>
-    <string name="recipe_filter_lacto_ovo">락토-오보</string>
-    <string name="recipe_filter_pollo">폴로</string>
 
+    <string name="recipe_filter_vegan_kr">비건</string>
+    <string name="recipe_filter_lacto_kr">락토</string>
+    <string name="recipe_filter_lacto_ovo_kr">락토-오보</string>
+    <string name="recipe_filter_pescatarian_kr">페스코테리언</string>
+    <string name="recipe_filter_pollo_kr">폴로</string>
+    <string name="recipe_filter_flexitarian_kr">플렉시테리언</string>
+    <string name="recipe_filter_vegan_en">VEGAN</string>
+    <string name="recipe_filter_lacto_en">LACTO_VEGETARIAN</string>
+    <string name="recipe_filter_lacto_ovo_en">LACTO_OVO_VEGETARIAN-오보</string>
+    <string name="recipe_filter_pescatarian_en">PASCATARIAN</string>
+    <string name="recipe_filter_pollo_en">POLLOTARIAN</string>
+    <string name="recipe_filter_flexitarian_en">FLEXITARIAN</string>
     <!--    Vegan Type Korean -->
     <string name="vegan_type_vegan_kr">비건</string>
     <string name="vegan_type_lacto_kr">락토 베지테리언</string>
@@ -92,8 +101,8 @@
     <string name="home_slogan_veganner">비거너</string>
     <string name="home_slogan_description">의 여정으로 함께 떠나봐요</string>
     <string name="home_semi_title">주변 식당에서 비건 여정을 시작해 보세요</string>
-    <string name="home_today_recipe">오늘의 추천 레시피</string>
-    <string name="home_vegan_magazine">비건 매거진</string>
+    <string name="home_today_recipe">오늘의 추천 레시피 \uD83E\uDD57</string>
+    <string name="home_vegan_magazine">비건 매거진 \uD83D\uDCE8</string>
     <string name="home_magazine_title_define">비건 = 채식주의자?\nNOPE</string>
     <string name="home_magazine_title_types">비건 종류가 7가지인 사실에\n놀라움을 감출 수 없었다</string>
     <string name="magazine_detail_title_define">비건 = 채식주의자\n1가지만 아니란 말이다!</string>
