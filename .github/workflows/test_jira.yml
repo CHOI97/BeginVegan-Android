@@ -22,3 +22,6 @@ jobs:
         issuetype: Task 
         summary: '${{ github.event.issue.title }}'
         description: '${{ github.event.issue.html_url }}'
+        
+    - name: Log created issue
+      run: echo "Issue ${{ steps.create.outputs.issue }} was created"
