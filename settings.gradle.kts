@@ -16,3 +16,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "beginvegan"
 include(":app")
+include(":presentation")
+include(":data")
+include(":domain")
