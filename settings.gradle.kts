@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
-        gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
@@ -10,9 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
-        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 rootProject.name = "beginvegan"
-include ':app'
+include(":app")
