@@ -1,5 +1,5 @@
 name: Github with JIRA Issue Template
-description: '[비긴, 비건] 프로젝트 Github & Jira 이슈 템플릿입낟.'
+description: '[비긴, 비건] 프로젝트 Github & Jira 이슈 템플릿입니다.'
 
 body:
   - type: dropdown
