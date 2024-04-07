@@ -68,7 +68,7 @@ jobs:
       uses: atlassian/gajira-create@v3
       with:
         project: BVVER24
-        issuetype: develop
+        issuetype: 개발
         summary: "[Android] ${{ github.event.issue.title }}"
         description: "${{ steps.md2jira.outputs.output-text }}"
         fields: |
