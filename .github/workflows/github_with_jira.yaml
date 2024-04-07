@@ -74,7 +74,7 @@ jobs:
         fields: |
           {
               "parent": {
-                 "key": "${{ steps.issue-parser.outputs.issueparser_parent }}"
+                 "key": "BVVER24-${{ steps.issue-parser.outputs.issueparser_parent }}"
               }
           }
 
