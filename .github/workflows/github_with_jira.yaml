@@ -1,4 +1,4 @@
-name: Test Jira issue 
+name: Github with jira
 on: 
   issues: 
     types: [opened] 
@@ -14,7 +14,7 @@ jobs:
       id: secret
       run: |
         echo "JIRA_API_TOKEN=JIRA_API_TOKEN_${{ github.actor }}" >> $GITHUB_OUTPUT
-        echo "JIRA_USER_EMAIL=JIRA_USER_EMAIL_${{ github.actor}}" >> $GITHUB_OUTPUT
+        echo "JIRA_USER_EMAIL=JIRA_USER_EMAIL_${{ github.actor }}" >> $GITHUB_OUTPUT
 
     # Jira Login
     - name: Login
