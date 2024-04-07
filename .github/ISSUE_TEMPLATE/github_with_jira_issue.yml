@@ -18,7 +18,7 @@ body:
     attributes:
       label: '🔖 상위 작업 Ticket Number'
       description: '상위 작업의 Ticket Number를 기입해주세요'
-      placeholder: 'BVVER24-00'
+      placeholder: 'BVVER24-xx에서 xx에 해당하는 부분만 기입해주세요! ex) 1'
     validations:
       required: true
       
