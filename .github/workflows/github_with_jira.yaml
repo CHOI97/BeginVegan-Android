@@ -35,7 +35,7 @@ jobs:
       uses: stefanbuck/github-issue-praser@v3
       id: issue-parser
       with:
-        template-path: .github/ISSUE_TEMPLATE/issue_test.yml
+        template-path: .github/ISSUE_TEMPLATE/github_with_jira_issue.yml
 
     # 생성한 이슈 파싱 로그
     - name: Log Issue Parser
