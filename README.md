@@ -86,3 +86,4 @@
 | <img width="200" src="https://github.com/DEPthes/2nd-MVP-BeginVegan-Client/assets/32347874/954278d2-c406-4e30-8fbf-d00703f05542"> | <img width="200" src="https://github.com/DEPthes/2nd-MVP-BeginVegan-Client/assets/32347874/8f78c27d-8979-4ffe-912f-28b978d1d6d6"> | <img width="200" src="https://github.com/DEPthes/2nd-MVP-BeginVegan-Client/assets/32347874/120de0fc-a982-484f-8105-aa2f99d41548"> | <img width="200" src="https://github.com/DEPthes/2nd-MVP-BeginVegan-Client/assets/32347874/7e7a9a86-42b6-4219-9ab8-002376e4cb4b"> |
  
 
+허스키 추가
