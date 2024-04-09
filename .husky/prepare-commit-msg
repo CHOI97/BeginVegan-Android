@@ -16,7 +16,7 @@ ISSUE_TICKET=$(echo "$BRANCH_NAME" | sed -n 's/^\(([A-Za-z0-9]*-[0-9]*\)-\(.*\)$
 # Check if ISSUE_TICKET is not empty
 if [ -n "$ISSUE_TICKET" ]; then
   # Output extracted Jira 이슈 티켓 번호
-  echo "=======================>>  Begin, Vegan Extracted Jira 이슈 티켓 번호: $ISSUE_TICKET "
+  echo "==================>>  Begin, Vegan Extracted Jira 이슈 티켓 번호: $ISSUE_TICKET <<=================="
 
   # Read the commit message from the temporary file
   COMMIT_MSG_FILE=$1
