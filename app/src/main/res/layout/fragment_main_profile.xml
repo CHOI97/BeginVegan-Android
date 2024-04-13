@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".src.ui.view.profile.MainProfileFragment">
-    <ImageView
-        android:id="@+id/iv_background_top"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/gradient_profile_bg"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,15 +16,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
             <ImageButton
-                android:id="@+id/btn_profile_more"
-                android:layout_width="@dimen/btn_32"
-                android:layout_height="@dimen/btn_32"
-                android:src="@drawable/ic_profile_more"
-                android:background="@color/color_transparent"
-                android:scaleType="centerCrop"
-                android:layout_marginTop="@dimen/margin_12"
-                android:layout_marginEnd="@dimen/margin_8"
-                android:layout_gravity="end"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="@color/color_primary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
