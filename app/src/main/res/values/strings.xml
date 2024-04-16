@@ -140,7 +140,7 @@
     <string name="bn_home">home</string>
     <string name="bn_map">map</string>
     <string name="bn_tips">tips</string>
-    <string name="bn_mypage">mypage</string>
+    <string name="bn_mypage">my</string>
 
     <!-- User Level -->
     <string name="user_level_1_seed">씨앗</string>
@@ -161,7 +161,7 @@
     <string name="btn_sign_up">가입하기</string>
     <string name="btn_report">제보하기</string>
     <string name="btn_back">돌아가기</string>
-    <string name="btn_write_review">등록</string>
+    <string name="btn_write_review">등록하기</string>
 
     <string name="btn_logout">로그아웃</string>
     <string name="btn_delete_account">계정 삭제</string>
@@ -184,7 +184,7 @@
     <string name="btn_mypage_my_restaurant">식당 보러가기</string>
     <string name="btn_mypage_my_magazine">매거진 보러가기</string>
     <string name="btn_mypage_my_recipe">레시피 보러가기</string>
-    
+
 
     <!-- 권한 관련 -->
     <string name="permission_description">비긴, 비건 서비스의 원활한 이용을 위해\n이용 중에 권한 접근을 요청받으면 허용해 주세요.</string>
@@ -223,7 +223,7 @@
 
     <!-- Input Field -->
     <string name="placeholder_nickname">한/영 2~12자 &#40;특수문자, 공백 불가&#41;</string>
-    <string name="helper_text_nickname_default">적합하지 않은 닉네임은 관리자에 의해 변경될 수 있어요</string>
+    <string name="helper_text_nickname_default">부적절한 닉네임은 관리자에 의해 변경될 수 있어요</string>
     <string name="helper_text_nickname_check">한/영 2~12자로 입력해 주세요 &#40;특수문자, 공백 불가&#41;</string>
 
     <string name="placeholder_map_search">검색어를 입력해 주세요. &#40;ex. 강남 한식&#41;</string>
@@ -238,8 +238,8 @@
 
     <!-- Dialog -->
     <string name="dialog_select_img_title">사진 선택</string>
-    <string name="dialog_select_img_gallery">갤러리에서 선택하기</string>
-    <string name="dialog_select_img_camera">카메라로 촬영하기</string>
+    <string name="dialog_select_img_gallery">갤러리에서 선택</string>
+    <string name="dialog_select_img_camera">카메라로 촬영</string>
     <string name="dialog_select_img_default">기본 이미지로 변경</string>
     
     <string name="dialog_nonexistent_post_title">존재하지 않는 게시글</string>
@@ -288,7 +288,7 @@
     <string name="dialog_user_level_explain_condition_recommended_review">리뷰 추천 받음</string>
     <string name="dialog_user_level_explain_condition_vegan_test">채식 성향 테스트</string>
     <string name="dialog_user_level_explain_condition_set_profile_img">프로필 사진 설정</string>
-    <string name="dialog_user_level_explain_get_interest_one">1 (처음 1회만)</string>
+    <string name="dialog_user_level_explain_get_interest_one">1 (최초 1회)</string>
     <string name="dialog_user_level_explain_get_interest_two">2</string>
     <string name="dialog_user_level_explain_get_interest_three">3</string>
     <string name="dialog_user_level_explain_grow_condition">나만의 식물 성장 기준</string>
@@ -340,6 +340,7 @@
     <string name="onboarding_img">나를 소개할 이미지를 업로드해 주세요</string>
     <string name="onboarding_question_nickname">어떤 닉네임으로 활동하고 싶으신가요? *</string>
     <string name="onboarding_question_vegan_type">채식 성향을 알고 계신가요? *</string>
+    <string name="onboarding_question_vegan_type_default">-선택하기-</string>
 
     <!-- Home -->
     <string name="home_hello">안녕하세요,</string>
@@ -377,7 +378,7 @@
     <string name="map_restaurant_review_write">리뷰 작성하기</string>
 
     <string name="map_write_review">리뷰 작성</string>
-    <string name="map_write_review_rating">별점을 등록해 주세요.</string>
+    <string name="map_write_review_rating">별점을 등록해 주세요. (필수)</string>
     <string name="map_write_review_img">이미지를 추가해 주세요. (선택)</string>
 
     <!-- Tips -->
@@ -409,7 +410,7 @@
     <string name="vegan_test_result_pesco_description">Pesco(생선) + Vegetarian</string>
     <string name="vegan_test_result_pesco_explanation">가급적 육류를 피하지만,\n유제품, 달걀, 해산물 등의 약간의 동물성 식품을 \n즐기기도 하는 채식주의자예요!</string>
     <string name="vegan_test_result_pollo_description">Pollo(닭고기) + Vegetarian</string>
-    <string name="vegan_test_result_pollo_explanation">채식을 중심으로 한 식생활을 즐기고,\n 돼지고기, 소고기와 같은 붉은 고기는 섭취하지 않지만 유제품, 생선, '닭고기는 섭취하는 비교적 자유로운 채식주의자예요!</string>
+    <string name="vegan_test_result_pollo_explanation">채식을 중심으로 한 식생활을 즐기고,\n 돼지고기, 소고기와 같은 붉은 고기는 섭취하지 않지만 유제품, 생선, 닭고기는 섭취하는 비교적 자유로운 채식주의자예요!</string>
     <string name="vegan_test_result_flexitarian_description">Flexible(유연한) + Vegetarian</string>
     <string name="vegan_test_result_flexitarian_explanation">평소에는 채식을 하지만,\n상황에 따라 유동적으로 육식을 겸하기도 하는\n자유로운 채식주의자예요!</string>
     <string name="vegan_test_result_recommend_recipe">%1$s 님께 딱 맞는 레시피로\n비거너에 한 발짝 다가가 보세요!</string>
