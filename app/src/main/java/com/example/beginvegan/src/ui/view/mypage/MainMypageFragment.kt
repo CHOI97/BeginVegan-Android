@@ -1,22 +1,16 @@
-package com.example.beginvegan.src.ui.view.profile
+package com.example.beginvegan.src.ui.view.mypage
 
-import android.content.Intent
 //import com.bumptech.glide.Glide
 import com.example.beginvegan.R
 import com.example.beginvegan.config.ApplicationClass
 import com.example.beginvegan.config.BaseFragment
-import com.example.beginvegan.databinding.FragmentMainProfileBinding
-import com.example.beginvegan.src.data.model.auth.AuthSignOutInterface
-import com.example.beginvegan.src.data.model.auth.AuthSignOutResponse
-import com.example.beginvegan.src.ui.adapter.profile.ProfileMyRecordsVPAdapter
-import com.example.beginvegan.src.ui.view.test.VeganTestActivity
+import com.example.beginvegan.databinding.FragmentMainMypageBinding
 import com.example.beginvegan.util.LogoutDialog
 import com.example.beginvegan.util.ProfileEditNameDialog
 import com.example.beginvegan.util.ProfileEditVeganTypeDialog
-import com.google.android.material.tabs.TabLayoutMediator
 
-class MainProfileFragment : BaseFragment<FragmentMainProfileBinding>(
-    FragmentMainProfileBinding::bind, R.layout.fragment_main_profile
+class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(
+    FragmentMainMypageBinding::bind, R.layout.fragment_main_mypage
 ), BottomSheetLogoutFragment.MyFragmentInteractionListener,
     ProfileEditNameDialog.EditNameDialogListener,
     ProfileEditVeganTypeDialog.EditVeganTypeDialogListener {

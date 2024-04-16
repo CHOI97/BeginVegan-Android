@@ -3,15 +3,15 @@ package com.example.beginvegan.src.ui.adapter.profile
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.beginvegan.src.ui.view.profile.MainProfileFragment
-import com.example.beginvegan.src.ui.view.profile.ProfileMyreviewFragment
-import com.example.beginvegan.src.ui.view.profile.ProfileMyscrapFragment
+import com.example.beginvegan.src.ui.view.mypage.MainMypageFragment
+import com.example.beginvegan.src.ui.view.mypage.MypageMyreviewFragment
+import com.example.beginvegan.src.ui.view.mypage.MypageMyscrapFragment
 
-class ProfileMyRecordsVPAdapter(mainProfileFragment: MainProfileFragment): FragmentStateAdapter(mainProfileFragment) {
+class ProfileMyRecordsVPAdapter(mainProfileFragment: MainMypageFragment): FragmentStateAdapter(mainProfileFragment) {
 
     val fragmentList = listOf<Fragment>(
-        ProfileMyreviewFragment(),
-        ProfileMyscrapFragment()
+        MypageMyreviewFragment(),
+        MypageMyscrapFragment()
     )
 
     override fun getItemCount(): Int { return fragmentList.size }
@@ -19,9 +19,9 @@ class ProfileMyRecordsVPAdapter(mainProfileFragment: MainProfileFragment): Fragm
     override fun createFragment(position: Int): Fragment {
         Log.d("TAG", "createFragment: adapter")
         return when (position) {
-            0 -> ProfileMyreviewFragment()
+            0 -> MypageMyreviewFragment()
             else -> {
-                ProfileMyscrapFragment()
+                MypageMyscrapFragment()
             }
         }
     }
