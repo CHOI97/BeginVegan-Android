@@ -1,4 +1,4 @@
-package com.example.beginvegan.src.ui.view.profile
+package com.example.beginvegan.src.ui.view.mypage
 
 import android.os.Bundle
 import android.view.LayoutInflater

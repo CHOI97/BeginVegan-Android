@@ -1,11 +1,11 @@
-package com.example.beginvegan.src.ui.view.profile
+package com.example.beginvegan.src.ui.view.mypage
 
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beginvegan.R
 import com.example.beginvegan.config.BaseFragment
-import com.example.beginvegan.databinding.FragmentProfileMyreviewBinding
+import com.example.beginvegan.databinding.FragmentMypageMyreviewBinding
 import com.example.beginvegan.src.data.model.review.ReviewDetail
 import com.example.beginvegan.src.data.model.review.ReviewInterface
 import com.example.beginvegan.src.data.model.review.ReviewListResponse
@@ -13,8 +13,8 @@ import com.example.beginvegan.src.data.model.review.ReviewService
 import com.example.beginvegan.src.data.model.review.WriteReviewResponse
 import com.example.beginvegan.src.ui.adapter.profile.ProfileMyReviewRVAdapter
 
-class ProfileMyreviewFragment : BaseFragment<FragmentProfileMyreviewBinding>(
-    FragmentProfileMyreviewBinding::bind, R.layout.fragment_profile_myreview
+class MypageMyreviewFragment : BaseFragment<FragmentMypageMyreviewBinding>(
+    FragmentMypageMyreviewBinding::bind, R.layout.fragment_mypage_myreview
     ),ReviewInterface {
     private lateinit var reviewList: ArrayList<ReviewDetail>
     private var pageNo = 0
@@ -35,7 +35,7 @@ class ProfileMyreviewFragment : BaseFragment<FragmentProfileMyreviewBinding>(
                     if(reviewList.size>9){
                         showLoadingDialog(requireContext())
                         pageNo++
-                        ReviewService(this@ProfileMyreviewFragment).tryGetReviewList(pageNo)
+                        ReviewService(this@MypageMyreviewFragment).tryGetReviewList(pageNo)
                     }
                 }
             }

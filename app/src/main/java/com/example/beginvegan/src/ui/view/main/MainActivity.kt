@@ -1,14 +1,12 @@
 package com.example.beginvegan.src.ui.view.main
 
-import android.os.Bundle
-import android.util.Log
 import com.example.beginvegan.R
 import com.example.beginvegan.config.BaseActivity
 import com.example.beginvegan.databinding.ActivityMainBinding
 import com.example.beginvegan.src.ui.view.recipe.MainRecipeFragment
 import com.example.beginvegan.src.ui.view.home.MainHomeFragment
 import com.example.beginvegan.src.ui.view.map.VeganMapFragment
-import com.example.beginvegan.src.ui.view.profile.MainProfileFragment
+import com.example.beginvegan.src.ui.view.mypage.MainMypageFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>({ ActivityMainBinding.inflate(it)}) {
     override fun init() {
@@ -34,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>({ ActivityMainBinding.inf
                 }
                 R.id.item_profile->{
                     supportFragmentManager.beginTransaction().replace(R.id.fl_main,
-                        MainProfileFragment()
+                        MainMypageFragment()
                     ).commit()
                 }
             }
