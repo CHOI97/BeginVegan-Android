@@ -44,30 +44,15 @@ android {
 }
 
 dependencies {
+    implementation(project(":presentation"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APP_COMPAT)
     implementation(Dependencies.MATERIAL)
     implementation(Dependencies.CONSTRAINT_LAYOUT)
 
-    // Testing
-//    testImplementation(Testing.JUNIT4)
-//    testImplementation("androidx.test.ext:truth:1.5.0")
-//    testImplementation("androidx.test:runner:1.5.2")
-//    testImplementation("org.robolectric:robolectric:4.9.1")
-//    testImplementation("androidx.test.ext:junit:1.1.5")
-//    testImplementation("androidx.test:core:1.5.0")
-//    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
-
-//    androidTestImplementation(Testing.ANDROID_JUNIT)
-//    androidTestImplementation(Testing.ESPRESSO_CORE)
-//    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
-//    androidTestImplementation("androidx.test:core:1.5.0")
-//    androidTestImplementation("androidx.test.ext:truth:1.5.0")
-//    androidTestImplementation("androidx.test:runner:1.5.2")
-//    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
-//    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
-//    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
     // Retrofit
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_CONVERTER_MOSHI)
@@ -129,7 +114,7 @@ dependencies {
     implementation(Dependencies.HILT_EXTENSION_WORK)
     kapt(Dependencies.HILT_EXTENSION_KAPT)
 
-//    implementation 'androidx.core:core-ktx:1.8.0'
+    //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
 //    implementation 'com.google.android.material:material:1.5.0'
 //    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
