@@ -123,15 +123,15 @@
             android:layout_height="@dimen/item_134"
             android:layout_marginTop="@dimen/margin_4" />
 
-        <me.relex.circleindicator.CircleIndicator3
-            android:id="@+id/ci_today_recipe"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/indicator_height"
-            app:ci_animator="@drawable/scale_indicator_with_alpha"
-            app:ci_drawable="@drawable/shape_circle_home_indicator_active"
-            app:ci_drawable_unselected="@drawable/shape_circle_home_indicator_inactive"
-            app:ci_height="@dimen/indicator_dot_height"
-            app:ci_width="@dimen/indicator_dot_width" />
+<!--        <me.relex.circleindicator.CircleIndicator3-->
+<!--            android:id="@+id/ci_today_recipe"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/indicator_height"-->
+<!--            app:ci_animator="@drawable/scale_indicator_with_alpha"-->
+<!--            app:ci_drawable="@drawable/shape_circle_home_indicator_active"-->
+<!--            app:ci_drawable_unselected="@drawable/shape_circle_home_indicator_inactive"-->
+<!--            app:ci_height="@dimen/indicator_dot_height"-->
+<!--            app:ci_width="@dimen/indicator_dot_width" />-->
     </LinearLayout>
 
     <LinearLayout
@@ -160,14 +160,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_88" />
 
-        <me.relex.circleindicator.CircleIndicator3
-            android:id="@+id/ci_magazine_contents"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/indicator_height"
-            app:ci_animator="@drawable/scale_indicator_with_alpha"
-            app:ci_drawable="@drawable/shape_circle_home_indicator_active"
-            app:ci_drawable_unselected="@drawable/shape_circle_home_indicator_inactive"
-            app:ci_height="@dimen/indicator_dot_height"
-            app:ci_width="@dimen/indicator_dot_width" />
+<!--        <me.relex.circleindicator.CircleIndicator3-->
+<!--            android:id="@+id/ci_magazine_contents"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/indicator_height"-->
+<!--            app:ci_animator="@drawable/scale_indicator_with_alpha"-->
+<!--            app:ci_drawable="@drawable/shape_circle_home_indicator_active"-->
+<!--            app:ci_drawable_unselected="@drawable/shape_circle_home_indicator_inactive"-->
+<!--            app:ci_height="@dimen/indicator_dot_height"-->
+<!--            app:ci_width="@dimen/indicator_dot_width" />-->
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

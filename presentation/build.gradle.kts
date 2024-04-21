@@ -1,5 +1,6 @@
 plugins {
-    id(Plugins.ANDROID_APPLICATION)
+//    id(Plugins.ANDROID_APPLICATION)
+    id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KAPT)
     id(Plugins.SECRETS_GRADLE_PLUGIN)
@@ -13,11 +14,11 @@ android {
     compileSdk = DefaultConfig.COMPILE_SDK_VERSION
 
     defaultConfig {
-        applicationId = "com.example.beginvegan"
+//        applicationId = "com.example.beginvegan"
         minSdk = DefaultConfig.MIN_SDK_VERSION
         targetSdk = DefaultConfig.TARGET_SDK_VERSION
-        versionCode = DefaultConfig.VERSION_CODE
-        versionName = DefaultConfig.VERSION_NAME
+//        versionCode = DefaultConfig.VERSION_CODE
+//        versionName = DefaultConfig.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,9 +45,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":presentation"))
     implementation(project(":domain"))
-    implementation(project(":data"))
+//    implementation(project(":data"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APP_COMPAT)
