@@ -39,7 +39,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
+    buildFeatures{
         dataBinding = true
     }
 }
@@ -113,6 +113,13 @@ dependencies {
     // Hilt extension
     implementation(Dependencies.HILT_EXTENSION_WORK)
     kapt(Dependencies.HILT_EXTENSION_KAPT)
+
+    // Splash Screen
+    implementation(Dependencies.SPLASH_SCREEN)
+
+    // Lottie
+    implementation(Dependencies.LOTTIE)
+
 
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
