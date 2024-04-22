@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--<com.github.ybq.android.spinkit.SpinKitView-->
+
+    <!--style="@style/SpinKitView.ThreeBounce"-->
+    <!--android:id="@+id/progressBar"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:maxHeight="40dp"-->
+    <!--android:maxWidth="40dp"-->
+    <!--android:minHeight="40dp"-->
+    <!--android:minWidth="40dp"-->
+    <!--app:SpinKit_Color="@color/color_primary3" />-->
