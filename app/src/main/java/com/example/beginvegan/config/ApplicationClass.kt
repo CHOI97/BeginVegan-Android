@@ -1,9 +1,15 @@
 package com.example.beginvegan.config
 
 import android.app.Application
+import timber.log.Timber
 
 class ApplicationClass : Application() {
-//    override fun onCreate() {
+    override fun onCreate() {
+        super.onCreate()
+        Timber.plant(Timber.DebugTree())
+    }
+
+    //    override fun onCreate() {
 //        super.onCreate()
 //        sSharedPreferences =
 //            applicationContext.getSharedPreferences("BeginVegan", MODE_PRIVATE)

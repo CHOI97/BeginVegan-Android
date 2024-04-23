@@ -60,4 +60,10 @@ object Dependencies {
 
     const val HILT_EXTENSION_WORK = "androidx.hilt:hilt-work:${Versions.HILT_EXTENSION}"
     const val HILT_EXTENSION_KAPT = "androidx.hilt:hilt-compiler:${Versions.HILT_EXTENSION}"
+
+    const val SPLASH_SCREEN ="androidx.core:core-splashscreen:${Versions.SPLASH_SCREEN}"
+
+    const val LOTTIE = "com.airbnb.android:lottie:${Versions.LOTTIE}"
+
+    const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
 }

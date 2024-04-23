@@ -1,12 +1,11 @@
 plugins {
-//    id(Plugins.ANDROID_APPLICATION)
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KAPT)
     id(Plugins.SECRETS_GRADLE_PLUGIN)
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
-    id(Plugins.HILT_PLUGIN)
+//    id(Plugins.HILT_PLUGIN)
 }
 
 android {
@@ -39,7 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
+    buildFeatures{
         dataBinding = true
     }
 }
@@ -111,9 +110,17 @@ dependencies {
     implementation(Dependencies.FRAGMENT_KTX)
 
     // Hilt extension
-    implementation(Dependencies.HILT_EXTENSION_WORK)
-    kapt(Dependencies.HILT_EXTENSION_KAPT)
+//    implementation(Dependencies.HILT_EXTENSION_WORK)
+//    kapt(Dependencies.HILT_EXTENSION_KAPT)
 
+    // Splash Screen
+    implementation(Dependencies.SPLASH_SCREEN)
+
+    // Lottie
+    implementation(Dependencies.LOTTIE)
+
+    // Timber
+    implementation(Dependencies.TIMBER)
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
 //    implementation 'com.google.android.material:material:1.5.0'

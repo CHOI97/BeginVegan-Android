@@ -5,7 +5,7 @@ plugins {
     id(Plugins.SECRETS_GRADLE_PLUGIN)
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
-    id(Plugins.HILT_PLUGIN)
+//    id(Plugins.HILT_PLUGIN)
 }
 
 android {
@@ -38,9 +38,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
+    buildFeatures{
+        dataBinding = true
     }
+
 }
 
 dependencies {
@@ -110,9 +111,11 @@ dependencies {
     implementation(Dependencies.ACTIVITY_KTX)
     implementation(Dependencies.FRAGMENT_KTX)
 
+    // Timber
+    implementation (Dependencies.TIMBER)
     // Hilt extension
-    implementation(Dependencies.HILT_EXTENSION_WORK)
-    kapt(Dependencies.HILT_EXTENSION_KAPT)
+//    implementation(Dependencies.HILT_EXTENSION_WORK)
+//    kapt(Dependencies.HILT_EXTENSION_KAPT)
 
     //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
