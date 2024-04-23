@@ -1,5 +1,9 @@
-//package com.example.beginvegan.src.ui.view.mypage
-//
+package com.example.presentation.view.mypage
+
+import com.example.presentation.base.BaseFragment
+import com.example.presentation.databinding.FragmentMainMypageBinding
+
+
 ////import com.bumptech.glide.Glide
 //import com.example.beginvegan.R
 //import com.example.beginvegan.config.ApplicationClass
@@ -8,6 +12,7 @@
 //import com.example.beginvegan.util.LogoutDialog
 //import com.example.beginvegan.util.ProfileEditNameDialog
 //import com.example.beginvegan.util.ProfileEditVeganTypeDialog
+//import com.example.presentation.base.BaseFragment
 //
 //class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(
 //    FragmentMainMypageBinding::bind, R.layout.fragment_main_mypage
@@ -96,3 +101,10 @@
 //        openLogoutDialog()
 //    }
 //}
+
+class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>{
+    override fun init() {
+
+    }
+
+}
