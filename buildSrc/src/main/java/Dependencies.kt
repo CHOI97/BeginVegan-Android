@@ -64,4 +64,6 @@ object Dependencies {
     const val SPLASH_SCREEN ="androidx.core:core-splashscreen:${Versions.SPLASH_SCREEN}"
 
     const val LOTTIE = "com.airbnb.android:lottie:${Versions.LOTTIE}"
+
+    const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
 }

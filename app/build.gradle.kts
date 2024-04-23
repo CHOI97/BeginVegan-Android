@@ -111,6 +111,8 @@ dependencies {
     implementation(Dependencies.ACTIVITY_KTX)
     implementation(Dependencies.FRAGMENT_KTX)
 
+    // Timber
+    implementation (Dependencies.TIMBER)
     // Hilt extension
 //    implementation(Dependencies.HILT_EXTENSION_WORK)
 //    kapt(Dependencies.HILT_EXTENSION_KAPT)
