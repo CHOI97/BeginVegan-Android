@@ -1,33 +1,42 @@
 package com.example.presentation.base
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
+import android.view.View
+import android.widget.Toast
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.ViewBinding
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import com.example.presentation.util.OnThrottleClickListener
+import timber.log.Timber
 
-abstract class BaseActivity<B : ViewBinding>(
-    private val inflate: (LayoutInflater) -> B) :
-    AppCompatActivity(){
-    protected lateinit var binding: B
-        private set
+abstract class BaseActivity<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
+    AppCompatActivity() {
+    lateinit var binding: T
 
-
+    private val tag = "${this::class.java.simpleName}"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = inflate(layoutInflater)
-        setContentView(binding.root)
+        logMessage("onCreate")
+        binding = DataBindingUtil.setContentView(this, layoutResId)
         init()
+        initViewModel()
     }
-    protected abstract fun init()
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        val imm: InputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-        return true
+    protected abstract fun initViewModel()
+    protected abstract fun init()
+    protected fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    protected fun logMessage(message: String) {
+        Timber.tag(tag).d(message)
+    }
+
+
+    protected fun View.onThrottleClick(action: (v: View) -> Unit) {
+        val listener = View.OnClickListener { action(it) }
+        setOnClickListener(OnThrottleClickListener(listener))
     }
 
 }

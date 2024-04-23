@@ -1,4 +1,3 @@
-import org.gradle.api.artifacts.dsl.Dependencies
 
 plugins {
     id(Plugins.ANDROID_LIBRARY)
