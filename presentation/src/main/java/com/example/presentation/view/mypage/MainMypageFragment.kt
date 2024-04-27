@@ -1,7 +1,9 @@
 package com.example.presentation.view.mypage
 
+import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMypageBinding
+import com.example.presentation.util.MypageUserLevelExplainDialog
 
 
 ////import com.bumptech.glide.Glide
@@ -102,9 +104,17 @@ import com.example.presentation.databinding.FragmentMainMypageBinding
 //    }
 //}
 
-class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>{
-    override fun init() {
+class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.fragment_main_mypage){
 
+    override fun init() {
+        binding.llUserLevelExplain.setOnClickListener {
+            openDialogUserLevelExplain()
+        }
+    }
+
+    private fun openDialogUserLevelExplain(){
+        val dialog = MypageUserLevelExplainDialog(requireContext())
+        dialog.show()
     }
 
 }

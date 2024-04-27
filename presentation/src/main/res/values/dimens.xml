@@ -81,13 +81,13 @@
     <dimen name="item_32">32dp</dimen>
     <dimen name="item_60">60dp</dimen>
     <dimen name="item_64">64dp</dimen>
+    <dimen name="item_80">80dp</dimen>
     <dimen name="item_160">160dp</dimen>
     <!-- 삭제 예정 -->
     <dimen name="item_36">36dp</dimen>
     <dimen name="item_52">52dp</dimen>
     <dimen name="item_56">56dp</dimen>
     <dimen name="item_76">76dp</dimen>
-    <dimen name="item_80">80dp</dimen>
     <dimen name="item_88">88dp</dimen>
     <dimen name="item_95">95dp</dimen>
     <dimen name="item_114">114dp</dimen>
