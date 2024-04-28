@@ -110,6 +110,8 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         binding.llUserLevelExplain.setOnClickListener {
             openDialogUserLevelExplain()
         }
+
+        setProgressBar(5,1)
     }
 
     private fun openDialogUserLevelExplain(){
@@ -117,4 +119,8 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         dialog.show()
     }
 
+    private fun setProgressBar(maxInt: Int, nowGauge:Int){
+        binding.pbUserLevelExp.max = maxInt
+        binding.pbUserLevelExp.progress = nowGauge
+    }
 }
