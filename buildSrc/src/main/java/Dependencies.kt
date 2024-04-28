@@ -66,4 +66,6 @@ object Dependencies {
     const val LOTTIE = "com.airbnb.android:lottie:${Versions.LOTTIE}"
 
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
+
+    const val KAKAO_LOGIN ="com.kakao.sdk:v2-all:${Versions.KAKAO_LOGIN}"
 }
