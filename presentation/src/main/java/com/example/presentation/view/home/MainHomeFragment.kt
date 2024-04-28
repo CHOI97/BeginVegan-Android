@@ -1,3 +1,7 @@
+import com.example.presentation.R
+import com.example.presentation.base.BaseFragment
+import com.example.presentation.databinding.FragmentMainHomeBinding
+
 //package com.example.presentation.view.home
 //
 //import android.os.Bundle
@@ -214,3 +218,9 @@
 //    override fun onPostMagazineDetailFailure(message: String) {}
 //
 //}
+
+class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main_home){
+    override fun init() {
+    }
+
+}

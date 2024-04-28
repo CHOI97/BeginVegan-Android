@@ -2,6 +2,8 @@ package com.example.presentation.view.main
 
 import android.os.Bundle
 import android.util.Log
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityMainBinding
@@ -13,39 +15,39 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun init() {
-        supportFragmentManager.beginTransaction().replace(R.id.fl_main,MainMypageFragment()).commit()
-//        supportFragmentManager.beginTransaction().replace(R.id.fl_main,MainHomeFragment()).commit()
-//        setBottomNavigationViewListener()
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fcw_main) as NavHostFragment
+        val navController = navHostFragment.navController
+
+
+        binding.bnvMain.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.item_home -> {
+                    navController.popBackStack()
+                    navController.navigate(R.id.mainHomeFragment)
+                }
+
+                R.id.item_map -> {
+
+                    navController.popBackStack()
+                    navController.navigate(R.id.veganMapFragment)
+                }
+
+                R.id.item_recipe -> {
+
+                    navController.popBackStack()
+                    navController.navigate(R.id.tipsFragment)
+                }
+
+                R.id.item_profile -> {
+
+                    navController.popBackStack()
+                    navController.navigate(R.id.mainMypageFragment)
+                }
+            }
+            true
+        }
     }
-//    private fun setBottomNavigationViewListener(){
-//
-//        binding.bnvMain.setOnItemSelectedListener {
-//            when(it.itemId){
-//                R.id.item_home->{
-//                    supportFragmentManager.beginTransaction().replace(R.id.fl_main,MainHomeFragment()).commit()
-//                }
-//                R.id.item_map->{
-//                    supportFragmentManager.beginTransaction().replace(R.id.fl_main,
-//                        VeganMapFragment()
-//                    ).setReorderingAllowed(true).commitAllowingStateLoss()
-//                }
-//                R.id.item_recipe->{
-//                    supportFragmentManager.beginTransaction().replace(R.id.fl_main,
-//                        MainRecipeFragment()
-//                    ).commit()
-//                }
-//                R.id.item_profile->{
-//                    supportFragmentManager.beginTransaction().replace(R.id.fl_main,
-//                        MainProfileFragment()
-//                    ).commit()
-//                }
-//            }
-//            true
-//        }
-//    }
-    fun setActiveBottomNavigationItem(itemId: Int) {
-        binding.bnvMain.setOnItemSelectedListener(null)
-        binding.bnvMain.selectedItemId = itemId
-//        setBottomNavigationViewListener()
-    }
+
 }
