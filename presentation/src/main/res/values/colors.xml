@@ -44,4 +44,5 @@
     <color name="color_table_head">#FFEEEEEE</color>
     <color name="color_table_body">#FFF5F5F5</color>
 
+    <color name="color_progress_bar">#FFA2D33F</color>
 </resources>
