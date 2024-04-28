@@ -1,3 +1,7 @@
+import com.example.presentation.R
+import com.example.presentation.base.BaseFragment
+import com.example.presentation.databinding.FragmentMainMapBinding
+
 //package com.example.presentation.view.map
 //
 //import android.app.Activity
@@ -221,3 +225,9 @@
 //
 //
 //}
+
+class VeganMapFragment: BaseFragment<FragmentMainMapBinding>(R.layout.fragment_main_map){
+    override fun init() {
+    }
+
+}

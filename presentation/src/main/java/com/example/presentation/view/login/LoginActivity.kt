@@ -272,7 +272,7 @@ import com.example.presentation.databinding.ActivityLoginBinding
 //
 //}
 
-class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login){
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     override fun initViewModel() {
     }
 
