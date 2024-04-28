@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     navController.navigate(R.id.veganMapFragment)
                 }
 
-                R.id.item_recipe -> {
+                R.id.item_tips -> {
 
                     navController.popBackStack()
                     navController.navigate(R.id.tipsFragment)

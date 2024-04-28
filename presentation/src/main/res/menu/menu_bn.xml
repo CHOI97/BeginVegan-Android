@@ -3,18 +3,18 @@
     <item
         android:title="home"
         android:id="@+id/item_home"
-        android:icon="@drawable/selector_menu_icon_home"/>
+        android:icon="@drawable/ic_nav_home"/>
     <item
         android:title="map"
         android:id="@+id/item_map"
-        android:icon="@drawable/selector_menu_icon_map"
+        android:icon="@drawable/ic_nav_map"
         />
     <item
         android:title="tips"
-        android:id="@+id/item_recipe"
-        android:icon="@drawable/selector_menu_icon_tips"/>
+        android:id="@+id/item_tips"
+        android:icon="@drawable/ic_nav_tips"/>
     <item
         android:title="my"
         android:id="@+id/item_profile"
-        android:icon="@drawable/selector_menu_icon_my"/>
+        android:icon="@drawable/ic_nav_mypage"/>
 </menu>

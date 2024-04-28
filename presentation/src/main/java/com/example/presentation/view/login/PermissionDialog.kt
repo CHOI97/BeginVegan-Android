@@ -12,7 +12,6 @@ class PermissionDialog: BaseDialogFragment<DialogPermissionBinding>(R.layout.dia
     private fun setOnClickOk() {
         binding.btnPermissionDialogOk.setOnClickListener {
             this.dismiss()
-
             // OS 12 이하는 Notification Permission 추가하기
         }
     }

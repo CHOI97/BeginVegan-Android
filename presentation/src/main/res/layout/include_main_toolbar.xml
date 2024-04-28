@@ -11,7 +11,8 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_alram"
+        android:src="@drawable/ic_alram"
+        android:backgroundTint="@color/color_primary"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/global_margin"/>
 </Toolbar>

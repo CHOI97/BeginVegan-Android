@@ -54,7 +54,6 @@
 
 
     <style name="MainBottomNavigationView">
-        <item name="android:itemBackground">@android:color/transparent</item>
         <item name="android:colorControlHighlight">@android:color/transparent</item>
         <item name="itemIconTint">@drawable/selector_bnv_color</item>
         <item name="itemTextColor">@drawable/selector_bnv_color</item>
