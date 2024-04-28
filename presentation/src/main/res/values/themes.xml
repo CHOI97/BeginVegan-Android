@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.Beginvegan" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Beginvegan" parent="Theme.Material3.DayNight.NoActionBar">
         <!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
         <!--        <item name="android:navigationBarColor">@android:color/transparent</item>-->
 
@@ -59,4 +59,27 @@
         <item name="itemTextColor">@drawable/selector_bnv_color</item>
     </style>
 
+<!--    OnBoarding-->
+    <style name="Widget.BeginVegan.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="endIconMode">custom</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="hintEnabled">false</item>
+    </style>
+
+    <style name="Widget.BeginVegan.TextInputEditText.OutlinedBox" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 </resources>

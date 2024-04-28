@@ -68,4 +68,7 @@ object Dependencies {
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
 
     const val KAKAO_LOGIN ="com.kakao.sdk:v2-all:${Versions.KAKAO_LOGIN}"
+
+    const val CIRCLE_IMAGEVIEW ="de.hdodenhof:circleimageview:${Versions.CIRCLE_IMAGEVIEW}"
+
 }
