@@ -1,4 +1,10 @@
-//package com.example.presentation.view.login
+package com.example.presentation.view.login
+
+import android.app.Activity
+import com.example.presentation.R
+import com.example.presentation.base.BaseActivity
+import com.example.presentation.databinding.ActivityLoginBinding
+
 //
 //import android.Manifest
 //import android.content.Context
@@ -265,3 +271,14 @@
 //    }
 //
 //}
+
+class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login){
+    override fun initViewModel() {
+    }
+
+    override fun init() {
+
+        PermissionDialog().show(supportFragmentManager, "PermissionDialog")
+    }
+
+}
