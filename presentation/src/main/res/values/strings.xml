@@ -334,6 +334,16 @@
     <string name="vegan_type_pesco">페스코 베지테리언</string>
     <string name="vegan_type_pollo">폴로 베지테리언</string>
     <string name="vegan_type_flexitarian">플렉시테리언</string>
+    <string-array name="vegan_type">
+        <item>알고 있지 않아요</item>
+        <item>비건</item>
+        <item>락토 베지테리언</item>
+        <item>오보 베지테리언</item>
+        <item>락토 오보 베지테리언</item>
+        <item>페스코 베지테리언</item>
+        <item>폴로 베지테리언</item>
+        <item>플렉시테리언</item>
+    </string-array>
 
     <!-- 온보딩 -->
     <string name="onboarding_description">비긴, 비건의 이용을 위해\n다음 정보를 입력해 주세요.</string>
