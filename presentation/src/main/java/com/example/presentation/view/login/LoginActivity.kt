@@ -272,13 +272,22 @@ import com.example.presentation.databinding.ActivityLoginBinding
 //
 //}
 
-class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login){
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     override fun initViewModel() {
     }
 
     override fun init() {
-
         PermissionDialog().show(supportFragmentManager, "PermissionDialog")
+        setOnClickLogin()
+    }
+
+    private fun setOnClickLogin() {
+        binding.btnLoginKakao.setOnClickListener {
+            // 서버랑 논의하고 kakao 로그인 추가 sdk
+            // kakao Token 운용방식 아직모름 위 코드 참고 할 것
+            // 사전 방식 kakao에서 승인 받고 개인 정보만 받아서 다시 우리쪽 서버에 넘긴 후
+            // access Token , refresh token 발급
+        }
     }
 
 }
