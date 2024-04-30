@@ -11,7 +11,8 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.login.OnboardingActivity">
+        tools:context=".view.login.OnboardingActivity"
+        >
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -34,24 +35,26 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo" />
+
         <LinearLayout
             android:id="@+id/ll_onboarding_profile_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_headline_app_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ll_input_area"
+            android:gravity="center"
             android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginTop="@dimen/margin_48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_headline_app_name">
+
             <RelativeLayout
                 android:id="@+id/rl_create_user_profile"
                 android:layout_width="@dimen/user_profile_size"
                 android:layout_height="@dimen/user_profile_size"
+                app:layout_constraintBottom_toTopOf="@id/tv_onboarding_profile"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
 
-                app:layout_constraintBottom_toTopOf="@id/tv_onboarding_profile">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/civ_onboarding_profile"
@@ -75,7 +78,7 @@
                 android:text="@string/onboarding_img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rl_create_user_profile"/>
+                app:layout_constraintTop_toBottomOf="@id/rl_create_user_profile" />
         </LinearLayout>
 
 
@@ -83,13 +86,16 @@
             android:id="@+id/ll_input_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ll_onboarding_profile_area"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="@dimen/global_margin"
             android:layout_marginEnd="@dimen/global_margin"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/btn_onboarding_next">
+            app:layout_constraintBottom_toTopOf="@id/btn_onboarding_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_onboarding_profile_area"
+
+            app:layout_constraintVertical_bias="0.1">
+
             <TextView
                 android:id="@+id/tv_onboarding_nick_headline"
                 android:layout_width="wrap_content"
@@ -103,64 +109,76 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_onboarding_edit_nick"
+                style="@style/Widget.BeginVegan.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_onboarding_nick_headline"
-                app:boxCornerRadiusBottomEnd="@dimen/cardview_default_radius"
-                app:boxStrokeWidth="1dp"
-                app:boxStrokeColor="@color/color_gray_01"
-                app:errorEnabled="true"
-                app:errorTextColor="@color/color_primary"
-                >
+                android:layout_marginTop="4dp">
+
                 <EditText
                     android:id="@+id/et_onboarding_edit_nick"
+                    style="@style/Widget.BeginVegan.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/placeholder_nickname" />
+                    android:hint="@string/placeholder_nickname"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/onboarding_question_vegan_type"
-                app:layout_constraintTop_toBottomOf="@id/til_onboarding_edit_nick"
-                app:layout_constraintStart_toStartOf="parent"
                 android:fontFamily="@font/pretendard_bold"
+                android:text="@string/onboarding_question_vegan_type"
                 android:textColor="@color/color_black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_onboarding_edit_nick" />
+
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/til_onboarding_edit_level"
+                style="@style/Widget.BeginVegan.Dropdown.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/onboarding_question_vegan_type_default"
-                >
+                android:layout_marginTop="4dp"
+                app:shapeAppearanceOverlay="@style/RoundedDropDown">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/filled_exposed_dropdown"
+                    android:id="@+id/actv_onboarding_edit_dropdown"
+                    style="@style/Widget.BeginVegan.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:hint="@string/onboarding_question_vegan_type_default"
+                    app:dropDownBackgroundTint="@color/color_white"
+                    android:dropDownHeight="200dp"
+                    android:dropDownVerticalOffset="8dp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_onboarding_next"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/btn_sign_up"
-            android:textColor="@color/color_white"
-            android:fontFamily="@font/pretendard_bold"
-            android:textSize="16sp"
-            app:backgroundTint="@color/color_primary"
-            android:layout_marginBottom="@dimen/margin_24"
             android:layout_marginStart="@dimen/global_margin"
             android:layout_marginEnd="@dimen/global_margin"
+            android:layout_marginBottom="@dimen/margin_24"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/btn_sign_up"
+            android:textColor="@color/color_white"
+            android:textSize="16sp"
+            app:backgroundTint="@color/color_primary"
             app:cornerRadius="10dp"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.1"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

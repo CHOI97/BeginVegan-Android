@@ -50,14 +50,13 @@
     </style>
 
 
-
     <style name="MainBottomNavigationView">
         <item name="android:colorControlHighlight">@android:color/transparent</item>
         <item name="itemIconTint">@drawable/selector_bnv_color</item>
         <item name="itemTextColor">@drawable/selector_bnv_color</item>
     </style>
 
-<!--    OnBoarding-->
+    <!--    OnBoarding-->
     <style name="Widget.BeginVegan.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -65,19 +64,35 @@
         <item name="boxCornerRadiusTopStart">8dp</item>
         <item name="boxCornerRadiusBottomEnd">8dp</item>
         <item name="boxCornerRadiusBottomStart">8dp</item>
-        <item name="boxStrokeWidthFocused">1dp</item>
-        <item name="boxStrokeWidth">1dp</item>
         <item name="boxBackgroundColor">@color/white</item>
-        <item name="endIconMode">custom</item>
-        <item name="errorIconDrawable">@null</item>
         <item name="hintEnabled">false</item>
+        <item name="errorTextColor">@color/color_primary</item>
+        <item name="boxStrokeColor">@color/color_primary</item>
     </style>
 
-    <style name="Widget.BeginVegan.TextInputEditText.OutlinedBox" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+    <style name="Widget.BeginVegan.TextInputEditText.OutlinedBox" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingTop">14dp</item>
         <item name="android:paddingBottom">14dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+    </style>
+
+
+    <style name="Widget.BeginVegan.Dropdown.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeColor">@color/color_primary</item>
+        <item name="dropDownBackgroundTint">@color/color_white</item>
+    </style>
+    <style name="RoundedDropDown" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 </resources>

@@ -138,6 +138,7 @@
 
 <!--    User Info-->
     <dimen name="user_profile_size">88dp</dimen>
+    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_padding" tools:override="true">0dp</dimen>
 
 <!--    Photo Select-->
     <dimen name="photo_select_dialog_width">280dp</dimen>
