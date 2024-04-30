@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/ll_user_profile_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_12"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/iv_user_profile_img"
+            android:layout_width="@dimen/item_30"
+            android:layout_height="@dimen/item_30"
+            android:background="@drawable/illus_user_profile_default"/>
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/body_2_regular"
+            android:textColor="@color/color_text_01"
+            android:layout_marginStart="@dimen/margin_12" />
+        <ImageView
+            android:id="@+id/iv_user_level_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_user_level_1_seed"
+            android:layout_marginStart="@dimen/margin_4"/>
+        <View
+            android:layout_width="@dimen/item_0"
+            android:layout_height="@dimen/item_0"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/body_2_regular"
+            android:textColor="@color/color_text_02"/>
+        <ImageButton
+            android:id="@+id/ib_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_menu_kebab"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

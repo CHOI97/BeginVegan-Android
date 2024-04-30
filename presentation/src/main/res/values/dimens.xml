@@ -79,6 +79,7 @@
     <dimen name="item_12">12dp</dimen>
     <dimen name="item_18">18dp</dimen>
     <dimen name="item_28">28dp</dimen>
+    <dimen name="item_30">30dp</dimen>
     <dimen name="item_32">32dp</dimen>
     <dimen name="item_56">56dp</dimen>
     <dimen name="item_60">60dp</dimen>
