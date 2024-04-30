@@ -57,6 +57,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
     //BottomNav 상태 제어
     fun setStateBn(isVisible: Boolean){
-        binding.includedToolbar.isVisible = isVisible
+        binding.bnvMain.isVisible = isVisible
     }
 }
