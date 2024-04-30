@@ -1,5 +1,9 @@
 package com.example.presentation.view.mypage
 
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.core.content.res.ResourcesCompat
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMypageBinding
@@ -112,6 +116,7 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         }
 
         setProgressBar(5,1)
+        setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
     }
 
     private fun openDialogUserLevelExplain(){
@@ -122,5 +127,29 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     private fun setProgressBar(maxInt: Int, nowGauge:Int){
         binding.pbUserLevelExp.max = maxInt
         binding.pbUserLevelExp.progress = nowGauge
+    }
+
+    private fun setVeganTypeDropdown(userVeganType:String){
+        val dropdownAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.item_dropdown_mypage_set_vegan_type,
+            resources.getStringArray(R.array.vegan_type)
+        )
+        binding.acsSetVeganType.adapter = dropdownAdapter
+        binding.acsSetVeganType.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    // 선택됐을 경우
+
+                }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+//        dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.sSetVeganType.adapter = dropdownAdapter
     }
 }
