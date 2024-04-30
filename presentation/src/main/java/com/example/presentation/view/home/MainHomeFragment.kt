@@ -1,6 +1,7 @@
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainHomeBinding
+import com.example.presentation.view.main.MainActivity
 
 //package com.example.presentation.view.home
 //
@@ -221,6 +222,7 @@ import com.example.presentation.databinding.FragmentMainHomeBinding
 
 class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main_home){
     override fun init() {
+        (activity as MainActivity).setStateToolBar(true)
         // UI 제작
         // 목업 배열 2개
         // 어댑터 제작
