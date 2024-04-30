@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.mypage.MypageEditProfileFragment">
+        <Toolbar
+            android:id="@+id/tb_edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageButton
+                android:id="@+id/ib_back_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="@color/color_primary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/title_bold"
+                android:text="@string/mypage_edit_profile"
+                android:textColor="@color/color_primary"
+                android:layout_gravity="center"/>
+            <ImageButton
+                android:id="@+id/ib_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_check"
+                android:backgroundTint="@color/color_primary"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_16"/>
+        </Toolbar>
+        <ImageView
+            android:id="@+id/iv_user_profile_img"
+            android:layout_width="@dimen/item_120"
+            android:layout_height="@dimen/item_120"
+            android:background="@drawable/illus_user_profile_default"
+            app:layout_constraintTop_toBottomOf="@id/tb_edit_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_28"/>
+        <ImageButton
+            android:id="@+id/ib_edit_profile_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_modify"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/color_primary"
+            android:padding="@dimen/margin_4"
+            app:layout_constraintEnd_toEndOf="@id/iv_user_profile_img"
+            app:layout_constraintBottom_toBottomOf="@id/iv_user_profile_img"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
