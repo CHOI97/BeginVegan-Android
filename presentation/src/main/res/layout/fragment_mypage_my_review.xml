@@ -16,7 +16,8 @@
             layout="@layout/include_mypage_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/mypage_my_review"/>
+            app:title="@{@string/mypage_my_review}"/>
+<!--            app:title="@{titleResId != null ? @string/title : @string/}"/>-->
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_0"

@@ -126,6 +126,9 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         binding.llEditProfile.setOnClickListener {
             moveToOtherFragment(MypageEditProfileFragment())
         }
+        binding.llMyReview.setOnClickListener {
+            moveToOtherFragment(MypageMyReviewFragment())
+        }
     }
 
     private fun openDialogUserLevelExplain(){
