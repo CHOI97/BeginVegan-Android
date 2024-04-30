@@ -23,5 +23,18 @@
             android:layout_height="@dimen/item_0"
             app:layout_constraintTop_toBottomOf="@id/included_toolbar"
             tools:listitem="@layout/item_review"/>
+        <TextView
+            android:id="@+id/tv_my_review_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/body_1_regular"
+            android:text="@string/empty_mypage_my_review"
+            android:textColor="@color/color_text_03"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

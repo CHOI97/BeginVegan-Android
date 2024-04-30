@@ -1,5 +1,7 @@
 package com.example.presentation.view.mypage
 
+import android.opengl.Visibility
+import androidx.core.view.isVisible
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMypageMyReviewBinding
@@ -12,5 +14,8 @@ class MypageMyReviewFragment : BaseFragment<FragmentMypageMyReviewBinding>(R.lay
         binding.includedToolbar.ibBackUp.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        //empty state
+        //binding.tvMyReviewEmpty.isVisible = true
     }
 }
