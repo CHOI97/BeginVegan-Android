@@ -2,6 +2,7 @@ package com.example.presentation.view.main
 
 import android.os.Bundle
 import android.util.Log
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
@@ -50,4 +51,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
+    //Tool Bar 상태 제어
+    fun setStateToolBar(isVisible:Boolean){
+        binding.includedToolbar.isVisible = isVisible
+    }
+    //BottomNav 상태 제어
+    fun setStateBn(isVisible: Boolean){
+        binding.includedToolbar.isVisible = isVisible
+    }
 }
