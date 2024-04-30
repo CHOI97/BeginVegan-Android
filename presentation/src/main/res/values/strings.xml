@@ -346,12 +346,12 @@
     </string-array>
 
     <!-- 온보딩 -->
-    <string name="onboarding_description">비긴, 비건의 이용을 위해\n다음 정보를 입력해 주세요.</string>
+    <string name="onboarding_description">"<b>비긴, 비건</b>의 이용을 위해\n다음 정보를 입력해 주세요.</string>
     <string name="onboarding_img">나를 소개할 이미지를 업로드해 주세요</string>
-    <string name="onboarding_question_nickname">어떤 닉네임으로 활동하고 싶으신가요? *</string>
-    <string name="onboarding_question_vegan_type">채식 성향을 알고 계신가요? *</string>
+    <string name="onboarding_question_nickname">"어떤 닉네임으로 활동하고 싶으신가요? <font color='#FF009861'>*</font>"</string>
+    <string name="onboarding_question_vegan_type">"채식 성향을 알고 계신가요? <font color='#FF009861'>*</font>"</string>
     <string name="onboarding_question_vegan_type_default">-선택하기-</string>
-
+    <string name="tv01"></string>
     <!-- Home -->
     <string name="home_hello">안녕하세요,</string>
     <string name="home_user_name">%1$s 님</string>

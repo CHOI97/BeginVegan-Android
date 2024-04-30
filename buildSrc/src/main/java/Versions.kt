@@ -37,4 +37,5 @@ object Versions {
     const val LOTTIE = "6.4.0"
     const val TIMBER = "4.7.1"
     const val KAKAO_LOGIN ="2.11.2"
+    const val CIRCLE_IMAGEVIEW ="3.1.0"
 }
