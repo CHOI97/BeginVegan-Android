@@ -12,6 +12,7 @@
     <!-- 사용 예정 -->
     <dimen name="margin_stroke">0.5dp</dimen>
     <dimen name="margin_1">1dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
     <dimen name="margin_4">4dp</dimen>
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_10">10dp</dimen>
@@ -24,7 +25,6 @@
     <dimen name="margin_44">44dp</dimen>
     <dimen name="margin_48">48dp</dimen>
     <!-- 삭제 예정 -->
-    <dimen name="margin_2">2dp</dimen>
     <dimen name="margin_6">6dp</dimen>
     <dimen name="margin_14">14dp</dimen>
     <dimen name="margin_32">32dp</dimen>
@@ -79,6 +79,7 @@
     <dimen name="item_12">12dp</dimen>
     <dimen name="item_18">18dp</dimen>
     <dimen name="item_28">28dp</dimen>
+    <dimen name="item_30">30dp</dimen>
     <dimen name="item_32">32dp</dimen>
     <dimen name="item_56">56dp</dimen>
     <dimen name="item_60">60dp</dimen>
