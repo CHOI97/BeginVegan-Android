@@ -132,6 +132,9 @@ dependencies {
     // Circle ImageView
     implementation(Dependencies.CIRCLE_IMAGEVIEW)
 
+    // Rating bar
+    implementation("com.github.ome450901:SimpleRatingBar:1.5.1")
+
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
 //    implementation 'com.google.android.material:material:1.5.0'
