@@ -58,6 +58,10 @@ dependencies {
 
     // Moshi
     implementation(Dependencies.MOSHI)
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     kapt(Dependencies.MOSHI_KAPT)
 
     // Okhttp
@@ -122,7 +126,11 @@ dependencies {
     // Timber
     implementation(Dependencies.TIMBER)
 
+    // KaKao Login
     implementation(Dependencies.KAKAO_LOGIN)
+
+    // Circle ImageView
+    implementation(Dependencies.CIRCLE_IMAGEVIEW)
 
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'

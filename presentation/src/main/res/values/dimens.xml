@@ -133,7 +133,15 @@
     <dimen name="dialog_permission_logo_width">127dp</dimen>
     <dimen name="dialog_permission_logo_height">58dp</dimen>
 
-
+<!--    bottom navigation-->
     <dimen name="design_bottom_navigation_text_size" tools:override="true">9sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">9sp</dimen>
+
+<!--    User Info-->
+    <dimen name="user_profile_size">88dp</dimen>
+    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_padding" tools:override="true">0dp</dimen>
+
+<!--    Photo Select-->
+    <dimen name="photo_select_dialog_width">280dp</dimen>
+    <dimen name="photo_select_dialog_radius">8dp</dimen>
 </resources>
