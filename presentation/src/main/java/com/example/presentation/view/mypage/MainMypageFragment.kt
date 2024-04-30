@@ -4,10 +4,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.MypageUserLevelExplainDialog
+import com.example.presentation.view.main.MainActivity
 
 
 ////import com.bumptech.glide.Glide
@@ -111,12 +113,19 @@ import com.example.presentation.util.MypageUserLevelExplainDialog
 class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.fragment_main_mypage){
 
     override fun init() {
+        (activity as MainActivity).setStateToolBar(false)
+        (activity as MainActivity).setStateBn(true)
+
         binding.llUserLevelExplain.setOnClickListener {
             openDialogUserLevelExplain()
         }
 
         setProgressBar(5,1)
         setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
+
+        binding.llEditProfile.setOnClickListener {
+            moveToOtherFragment(MypageEditProfileFragment())
+        }
     }
 
     private fun openDialogUserLevelExplain(){
@@ -136,20 +145,27 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
             resources.getStringArray(R.array.vegan_type)
         )
         binding.acsSetVeganType.adapter = dropdownAdapter
-        binding.acsSetVeganType.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    // 선택됐을 경우
-
-                }
-                override fun onNothingSelected(parent: AdapterView<*>) {}
-            }
+//        binding.acsSetVeganType.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>,
+//                    view: View,
+//                    position: Int,
+//                    id: Long
+//                ) {
+//                    // 선택됐을 경우
+//
+//                }
+//                override fun onNothingSelected(parent: AdapterView<*>) {}
+//            }
 //        dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 //        binding.sSetVeganType.adapter = dropdownAdapter
+    }
+
+    private fun moveToOtherFragment(fragment: Fragment){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fcw_main, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
