@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Beginvegan"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        카카오 로그인 용 UI 서버 협의 후 어떻게 사용방법에 따라 수정
+<!--        카카오 로그인 용 UI 서버 협의 후 어떻게 사용방법에 따라 수정-->
 <!--        <activity-->
 <!--            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"-->
 <!--            android:exported="true">-->

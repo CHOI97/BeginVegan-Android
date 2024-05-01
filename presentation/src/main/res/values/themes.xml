@@ -57,6 +57,10 @@
         <item name="itemPaddingBottom">10dp</item>
         <item name="itemPaddingTop">10dp</item>
     </style>
+    <style name="MainBottomNavigationView.TextActive" >
+        <item name="android:textSize">9sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
 
     <!--    OnBoarding-->
     <style name="Widget.BeginVegan.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">

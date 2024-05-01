@@ -42,9 +42,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:itemIconSize="30dp"
-            app:itemActiveIndicatorStyle="@null"
+            app:itemActiveIndicatorStyle="@android:color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fcw_main"
+            app:itemTextAppearanceActive="@style/MainBottomNavigationView.TextActive"
+            app:itemTextAppearanceInactive="@style/MainBottomNavigationView.TextActive"
             app:menu="@menu/menu_bn"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
