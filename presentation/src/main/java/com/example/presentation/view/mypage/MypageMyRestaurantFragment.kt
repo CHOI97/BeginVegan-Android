@@ -17,7 +17,11 @@ class MypageMyRestaurantFragment : BaseFragment<FragmentMypageMyRestaurantBindin
         binding.ibFab.setOnClickListener {
             //클릭시 상단으로 이동
         }
+        
         //empty state
-//        binding.tvMyRestaurantEmpty.isVisible = true
+//        binding.llEmptyArea.isVisible = true
+        binding.btnMoveToMap.setOnClickListener {
+            //Map으로 이동
+        }
     }
 }

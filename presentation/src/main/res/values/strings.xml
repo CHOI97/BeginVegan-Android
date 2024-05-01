@@ -321,7 +321,7 @@
     <string name="empty_map_restaurant_review">등록된 리뷰가 없어요.\n첫 리뷰를 작성해 주세요!</string>
     <string name="empty_map_restaurant_review_deleted">해당 리뷰는 관리자에 의해 삭제되었어요.</string>
     <string name="empty_mypage_my_review">작성한 리뷰가 없어요\n식당을 방문하고 리뷰를 작성해봐요.</string>
-    <string name="empty_mypage_my_restaurant">스크랩한 식당이 없어요.\n관심있는 식당을 스크랩해봐요.</string>
+    <string name="empty_mypage_my_restaurant">저장한 식당이 없어요.\n관심있는 식당을 스크랩해봐요.</string>
     <string name="empty_mypage_my_magazine">스크랩한 매거진이 없어요.\n관심있는 매거진을 스크랩해봐요.</string>
     <string name="empty_mypage_my_recipe">스크랩한 레시피가 없어요.\n관심있는 레시피를 스크랩해봐요.</string>
 
