@@ -132,6 +132,9 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         binding.llMyRestaurant.setOnClickListener {
             moveToOtherFragment(MypageMyRestaurantFragment())
         }
+        binding.llMyMagazine.setOnClickListener {
+            moveToOtherFragment(MypageMyMagazineFragment())
+        }
         binding.llMyRecipe.setOnClickListener {
             moveToOtherFragment(MypageMyRecipeFragment())
         }
