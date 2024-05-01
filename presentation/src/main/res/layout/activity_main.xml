@@ -35,16 +35,14 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_main"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_56"
+            android:layout_height="56dp"
             android:background="@color/color_white"
-            android:theme="@style/Theme.AppCompat.Light"
             style="@style/MainBottomNavigationView"
-            app:itemIconSize="30dp"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fcw_main"
-            app:menu="@menu/menu_bn" />
+            app:menu="@menu/menu_bn"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
