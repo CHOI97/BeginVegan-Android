@@ -370,7 +370,7 @@
 
     <!-- Map -->
     <string name="map_bottom_sheet_title_nearby">&lt;%1$s&gt; 님의 주변에 위치한 식당이에요.</string>
-    <string name="map_how_far">내 위치로부터 %dkm</string>
+    <string name="map_how_far">"내 위치로부터 <font color='#FF005536'>%dkm</font>"</string>
     <string name="map_search_history">최근 검색 기록</string>
     <string name="map_search_result_order_review">리뷰 많은 순</string>
     <string name="map_search_result_order_scrap">스크랩 많은 순</string>
