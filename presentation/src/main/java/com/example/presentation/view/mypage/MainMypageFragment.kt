@@ -129,6 +129,9 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         binding.llMyReview.setOnClickListener {
             moveToOtherFragment(MypageMyReviewFragment())
         }
+        binding.llMyRestaurant.setOnClickListener {
+            moveToOtherFragment(MypageMyRestaurantFragment())
+        }
     }
 
     private fun openDialogUserLevelExplain(){
