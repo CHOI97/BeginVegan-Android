@@ -1,12 +1,15 @@
 package com.example.beginvegan.config
 
 import android.app.Application
+import com.example.beginvegan.BuildConfig
+import com.kakao.vectormap.KakaoMapSdk
 import timber.log.Timber
 
 class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+        KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY);
     }
 
     //    override fun onCreate() {

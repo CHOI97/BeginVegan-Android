@@ -54,6 +54,7 @@
         <item name="android:colorControlHighlight">@android:color/transparent</item>
         <item name="itemIconTint">@drawable/selector_bnv_color</item>
         <item name="itemTextColor">@drawable/selector_bnv_color</item>
+        <item name="theme">@style/Theme.AppCompat.Light</item>
     </style>
 
     <!--    OnBoarding-->
