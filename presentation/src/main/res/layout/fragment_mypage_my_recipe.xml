@@ -59,7 +59,7 @@
                 android:textColor="@color/color_text_03"
                 android:gravity="center"/>
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_move_to_map"
+                android:id="@+id/btn_move_to_recipe"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_56"
                 style="@style/body_1_bold"
