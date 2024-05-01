@@ -1,6 +1,11 @@
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
+import com.kakao.vectormap.KakaoMap
+import com.kakao.vectormap.KakaoMapReadyCallback
+import com.kakao.vectormap.MapLifeCycleCallback
+import com.kakao.vectormap.MapView
+
 
 //package com.example.presentation.view.map
 //
@@ -226,8 +231,24 @@ import com.example.presentation.databinding.FragmentMainMapBinding
 //
 //}
 
-class VeganMapFragment: BaseFragment<FragmentMainMapBinding>(R.layout.fragment_main_map){
+class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_main_map) {
+    private lateinit var mapView: MapView
     override fun init() {
+        mapView = MapView(requireContext())
+        binding.mapView.addView(mapView)
+        mapView.start(object : MapLifeCycleCallback() {
+            override fun onMapDestroy() {
+                // 지도 API 가 정상적으로 종료될 때 호출됨
+            }
+
+            override fun onMapError(error: Exception) {
+                // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
+            }
+        }, object : KakaoMapReadyCallback() {
+            override fun onMapReady(kakaoMap: KakaoMap) {
+                // 인증 후 API 가 정상적으로 실행될 때 호출됨
+            }
+        })
     }
 
 }

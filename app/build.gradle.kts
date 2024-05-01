@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
@@ -12,13 +15,15 @@ android {
     namespace = "com.example.beginvegan"
     compileSdk = DefaultConfig.COMPILE_SDK_VERSION
 
+    val localProperties = Properties()
+    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+
     defaultConfig {
         applicationId = "com.example.beginvegan"
         minSdk = DefaultConfig.MIN_SDK_VERSION
         targetSdk = DefaultConfig.TARGET_SDK_VERSION
         versionCode = DefaultConfig.VERSION_CODE
         versionName = DefaultConfig.VERSION_NAME
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -29,6 +34,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
+
         }
     }
     compileOptions {
@@ -40,6 +48,7 @@ android {
     }
     buildFeatures{
         dataBinding = true
+        buildConfig = true
     }
 
 }
@@ -113,6 +122,13 @@ dependencies {
 
     // Timber
     implementation (Dependencies.TIMBER)
+
+    // KaKao Login
+    implementation(Dependencies.KAKAO_LOGIN)
+
+
+    // KAKAO MAP
+    implementation ("com.kakao.maps.open:android:2.9.5")
     // Hilt extension
 //    implementation(Dependencies.HILT_EXTENSION_WORK)
 //    kapt(Dependencies.HILT_EXTENSION_KAPT)
