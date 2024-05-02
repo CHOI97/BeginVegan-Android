@@ -42,6 +42,10 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     }
     private fun goResult(){
         val checkedId = binding.rgVeganTest.checkedRadioButtonId
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fcw_main, VeganTestResultFragment())
+            .addToBackStack(null)
+            .commit()
     }
     //라디오버튼 클릭 시 반영
     private fun setDescription(selectedView: IncludeIllusVeganLevelBinding, radioView: View?,selectedDescription: String){

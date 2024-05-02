@@ -72,7 +72,9 @@
                 android:text="@string/vegan_test_result_vegan_description"
                 android:textColor="@color/color_text_02" />
 
-            <include layout="@layout/include_illus_vegan_level" />
+            <include
+                android:id="@+id/included_illus_vegan_level"
+                layout="@layout/include_illus_vegan_level" />
 
             <View
                 android:layout_width="match_parent"
