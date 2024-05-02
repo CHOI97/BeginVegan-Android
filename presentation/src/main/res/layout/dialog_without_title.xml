@@ -6,16 +6,16 @@
         <variable
             name="content"
             type="String" />
-        <variable
-            name="btn_cancel"
-            type="String" />
-        <variable
-            name="btn_confirm"
-            type="String" />
+<!--        <variable-->
+<!--            name="btn_cancel"-->
+<!--            type="String" />-->
+<!--        <variable-->
+<!--            name="btn_confirm"-->
+<!--            type="String" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/dialog_width"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_dialog">
         <TextView
@@ -34,7 +34,6 @@
             android:layout_height="wrap_content"
             style="@style/body_1_bold"
             android:textColor="@color/color_text_02"
-            android:text="@{btn_cancel}"
             android:backgroundTint="@color/color_background"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
             app:layout_constraintEnd_toStartOf="@id/btn_confirm"
@@ -48,7 +47,6 @@
             android:layout_height="wrap_content"
             style="@style/body_1_bold"
             android:textColor="@color/color_primary"
-            android:text="@{btn_confirm}"
             android:backgroundTint="@color/color_background"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
             app:layout_constraintEnd_toEndOf="parent"

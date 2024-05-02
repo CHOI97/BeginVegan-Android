@@ -14,13 +14,22 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
         }
 
         //로그아웃
-        binding.tvLogout.setOnClickListener {
-
+        binding.tvLogout.onThrottleClick{
+            openDialogLogout()
         }
 
         //계정 삭제
         binding.tvDeleteAccount.setOnClickListener {
 
         }
+    }
+
+    private fun openDialogLogout(){
+        MypageLogoutDialog().show(childFragmentManager, "LogoutDialog")
+        MypageLogoutDialog().setOnConfirm(object :MypageLogoutDialog.OnBtnClickListener{
+            override fun onConfirm() {
+                //확인 클릭 시
+            }
+        })
     }
 }

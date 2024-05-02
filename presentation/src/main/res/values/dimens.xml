@@ -149,6 +149,6 @@
     <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_padding" tools:override="true">0dp</dimen>
 
 <!--    Photo Select-->
-    <dimen name="photo_select_dialog_width">280dp</dimen>
+    <dimen name="dialog_width">280dp</dimen> //dialog 공통으로 사용돼서 이름 변경했습니다.
     <dimen name="photo_select_dialog_radius">8dp</dimen>
 </resources>
