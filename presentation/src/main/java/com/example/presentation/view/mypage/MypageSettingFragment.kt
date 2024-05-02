@@ -19,8 +19,8 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
         }
 
         //계정 삭제
-        binding.tvDeleteAccount.setOnClickListener {
-
+        binding.tvDeleteAccount.onThrottleClick {
+            openDialogDeleteAccount()
         }
     }
 
@@ -30,6 +30,16 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
             override fun onConfirm() {
                 //확인 클릭 시
             }
+        })
+    }
+
+    private fun openDialogDeleteAccount(){
+        MypageDeleteAccountDialog().show(childFragmentManager, "DeleteAccountDialog")
+        MypageDeleteAccountDialog().setOnConfirm(object :MypageDeleteAccountDialog.OnBtnClickListener{
+            override fun onConfirm() {
+                //계정 삭제
+            }
+
         })
     }
 }
