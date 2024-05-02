@@ -52,7 +52,6 @@
         <activity
             android:name=".view.login.OnboardingActivity"
             android:exported="true">
-
         </activity>
 
     </application>

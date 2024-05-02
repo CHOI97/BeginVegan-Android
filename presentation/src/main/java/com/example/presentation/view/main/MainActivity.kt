@@ -1,14 +1,10 @@
 package com.example.presentation.view.main
 
-import android.os.Bundle
-import android.util.Log
 import androidx.core.view.isVisible
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityMainBinding
-import com.example.presentation.view.mypage.MainMypageFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun initViewModel() {
