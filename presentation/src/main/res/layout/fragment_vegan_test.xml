@@ -27,6 +27,7 @@
             android:layout_marginTop="@dimen/margin_72"
             android:text="@string/vegan_test_description"
             android:textColor="@color/color_text_01"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/included_toolbar" />
@@ -122,8 +123,7 @@
             <include
                 android:id="@+id/included_vegan"
                 layout="@layout/include_illus_vegan_level"
-                app:description="@{@string/vegan_test_description_vegan}"
-                app:marginTop="@{true}"/>
+                app:description="@{@string/vegan_test_description_vegan}" />
             <View
                 android:layout_width="@dimen/item_0"
                 android:layout_height="@dimen/margin_16" />
