@@ -6,12 +6,6 @@
         <variable
             name="content"
             type="String" />
-<!--        <variable-->
-<!--            name="btn_cancel"-->
-<!--            type="String" />-->
-<!--        <variable-->
-<!--            name="btn_confirm"-->
-<!--            type="String" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

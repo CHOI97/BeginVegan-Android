@@ -1,9 +1,6 @@
 package com.example.presentation.view.mypage
 
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
