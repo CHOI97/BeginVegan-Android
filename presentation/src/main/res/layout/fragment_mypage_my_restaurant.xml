@@ -13,7 +13,7 @@
         tools:context=".view.mypage.MypageMyRestaurantFragment">
         <include
             android:id="@+id/included_toolbar"
-            layout="@layout/include_mypage_toolbar"
+            layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@{@string/mypage_my_restaurant}"/>
