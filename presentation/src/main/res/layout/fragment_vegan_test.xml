@@ -52,7 +52,7 @@
                 <include
                     android:id="@+id/included_vegan"
                     layout="@layout/include_illus_vegan_level"
-                    app:description="@string/vegan_test_description_vegan"/>
+                    app:description="@{@string/vegan_test_description_vegan}"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -66,10 +66,10 @@
                     android:buttonTint="@color/color_transparent"
                     android:layout_marginEnd="@dimen/margin_12"/>
                 <include
-                    android:id="@+id/included_vegan"
+                    android:id="@+id/included_lacto"
                     layout="@layout/include_illus_vegan_level"
-                    app:mlik="true"
-                    app:description="@string/vegan_test_description_lacto"/>
+                    app:milk="@{true}"
+                    app:description="@{@string/vegan_test_description_lacto}"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -83,10 +83,10 @@
                     android:buttonTint="@color/color_transparent"
                     android:layout_marginEnd="@dimen/margin_12"/>
                 <include
-                    android:id="@+id/included_vegan"
+                    android:id="@+id/included_ovo"
                     layout="@layout/include_illus_vegan_level"
-                    app:egg="true"
-                    app:description="@string/vegan_test_description_ovo"/>
+                    app:egg="@{true}"
+                    app:description="@{@string/vegan_test_description_ovo}"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -100,11 +100,11 @@
                     android:buttonTint="@color/color_transparent"
                     android:layout_marginEnd="@dimen/margin_12"/>
                 <include
-                    android:id="@+id/included_vegan"
+                    android:id="@+id/included_lacto_ovo"
                     layout="@layout/include_illus_vegan_level"
-                    app:milk="true"
-                    app:egg="true"
-                    app:description="@string/vegan_test_description_lacto_ovo"/>
+                    app:milk="@{true}"
+                    app:egg="@{true}"
+                    app:description="@{@string/vegan_test_description_lacto_ovo}"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -118,12 +118,12 @@
                     android:buttonTint="@color/color_transparent"
                     android:layout_marginEnd="@dimen/margin_12"/>
                 <include
-                    android:id="@+id/included_vegan"
+                    android:id="@+id/included_pesco"
                     layout="@layout/include_illus_vegan_level"
-                    app:milk="true"
-                    app:egg="true"
-                    app:fish="true"
-                    app:description="@string/vegan_test_description_pesco"/>
+                    app:milk="@{true}"
+                    app:egg="@{true}"
+                    app:fish="@{true}"
+                    app:description="@{@string/vegan_test_description_pesco}"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -137,13 +137,13 @@
                     android:buttonTint="@color/color_transparent"
                     android:layout_marginEnd="@dimen/margin_12"/>
                 <include
-                    android:id="@+id/included_vegan"
+                    android:id="@+id/included_pollo"
                     layout="@layout/include_illus_vegan_level"
-                    app:milk="true"
-                    app:egg="true"
-                    app:fish="true"
-                    app:chicken="true"
-                    app:description="@string/vegan_test_description_pollo"/>
+                    app:milk="@{true}"
+                    app:egg="@{true}"
+                    app:fish="@{true}"
+                    app:chicken="@{true}"
+                    app:description="@{@string/vegan_test_description_pollo}"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -157,14 +157,14 @@
                     android:buttonTint="@color/color_transparent"
                     android:layout_marginEnd="@dimen/margin_12"/>
                 <include
-                    android:id="@+id/included_vegan"
+                    android:id="@+id/included_flexitarian"
                     layout="@layout/include_illus_vegan_level"
-                    app:milk="true"
-                    app:egg="true"
-                    app:fish="true"
-                    app:chicken="true"
-                    app:meat="true"
-                    app:description="@string/vegan_test_description_flexitarian"/>
+                    app:milk="@{true}"
+                    app:egg="@{true}"
+                    app:fish="@{true}"
+                    app:chicken="@{true}"
+                    app:meat="@{true}"
+                    app:description="@{@string/vegan_test_description_flexitarian}"/>
             </LinearLayout>
         </RadioGroup>
         <TextView
