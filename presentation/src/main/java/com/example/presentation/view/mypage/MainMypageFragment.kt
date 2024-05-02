@@ -138,6 +138,9 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         binding.llMyRecipe.setOnClickListener {
             moveToOtherFragment(MypageMyRecipeFragment())
         }
+        binding.llSetting.setOnClickListener {
+            moveToOtherFragment(MypageSettingFragment())
+        }
     }
 
     private fun openDialogUserLevelExplain(){
