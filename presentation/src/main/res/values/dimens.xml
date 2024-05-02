@@ -26,17 +26,17 @@
     <dimen name="margin_40">40dp</dimen>
     <dimen name="margin_44">44dp</dimen>
     <dimen name="margin_48">48dp</dimen>
+    <dimen name="margin_56">56dp</dimen>
+    <dimen name="margin_72">72dp</dimen>
     <!-- 삭제 예정 -->
     <dimen name="margin_6">6dp</dimen>
     <dimen name="margin_14">14dp</dimen>
     <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_34">34dp</dimen>
     <dimen name="margin_52">52dp</dimen>
-    <dimen name="margin_56">56dp</dimen>
     <dimen name="margin_60">60dp</dimen>
     <dimen name="margin_64">64dp</dimen>
     <dimen name="margin_68">68dp</dimen>
-    <dimen name="margin_72">72dp</dimen>
     <dimen name="margin_76">76dp</dimen>
     <dimen name="margin_80">80dp</dimen>
     <dimen name="margin_100">100dp</dimen>
@@ -84,6 +84,7 @@
     <dimen name="item_28">28dp</dimen>
     <dimen name="item_30">30dp</dimen>
     <dimen name="item_32">32dp</dimen>
+    <dimen name="item_40">40dp</dimen>
     <dimen name="item_48">48dp</dimen>
     <dimen name="item_56">56dp</dimen>
     <dimen name="item_60">60dp</dimen>
