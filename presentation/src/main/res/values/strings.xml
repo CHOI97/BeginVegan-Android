@@ -354,7 +354,7 @@
     <string name="tv01"></string>
     <!-- Home -->
     <string name="home_hello">안녕하세요,</string>
-    <string name="home_user_name">%1$s 님</string>
+    <string name="home_user_name"><font color='#FFFDD23B'>%1$s</font> 님</string>
     <string name="home_description">비거너의 여정으로 함께 떠나요!</string>
     <string name="home_restaurant_title">%1$s 님을 위한 식당이에요</string>
 
