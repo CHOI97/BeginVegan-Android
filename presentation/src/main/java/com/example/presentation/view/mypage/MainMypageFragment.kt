@@ -113,6 +113,10 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         (activity as MainActivity).setStateToolBar(false)
         (activity as MainActivity).setStateBn(true)
 
+        binding.ibNotification.setOnClickListener {
+            (activity as MainActivity).openDrawer()
+        }
+
         binding.llUserLevelExplain.setOnClickListener {
             openDialogUserLevelExplain()
         }
