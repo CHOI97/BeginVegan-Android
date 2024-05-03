@@ -44,5 +44,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fcw_main"
             app:menu="@menu/menu_bn"/>
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/dl_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone">
+            <include
+                android:id="@+id/included_drawer"
+                layout="@layout/include_notification_drawer"/>
+        </androidx.drawerlayout.widget.DrawerLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
