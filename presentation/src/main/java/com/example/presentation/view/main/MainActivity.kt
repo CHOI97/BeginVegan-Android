@@ -17,6 +17,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun init() {
 
+
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fcw_main) as NavHostFragment
         val navController = navHostFragment.navController

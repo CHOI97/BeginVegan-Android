@@ -54,9 +54,19 @@
         <item name="android:colorControlHighlight">@android:color/transparent</item>
         <item name="itemIconTint">@drawable/selector_bnv_color</item>
         <item name="itemTextColor">@drawable/selector_bnv_color</item>
-        <item name="theme">@style/Theme.AppCompat.Light</item>
-    </style>
+        <item name="itemPaddingBottom">10dp</item>
+        <item name="itemPaddingTop">10dp</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
 
+    </style>
+    <style name="MainBottomNavigationView.TextActive" >
+        <item name="android:textSize">9sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
+    </style>
+    <style name="MainBottomNavigationView.ActiveIndicator" parent="">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
     <!--    OnBoarding-->
     <style name="Widget.BeginVegan.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
@@ -92,14 +102,21 @@
         <item name="boxStrokeColor">@color/color_primary</item>
         <item name="dropDownBackgroundTint">@color/color_white</item>
     </style>
-    <style name="RoundedDropDown" parent="">
+    <style name="RoundedDropDown">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
 
+<<<<<<< Updated upstream
     <!-- toggle switch -->
     <style name="SwitchTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlActivated">@color/color_primary</item>
         <item name="colorSwitchThumbNormal">@color/color_background</item>
+=======
+
+<!--    Home -->
+    <style name="MainHomeTextStyle" parent="body_1_bold">
+        <item name="android:textColor">@color/color_white</item>
+>>>>>>> Stashed changes
     </style>
 </resources>

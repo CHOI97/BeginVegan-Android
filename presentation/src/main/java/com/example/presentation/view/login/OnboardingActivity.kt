@@ -1,11 +1,13 @@
 package com.example.presentation.view.login
 
+import android.content.Intent
 import android.widget.ArrayAdapter
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityOnboardingBinding
 import com.example.presentation.util.PhotoSelectDialog
+import com.example.presentation.view.main.MainActivity
 
 class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.activity_onboarding) {
     val items = arrayOf("알고 있지 않아요","비건","락토 베지테리언","오보 베지테리언","락토 오보 베지테리언","페스코 베지테리언","폴로 베지테리언","플렉시테리언")
@@ -19,7 +21,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
 
     override fun init() {
         setOnClickProfile()
-
+        setOnClickMain()
         val adapter = ArrayAdapter(this, R.layout.item_dropdown, items)
 
         binding.actvOnboardingEditDropdown.setAdapter(adapter)
@@ -27,6 +29,13 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         binding.actvOnboardingEditDropdown.setOnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position).toString()
             // 선택된 항목에 대한 처리 추가
+        }
+    }
+
+    private fun setOnClickMain() {
+        binding.btnOnboardingNext.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
