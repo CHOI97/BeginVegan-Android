@@ -101,4 +101,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
+
+    <!-- toggle switch -->
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlActivated">@color/color_primary</item>
+        <item name="colorSwitchThumbNormal">@color/color_background</item>
+    </style>
 </resources>

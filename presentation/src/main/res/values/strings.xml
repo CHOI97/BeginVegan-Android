@@ -321,7 +321,7 @@
     <string name="empty_map_restaurant_review">등록된 리뷰가 없어요.\n첫 리뷰를 작성해 주세요!</string>
     <string name="empty_map_restaurant_review_deleted">해당 리뷰는 관리자에 의해 삭제되었어요.</string>
     <string name="empty_mypage_my_review">작성한 리뷰가 없어요\n식당을 방문하고 리뷰를 작성해봐요.</string>
-    <string name="empty_mypage_my_restaurant">스크랩한 식당이 없어요.\n관심있는 식당을 스크랩해봐요.</string>
+    <string name="empty_mypage_my_restaurant">저장한 식당이 없어요.\n관심있는 식당을 스크랩해봐요.</string>
     <string name="empty_mypage_my_magazine">스크랩한 매거진이 없어요.\n관심있는 매거진을 스크랩해봐요.</string>
     <string name="empty_mypage_my_recipe">스크랩한 레시피가 없어요.\n관심있는 레시피를 스크랩해봐요.</string>
 
@@ -370,7 +370,7 @@
 
     <!-- Map -->
     <string name="map_bottom_sheet_title_nearby">&lt;%1$s&gt; 님의 주변에 위치한 식당이에요.</string>
-    <string name="map_how_far">내 위치로부터 %dkm</string>
+    <string name="map_how_far">"내 위치로부터 <font color='#FF005536'>%dkm</font>"</string>
     <string name="map_search_history">최근 검색 기록</string>
     <string name="map_search_result_order_review">리뷰 많은 순</string>
     <string name="map_search_result_order_scrap">스크랩 많은 순</string>
@@ -407,7 +407,7 @@
     <string name="vegan_test_description_flexitarian">채식도 좋아하지만, 다양한 음식을 즐기는 것을 좋아해요.</string>
 
     <string name="vegan_test_result_title">나는 어떤 비거너?</string>
-    <string name="vegan_test_result_description">%1$s 님은\n이런 채식 성향을 가지고 있어요!</string>
+    <string name="vegan_test_result_description">"<font color='#FF009861'>%1$s</font> 님은\n이런 채식 성향을 가지고 있어요!"</string>
     <string name="vegan_test_result_my_type">나의 채식 성향은</string>
     <string name="vegan_test_result_vegan_description">Beginning + Vegetarian</string>
     <string name="vegan_test_result_vegan_explanation">모든 동물성 식품을 섭취하지 않고, 식품 외에도 동물의 희생이 담긴 제품도 반대하는 등 완전한 비건이자 채식주의자예요!</string>
@@ -423,7 +423,7 @@
     <string name="vegan_test_result_pollo_explanation">채식을 중심으로 한 식생활을 즐기고,\n 돼지고기, 소고기와 같은 붉은 고기는 섭취하지 않지만 유제품, 생선, 닭고기는 섭취하는 비교적 자유로운 채식주의자예요!</string>
     <string name="vegan_test_result_flexitarian_description">Flexible(유연한) + Vegetarian</string>
     <string name="vegan_test_result_flexitarian_explanation">평소에는 채식을 하지만,\n상황에 따라 유동적으로 육식을 겸하기도 하는\n자유로운 채식주의자예요!</string>
-    <string name="vegan_test_result_recommend_recipe">%1$s 님께 딱 맞는 레시피로\n비거너에 한 발짝 다가가 보세요!</string>
+    <string name="vegan_test_result_recommend_recipe">"<font color='#FF009861'>%1$s</font> 님께 딱 맞는 레시피로\n비거너에 한 발짝 다가가 보세요!"</string>
 
     <!-- MyPage -->
     <string name="mypage_title">My page</string>
