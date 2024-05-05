@@ -15,16 +15,22 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
 
         recipeRvAdapter.setOnItemClickListener(object :TipsRecipeRvAdapter.OnItemClickListener{
             override fun onItemClick() {
-
+                openDialogRecipeDetail()
             }
         })
 
         binding.ibTooltipRecipeForMe.setOnClickListener {
             openDialogRecipeForMe()
         }
+        binding.llBtnRecipeForMe.setOnClickListener {
+            //나를 위한 레시피 필터 기능
+        }
     }
 
     private fun openDialogRecipeForMe(){
         TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
+    }
+    private fun openDialogRecipeDetail(){
+        TipsRecipeDetailDialog().show(childFragmentManager, "TipsRecipeDetail")
     }
 }

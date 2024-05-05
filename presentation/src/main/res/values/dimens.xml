@@ -97,6 +97,8 @@
     <dimen name="item_86">86dp</dimen>
     <dimen name="item_120">120dp</dimen>
     <dimen name="item_160">160dp</dimen>
+    <dimen name="item_240">240dp</dimen>
+    <dimen name="item_264">264dp</dimen>
     <!-- 삭제 예정 -->
     <dimen name="item_36">36dp</dimen>
     <dimen name="item_52">52dp</dimen>

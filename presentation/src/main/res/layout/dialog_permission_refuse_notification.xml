@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="@dimen/dialog_width"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_dialog">
+            android:background="@drawable/shape_rectangle_radius_8">
 
             <TextView
                 android:id="@+id/tv_title"
