@@ -70,22 +70,4 @@ abstract class BaseDialogFragment<T : ViewDataBinding>(@LayoutRes private val la
         setOnClickListener(OnThrottleClickListener(listener))
     }
 
-    protected fun resize(dialog: Dialog, width: Float, height: Float){
-        val windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-        if (Build.VERSION.SDK_INT < 30) {
-            val size = Point()
-            windowManager.defaultDisplay.getSize(size)
-
-            val x = (size.x * width).toInt()
-            val y = (size.y * height).toInt()
-            dialog.window?.setLayout(x, y)
-        } else {
-            val rect = windowManager.currentWindowMetrics.bounds
-
-            val x = (rect.width() * width).toInt()
-            val y = (rect.height() * height).toInt()
-            dialog.window?.setLayout(x, y)
-        }
-    }
 }

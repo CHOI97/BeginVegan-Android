@@ -9,7 +9,6 @@ class MypageDeleteAccountDialog:BaseDialogFragment<DialogWithTitleBinding>(R.lay
     private var listener: OnBtnClickListener? = null
 
     override fun init() {
-        resize(this.dialog!!, 0.8f, 0.2f)
         isCancelable =false
 
         binding.title = getString(R.string.dialog_mypage_setting_delete_account_title)

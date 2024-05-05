@@ -8,7 +8,6 @@ class MypageLogoutDialog:BaseDialogFragment<DialogWithoutTitleBinding>(R.layout.
     private var listener: OnBtnClickListener? = null
 
     override fun init() {
-        resize(this.dialog!!, 0.8f, 0.15f)
         isCancelable =false
 
         binding.content = getString(R.string.dialog_mypage_setting_logout)
