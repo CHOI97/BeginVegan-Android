@@ -53,7 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
 
         binding.includedToolbar.ibNotification.setOnClickListener {
-            openDrawer()
+            openNotificationDrawer()
         }
     }
 
@@ -67,7 +67,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     //Drawer - 알림
-    fun openDrawer(){
+    fun openNotificationDrawer(){
         val drawerLayout = binding.dlDrawer
         drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}

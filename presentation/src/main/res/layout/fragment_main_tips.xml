@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,13 +10,62 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
+        <Toolbar
+            android:id="@+id/tb_toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="Tips"/>
+            android:background="@color/color_primary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/title_bold"
+                android:textColor="@color/color_text_04"
+                android:text="@string/tips_title"
+                android:layout_gravity="center"/>
+            <ImageButton
+                android:id="@+id/ib_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_notification_stroke"
+                android:backgroundTint="@color/color_background"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_16"/>
+        </Toolbar>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_1"
+            app:layout_constraintBottom_toBottomOf="@id/tl_tab"
+            android:background="@color/color_gray_01"/>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_60"
+            app:layout_constraintTop_toBottomOf="@id/tb_toolbar"
+            app:tabTextAppearance="@style/heading_regular"
+            app:tabTextColor="@color/color_text_02"
+            app:tabSelectedTextAppearance="@style/heading_bold"
+            app:tabSelectedTextColor="@color/color_primary"
+            app:tabRippleColor="@null"
+            app:tabIndicatorColor="@color/color_primary"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="3dp"
+            android:layout_marginHorizontal="@dimen/margin_60"
+            android:background="@drawable/shape_tab_layout">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/magazine" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recipe" />
+        </com.google.android.material.tabs.TabLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_viewpager_area"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_0"
+            app:layout_constraintTop_toBottomOf="@id/tl_tab"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
