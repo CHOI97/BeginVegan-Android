@@ -114,7 +114,7 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         (activity as MainActivity).setStateBn(true)
 
         binding.ibNotification.setOnClickListener {
-            (activity as MainActivity).openDrawer()
+            (activity as MainActivity).openNotificationDrawer()
         }
 
         binding.llUserLevelExplain.setOnClickListener {

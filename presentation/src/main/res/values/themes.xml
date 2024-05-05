@@ -107,16 +107,14 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-<<<<<<< Updated upstream
     <!-- toggle switch -->
     <style name="SwitchTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlActivated">@color/color_primary</item>
         <item name="colorSwitchThumbNormal">@color/color_background</item>
-=======
+    </style>
 
-<!--    Home -->
+    <!--    Home -->
     <style name="MainHomeTextStyle" parent="body_1_bold">
         <item name="android:textColor">@color/color_white</item>
->>>>>>> Stashed changes
     </style>
 </resources>
