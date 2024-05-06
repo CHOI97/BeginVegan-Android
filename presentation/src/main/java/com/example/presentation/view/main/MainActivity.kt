@@ -1,6 +1,10 @@
 package com.example.presentation.view.main
 
+import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
@@ -47,14 +51,41 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
             true
         }
+
+        binding.includedToolbar.ibNotification.setOnClickListener {
+            openNotificationDrawer()
+        }
     }
 
     //Tool Bar 상태 제어
     fun setStateToolBar(isVisible:Boolean){
-        binding.includedToolbar.isVisible = isVisible
+        binding.includedToolbar.root.isVisible = isVisible
     }
     //BottomNav 상태 제어
     fun setStateBn(isVisible: Boolean){
         binding.bnvMain.isVisible = isVisible
+    }
+
+    //Drawer - 알림
+    fun openNotificationDrawer(){
+        val drawerLayout = binding.dlDrawer
+        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+
+            override fun onDrawerOpened(drawerView: View) {
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                drawerLayout.visibility = ViewGroup.GONE
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {}
+
+        })
+        drawerLayout.visibility = ViewGroup.VISIBLE
+        drawerLayout.openDrawer(binding.includedDrawer.clDrawer)
+        binding.includedDrawer.ibBackUp.setOnClickListener {
+            drawerLayout.closeDrawer(binding.includedDrawer.clDrawer)
+        }
     }
 }

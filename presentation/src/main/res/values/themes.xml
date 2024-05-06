@@ -125,11 +125,13 @@
         <item name="color">@color/color_gray_01</item>
     </style>
 
+    <!-- toggle switch -->
     <style name="SwitchTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlActivated">@color/color_primary</item>
         <item name="colorSwitchThumbNormal">@color/color_background</item>
     </style>
 
+    <!--    Home -->
     <style name="MainHomeTextStyle" parent="body_1_bold">
         <item name="android:textColor">@color/color_white</item>
     </style>

@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_24"
             android:layout_marginTop="@dimen/margin_20"
-            android:background="@drawable/shape_dialog"
+            android:background="@drawable/shape_rectangle_radius_8"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/tv_description">
