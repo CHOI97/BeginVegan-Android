@@ -145,6 +145,9 @@ dependencies {
     // KAKAO MAP
     implementation ("com.kakao.maps.open:android:2.9.5")
 
+    // Shimmer
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
 //    implementation 'com.google.android.material:material:1.5.0'
