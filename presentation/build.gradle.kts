@@ -8,7 +8,7 @@ plugins {
     id(Plugins.SECRETS_GRADLE_PLUGIN)
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
-    id(Plugins.HILT_PLUGIN)
+    id(Plugins.DAGGER_HILT)
 }
 
 android {
@@ -123,9 +123,6 @@ dependencies {
     implementation(Dependencies.ACTIVITY_KTX)
     implementation(Dependencies.FRAGMENT_KTX)
 
-    // Hilt extension
-    implementation(Dependencies.HILT_EXTENSION_WORK)
-    kapt(Dependencies.HILT_EXTENSION_KAPT)
 
     // Splash Screen
     implementation(Dependencies.SPLASH_SCREEN)

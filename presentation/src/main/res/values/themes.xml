@@ -59,11 +59,13 @@
         <item name="itemRippleColor">@android:color/transparent</item>
 
     </style>
-    <style name="MainBottomNavigationView.TextActive" >
+
+    <style name="MainBottomNavigationView.TextActive">
         <item name="android:textSize">9sp</item>
         <item name="fontFamily">@font/pretendard_regular</item>
         <item name="itemRippleColor">@android:color/transparent</item>
     </style>
+
     <style name="MainBottomNavigationView.ActiveIndicator" parent="">
         <item name="android:color">@android:color/transparent</item>
     </style>
@@ -75,20 +77,16 @@
         <item name="boxCornerRadiusTopStart">8dp</item>
         <item name="boxCornerRadiusBottomEnd">8dp</item>
         <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="errorTextColor">@color/color_primary</item>
         <item name="boxBackgroundColor">@color/white</item>
         <item name="hintEnabled">false</item>
-        <item name="errorTextColor">@color/color_primary</item>
-        <item name="boxStrokeColor">@color/color_primary</item>
-    </style>
+        <item name="errorIconDrawable">@null</item>
 
-    <style name="Widget.BeginVegan.TextInputEditText.OutlinedBox" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
-        <item name="android:paddingStart">12dp</item>
-        <item name="android:paddingTop">14dp</item>
-        <item name="android:paddingBottom">14dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
+        <item name="boxStrokeWidth">0.5dp</item>
+        <item name="boxStrokeWidthFocused">0.5dp</item>
+        <item name="boxStrokeColor">@drawable/onboarding_color</item>
 
+    </style>
 
     <style name="Widget.BeginVegan.Dropdown.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
         <item name="android:layout_width">0dp</item>
@@ -99,24 +97,40 @@
         <item name="boxCornerRadiusBottomStart">8dp</item>
         <item name="boxBackgroundColor">@color/white</item>
         <item name="hintEnabled">false</item>
-        <item name="boxStrokeColor">@color/color_primary</item>
         <item name="dropDownBackgroundTint">@color/color_white</item>
+        <item name="errorIconDrawable">@null</item>
+
+        <item name="boxStrokeWidth">0.5dp</item>
+        <item name="boxStrokeWidthFocused">0.5dp</item>
+        <item name="boxStrokeColor">@drawable/onboarding_color</item>
     </style>
+
+
+    <style name="textSelect">
+        <item name="backgroundTint">@color/color_primary</item>
+    </style>
+
+    <style name="Widget.BeginVegan.TextInputEditText.OutlinedBox" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+
+    </style>
+
     <style name="RoundedDropDown">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
+        <item name="color">@color/color_gray_01</item>
     </style>
 
-<<<<<<< Updated upstream
-    <!-- toggle switch -->
     <style name="SwitchTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlActivated">@color/color_primary</item>
         <item name="colorSwitchThumbNormal">@color/color_background</item>
-=======
+    </style>
 
-<!--    Home -->
     <style name="MainHomeTextStyle" parent="body_1_bold">
         <item name="android:textColor">@color/color_white</item>
->>>>>>> Stashed changes
     </style>
 </resources>

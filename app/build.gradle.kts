@@ -8,7 +8,7 @@ plugins {
     id(Plugins.SECRETS_GRADLE_PLUGIN)
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
-    id(Plugins.HILT_PLUGIN)
+    id(Plugins.DAGGER_HILT)
 }
 
 android {
@@ -129,9 +129,6 @@ dependencies {
 
     // KAKAO MAP
     implementation ("com.kakao.maps.open:android:2.9.5")
-    // Hilt extension
-    implementation(Dependencies.HILT_EXTENSION_WORK)
-    kapt(Dependencies.HILT_EXTENSION_KAPT)
 
     //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
