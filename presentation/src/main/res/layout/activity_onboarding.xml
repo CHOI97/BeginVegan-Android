@@ -114,6 +114,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 app:boxStrokeErrorColor="@color/color_gray_01"
+                app:errorEnabled="true"
+                android:fitsSystemWindows="true"
                 app:cursorColor="@color/color_black"
                 app:cursorErrorColor="@color/color_black"
                 app:layout_constraintEnd_toEndOf="parent"
