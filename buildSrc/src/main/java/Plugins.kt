@@ -7,7 +7,6 @@ object Plugins {
     const val SAFEARGS = "androidx.navigation.safeargs.kotlin"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin.plugin.serialization"
     const val DAGGER_HILT = "com.google.dagger.hilt.android"
-    const val HILT_PLUGIN = "dagger.hilt.android.plugin"
     const val PARCELIZE = "kotlin-parcelize"
     const val KAPT = "kotlin-kapt"
 }

@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
@@ -5,12 +8,16 @@ plugins {
     id(Plugins.SECRETS_GRADLE_PLUGIN)
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
-//    id(Plugins.HILT_PLUGIN)
+    id(Plugins.DAGGER_HILT)
 }
 
 android {
     namespace = "com.example.presentation"
     compileSdk = DefaultConfig.COMPILE_SDK_VERSION
+
+    val localProperties = Properties()
+    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+
 
     defaultConfig {
 //        applicationId = "com.example.beginvegan"
@@ -29,6 +36,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
         }
     }
     compileOptions {
@@ -40,6 +49,7 @@ android {
     }
     buildFeatures{
         dataBinding = true
+        buildConfig = true
     }
 }
 
@@ -113,9 +123,6 @@ dependencies {
     implementation(Dependencies.ACTIVITY_KTX)
     implementation(Dependencies.FRAGMENT_KTX)
 
-    // Hilt extension
-//    implementation(Dependencies.HILT_EXTENSION_WORK)
-//    kapt(Dependencies.HILT_EXTENSION_KAPT)
 
     // Splash Screen
     implementation(Dependencies.SPLASH_SCREEN)
