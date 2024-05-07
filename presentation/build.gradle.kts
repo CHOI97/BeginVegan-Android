@@ -55,7 +55,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-//    implementation(project(":data"))
+    implementation(project(":data"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APP_COMPAT)
@@ -147,6 +147,10 @@ dependencies {
 
     // Shimmer
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
 
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
