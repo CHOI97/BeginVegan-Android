@@ -1,4 +1,5 @@
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.NearRestaurant
 import com.example.presentation.R
@@ -7,6 +8,7 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.view.home.VeganTestFragment
 import com.example.presentation.view.main.MainActivity
+import com.google.android.material.tabs.TabLayout
 
 //package com.example.presentation.view.home
 //
@@ -243,6 +245,27 @@ class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_
         }
 
         setRestaurantRecyclerView()
+        setTipsTab()
+    }
+
+    private fun setTipsTab() {
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.fcw_tips) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.tlTips.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                when(p0?.position){
+                    0 ->{
+                        navController.navigate(R.id.homeTipsMagazineFragment)
+                    }
+                    1->{
+                        navController.navigate(R.id.homeTipsRecipeFragment)
+                    }
+                }
+            }
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
+        })
     }
 
     private fun testData(){

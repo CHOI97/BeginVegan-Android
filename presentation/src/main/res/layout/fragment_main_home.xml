@@ -55,10 +55,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/global_margin"
             android:layout_marginEnd="@dimen/global_margin"
+            app:layout_constraintBottom_toTopOf="@id/iv_banner_vegan_test"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_headline"
-            app:layout_constraintBottom_toTopOf="@id/iv_banner_vegan_test">
+            app:layout_constraintTop_toBottomOf="@id/cl_headline">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_restaurant_list_headline"
@@ -95,6 +95,7 @@
                 android:id="@+id/rv_restaurant_list"
                 android:layout_width="match_parent"
                 android:layout_height="104dp"
+                android:layout_marginTop="@dimen/margin_6"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +109,10 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:src="@drawable/banner_home_vegan_test"
+            app:layout_constraintBottom_toTopOf="@id/ll_tips"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_restaurant_list"
-            app:layout_constraintBottom_toTopOf="@id/ll_tips"/>
+            app:layout_constraintTop_toBottomOf="@id/cl_restaurant_list" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_tips"
@@ -120,10 +121,10 @@
             android:layout_marginStart="@dimen/global_margin"
             android:layout_marginEnd="@dimen/global_margin"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_banner_vegan_test"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/iv_banner_vegan_test">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tl_tips"
@@ -134,10 +135,10 @@
                 app:tabBackground="@color/color_white"
                 app:tabIndicatorColor="@color/color_black"
                 app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="1dp"
                 app:tabSelectedTextAppearance="@style/heading_regular"
-                app:tabTextAppearance="@style/heading_regular"
                 app:tabSelectedTextColor="@color/color_black"
-                app:tabIndicatorHeight="1dp">
+                app:tabTextAppearance="@style/heading_regular">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -159,17 +160,21 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:text="@string/btn_more"
+                app:layout_constraintBottom_toTopOf="@id/fcw_tips"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/fcw_tips"/>
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fcw_tips"
+                android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tl_tips"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="0dp"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tl_tips"
+                app:navGraph="@navigation/nav_tips_tab" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
