@@ -12,45 +12,170 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_headline"
             android:layout_width="326dp"
             android:layout_height="171dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/main_home_background"
             android:layout_marginTop="-1dp"
-            android:padding="@dimen/margin_24">
+            android:background="@drawable/main_home_background"
+            android:padding="@dimen/margin_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/home_headline_hello"
+                style="@style/MainHomeTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_hello"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                style="@style/MainHomeTextStyle"/>
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/home_headline_user_name"
+                style="@style/MainHomeTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_user_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_headline_hello"
-                style="@style/MainHomeTextStyle"/>
+                app:layout_constraintTop_toBottomOf="@id/home_headline_hello" />
+
             <TextView
                 android:id="@+id/home_headline_description"
+                style="@style/MainHomeTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_headline_user_name"
-                style="@style/MainHomeTextStyle"/>
+                app:layout_constraintTop_toBottomOf="@id/home_headline_user_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_restaurant_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/global_margin"
+            android:layout_marginEnd="@dimen/global_margin"
+            app:layout_constraintBottom_toTopOf="@id/iv_banner_vegan_test"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_headline">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_restaurant_list_headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/heading_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_restaurant_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/caption_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableEnd="@drawable/ic_general_arrow_large"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:text="@string/btn_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_restaurant_list"
+                android:layout_width="match_parent"
+                android:layout_height="104dp"
+                android:layout_marginTop="@dimen/margin_6"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_restaurant_list_headline" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ImageView
             android:id="@+id/iv_banner_vegan_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:src="@drawable/banner_home_vegan_test"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/ll_tips"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_restaurant_list" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/global_margin"
+            android:layout_marginEnd="@dimen/global_margin"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_banner_vegan_test">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tl_tips"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabBackground="@color/color_white"
+                app:tabIndicatorColor="@color/color_black"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="1dp"
+                app:tabSelectedTextAppearance="@style/heading_regular"
+                app:tabSelectedTextColor="@color/color_black"
+                app:tabTextAppearance="@style/heading_regular">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/magazine" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recipe" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/caption_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableEnd="@drawable/ic_general_arrow_large"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="@string/btn_more"
+                app:layout_constraintBottom_toTopOf="@id/fcw_tips"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fcw_tips"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tl_tips"
+                app:navGraph="@navigation/nav_tips_tab" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

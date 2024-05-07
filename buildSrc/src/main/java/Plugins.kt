@@ -9,4 +9,5 @@ object Plugins {
     const val DAGGER_HILT = "com.google.dagger.hilt.android"
     const val PARCELIZE = "kotlin-parcelize"
     const val KAPT = "kotlin-kapt"
+    const val KOTLIN = "kotlin"
 }
