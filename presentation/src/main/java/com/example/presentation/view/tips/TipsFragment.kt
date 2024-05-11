@@ -8,8 +8,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main_tips) {
     override fun init() {
-        (activity as MainActivity).setStateToolBar(false)
-        binding.ibNotification.setOnClickListener {
+//        (activity as MainActivity).setStateToolBar(false)
+        binding.includedToolbar.ibNotification.setOnClickListener {
             (activity as MainActivity).openNotificationDrawer()
         }
 

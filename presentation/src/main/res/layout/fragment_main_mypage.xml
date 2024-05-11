@@ -1,105 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.mypage.MainMypageFragment">
 
-    <data>
-    </data>
+    <data></data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb_profile_toolbar"
+
+        <include
+            android:id="@+id/included_toolbar"
+            layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:backButtonVisible="@{true}"
+            app:colorMode="@{false}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-            <ImageButton
-                android:id="@+id/ib_back_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_back"
-                android:backgroundTint="@color/color_primary"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_title"
-                style="@style/title_bold"
-                android:textColor="@color/color_primary"
-                android:layout_gravity="center"/>
-            <ImageButton
-                android:id="@+id/ib_notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_notification_filled"
-                android:backgroundTint="@color/color_primary"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/margin_16"/>
-        </androidx.appcompat.widget.Toolbar>
+            app:layout_constraintTop_toTopOf="parent"
+            app:notificationVisible="@{true}"
+            app:title="@{@string/mypage_title}" />
+
         <View
             android:id="@+id/v_divider_under_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_2"
             android:background="@color/color_gray_00"
-            app:layout_constraintTop_toBottomOf="@id/tb_profile_toolbar"/>
+            app:layout_constraintTop_toBottomOf="@id/included_toolbar" />
+
         <ImageView
             android:id="@+id/iv_illus_user_level"
             android:layout_width="@dimen/item_160"
             android:layout_height="@dimen/item_160"
-            app:layout_constraintTop_toBottomOf="@id/v_divider_under_tool_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/margin_20"
-            android:background="@drawable/illus_user_level_1_seed"/>
+            android:background="@drawable/illus_user_level_1_seed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_divider_under_tool_bar" />
+
         <TextView
             android:id="@+id/tv_user_level"
+            style="@style/heading_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/heading_bold"
-            android:textColor="@color/color_text_01"
+            android:layout_marginTop="@dimen/margin_16"
             android:text="@string/mypage_user_level"
-            app:layout_constraintTop_toBottomOf="@id/iv_illus_user_level"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/color_text_01"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_16"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_illus_user_level" />
+
         <LinearLayout
             android:id="@+id/ll_user_level_explain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tv_user_level"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_4">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_level">
+
             <TextView
                 android:id="@+id/tv_user_level_explain"
+                style="@style/caption_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/caption_regular"
-                android:textColor="@color/color_text_03"
+                android:layout_gravity="center_vertical"
                 android:text="@string/mypage_user_level_explain"
-                android:layout_gravity="center_vertical"/>
+                android:textColor="@color/color_text_03" />
+
             <ImageView
                 android:id="@+id/iv_user_level_ic"
                 android:layout_width="@dimen/item_18"
                 android:layout_height="@dimen/item_18"
                 android:background="@drawable/ic_arrow"
                 android:backgroundTint="@color/color_text_03"
-                android:rotation="180"/>
+                android:rotation="180" />
         </LinearLayout>
+
         <ProgressBar
             android:id="@+id/pb_user_level_exp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_12"
-            android:progress="50"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:progressDrawable="@drawable/layer_list_mypage_progress_bar"
+            android:layout_marginTop="@dimen/margin_20"
             android:indeterminate="false"
-            app:layout_constraintTop_toBottomOf="@id/ll_user_level_explain"
-            android:layout_marginTop="@dimen/margin_20"/>
+            android:progress="50"
+            android:progressDrawable="@drawable/layer_list_mypage_progress_bar"
+            app:layout_constraintTop_toBottomOf="@id/ll_user_level_explain" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_user_profile"
@@ -130,202 +121,225 @@
                 app:layout_constraintStart_toEndOf="@id/iv_user_profile_img"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
-<!--                <Spinner-->
-<!--                    android:id="@+id/s_set_vegan_type"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/tv_user_name"-->
-<!--                    app:layout_constraintStart_toEndOf="@id/iv_user_profile_img"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    android:layout_marginStart="@dimen/margin_8" />-->
+            <!--                <Spinner-->
+            <!--                    android:id="@+id/s_set_vegan_type"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    app:layout_constraintTop_toBottomOf="@id/tv_user_name"-->
+            <!--                    app:layout_constraintStart_toEndOf="@id/iv_user_profile_img"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    android:layout_marginStart="@dimen/margin_8" />-->
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/acs_set_vegan_type"
+                style="@style/caption_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_name"
-                app:layout_constraintStart_toEndOf="@id/iv_user_profile_img"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="@dimen/margin_4"
                 android:background="@drawable/layer_list_mypage_dropdown_vegan_type"
                 android:overlapAnchor="false"
                 android:popupElevation="@dimen/dim_3"
-                style="@style/caption_regular"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_user_profile_img"
+                app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+
             <ImageView
                 android:id="@+id/iv_user_profile_user_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
                 android:background="@drawable/ic_user_level_1_seed"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/margin_16"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:id="@+id/ll_edit_profile_my_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/cl_user_profile"
+            android:background="@color/color_gray_00"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:background="@color/color_gray_00">
+            app:layout_constraintTop_toBottomOf="@id/cl_user_profile">
+
             <LinearLayout
                 android:id="@+id/ll_edit_profile"
                 android:layout_width="@dimen/item_0"
                 android:layout_height="@dimen/item_64"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:layout_margin="@dimen/margin_stroke"
-                android:background="@color/color_background">
+                android:layout_weight="1"
+                android:background="@color/color_background"
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_nav_mypage"
-                    android:backgroundTint="@color/color_text_01"/>
+                    android:backgroundTint="@color/color_text_01" />
+
                 <TextView
+                    style="@style/body_1_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/body_1_regular"
-                    android:textColor="@color/color_text_01"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:text="@string/mypage_edit_profile"
-                    android:layout_marginStart="@dimen/margin_8"/>
+                    android:textColor="@color/color_text_01" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_my_review"
                 android:layout_width="@dimen/item_0"
                 android:layout_height="@dimen/item_64"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:layout_margin="@dimen/margin_stroke"
-                android:background="@color/color_background">
+                android:layout_weight="1"
+                android:background="@color/color_background"
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_review"
-                    android:backgroundTint="@color/color_text_01"/>
+                    android:backgroundTint="@color/color_text_01" />
+
                 <TextView
+                    style="@style/body_1_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/body_1_regular"
-                    android:textColor="@color/color_text_01"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:text="@string/mypage_my_review"
-                    android:layout_marginStart="@dimen/margin_8"/>
+                    android:textColor="@color/color_text_01" />
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:id="@+id/v_divider_between_profile_scrap"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_8"
             android:background="@color/color_gray_00"
-            app:layout_constraintTop_toBottomOf="@id/ll_edit_profile_my_review"/>
+            app:layout_constraintTop_toBottomOf="@id/ll_edit_profile_my_review" />
+
         <TextView
             android:id="@+id/tv_scrap"
+            style="@style/heading_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/heading_bold"
-            android:textColor="@color/color_text_01"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_20"
+            android:paddingBottom="@dimen/margin_4"
             android:text="@string/mypage_scrap"
-            app:layout_constraintTop_toBottomOf="@id/v_divider_between_profile_scrap"
+            android:textColor="@color/color_text_01"
             app:layout_constraintBottom_toTopOf="@id/ll_my_restaurant"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/margin_20"
-            android:layout_marginStart="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_4" />
+            app:layout_constraintTop_toBottomOf="@id/v_divider_between_profile_scrap" />
+
         <LinearLayout
             android:id="@+id/ll_my_restaurant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tv_scrap"
             android:paddingVertical="@dimen/margin_5"
             android:paddingStart="@dimen/margin_16"
-            android:gravity="center_vertical">
+            app:layout_constraintTop_toBottomOf="@id/tv_scrap">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_chef"
-                android:backgroundTint="@color/color_text_01"/>
+                android:backgroundTint="@color/color_text_01" />
+
             <TextView
+                style="@style/body_1_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/body_1_regular"
-                android:textColor="@color/color_text_01"
+                android:layout_marginStart="@dimen/margin_8"
                 android:text="@string/mypage_my_restaurant"
-                android:layout_marginStart="@dimen/margin_8"/>
+                android:textColor="@color/color_text_01" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_my_magazine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/ll_my_restaurant"
             android:paddingVertical="@dimen/margin_5"
             android:paddingStart="@dimen/margin_16"
-            android:gravity="center_vertical">
+            app:layout_constraintTop_toBottomOf="@id/ll_my_restaurant">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_magazine"
-                android:backgroundTint="@color/color_text_01"/>
+                android:backgroundTint="@color/color_text_01" />
+
             <TextView
+                style="@style/body_1_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/body_1_regular"
-                android:textColor="@color/color_text_01"
+                android:layout_marginStart="@dimen/margin_8"
                 android:text="@string/mypage_my_magazine"
-                android:layout_marginStart="@dimen/margin_8"/>
+                android:textColor="@color/color_text_01" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_my_recipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/ll_my_magazine"
             android:paddingVertical="@dimen/margin_5"
             android:paddingStart="@dimen/margin_16"
-            android:gravity="center_vertical">
+            app:layout_constraintTop_toBottomOf="@id/ll_my_magazine">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_recipe"
-                android:backgroundTint="@color/color_text_01"/>
+                android:backgroundTint="@color/color_text_01" />
+
             <TextView
+                style="@style/body_1_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/body_1_regular"
-                android:textColor="@color/color_text_01"
+                android:layout_marginStart="@dimen/margin_8"
                 android:text="@string/mypage_my_recipe"
-                android:layout_marginStart="@dimen/margin_8"/>
+                android:textColor="@color/color_text_01" />
         </LinearLayout>
+
         <View
             android:id="@+id/v_divider_between_scrap_setting"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_8"
+            android:layout_marginTop="@dimen/margin_16"
             android:background="@color/color_gray_00"
-            app:layout_constraintTop_toBottomOf="@id/ll_my_recipe"
-            android:layout_marginTop="@dimen/margin_16"/>
+            app:layout_constraintTop_toBottomOf="@id/ll_my_recipe" />
+
         <LinearLayout
             android:id="@+id/ll_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/v_divider_between_scrap_setting"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingVertical="@dimen/margin_20"
-            android:paddingStart="@dimen/margin_16">
+            android:paddingStart="@dimen/margin_16"
+            app:layout_constraintTop_toBottomOf="@id/v_divider_between_scrap_setting">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_setting"
-                android:backgroundTint="@color/color_text_01"/>
+                android:backgroundTint="@color/color_text_01" />
+
             <TextView
+                style="@style/body_1_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/body_1_regular"
-                android:textColor="@color/color_text_01"
+                android:layout_marginStart="@dimen/margin_8"
                 android:text="@string/mypage_setting"
-                android:layout_marginStart="@dimen/margin_8"/>
+                android:textColor="@color/color_text_01" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

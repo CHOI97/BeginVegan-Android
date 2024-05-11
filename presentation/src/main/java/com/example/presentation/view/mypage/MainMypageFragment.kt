@@ -110,10 +110,10 @@ import com.example.presentation.view.main.MainActivity
 class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.fragment_main_mypage){
 
     override fun init() {
-        (activity as MainActivity).setStateToolBar(false)
+//        (activity as MainActivity).setStateToolBar(false)
         (activity as MainActivity).setStateBn(true)
 
-        binding.ibNotification.setOnClickListener {
+        binding.includedToolbar.ibNotification.setOnClickListener {
             (activity as MainActivity).openNotificationDrawer()
         }
 

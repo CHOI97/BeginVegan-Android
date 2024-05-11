@@ -13,7 +13,7 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     private var latestRadioButton:View? = null
     private var latestIncludedView: IncludeIllusVeganLevelBinding? =null
     override fun init() {
-        (activity as MainActivity).setStateToolBar(false)
+//        (activity as MainActivity).setStateToolBar(false)
         (activity as MainActivity).setStateBn(false)
 
         binding.includedToolbar.ibBackUp.setOnClickListener {

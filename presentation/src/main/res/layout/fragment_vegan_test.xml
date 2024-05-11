@@ -17,7 +17,10 @@
             layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/vegan_test_title}" />
+            app:title="@{@string/vegan_test_title}"
+            app:backButtonVisible="@{true}"
+            app:notificationVisible="@{false}"
+            app:colorMode="@{true}"/>
 
         <TextView
             android:id="@+id/tv_description"
