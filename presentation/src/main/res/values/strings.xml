@@ -226,7 +226,7 @@
     <string name="helper_text_nickname_default">부적절한 닉네임은 관리자에 의해 변경될 수 있어요</string>
     <string name="helper_text_nickname_check">한/영 2~12자로 입력해 주세요 &#40;특수문자, 공백 불가&#41;</string>
 
-    <string name="placeholder_map_search">검색어를 입력해 주세요. &#40;ex. 강남 한식&#41;</string>
+    <string name="placeholder_map_search">지역, 메뉴명 입력</string>
     <string name="placeholder_map_report_restaurant_name">제보하려는 식당 이름을 입력해 주세요.</string>
     <string name="placeholder_map_report_restaurant_location">어디에 위치한 식당인가요?</string>
     <string name="placeholder_map_report_restaurant_explanation">해당 식당에 대한 정보를 자유롭게 작성해 주세요.</string>

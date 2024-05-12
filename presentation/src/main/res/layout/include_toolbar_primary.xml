@@ -25,7 +25,7 @@
     <Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/global_toolbar_height"
         android:background="@{colorMode ? @color/color_primary : @color/color_background}">
 
         <ImageButton

@@ -1,3 +1,5 @@
+import android.view.View
+import android.view.View.OnFocusChangeListener
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
@@ -249,6 +251,25 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 // 인증 후 API 가 정상적으로 실행될 때 호출됨
             }
         })
+        setOnSearchFocus()
+        setOnSearchBack()
+    }
+
+    private fun setOnSearchBack() {
+        binding.includedSearchToolbar.ibBack.setOnClickListener {
+            it.visibility = View.GONE
+        }
+    }
+
+    private fun setOnSearchFocus() {
+        binding.includedSearchToolbar.etSearchEdittext.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if(hasFocus){
+                    binding.includedSearchToolbar.ibBack.visibility = View.VISIBLE
+                }else{
+                    binding.includedSearchToolbar.ibBack.visibility = View.GONE
+                }
+            }
     }
 
 }

@@ -8,6 +8,7 @@
     <!--  Global Margin(dp) (새로추가)-->
     <dimen name="global_margin">16dp</dimen>
     <dimen name="global_dialog_radius">5dp</dimen>
+    <dimen name="global_toolbar_height">56dp</dimen>
     <!--  Margin(dp)-->
     <!-- 사용 예정 -->
     <dimen name="margin_stroke">0.5dp</dimen>
