@@ -3,6 +3,8 @@
     <style name="Theme.Beginvegan" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/color_white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/launch_tranparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/color_white</item>
     </style>
     <!--    <style name="Theme.App.Starting" parent="Theme.SplashScreen">-->
     <!--        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>-->
@@ -110,6 +112,9 @@
         <item name="backgroundTint">@color/color_primary</item>
     </style>
 
+    <style name="SearchOutlineBox">
+        <item name="colorControlActivated">@color/color_text_01</item>
+    </style>
     <style name="Widget.BeginVegan.TextInputEditText.OutlinedBox" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingTop">14dp</item>
@@ -135,4 +140,6 @@
     <style name="MainHomeTextStyle" parent="body_1_bold">
         <item name="android:textColor">@color/color_white</item>
     </style>
+
+
 </resources>

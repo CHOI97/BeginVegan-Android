@@ -52,15 +52,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             true
         }
 
-        binding.includedToolbar.ibNotification.setOnClickListener {
-            openNotificationDrawer()
-        }
     }
 
-    //Tool Bar 상태 제어
-    fun setStateToolBar(isVisible:Boolean){
-        binding.includedToolbar.root.isVisible = isVisible
-    }
     //BottomNav 상태 제어
     fun setStateBn(isVisible: Boolean){
         binding.bnvMain.isVisible = isVisible

@@ -232,7 +232,7 @@ class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_
 
     private var list: ArrayList<NearRestaurant> = ArrayList()
     override fun init() {
-        (activity as MainActivity).setStateToolBar(true)
+//        (activity as MainActivity).setStateToolBar(true)
         (activity as MainActivity).setStateBn(true)
         // UI 제작
         // 목업 배열 2개

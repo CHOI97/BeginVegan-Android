@@ -8,6 +8,7 @@
     <!--  Global Margin(dp) (새로추가)-->
     <dimen name="global_margin">16dp</dimen>
     <dimen name="global_dialog_radius">5dp</dimen>
+    <dimen name="global_toolbar_height">56dp</dimen>
     <!--  Margin(dp)-->
     <!-- 사용 예정 -->
     <dimen name="margin_stroke">0.5dp</dimen>
@@ -145,6 +146,9 @@
     <dimen name="indicator_dot_width">8dp</dimen>
     <dimen name="dialog_permission_logo_width">127dp</dimen>
     <dimen name="dialog_permission_logo_height">58dp</dimen>
+
+<!--    Vegan Map Bottom Sheet-->
+    <dimen name="bottomSheet_handle_height">24dp</dimen>
 
 <!--    User Info-->
     <dimen name="user_profile_size">88dp</dimen>
