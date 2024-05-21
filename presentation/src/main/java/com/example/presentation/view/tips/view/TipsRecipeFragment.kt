@@ -1,10 +1,10 @@
-package com.example.presentation.view.tips
+package com.example.presentation.view.tips.view
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentTipsRecipeBinding
-import com.example.presentation.view.mypage.MypageDeleteAccountDialog
+import com.example.presentation.view.tips.adapter.TipsRecipeRvAdapter
 
 class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.fragment_tips_recipe) {
     private lateinit var recipeRvAdapter: TipsRecipeRvAdapter
@@ -13,7 +13,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.rvRecipe.adapter = recipeRvAdapter
         binding.rvRecipe.layoutManager = LinearLayoutManager(this.context)
 
-        recipeRvAdapter.setOnItemClickListener(object :TipsRecipeRvAdapter.OnItemClickListener{
+        recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
             override fun onItemClick() {
                 openDialogRecipeDetail()
             }

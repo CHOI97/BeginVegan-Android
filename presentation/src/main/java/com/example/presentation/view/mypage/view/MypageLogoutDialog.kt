@@ -1,4 +1,4 @@
-package com.example.presentation.view.mypage
+package com.example.presentation.view.mypage.view
 
 import com.example.presentation.R
 import com.example.presentation.base.BaseDialogFragment

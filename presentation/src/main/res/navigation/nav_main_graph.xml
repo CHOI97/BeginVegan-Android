@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainMypageFragment"
-        android:name="com.example.presentation.view.mypage.MainMypageFragment"
+        android:name="com.example.presentation.view.mypage.view.MainMypageFragment"
         android:label="MainMypageFragment" >
         <action
             android:id="@+id/action_mainMypageFragment_to_mainHomeFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/veganMapFragment"
-        android:name="com.example.presentation.view.map.VeganMapFragment"
+        android:name="com.example.presentation.view.map.view.VeganMapFragment"
         android:label="VeganMapFragment" >
         <action
             android:id="@+id/action_veganMapFragment_to_mainHomeFragment"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/tipsFragment"
-        android:name="com.example.presentation.view.tips.TipsFragment"
+        android:name="com.example.presentation.view.tips.view.TipsFragment"
         android:label="TipsFragment" >
         <action
             android:id="@+id/action_tipsFragment_to_mainHomeFragment"

@@ -1,7 +1,6 @@
-package com.example.presentation.config
+package com.example.presentation.config.drawer
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.presentation.R
@@ -10,7 +9,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import timber.log.Timber
 
 @Module
 @InstallIn(ActivityComponent::class)

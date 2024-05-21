@@ -1,4 +1,4 @@
-package com.example.presentation.view.mypage
+package com.example.presentation.view.mypage.view
 
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
-import com.example.presentation.view.main.MainFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

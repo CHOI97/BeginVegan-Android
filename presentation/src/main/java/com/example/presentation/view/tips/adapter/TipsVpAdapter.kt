@@ -1,9 +1,11 @@
-package com.example.presentation.view.tips
+package com.example.presentation.view.tips.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.presentation.view.tips.view.TipsMagazineFragment
+import com.example.presentation.view.tips.view.TipsRecipeFragment
 
 class TipsVpAdapter(fragmentManager:FragmentManager, lifecycle:Lifecycle):FragmentStateAdapter(fragmentManager, lifecycle) {
     private val TAB_COUNT = 2

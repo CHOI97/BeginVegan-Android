@@ -7,14 +7,14 @@
 
         <variable
             name="vm"
-            type="com.example.presentation.view.login.OnboardingViewModel" />
+            type="com.example.presentation.view.login.viewModel.OnboardingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.login.OnboardingActivity">
+        tools:context=".view.login.view.OnboardingActivity">
 
         <ImageView
             android:id="@+id/iv_logo"

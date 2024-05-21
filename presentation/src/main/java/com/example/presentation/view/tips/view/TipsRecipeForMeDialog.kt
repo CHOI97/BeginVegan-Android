@@ -1,4 +1,4 @@
-package com.example.presentation.view.tips
+package com.example.presentation.view.tips.view
 
 import android.view.ViewGroup
 import com.example.presentation.R

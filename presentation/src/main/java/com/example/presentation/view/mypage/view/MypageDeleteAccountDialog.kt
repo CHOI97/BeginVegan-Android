@@ -1,4 +1,4 @@
-package com.example.presentation.view.mypage
+package com.example.presentation.view.mypage.view
 
 import androidx.core.view.isVisible
 import com.example.presentation.R

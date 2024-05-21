@@ -1,13 +1,12 @@
 package com.example.presentation.view.home
 
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.NearRestaurant
 import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainHomeBinding
+import com.example.presentation.config.navigation.NavigationHandler
 import com.example.presentation.util.DrawerController
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,13 +20,17 @@ class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_
     @Inject
     lateinit var drawerController: DrawerController
 
+    @Inject
+    lateinit var navigationHandler: NavigationHandler
+
+
+    // ViewModel 분리
     private var list: ArrayList<NearRestaurant> = ArrayList()
 
     override fun init() {
 
-        binding.ivBannerVeganTest.setOnClickListener{
-            moveToOtherFragment(VeganTestFragment())
-        }
+//        binding.ivBannerVeganTest.setOnClickListener{
+//        }
 
         setRestaurantRecyclerView()
         setTipsTab()
@@ -38,26 +41,24 @@ class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_
             drawerController.openDrawer()
         }
     }
+
     private fun setTipsTab() {
-        val navHostFragment =
-            childFragmentManager.findFragmentById(R.id.fcw_tips) as NavHostFragment
-        val navController = navHostFragment.navController
-        binding.tlTips.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(p0: TabLayout.Tab?) {
-                when(p0?.position){
-                    0 ->{
-                        navController.navigate(R.id.homeTipsMagazineFragment)
-                    }
-                    1->{
-                        navController.navigate(R.id.homeTipsRecipeFragment)
-                    }
+        binding.tlTips.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> navigationHandler.navigateToMagazine()
+                    1 -> navigationHandler.navigateToRecipe()
                 }
             }
-            override fun onTabUnselected(p0: TabLayout.Tab?) {}
-            override fun onTabReselected(p0: TabLayout.Tab?) {}
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
+
+
+    // ViewModel 분리
     private fun testData(){
         list.add(NearRestaurant(0,"식당1","null"))
         list.add(NearRestaurant(0,"식당2","null"))
@@ -74,13 +75,5 @@ class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_
         homeRestaurantRVAdapter.submitList(list.toMutableList())
         binding.rvRestaurantList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
-
-    private fun moveToOtherFragment(fragment: Fragment){
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fcw_main, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
 
 }

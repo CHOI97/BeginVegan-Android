@@ -1,4 +1,4 @@
-package com.example.presentation.view.login
+package com.example.presentation.view.login.view
 
 import android.content.Intent
 import androidx.activity.viewModels
@@ -7,6 +7,7 @@ import com.example.presentation.adapter.onboarding.OnboardingAdapter
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityOnboardingBinding
 import com.example.presentation.util.PhotoSelectDialog
+import com.example.presentation.view.login.viewModel.OnboardingViewModel
 import com.example.presentation.view.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 

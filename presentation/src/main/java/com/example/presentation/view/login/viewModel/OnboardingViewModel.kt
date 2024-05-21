@@ -1,4 +1,4 @@
-package com.example.presentation.view.login
+package com.example.presentation.view.login.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

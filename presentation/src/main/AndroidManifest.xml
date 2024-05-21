@@ -24,7 +24,7 @@
             android:name=".view.main.SplashActivity"
             android:exported="true" />
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name=".view.login.view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.login.OnboardingActivity"
+            android:name=".view.login.view.OnboardingActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
     </application>

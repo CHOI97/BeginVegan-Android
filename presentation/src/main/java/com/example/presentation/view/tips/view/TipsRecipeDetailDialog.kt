@@ -1,4 +1,4 @@
-package com.example.presentation.view.tips
+package com.example.presentation.view.tips.view
 
 import com.example.presentation.R
 import com.example.presentation.base.BaseDialogFragment

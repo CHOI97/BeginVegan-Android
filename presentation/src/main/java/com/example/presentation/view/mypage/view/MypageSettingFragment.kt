@@ -1,9 +1,8 @@
-package com.example.presentation.view.mypage
+package com.example.presentation.view.mypage.view
 
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMypageSettingBinding
-import com.example.presentation.view.main.MainFragment
 
 class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layout.fragment_mypage_setting) {
     override fun init() {
@@ -24,7 +23,7 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
     private fun openDialogLogout(){
         MypageLogoutDialog().show(childFragmentManager, "LogoutDialog")
-        MypageLogoutDialog().setOnConfirm(object :MypageLogoutDialog.OnBtnClickListener{
+        MypageLogoutDialog().setOnConfirm(object : MypageLogoutDialog.OnBtnClickListener {
             override fun onConfirm() {
                 //확인 클릭 시
             }
@@ -33,7 +32,8 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
     private fun openDialogDeleteAccount(){
         MypageDeleteAccountDialog().show(childFragmentManager, "DeleteAccountDialog")
-        MypageDeleteAccountDialog().setOnConfirm(object :MypageDeleteAccountDialog.OnBtnClickListener{
+        MypageDeleteAccountDialog().setOnConfirm(object :
+            MypageDeleteAccountDialog.OnBtnClickListener {
             override fun onConfirm() {
                 //계정 삭제
             }

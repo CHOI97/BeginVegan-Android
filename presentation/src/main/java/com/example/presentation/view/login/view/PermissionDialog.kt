@@ -1,4 +1,4 @@
-package com.example.presentation.view.login
+package com.example.presentation.view.login.view
 
 import com.example.presentation.R
 import com.example.presentation.base.BaseDialogFragment

@@ -1,5 +1,5 @@
 
-package com.example.presentation.view.map
+package com.example.presentation.view.map.view
 import android.view.View
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment

@@ -1,6 +1,5 @@
-package com.example.presentation.view.login
+package com.example.presentation.view.login.view
 
-import android.app.Activity
 import android.content.Intent
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
@@ -288,7 +287,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             // kakao Token 운용방식 아직모름 위 코드 참고 할 것
             // 사전 방식 kakao에서 승인 받고 개인 정보만 받아서 다시 우리쪽 서버에 넘긴 후
             // access Token , refresh token 발급
-            val intent = Intent(this,OnboardingActivity::class.java)
+            val intent = Intent(this, OnboardingActivity::class.java)
             startActivity(intent)
         }
 
