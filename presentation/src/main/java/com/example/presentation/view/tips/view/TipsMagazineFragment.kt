@@ -17,7 +17,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
             TipsMagazineRvAdapter.OnItemClickListener {
             override fun onItemClick() {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fcw_main, TipsMagazineDetailFragment())
+                    .replace(R.id.fcw_home, TipsMagazineDetailFragment())
                     .addToBackStack(null)
                     .commit()
             }

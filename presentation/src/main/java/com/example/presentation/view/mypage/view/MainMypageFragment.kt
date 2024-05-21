@@ -186,7 +186,7 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 
     private fun moveToOtherFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fcw_main, fragment)
+            .replace(R.id.fcw_home, fragment)
             .addToBackStack(null)
             .commit()
     }

@@ -41,7 +41,7 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     private fun goResult(){
         val checkedId = binding.rgVeganTest.checkedRadioButtonId
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fcw_main, VeganTestResultFragment())
+            .replace(R.id.fcw_home, VeganTestResultFragment())
             .addToBackStack(null)
             .commit()
     }

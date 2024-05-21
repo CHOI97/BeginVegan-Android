@@ -8,10 +8,16 @@
         android:id="@+id/homeTipsMagazineFragment"
         android:name="com.example.presentation.view.home.HomeTipsMagazineFragment"
         android:label="HomeTipsMagazineFragment" >
+        <action
+            android:id="@+id/action_homeTipsMagazineFragment_to_homeTipsRecipeFragment"
+            app:destination="@id/homeTipsRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeTipsRecipeFragment"
         android:name="com.example.presentation.view.home.HomeTipsRecipeFragment"
         android:label="HomeTipsRecipeFragment" >
+        <action
+            android:id="@+id/action_homeTipsRecipeFragment_to_homeTipsMagazineFragment"
+            app:destination="@id/homeTipsMagazineFragment" />
     </fragment>
 </navigation>
