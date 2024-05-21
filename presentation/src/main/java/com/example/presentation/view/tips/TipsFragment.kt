@@ -3,14 +3,13 @@ package com.example.presentation.view.tips
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainTipsBinding
-import com.example.presentation.view.main.MainActivity
+import com.example.presentation.view.main.MainFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main_tips) {
     override fun init() {
 //        (activity as MainActivity).setStateToolBar(false)
         binding.includedToolbar.ibNotification.setOnClickListener {
-            (activity as MainActivity).openNotificationDrawer()
         }
 
         binding.vpViewpagerArea.adapter = TipsVpAdapter(childFragmentManager, lifecycle)

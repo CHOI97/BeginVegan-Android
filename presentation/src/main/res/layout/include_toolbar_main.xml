@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_alram"
-            android:backgroundTint="@color/color_primary"
+            android:background="@android:color/transparent"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/global_margin" />
     </Toolbar>

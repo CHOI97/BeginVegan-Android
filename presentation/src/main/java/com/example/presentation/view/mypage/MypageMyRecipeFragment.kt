@@ -4,11 +4,10 @@ import androidx.core.view.isVisible
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMypageMyRecipeBinding
-import com.example.presentation.view.main.MainActivity
+import com.example.presentation.view.main.MainFragment
 
 class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.layout.fragment_mypage_my_recipe) {
     override fun init() {
-        (activity as MainActivity).setStateBn(false)
 
         binding.includedToolbar.ibBackUp.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()

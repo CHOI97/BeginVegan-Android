@@ -1,9 +1,7 @@
 package com.example.presentation.view.login
 
 import android.content.Intent
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.presentation.R
 import com.example.presentation.adapter.onboarding.OnboardingAdapter
 import com.example.presentation.base.BaseActivity

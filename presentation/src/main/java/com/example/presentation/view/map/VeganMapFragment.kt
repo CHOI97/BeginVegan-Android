@@ -1,5 +1,6 @@
+
+package com.example.presentation.view.map
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
@@ -7,9 +8,9 @@ import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
+import dagger.hilt.android.AndroidEntryPoint
 
 
-//package com.example.presentation.view.map
 //
 //import android.app.Activity
 //import android.content.Context
@@ -232,7 +233,7 @@ import com.kakao.vectormap.MapView
 //
 //
 //}
-
+@AndroidEntryPoint
 class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_main_map) {
     private lateinit var mapView: MapView
     override fun init() {
@@ -251,7 +252,7 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 // 인증 후 API 가 정상적으로 실행될 때 호출됨
             }
         })
-        setOnSearchFocus()
+//        setOnSearchFocus()
         setOnSearchBack()
     }
 
@@ -261,15 +262,15 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         }
     }
 
-    private fun setOnSearchFocus() {
-        binding.includedSearchToolbar.etSearchEdittext.onFocusChangeListener =
-            OnFocusChangeListener { v, hasFocus ->
-                if(hasFocus){
-                    binding.includedSearchToolbar.ibBack.visibility = View.VISIBLE
-                }else{
-                    binding.includedSearchToolbar.ibBack.visibility = View.GONE
-                }
-            }
-    }
+//    private fun setOnSearchFocus() {
+//        binding.includedSearchToolbar..onFocusChangeListener =
+//            OnFocusChangeListener { v, hasFocus ->
+//                if(hasFocus){
+//                    binding.includedSearchToolbar.ibBack.visibility = View.VISIBLE
+//                }else{
+//                    binding.includedSearchToolbar.ibBack.visibility = View.GONE
+//                }
+//            }
+//    }
 
 }

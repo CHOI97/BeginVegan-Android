@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMypageBinding
+import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
-import com.example.presentation.view.main.MainActivity
+import com.example.presentation.view.main.MainFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 ////import com.bumptech.glide.Glide
@@ -107,21 +110,18 @@ import com.example.presentation.view.main.MainActivity
 //    }
 //}
 
-class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.fragment_main_mypage){
+@AndroidEntryPoint
+class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.fragment_main_mypage) {
 
+    @Inject
+    lateinit var drawerController: DrawerController
     override fun init() {
-//        (activity as MainActivity).setStateToolBar(false)
-        (activity as MainActivity).setStateBn(true)
-
-        binding.includedToolbar.ibNotification.setOnClickListener {
-            (activity as MainActivity).openNotificationDrawer()
-        }
-
         binding.llUserLevelExplain.setOnClickListener {
             openDialogUserLevelExplain()
         }
 
-        setProgressBar(5,1)
+        setOpenDrawer()
+        setProgressBar(5, 1)
         setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
 
         binding.llEditProfile.setOnClickListener {
@@ -142,19 +142,26 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         binding.llSetting.setOnClickListener {
             moveToOtherFragment(MypageSettingFragment())
         }
+
     }
 
-    private fun openDialogUserLevelExplain(){
+    private fun setOpenDrawer() {
+        binding.includedToolbar.ibNotification.setOnClickListener {
+            drawerController.openDrawer()
+        }
+    }
+
+    private fun openDialogUserLevelExplain() {
         val dialog = MypageUserLevelExplainDialog(requireContext())
         dialog.show()
     }
 
-    private fun setProgressBar(maxInt: Int, nowGauge:Int){
+    private fun setProgressBar(maxInt: Int, nowGauge: Int) {
         binding.pbUserLevelExp.max = maxInt
         binding.pbUserLevelExp.progress = nowGauge
     }
 
-    private fun setVeganTypeDropdown(userVeganType:String){
+    private fun setVeganTypeDropdown(userVeganType: String) {
         val dropdownAdapter = ArrayAdapter(
             requireContext(),
             R.layout.item_dropdown_mypage_set_vegan_type,
@@ -178,7 +185,7 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 //        binding.sSetVeganType.adapter = dropdownAdapter
     }
 
-    private fun moveToOtherFragment(fragment: Fragment){
+    private fun moveToOtherFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fcw_main, fragment)
             .addToBackStack(null)
