@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.example.presentation.util.OnThrottleClickListener
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 abstract class BaseActivity<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :

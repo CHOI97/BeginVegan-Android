@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.mypage.MypageMyRestaurantFragment">
+        tools:context=".view.mypage.view.MypageMyRestaurantFragment">
         <include
             android:id="@+id/included_toolbar"
             layout="@layout/include_toolbar_primary"

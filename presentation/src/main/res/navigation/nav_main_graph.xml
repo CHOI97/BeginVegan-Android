@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_main_raph"
-    app:startDestination="@id/mainHomeFragment">
+    android:id="@+id/nav_main_graph"
+    app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/mainMypageFragment"
-        android:name="com.example.presentation.view.mypage.MainMypageFragment"
-        android:label="MainMypageFragment" />
+        android:id="@+id/mainFragment"
+        android:name="com.example.presentation.view.main.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_veganTestFragment"
+            app:destination="@id/veganTestFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/veganMapFragment"
-        android:name="VeganMapFragment"
-        android:label="VeganMapFragment" />
+        android:id="@+id/veganTestFragment"
+        android:name="com.example.presentation.view.home.VeganTestFragment"
+        android:label="VeganTestFragment" >
+        <action
+            android:id="@+id/action_veganTestFragment_to_veganTestResultFragment"
+            app:destination="@id/veganTestResultFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/tipsFragment"
-        android:name="com.example.presentation.view.tips.TipsFragment"
-        android:label="TipsFragment" />
+        android:id="@+id/veganTestResultFragment"
+        android:name="com.example.presentation.view.home.VeganTestResultFragment"
+        android:label="VeganTestResultFragment" >
+        <action
+            android:id="@+id/action_veganTestResultFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/mainHomeFragment"
-        android:name="MainHomeFragment"
-        android:label="MainHomeFragment" />
+        android:id="@+id/mypageEditProfileFragment"
+        android:name="com.example.presentation.view.mypage.view.MypageEditProfileFragment"
+        android:label="MypageEditProfileFragment" />
 </navigation>
