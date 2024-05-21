@@ -6,7 +6,7 @@ import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainHomeBinding
-import com.example.presentation.config.navigation.NavigationHandler
+import com.example.presentation.config.navigation.TipsNavigationHandler
 import com.example.presentation.util.DrawerController
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +21,7 @@ class MainHomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_
     lateinit var drawerController: DrawerController
 
     @Inject
-    lateinit var navigationHandler: NavigationHandler
+    lateinit var navigationHandler: TipsNavigationHandler
 
 
     // ViewModel 분리

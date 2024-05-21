@@ -29,6 +29,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="mypageEditProfileFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="205" />
+                            <option name="y" value="-144" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="veganTestFragment">
                     <value>
                       <LayoutPositions>

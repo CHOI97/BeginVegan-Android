@@ -1,6 +1,6 @@
 package com.example.presentation.config.navigation
 
-interface NavigationHandler {
+interface TipsNavigationHandler {
     fun navigateToMagazine()
     fun navigateToRecipe()
 }
