@@ -1,21 +1,27 @@
 package com.example.presentation.view.main
 
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.home.HomeNavigationHandler
+import com.example.presentation.config.navigation.home.HomeNavigationImpl
 import com.example.presentation.databinding.FragmentMainBinding
+import com.example.presentation.util.DrawerController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
-    @Inject
-    lateinit var navigationHandler: HomeNavigationHandler
+    private lateinit var homeNavigationHandler: HomeNavigationHandler
 
     override fun init() {
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.fcw_home) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        homeNavigationHandler = HomeNavigationImpl(navController)
+
         with(binding) {
             val navController = findNavController()
             bnvMain.setupWithNavController(navController)
@@ -30,10 +36,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
             bnvMain.setOnItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.item_home -> navigationHandler.navigateToHome()
-                    R.id.item_map -> navigationHandler.navigateToMap()
-                    R.id.item_tips -> navigationHandler.navigateToTips()
-                    R.id.item_profile -> navigationHandler.navigateToMypage()
+                    R.id.item_home -> homeNavigationHandler.navigateToHome()
+                    R.id.item_map ->  homeNavigationHandler.navigateToMap()
+                    R.id.item_tips -> homeNavigationHandler.navigateToTips()
+                    R.id.item_profile -> homeNavigationHandler.navigateToMypage()
                 }
                 true
             }

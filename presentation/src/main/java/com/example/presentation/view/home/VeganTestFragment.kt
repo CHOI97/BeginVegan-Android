@@ -8,7 +8,9 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentVeganTestBinding
 import com.example.presentation.databinding.IncludeIllusVeganLevelBinding
 import com.example.presentation.view.main.MainFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragment_vegan_test) {
     private var latestRadioButton:View? = null
     private var latestIncludedView: IncludeIllusVeganLevelBinding? =null

@@ -12,7 +12,7 @@ import dagger.hilt.android.components.ActivityComponent
 
 @Module
 @InstallIn(ActivityComponent::class)
-object DrawerModule {
+object DrawerControllerModule {
     @Provides
     fun provideDrawerHandler(activity: Activity): DrawerController = object : DrawerController {
         override fun openDrawer() {

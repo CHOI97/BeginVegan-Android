@@ -5,7 +5,9 @@ import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentTipsMagazineBinding
 import com.example.presentation.view.tips.adapter.TipsMagazineRvAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.fragment_tips_magazine) {
     private lateinit var magazineRvAdapter: TipsMagazineRvAdapter
     override fun init() {

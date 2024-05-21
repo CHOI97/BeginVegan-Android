@@ -7,8 +7,10 @@ import com.example.domain.model.NearRestaurant
 import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.home.HomeNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.config.navigation.tips.TipsNavigationHandler
+import com.example.presentation.config.navigation.tips.TipsNavigationImpl
 import com.example.presentation.util.DrawerController
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,9 +24,7 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
     @Inject
     lateinit var drawerController: DrawerController
 
-    @Inject
-    lateinit var navigationHandler: TipsNavigationHandler
-
+    private lateinit var tipsNavigationHandler: TipsNavigationHandler
 
     // ViewModel 분리
     private var list: ArrayList<NearRestaurant> = ArrayList()
@@ -41,11 +41,15 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
     }
 
     private fun setTipsTab() {
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.fcw_tips) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        tipsNavigationHandler = TipsNavigationImpl(navController)
+
         binding.tlTips.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> navigationHandler.navigateToMagazine()
-                    1 -> navigationHandler.navigateToRecipe()
+                    0 -> tipsNavigationHandler.navigateToMagazine()
+                    1 -> tipsNavigationHandler.navigateToRecipe()
                 }
             }
 
