@@ -45,6 +45,7 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
         val navController = navHostFragment.findNavController()
         tipsNavigationHandler = TipsNavigationImpl(navController)
 
+
         binding.tlTips.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {

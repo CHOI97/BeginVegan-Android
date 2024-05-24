@@ -1,5 +1,10 @@
 package com.example.presentation.config.navigation.main
 
 interface MainNavigationHandler {
-    fun navigateToMainHome()
+    fun navigateToEditProfile()
+    fun navigateToMyRestaurant()
+    fun navigateToMyMagazine()
+    fun navigateToMyRecipe()
+    fun navigateToMySetting()
+    fun navigateToReview()
 }

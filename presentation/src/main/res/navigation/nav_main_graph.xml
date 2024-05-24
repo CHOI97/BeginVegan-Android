@@ -7,15 +7,37 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.presentation.view.main.MainFragment"
-        android:label="MainFragment" >
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_mypageEditProfileFragment"
+            app:destination="@id/mypageEditProfileFragment" />
         <action
             android:id="@+id/action_mainFragment_to_veganTestFragment"
             app:destination="@id/veganTestFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mypageMyRecipeFragment"
+            app:destination="@id/mypageMyRecipeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mypageMyMagazineFragment"
+            app:destination="@id/mypageMyMagazineFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mypageMyRestaurantFragment"
+            app:destination="@id/mypageMyRestaurantFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mypageMyReviewFragment"
+            app:destination="@id/mypageMyReviewFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mypageSettingFragment"
+            app:destination="@id/mypageSettingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mypageEditProfileFragment"
+        android:name="com.example.presentation.view.mypage.view.MypageEditProfileFragment"
+        android:label="MypageEditProfileFragment" />
     <fragment
         android:id="@+id/veganTestFragment"
         android:name="com.example.presentation.view.home.VeganTestFragment"
-        android:label="VeganTestFragment" >
+        android:label="VeganTestFragment">
         <action
             android:id="@+id/action_veganTestFragment_to_veganTestResultFragment"
             app:destination="@id/veganTestResultFragment" />
@@ -23,13 +45,34 @@
     <fragment
         android:id="@+id/veganTestResultFragment"
         android:name="com.example.presentation.view.home.VeganTestResultFragment"
-        android:label="VeganTestResultFragment" >
-        <action
-            android:id="@+id/action_veganTestResultFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+        android:label="VeganTestResultFragment"></fragment>
+
+    <fragment
+        android:id="@+id/mypageSettingFragment"
+        android:name="com.example.presentation.view.mypage.view.MypageSettingFragment"
+        android:label="MypageSettingFragment" />
+
+
+    <fragment
+        android:id="@+id/mypageMyReviewFragment"
+        android:name="com.example.presentation.view.mypage.view.MypageMyReviewFragment"
+        android:label="MypageMyReviewFragment" />
+    <fragment
+        android:id="@+id/mypageMyRestaurantFragment"
+        android:name="com.example.presentation.view.mypage.view.MypageMyRestaurantFragment"
+        android:label="MypageMyRestaurantFragment" />
+    <fragment
+        android:id="@+id/mypageMyMagazineFragment"
+        android:name="com.example.presentation.view.mypage.view.MypageMyMagazineFragment"
+        android:label="MypageMyMagazineFragment" >
     </fragment>
     <fragment
-        android:id="@+id/mypageEditProfileFragment"
-        android:name="com.example.presentation.view.mypage.view.MypageEditProfileFragment"
-        android:label="MypageEditProfileFragment" />
+        android:id="@+id/mypageMyRecipeFragment"
+        android:name="com.example.presentation.view.mypage.view.MypageMyRecipeFragment"
+        android:label="MypageMyRecipeFragment" />
+
+    <include
+        android:id="@+id/nav_home_graph"
+        app:graph ="@navigation/nav_home_graph"/>
+
 </navigation>

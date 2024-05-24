@@ -5,10 +5,10 @@ import com.example.presentation.R
 
 class TipsNavigationImpl(private val navController: NavController) : TipsNavigationHandler {
     override fun navigateToMagazine() {
-        navController.navigate(R.id.action_homeTipsMagazineFragment_to_homeTipsRecipeFragment)
+        navController.navigate(R.id.homeTipsMagazineFragment)
     }
 
     override fun navigateToRecipe() {
-        navController.navigate(R.id.action_homeTipsRecipeFragment_to_homeTipsMagazineFragment)
+        navController.navigate(R.id.homeTipsRecipeFragment)
     }
 }

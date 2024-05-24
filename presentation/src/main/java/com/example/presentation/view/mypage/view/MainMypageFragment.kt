@@ -2,8 +2,15 @@ package com.example.presentation.view.mypage.view
 
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.main.MainNavigationImpl
+import com.example.presentation.config.navigation.tips.TipsNavigationHandler
+import com.example.presentation.config.navigation.tips.TipsNavigationImpl
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
@@ -114,6 +121,10 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 
     @Inject
     lateinit var drawerController: DrawerController
+
+    @Inject
+    lateinit var mainNavigationHandler: MainNavigationHandler
+
     override fun init() {
         binding.llUserLevelExplain.setOnClickListener {
             openDialogUserLevelExplain()
@@ -123,25 +134,26 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         setProgressBar(5, 1)
         setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
 
+
+
         binding.llEditProfile.setOnClickListener {
-            moveToOtherFragment(MypageEditProfileFragment())
+            mainNavigationHandler.navigateToEditProfile()
         }
         binding.llMyReview.setOnClickListener {
-            moveToOtherFragment(MypageMyReviewFragment())
+            mainNavigationHandler.navigateToReview()
         }
         binding.llMyRestaurant.setOnClickListener {
-            moveToOtherFragment(MypageMyRestaurantFragment())
+            mainNavigationHandler.navigateToMyRestaurant()
         }
         binding.llMyMagazine.setOnClickListener {
-            moveToOtherFragment(MypageMyMagazineFragment())
+            mainNavigationHandler.navigateToMyMagazine()
         }
         binding.llMyRecipe.setOnClickListener {
-            moveToOtherFragment(MypageMyRecipeFragment())
+            mainNavigationHandler.navigateToMyRecipe()
         }
         binding.llSetting.setOnClickListener {
-            moveToOtherFragment(MypageSettingFragment())
+            mainNavigationHandler.navigateToMySetting()
         }
-
     }
 
     private fun setOpenDrawer() {
@@ -182,12 +194,5 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 //            }
 //        dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 //        binding.sSetVeganType.adapter = dropdownAdapter
-    }
-
-    private fun moveToOtherFragment(fragment: Fragment) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fcw_home, fragment)
-            .addToBackStack(null)
-            .commit()
     }
 }
