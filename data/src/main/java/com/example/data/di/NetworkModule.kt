@@ -4,6 +4,7 @@ import com.example.data.BuildConfig
 import com.example.data.model.common.ApiResponse
 import com.example.data.model.common.ErrorResponse
 import com.example.data.model.common.SuccessResponse
+import com.example.data.retrofit.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
@@ -56,5 +57,11 @@ object NetworkModule {
             .client(okHttpClient)
             .baseUrl(BuildConfig.BASE_URL)
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
     }
 }
