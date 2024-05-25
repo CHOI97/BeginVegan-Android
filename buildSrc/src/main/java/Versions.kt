@@ -7,7 +7,7 @@ object Versions {
     // Androidx
     const val CORE_KTX = "1.9.0"
     const val APP_COMPAT = "1.6.1"
-    const val MATERIAL = "1.8.0"
+    const val MATERIAL = "1.12.0"
     const val CONSTRAINT_LAYOUT = "2.1.4"
 
     // Testing

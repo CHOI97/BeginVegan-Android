@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
@@ -8,9 +11,14 @@ android {
     namespace = "com.example.data"
     compileSdk = DefaultConfig.COMPILE_SDK_VERSION
 
+    val localProperties = Properties()
+    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+
     defaultConfig {
         minSdk = DefaultConfig.MIN_SDK_VERSION
         targetSdk = DefaultConfig.TARGET_SDK_VERSION
+
+        buildConfigField("String", "BASE_URL", localProperties.getProperty("BASE_URL"))
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,6 +39,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    buildFeatures{
+        buildConfig = true
+    }
 
 }
 

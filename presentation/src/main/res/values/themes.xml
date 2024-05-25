@@ -99,7 +99,7 @@
         <item name="boxCornerRadiusBottomStart">8dp</item>
         <item name="boxBackgroundColor">@color/white</item>
         <item name="hintEnabled">false</item>
-        <item name="dropDownBackgroundTint">@color/color_white</item>
+        <item name="android:background">@color/color_white</item>
         <item name="errorIconDrawable">@null</item>
 
         <item name="boxStrokeWidth">0.5dp</item>

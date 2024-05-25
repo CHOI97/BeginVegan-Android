@@ -11,7 +11,7 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY);
+        KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST);
     }
 
     //    override fun onCreate() {
