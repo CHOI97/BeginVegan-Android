@@ -58,6 +58,8 @@ dependencies {
 
     // Moshi
     implementation(Dependencies.MOSHI)
+    implementation(Dependencies.MOSHI_KOTLIN)
+    implementation(Dependencies.MOSHI_ADAPTERS)
     kapt(Dependencies.MOSHI_KAPT)
 
     // Okhttp

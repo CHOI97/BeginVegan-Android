@@ -10,6 +10,8 @@ object Dependencies {
         "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}"
 
     const val MOSHI = "com.squareup.moshi:moshi:${Versions.MOSHI}"
+    const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}"
+    const val MOSHI_ADAPTERS = "com.squareup.moshi:moshi-adapters:${Versions.MOSHI}"
     const val MOSHI_KAPT = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.MOSHI}"
 
     const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
