@@ -8,6 +8,7 @@ import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.home.HomeNavigationHandler
+import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.config.navigation.tips.TipsNavigationHandler
 import com.example.presentation.config.navigation.tips.TipsNavigationImpl
@@ -24,6 +25,9 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
     @Inject
     lateinit var drawerController: DrawerController
 
+    @Inject
+    lateinit var mainNavigationHandler: MainNavigationHandler
+
     private lateinit var tipsNavigationHandler: TipsNavigationHandler
 
     // ViewModel 분리
@@ -33,7 +37,15 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
         setRestaurantRecyclerView()
         setTipsTab()
         setOpenDrawer()
+        setBeganTest()
     }
+
+    private fun setBeganTest() {
+        binding.ivBannerVeganTest.setOnClickListener{
+            mainNavigationHandler.navigateToBeganTest()
+        }
+    }
+
     private fun setOpenDrawer() {
         binding.includedToolbar.ibNotification.setOnClickListener {
             drawerController.openDrawer()

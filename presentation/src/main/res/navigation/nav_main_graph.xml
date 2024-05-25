@@ -45,7 +45,13 @@
     <fragment
         android:id="@+id/veganTestResultFragment"
         android:name="com.example.presentation.view.home.VeganTestResultFragment"
-        android:label="VeganTestResultFragment"></fragment>
+        android:label="VeganTestResultFragment">
+        <action
+            android:id="@+id/action_veganTestResultFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/veganTestFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/mypageSettingFragment"

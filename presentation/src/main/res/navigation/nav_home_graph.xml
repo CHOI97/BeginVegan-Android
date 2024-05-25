@@ -19,7 +19,6 @@
         android:name="com.example.presentation.view.home.HomeFragment"
         android:label="MainHomeFragment" />
 
-
     <fragment
         android:id="@+id/mainMypageFragment"
         android:name="com.example.presentation.view.mypage.view.MainMypageFragment"

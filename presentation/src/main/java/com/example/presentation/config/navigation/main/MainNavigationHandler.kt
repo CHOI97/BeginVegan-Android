@@ -7,4 +7,10 @@ interface MainNavigationHandler {
     fun navigateToMyRecipe()
     fun navigateToMySetting()
     fun navigateToReview()
+    fun navigateToBeganTest()
+
+    fun navigateToBeganTestResult()
+
+    fun navigateToMainHome()
+
 }

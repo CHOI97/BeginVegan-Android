@@ -2,11 +2,17 @@ package com.example.presentation.view.home
 
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentVeganTestResultBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.layout.fragment_vegan_test_result) {
+
+    @Inject
+    lateinit var mainNavigationHandler: MainNavigationHandler
+
     override fun init() {
         binding.includedToolbar.ibBackUp.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
@@ -25,6 +31,6 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     }
 
     private fun goRecommendRecipe(){
-        //레시피로 이동
+        mainNavigationHandler.navigateToMainHome()
     }
 }

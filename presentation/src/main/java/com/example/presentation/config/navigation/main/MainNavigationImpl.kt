@@ -30,4 +30,18 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
     override fun navigateToReview() {
         navController.navigate(R.id.action_mainFragment_to_mypageMyReviewFragment)
     }
+
+    override fun navigateToBeganTest() {
+        navController.navigate(R.id.action_mainFragment_to_veganTestFragment)
+    }
+
+    override fun navigateToBeganTestResult() {
+        navController.navigate(R.id.action_veganTestFragment_to_veganTestResultFragment)
+    }
+
+    override fun navigateToMainHome() {
+        navController.navigate(R.id.action_veganTestResultFragment_to_mainFragment)
+    }
+
+
 }

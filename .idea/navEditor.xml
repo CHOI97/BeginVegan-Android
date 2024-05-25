@@ -25,20 +25,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="mypageSettingFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-202" />
-                            <option name="y" value="37" />
+                            <option name="x" value="247" />
+                            <option name="y" value="7" />
                           </Point>
                         </option>
                       </LayoutPositions>
