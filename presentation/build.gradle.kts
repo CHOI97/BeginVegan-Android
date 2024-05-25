@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -20,13 +21,19 @@ android {
 
 
     defaultConfig {
-//        applicationId = "com.example.beginvegan"
         minSdk = DefaultConfig.MIN_SDK_VERSION
         targetSdk = DefaultConfig.TARGET_SDK_VERSION
-//        versionCode = DefaultConfig.VERSION_CODE
-//        versionName = DefaultConfig.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI" to localProperties.getProperty("KAKAO_API_KEY")))
+        buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
+        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI_TEST" to localProperties.getProperty("KAKAO_API_KEY_TEST")))
+        buildConfigField(
+            "String",
+            "KAKAO_API_KEY_TEST",
+            localProperties.getProperty("KAKAO_API_KEY_TEST")
+        )
     }
 
     buildTypes {
@@ -36,8 +43,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
         }
     }
     compileOptions {
@@ -47,7 +52,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
         buildConfig = true
     }
@@ -55,12 +60,13 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-//    implementation(project(":data"))
+    implementation(project(":data"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APP_COMPAT)
     implementation(Dependencies.MATERIAL)
     implementation(Dependencies.CONSTRAINT_LAYOUT)
+    implementation("androidx.activity:activity:1.8.0")
 
     // Retrofit
     implementation(Dependencies.RETROFIT)
@@ -68,10 +74,6 @@ dependencies {
 
     // Moshi
     implementation(Dependencies.MOSHI)
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.activity:activity:1.8.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     kapt(Dependencies.MOSHI_KAPT)
 
     // Okhttp
@@ -143,17 +145,17 @@ dependencies {
     implementation("com.github.ome450901:SimpleRatingBar:1.5.1")
 
     // KAKAO MAP
-    implementation ("com.kakao.maps.open:android:2.9.5")
+    implementation("com.kakao.maps.open:android:2.9.5")
 
     // Shimmer
-    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 
     // indicator
-    implementation ("me.relex:circleindicator:2.1.6")
+    implementation("me.relex:circleindicator:2.1.6")
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
 //    implementation 'com.google.android.material:material:1.5.0'
