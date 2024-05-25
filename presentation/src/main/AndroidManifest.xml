@@ -6,20 +6,25 @@
         <activity
             android:name=".view.main.MainActivity"
             android:exported="true" />
-        <!-- 카카오 로그인 용 UI 서버 협의 후 어떻게 사용방법에 따라 수정 -->
-        <!-- <activity -->
-        <!-- android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity" -->
-        <!-- android:exported="true"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.VIEW" /> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
-        <!-- &lt;!&ndash; Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" &ndash;&gt; -->
-        <!-- <data -->
-        <!-- android:host="oauth" -->
-        <!-- android:scheme="kakaofb5550ba69a57eb73aae78bc996d8a8e" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+<!--                비즈니스 신청으로 인한 사용 불가 - 원본 앱-->
+<!--                <data-->
+<!--                    android:host="oauth"-->
+<!--                    android:scheme="kakao17256ef458637114ac2cd1d6e2cd44c2" />-->
+<!--                비즈니스 신청으로 인한 테스트 앱 키 -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao5c6add2f5c574f5575beb34228d6a789"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.main.SplashActivity"
             android:exported="true" />

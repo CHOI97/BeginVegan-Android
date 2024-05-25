@@ -23,7 +23,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         homeNavigationHandler = HomeNavigationImpl(navController)
 
         with(binding) {
-            val navController = findNavController()
             bnvMain.setupWithNavController(navController)
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {

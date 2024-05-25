@@ -5,15 +5,22 @@ import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentVeganTestBinding
 import com.example.presentation.databinding.IncludeIllusVeganLevelBinding
 import com.example.presentation.view.main.MainFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragment_vegan_test) {
     private var latestRadioButton:View? = null
     private var latestIncludedView: IncludeIllusVeganLevelBinding? =null
+
+    @Inject
+    lateinit var mainNavigationHandler: MainNavigationHandler
+
+
     override fun init() {
 
         binding.includedToolbar.ibBackUp.setOnClickListener {
@@ -24,7 +31,7 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
         controlRadioButton()
 
         binding.tvGoResult.setOnClickListener {
-            goResult()
+            mainNavigationHandler.navigateToBeganTestResult()
         }
     }
     private fun controlRadioButton(){
