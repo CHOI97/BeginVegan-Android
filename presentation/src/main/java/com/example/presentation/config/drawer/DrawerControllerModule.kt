@@ -3,8 +3,12 @@ package com.example.presentation.config.drawer
 import android.app.Activity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.notification.Notification
 import com.example.presentation.R
 import com.example.presentation.util.DrawerController
+import com.example.presentation.view.notification.NotificationNewRvAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,8 +27,7 @@ object DrawerControllerModule {
         override fun closeDrawer() {
             val drawerLayout: DrawerLayout = activity.findViewById(R.id.dl_drawer)
             drawerLayout.closeDrawer(GravityCompat.END)
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
-
     }
 }
