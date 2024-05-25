@@ -25,6 +25,14 @@ android {
         versionCode = DefaultConfig.VERSION_CODE
         versionName = DefaultConfig.VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI" to localProperties.getProperty("KAKAO_API_KEY")))
+        buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
+        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI_TEST" to localProperties.getProperty("KAKAO_API_KEY_TEST")))
+        buildConfigField(
+            "String",
+            "KAKAO_API_KEY_TEST",
+            localProperties.getProperty("KAKAO_API_KEY_TEST")
+        )
     }
 
     buildTypes {
@@ -34,13 +42,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            buildConfigField(
-                "String",
-                "KAKAO_API_KEY",
-                localProperties.getProperty("KAKAO_API_KEY")
-            )
-
         }
     }
     compileOptions {
@@ -60,7 +61,7 @@ android {
 dependencies {
     implementation(project(":presentation"))
     implementation(project(":domain"))
-//    implementation(project(":data"))
+    implementation(project(":data"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APP_COMPAT)

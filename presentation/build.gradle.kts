@@ -43,8 +43,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-
         }
     }
     compileOptions {
@@ -68,6 +66,7 @@ dependencies {
     implementation(Dependencies.APP_COMPAT)
     implementation(Dependencies.MATERIAL)
     implementation(Dependencies.CONSTRAINT_LAYOUT)
+    implementation("androidx.activity:activity:1.8.0")
 
     // Retrofit
     implementation(Dependencies.RETROFIT)
@@ -75,10 +74,6 @@ dependencies {
 
     // Moshi
     implementation(Dependencies.MOSHI)
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.activity:activity:1.8.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     kapt(Dependencies.MOSHI_KAPT)
 
     // Okhttp

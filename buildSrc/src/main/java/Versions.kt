@@ -17,7 +17,7 @@ object Versions {
 
     // Library
     const val RETROFIT = "2.9.0"
-    const val MOSHI = "1.13.0"
+    const val MOSHI = "1.15.0"
     const val OKHTTP = "4.9.3"
     const val LIFECYCLE = "2.4.1"
     const val COROUTINE = "1.6.1"

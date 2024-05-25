@@ -33,5 +33,4 @@ object AppModule {
             .baseUrl(BASE_URL)
             .build()
     }
-
 }
