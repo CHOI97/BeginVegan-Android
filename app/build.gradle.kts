@@ -35,7 +35,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
+            buildConfigField(
+                "String",
+                "KAKAO_API_KEY",
+                localProperties.getProperty("KAKAO_API_KEY")
+            )
 
         }
     }
@@ -46,7 +50,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
         buildConfig = true
     }
@@ -121,14 +125,17 @@ dependencies {
     implementation(Dependencies.FRAGMENT_KTX)
 
     // Timber
-    implementation (Dependencies.TIMBER)
+    implementation(Dependencies.TIMBER)
 
     // KaKao Login
     implementation(Dependencies.KAKAO_LOGIN)
 
 
     // KAKAO MAP
-    implementation ("com.kakao.maps.open:android:2.9.5")
+    implementation("com.kakao.maps.open:android:2.9.5")
+
+    // KAKAO LOGIN API
+    implementation("com.kakao.sdk:v2-user:2.4.0") // 카카오 로그인
 
     //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -152,8 +159,7 @@ dependencies {
 //    // KAKAO MAP API
 //    implementation files('libs/libDaumMapAndroid.jar')
 //
-//    // KAKAO LOGIN API
-//    implementation "com.kakao.sdk:v2-user:2.15.0" // 카카오 로그인
+
 //
 //    // Splash Screen
 //    implementation 'androidx.core:core-splashscreen:1.0.0'
