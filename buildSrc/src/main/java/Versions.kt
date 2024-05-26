@@ -7,7 +7,7 @@ object Versions {
     // Androidx
     const val CORE_KTX = "1.9.0"
     const val APP_COMPAT = "1.6.1"
-    const val MATERIAL = "1.8.0"
+    const val MATERIAL = "1.12.0"
     const val CONSTRAINT_LAYOUT = "2.1.4"
 
     // Testing
@@ -17,7 +17,7 @@ object Versions {
 
     // Library
     const val RETROFIT = "2.9.0"
-    const val MOSHI = "1.13.0"
+    const val MOSHI = "1.15.1"
     const val OKHTTP = "4.9.3"
     const val LIFECYCLE = "2.4.1"
     const val COROUTINE = "1.6.1"
