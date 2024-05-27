@@ -9,10 +9,10 @@ import javax.inject.Inject
 @HiltViewModel
 class VeganTestViewModel@Inject constructor(): ViewModel() {
 
-    private val _userVeganType = MutableLiveData<String>()
-    val userVeganType: LiveData<String> = _userVeganType
+    private val _userVeganTypeNum = MutableLiveData<Int>()
+    val userVeganTypeNum: LiveData<Int> = _userVeganTypeNum
 
-    fun setUserVeganType(veganType:String){
-        _userVeganType.value = veganType
+    fun setUserVeganTypeNum(veganTypeNum:Int){
+        _userVeganTypeNum.value = veganTypeNum
     }
 }

@@ -1,5 +1,6 @@
 package com.example.presentation.view.home
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -23,29 +24,60 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val viewModel:VeganTestViewModel by activityViewModels()
 
+    private lateinit var veganTypes:Array<String>
+    private lateinit var resultDescriptions:Array<String>
+    private lateinit var resultExplanations:Array<String>
+    private var typeNum = 0
+
     override fun init() {
-        viewModel.userVeganType.observe(this, Observer {
-            val veganType = viewModel.userVeganType.value!!
-            binding.tvResultVeganType.text = VeganTypes.valueOf(veganType).veganType
+        veganTypes = resources.getStringArray(R.array.vegan_type)
+        resultDescriptions = resources.getStringArray(R.array.vegan_test_result_descriptions)
+        resultExplanations = resources.getStringArray(R.array.vegan_test_result_explanations)
+
+        viewModel.userVeganTypeNum.observe(this, Observer {
+            typeNum = viewModel.userVeganTypeNum.value!!
+            binding.tvResultVeganType.text = veganTypes[typeNum+1]
+            binding.tvVeganTypeDescription.text = resultDescriptions[typeNum]
+            binding.tvResultExplanation.text = resultExplanations[typeNum]
+            setIllus()
         })
 
-        binding.includedToolbar.ibBackUp.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-
 //        binding.tvDescription.text = 유저네임
-//        binding.tvResultVeganType.text = 비건타입
-//        binding.tvVeganTypeDescription.text = 비건타입 설명
-//        binding.tvResultExplanation.text = 비건 타입 상세 설명
 //        binding.tvGoRecommendRecipe.text = 유저 네임
-//        binding.includedIllusVeganLevel. //일러스트
 
-        binding.tvBtnGoRecommendRecipe.setOnClickListener {
-            goRecommendRecipe()
+        goBackUp()
+        goRecommendRecipe()
+    }
+
+    private fun setIllus(){
+        val levels = listOf(
+            { binding.includedIllusVeganLevel.milk = true },
+            { binding.includedIllusVeganLevel.egg = true },
+            { binding.includedIllusVeganLevel.fish = true },
+            { binding.includedIllusVeganLevel.chicken = true },
+            { binding.includedIllusVeganLevel.meat = true }
+        )
+        when(typeNum){
+            0 -> return
+            1 -> levels[0]()
+            2 -> levels[1]()
+            else -> {
+                for (i in 0 until typeNum-1) {
+                    levels[i]()
+                }
+            }
         }
     }
 
+    //이동
+    private fun goBackUp(){
+        binding.includedToolbar.ibBackUp.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
     private fun goRecommendRecipe(){
-        mainNavigationHandler.navigateToMainHome()
+        binding.tvBtnGoRecommendRecipe.setOnClickListener {
+            mainNavigationHandler.navigateToMainHome()
+        }
     }
 }

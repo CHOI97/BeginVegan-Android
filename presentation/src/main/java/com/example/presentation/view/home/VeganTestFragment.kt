@@ -24,57 +24,45 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val viewModel: VeganTestViewModel by activityViewModels()
 
-    private var selectedVeganType = ""
-    private lateinit var veganTypes:Array<String>
+    private var selectedVeganTypeNum = 0
     private lateinit var veganTestDescriptions:Array<String>
 
     override fun init() {
-
-        binding.includedToolbar.ibBackUp.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-
-        veganTypes = resources.getStringArray(R.array.vegan_types_eng)
         veganTestDescriptions = resources.getStringArray(R.array.vegan_test_descriptions)
 
-        setDescription(binding.includedVegan,binding.acrbLacto, veganTestDescriptions[0], veganTypes[1])
+        setDescription(binding.includedVegan,binding.acrbLacto,0 )
         controlRadioButton()
 
-        binding.tvGoResult.setOnClickListener {
-            goResult()
-        }
+        goBackUp()
+        goResult()
     }
     private fun controlRadioButton(){
         binding.rgVeganTest.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId){
-                R.id.acrb_vegan -> setDescription(binding.includedVegan,binding.acrbLacto, veganTestDescriptions[0], veganTypes[1])
-                R.id.acrb_lacto -> setDescription(binding.includedLacto,binding.acrbOvo, veganTestDescriptions[1], veganTypes[2])
-                R.id.acrb_ovo -> setDescription(binding.includedOvo,binding.acrbLactoOvo, veganTestDescriptions[2],veganTypes[3])
-                R.id.acrb_lacto_ovo -> setDescription(binding.includedLactoOvo,binding.acrbPesco, veganTestDescriptions[3],veganTypes[4])
-                R.id.acrb_pesco -> setDescription(binding.includedPesco, binding.acrbPollo,veganTestDescriptions[4],veganTypes[5])
-                R.id.acrb_pollo -> setDescription(binding.includedPollo, binding.acrbFlexitarian,veganTestDescriptions[5],veganTypes[6])
-                R.id.acrb_flexitarian -> setDescription(binding.includedFlexitarian,null,veganTestDescriptions[6],veganTypes[7])
+                R.id.acrb_vegan -> setDescription(binding.includedVegan,binding.acrbLacto, 0)
+                R.id.acrb_lacto -> setDescription(binding.includedLacto,binding.acrbOvo, 1)
+                R.id.acrb_ovo -> setDescription(binding.includedOvo,binding.acrbLactoOvo,2)
+                R.id.acrb_lacto_ovo -> setDescription(binding.includedLactoOvo,binding.acrbPesco,3)
+                R.id.acrb_pesco -> setDescription(binding.includedPesco, binding.acrbPollo,4)
+                R.id.acrb_pollo -> setDescription(binding.includedPollo, binding.acrbFlexitarian,5)
+                R.id.acrb_flexitarian -> setDescription(binding.includedFlexitarian,null,6)
             }
         }
     }
-    private fun goResult(){
-        viewModel.setUserVeganType(selectedVeganType)
-        mainNavigationHandler.navigateToBeganTestResult()
-    }
 
     //라디오버튼 클릭 시 반영
-    private fun setDescription(selectedView: IncludeIllusVeganLevelBinding, radioView: View?,selectedDescription: String, veganType:String){
+    private fun setDescription(selectedView: IncludeIllusVeganLevelBinding, radioView: View?, veganTypeNum:Int){
         resetMargin(latestRadioButton,94)
         latestIncludedView?.tvDescription?.isVisible = false
 
-        selectedView.description = selectedDescription
+        selectedView.description = veganTestDescriptions[veganTypeNum]
         selectedView.tvDescription.isVisible = true
         resetMargin(radioView, 160)
 
         latestIncludedView = selectedView
         latestRadioButton = radioView ?: binding.acrbFlexitarian
 
-        selectedVeganType = veganType
+        selectedVeganTypeNum = veganTypeNum
     }
     private fun resetMargin(radioView:View?, marginTop:Int){
         val params = LinearLayout.LayoutParams(
@@ -83,5 +71,23 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
         )
         params.setMargins(0, marginTop, 0, 0)
         radioView?.layoutParams = params
+    }
+
+    //retrofit
+    private fun patchVeganType(){
+
+    }
+
+    //이동
+    private fun goBackUp(){
+        binding.includedToolbar.ibBackUp.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+    private fun goResult(){
+        binding.tvGoResult.setOnClickListener {
+            viewModel.setUserVeganTypeNum(selectedVeganTypeNum)
+            mainNavigationHandler.navigateToBeganTestResult()
+        }
     }
 }
