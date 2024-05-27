@@ -72,7 +72,7 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     //이동
     private fun goBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            mainNavigationHandler.popBackStack()
         }
     }
     private fun goRecommendRecipe(){

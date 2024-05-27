@@ -81,7 +81,7 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     //이동
     private fun goBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            mainNavigationHandler.popBackStack()
         }
     }
     private fun goResult(){

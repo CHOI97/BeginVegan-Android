@@ -43,5 +43,9 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
         navController.navigate(R.id.action_veganTestResultFragment_to_mainFragment)
     }
 
+    override fun popBackStack() {
+        navController.popBackStack()
+    }
+
 
 }
