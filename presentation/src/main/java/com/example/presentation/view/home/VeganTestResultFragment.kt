@@ -1,9 +1,18 @@
 package com.example.presentation.view.home
 
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.home.HomeNavigationHandler
+import com.example.presentation.config.navigation.home.HomeNavigationImpl
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentVeganTestResultBinding
+import com.example.presentation.util.VeganTypes
+import com.example.presentation.view.home.viewModel.VeganTestViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -12,8 +21,14 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
 
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
+    private val viewModel:VeganTestViewModel by activityViewModels()
 
     override fun init() {
+        viewModel.userVeganType.observe(this, Observer {
+            val veganType = viewModel.userVeganType.value!!
+            binding.tvResultVeganType.text = VeganTypes.valueOf(veganType).veganType
+        })
+
         binding.includedToolbar.ibBackUp.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }

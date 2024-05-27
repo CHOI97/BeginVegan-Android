@@ -334,6 +334,7 @@
     <string name="vegan_type_pesco">페스코 베지테리언</string>
     <string name="vegan_type_pollo">폴로 베지테리언</string>
     <string name="vegan_type_flexitarian">플렉시테리언</string>
+
     <string-array name="vegan_type">
         <item>알고 있지 않아요</item>
         <item>비건</item>
@@ -343,6 +344,16 @@
         <item>페스코 베지테리언</item>
         <item>폴로 베지테리언</item>
         <item>플렉시테리언</item>
+    </string-array>
+    <string-array name="vegan_types_eng">
+        <item>NONE</item>
+        <item>VEGAN</item>
+        <item>LACTO_VEGETARIAN</item>
+        <item>OVO_VEGETARIAN</item>
+        <item>LACTO_OVO_VEGETARIAN</item>
+        <item>PASCATARIAN</item>
+        <item>POLLOTARIAN</item>
+        <item>FLEXITARIAN</item>
     </string-array>
 
     <!-- 온보딩 -->
@@ -398,13 +409,15 @@
     <!-- Vegan Test -->
     <string name="vegan_test_title">나의 채식 성향은?</string>
     <string name="vegan_test_description">비거너로의 여정을 떠나기 전,\n나는 어떤 채식 성향을 가지고 있는지 알아봐요!</string>
-    <string name="vegan_test_description_vegan">동물로부터 나오는 모든 것을 선호하지 않아요.</string>
-    <string name="vegan_test_description_lacto">채식을 지향하지만, 유제품도 선호해요.</string>
-    <string name="vegan_test_description_ovo">고기, 유제품은 선호하지 않지만, 달걀 섭취는 부담없어요.</string>
-    <string name="vegan_test_description_lacto_ovo">동물로부터 나온 우유나 달걀 섭취까지도 부담없어요.</string>
-    <string name="vegan_test_description_pesco">육류는 전혀 먹고싶지 않아요.</string>
-    <string name="vegan_test_description_pollo">돼지고기, 소고기같은 빨간 고기는 선호하지 않아요.</string>
-    <string name="vegan_test_description_flexitarian">채식도 좋아하지만, 다양한 음식을 즐기는 것을 좋아해요.</string>
+    <string-array name="vegan_test_descriptions">
+        <item>동물로부터 나오는 모든 것을 선호하지 않아요.</item>
+        <item>채식을 지향하지만, 유제품도 선호해요.</item>
+        <item>고기, 유제품은 선호하지 않지만, 달걀 섭취는 부담없어요.</item>
+        <item>동물로부터 나온 우유나 달걀 섭취까지도 부담없어요.</item>
+        <item>육류는 전혀 먹고싶지 않아요.</item>
+        <item>돼지고기, 소고기같은 빨간 고기는 선호하지 않아요.</item>
+        <item>채식도 좋아하지만, 다양한 음식을 즐기는 것을 좋아해요.</item>
+    </string-array>
 
     <string name="vegan_test_result_title">나는 어떤 비거너?</string>
     <string name="vegan_test_result_description">"<font color='#FF009861'>%1$s</font> 님은\n이런 채식 성향을 가지고 있어요!"</string>
