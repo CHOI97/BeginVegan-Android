@@ -17,7 +17,7 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
     }
 
     private fun goBackUp(){
-        binding.ibBackUp.setOnClickListener {
+        binding.includedToolbar.ibBackUp.setOnClickListener {
             mainNavigationHandler.popBackStack()
         }
     }
