@@ -39,8 +39,16 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
         navController.navigate(R.id.action_veganTestFragment_to_veganTestResultFragment)
     }
 
+    override fun navigateToTipsMagazineDetail() {
+        navController.navigate(R.id.action_mainFragment_to_tipsMagazineDetailFragment)
+    }
+
     override fun navigateToMainHome() {
         navController.navigate(R.id.action_veganTestResultFragment_to_mainFragment)
+    }
+
+    override fun popBackStack() {
+        navController.popBackStack()
     }
 
 

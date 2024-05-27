@@ -10,7 +10,9 @@ interface MainNavigationHandler {
     fun navigateToBeganTest()
 
     fun navigateToBeganTestResult()
+    fun navigateToTipsMagazineDetail()
 
     fun navigateToMainHome()
 
+    fun popBackStack()
 }

@@ -1,10 +1,15 @@
 package com.example.presentation.view.tips.view
 
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.tips.TipsNavigationHandler
+import com.example.presentation.config.navigation.tips.TipsNavigationImpl
 import com.example.presentation.databinding.FragmentMainTipsBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.view.tips.adapter.TipsVpAdapter
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -15,9 +20,10 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
     @Inject
     lateinit var drawerController: DrawerController
     override fun init() {
-        binding.includedToolbar.ibNotification.setOnClickListener {
-        }
-
+        setTipsTab()
+        setOpenDrawer()
+    }
+    private fun setTipsTab() {
         binding.vpViewpagerArea.adapter = TipsVpAdapter(childFragmentManager, lifecycle)
         TabLayoutMediator(binding.tlTab, binding.vpViewpagerArea){ tab, position ->
             when(position){
@@ -25,10 +31,9 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
                 1 -> tab.text = getString(R.string.recipe)
             }
         }.attach()
-
-        setOpenDrawer()
     }
 
+    //이동
     private fun setOpenDrawer() {
         binding.includedToolbar.ibNotification.setOnClickListener {
             drawerController.openDrawer()
