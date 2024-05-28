@@ -4,15 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.model.tips.MagazineResponse
 import com.example.presentation.databinding.ItemMagazineBinding
 
-class TipsMagazineRvAdapter(private val context:Context):RecyclerView.Adapter<TipsMagazineRvAdapter.RecyclerViewHolder>() {
+class TipsMagazineRvAdapter(private val context:Context,private val list:MutableList<MagazineResponse>):RecyclerView.Adapter<TipsMagazineRvAdapter.RecyclerViewHolder>() {
     private var listener: OnItemClickListener? = null
 
     inner class RecyclerViewHolder(private val binding:ItemMagazineBinding):
         RecyclerView.ViewHolder(binding.root){
             fun bind(position:Int){
-
+                val item = list[position]
+                binding.tvMagazineTitle.text = item.title
+                binding.tvWriter.text = item.editor
             }
         }
 
@@ -21,19 +24,19 @@ class TipsMagazineRvAdapter(private val context:Context):RecyclerView.Adapter<Ti
         return RecyclerViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.bind(position)
         if(position != RecyclerView.NO_POSITION){
             holder.itemView.setOnClickListener{
-                listener?.onItemClick()
+                listener?.onItemClick(list[position].id)
             }
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClick()
+        fun onItemClick(magazineId:Int)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener

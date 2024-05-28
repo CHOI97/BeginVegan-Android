@@ -21,25 +21,6 @@
             app:backButtonVisible="@{true}"
             app:notificationVisible="@{false}"
             app:colorMode="@{false}"/>
-<!--        <Toolbar-->
-<!--            android:id="@+id/tb_toolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toTopOf="parent" >-->
-<!--            <ImageButton-->
-<!--                android:id="@+id/ib_back_up"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/ic_back"-->
-<!--                android:backgroundTint="@color/color_primary"/>-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                style="@style/title_bold"-->
-<!--                android:textColor="@color/color_primary"-->
-<!--                android:text="@string/magazine"-->
-<!--                android:layout_gravity="center"/>-->
-<!--        </Toolbar>-->
         <TextView
             android:id="@+id/tv_magazine_title"
             android:layout_width="match_parent"
@@ -47,7 +28,7 @@
             style="@style/heading_bold"
             android:textColor="@color/color_text_01"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/tb_toolbar"
+            app:layout_constraintTop_toBottomOf="@id/included_toolbar"
             android:layout_marginTop="@dimen/margin_24"
             android:layout_marginHorizontal="@dimen/margin_16"/>
         <TextView
