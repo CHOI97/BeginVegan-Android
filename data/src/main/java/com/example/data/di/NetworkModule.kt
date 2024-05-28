@@ -30,9 +30,9 @@ object NetworkModule {
             .setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
+            .addInterceptor(httpLoggingInterceptor)
             .build()
     }
 
@@ -59,9 +59,5 @@ object NetworkModule {
             .build()
     }
 
-    @Singleton
-    @Provides
-    fun provideUserService(retrofit: Retrofit): UserService {
-        return retrofit.create(UserService::class.java)
-    }
+
 }
