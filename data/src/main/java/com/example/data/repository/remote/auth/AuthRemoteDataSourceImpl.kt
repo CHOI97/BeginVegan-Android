@@ -1,20 +1,23 @@
-package com.example.data.repository
+package com.example.data.repository.remote.auth
 
 import com.example.data.model.auth.AuthRequest
+import com.example.data.model.common.ApiResponse
 import com.example.data.model.common.ErrorResponse
 import com.example.data.model.common.SuccessResponse
 import com.example.data.retrofit.UserService
-import com.example.domain.repository.auth.AuthRepository
 import timber.log.Timber
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(private val userService: UserService) : AuthRepository {
-    override suspend fun signUp(email: String, providerId: String): Result<Boolean> {
+class AuthRemoteDataSourceImpl @Inject constructor(
+    private val userService: UserService
+) : AuthRemoteDataSource {
+    override suspend fun signUp(authRequest: AuthRequest): Result<ApiResponse> {
         return try {
-            when (val response = userService.signUp(AuthRequest(email, providerId))) {
-                is SuccessResponse -> {
+            val response = userService.signUp(authRequest)
+            when (response) {
+                is SuccessResponse<*> -> {
                     Timber.d("response = $response")
-                    Result.success(true)
+                    Result.success(response)
                 }
                 is ErrorResponse -> {
                     Timber.d("response = $response")
@@ -22,16 +25,18 @@ class AuthRepositoryImpl @Inject constructor(private val userService: UserServic
                 }
             }
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }
 
-    override suspend fun signIn(email: String, providerId: String): Result<Boolean> {
+    override suspend fun signIn(authRequest: AuthRequest): Result<ApiResponse> {
         return try {
-            when (val response = userService.signIn(AuthRequest(email, providerId))) {
-                is SuccessResponse -> {
+            val response = userService.signIn(authRequest)
+            when (response) {
+                is SuccessResponse<*> -> {
                     Timber.d("response = $response")
-                    Result.success(true)
+                    Result.success(response)
                 }
                 is ErrorResponse -> {
                     Timber.d("response = $response")
@@ -39,6 +44,7 @@ class AuthRepositoryImpl @Inject constructor(private val userService: UserServic
                 }
             }
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }
