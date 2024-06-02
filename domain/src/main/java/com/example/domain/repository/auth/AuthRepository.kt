@@ -6,9 +6,9 @@ import com.example.domain.model.AuthToken
  *  구현 Impl -> Data Module */
 interface AuthRepository {
 
-    suspend fun signUp(email: String, providerId: String): Boolean
+    suspend fun signUp(email: String, providerId: String): Result<Boolean>
 
-    suspend fun signIn(email: String, providerId: String): AuthToken
+    suspend fun signIn(email: String, providerId: String): Result<AuthToken>
 
     // Multipart
 //    suspend fun signUpDetail(nick: String, veganType: String, )

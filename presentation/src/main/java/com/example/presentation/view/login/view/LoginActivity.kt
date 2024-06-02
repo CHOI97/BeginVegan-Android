@@ -289,7 +289,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun setOnClickLogin() {
         binding.btnLoginKakao.setOnClickListener {
-            viewModel.signIn("test@test.test","1")
+            viewModel.signIn("test5@test.com","1")
             val intent = Intent(this, OnboardingActivity::class.java)
             startActivity(intent)
         }

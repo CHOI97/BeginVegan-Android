@@ -1,5 +1,5 @@
 package com.example.domain.model
-/** User Token Entity **/
+/** User Toekn Domain Model **/
 data class AuthToken(
     val accessToken: String,
     val refreshToken: String,

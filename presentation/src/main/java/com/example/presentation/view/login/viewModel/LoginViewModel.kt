@@ -25,13 +25,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private val _authToken = MutableLiveData<Result<AuthToken>>()
-    val authToken: LiveData<Result<AuthToken>> = _authToken
+    private val _authToken = MutableLiveData<AuthToken>()
+    val authToken: LiveData<AuthToken> = _authToken
 
     fun signIn(email: String, providerId: String) {
         viewModelScope.launch {
             val result = signInUseCase.invoke(email, providerId)
-            _authToken.value = result
+            Timber.d("$result")
         }
     }
 }

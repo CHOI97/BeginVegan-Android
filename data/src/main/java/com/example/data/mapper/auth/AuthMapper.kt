@@ -7,6 +7,7 @@ import com.example.domain.model.AuthToken
 /** Token Mapper **
  * AccessToken = Token Type + " " + accessToken
  * RefreshToken = Token Type + " " + refreshToken
+ * Mapper의 역할 [ Data Layer의 model (DTO) -> Domain Layer의 model로 변환 ]
  **/
 
 class AuthMapper: Mapper<TokenResponse,AuthToken> {

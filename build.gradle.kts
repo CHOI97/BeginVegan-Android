@@ -6,4 +6,5 @@ plugins {
     id(Plugins.SAFEARGS) version Versions.NAVIGATION apply false
     id(Plugins.KOTLIN_SERIALIZATION) version Versions.KOTLIN apply false
     id(Plugins.DAGGER_HILT) version Versions.HILT apply false
+//    id(Plugins.KSP) version Versions.KSP apply false
 }
