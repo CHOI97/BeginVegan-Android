@@ -10,6 +10,7 @@ plugins {
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
     id(Plugins.DAGGER_HILT)
+//    id(Plugins.KSP)
 }
 
 android {
@@ -102,7 +103,7 @@ dependencies {
     // Room
     implementation(Dependencies.ROOM_RUNTIME)
     implementation(Dependencies.ROOM_KTX)
-    kapt(Dependencies.ROOM_KAPT)
+    kapt(Dependencies.ROOM_KSP)
     implementation(Dependencies.ROOM_PAGING)
 
     // Kotlin serialization
