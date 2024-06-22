@@ -17,7 +17,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -28,7 +27,7 @@
 <!--                비즈니스 신청으로 인한 테스트 앱 키 -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao5c6add2f5c574f5575beb34228d6a789"/>
+                    android:scheme="kakao${KAKAO_REDIRECT_URI_TEST}"/>
             </intent-filter>
         </activity>
         <activity

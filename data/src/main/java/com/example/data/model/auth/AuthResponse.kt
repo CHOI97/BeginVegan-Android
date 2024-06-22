@@ -1,9 +1,16 @@
-//package com.example.data.model.auth
-//
-//import com.google.gson.annotations.SerializedName
-//
-//data class AuthResponse(
-//    @SerializedName("accessToken") val accessToken: String,
-//    @SerializedName("refreshToken") val refreshToken: String,
-//    @SerializedName("tokenType") val tokenType: String
-//)
+package com.example.data.model.auth
+
+import com.example.data.model.auth.TokenResponse
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+
+@JsonClass(generateAdapter = true)
+data class AuthResponse(
+    @Json(name= "message")
+    val message: String? = null,
+    @Json(name= "authRes")
+    val authRes: TokenResponse? = null,
+    @Json(name= "signUpCompleted")
+    val signUpCompleted: Boolean? = null
+)

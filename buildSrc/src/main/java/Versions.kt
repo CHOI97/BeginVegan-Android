@@ -1,13 +1,13 @@
 object Versions {
     // Project
     const val AGP = "8.3.0"
-    const val KOTLIN = "1.9.23"
+    const val KOTLIN = "1.9.24"
     const val SECRETS_GRADLE = "2.0.1"
-
+    const val KSP = "1.9.24-1.0.20"
     // Androidx
-    const val CORE_KTX = "1.9.0"
+    const val CORE_KTX = "1.9.24"
     const val APP_COMPAT = "1.6.1"
-    const val MATERIAL = "1.8.0"
+    const val MATERIAL = "1.12.0"
     const val CONSTRAINT_LAYOUT = "2.1.4"
 
     // Testing
@@ -17,14 +17,14 @@ object Versions {
 
     // Library
     const val RETROFIT = "2.9.0"
-    const val MOSHI = "1.13.0"
+    const val MOSHI = "1.15.1"
     const val OKHTTP = "4.9.3"
     const val LIFECYCLE = "2.4.1"
     const val COROUTINE = "1.6.1"
     const val COIL = "2.0.0-rc03"
     const val RECYCLERVIEW = "1.3.0"
     const val NAVIGATION = "2.5.3"
-    const val ROOM = "2.5.1"
+    const val ROOM = "2.6.1"
     const val KOTLIN_SERIALIZATION = "1.3.2"
     const val DATASTORE = "1.0.0"
     const val PAGING = "3.1.1"

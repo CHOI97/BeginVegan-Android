@@ -9,6 +9,7 @@ plugins {
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
     id(Plugins.DAGGER_HILT)
+//    id(Plugins.KSP)
 }
 
 android {
@@ -25,6 +26,14 @@ android {
         versionCode = DefaultConfig.VERSION_CODE
         versionName = DefaultConfig.VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI" to localProperties.getProperty("KAKAO_API_KEY")))
+        buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
+        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI_TEST" to localProperties.getProperty("KAKAO_API_KEY_TEST")))
+        buildConfigField(
+            "String",
+            "KAKAO_API_KEY_TEST",
+            localProperties.getProperty("KAKAO_API_KEY_TEST")
+        )
     }
 
     buildTypes {
@@ -34,9 +43,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
-
         }
     }
     compileOptions {
@@ -46,7 +52,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
         buildConfig = true
     }
@@ -56,7 +62,7 @@ android {
 dependencies {
     implementation(project(":presentation"))
     implementation(project(":domain"))
-//    implementation(project(":data"))
+    implementation(project(":data"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APP_COMPAT)
@@ -97,7 +103,7 @@ dependencies {
     // Room
     implementation(Dependencies.ROOM_RUNTIME)
     implementation(Dependencies.ROOM_KTX)
-    kapt(Dependencies.ROOM_KAPT)
+    kapt(Dependencies.ROOM_KSP)
     implementation(Dependencies.ROOM_PAGING)
 
     // Kotlin serialization
@@ -121,14 +127,17 @@ dependencies {
     implementation(Dependencies.FRAGMENT_KTX)
 
     // Timber
-    implementation (Dependencies.TIMBER)
+    implementation(Dependencies.TIMBER)
 
     // KaKao Login
     implementation(Dependencies.KAKAO_LOGIN)
 
 
     // KAKAO MAP
-    implementation ("com.kakao.maps.open:android:2.9.5")
+    implementation("com.kakao.maps.open:android:2.9.5")
+
+    // KAKAO LOGIN API
+    implementation("com.kakao.sdk:v2-user:2.4.0") // 카카오 로그인
 
     //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -152,8 +161,7 @@ dependencies {
 //    // KAKAO MAP API
 //    implementation files('libs/libDaumMapAndroid.jar')
 //
-//    // KAKAO LOGIN API
-//    implementation "com.kakao.sdk:v2-user:2.15.0" // 카카오 로그인
+
 //
 //    // Splash Screen
 //    implementation 'androidx.core:core-splashscreen:1.0.0'

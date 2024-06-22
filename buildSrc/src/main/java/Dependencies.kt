@@ -10,7 +10,10 @@ object Dependencies {
         "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}"
 
     const val MOSHI = "com.squareup.moshi:moshi:${Versions.MOSHI}"
+    const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}"
+    const val MOSHI_ADAPTERS = "com.squareup.moshi:moshi-adapters:${Versions.MOSHI}"
     const val MOSHI_KAPT = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.MOSHI}"
+    const val MOSHI_TYPE_LABEL ="dev.zacsweers.moshix:moshi-sealed-runtime:${Versions.MOSHI}"
 
     const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
     const val OKHTTP_LOGGING_INTERCEPTOR =
@@ -37,7 +40,7 @@ object Dependencies {
 
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
-    const val ROOM_KAPT = "androidx.room:room-compiler:${Versions.ROOM}"
+    const val ROOM_KSP = "androidx.room:room-compiler:${Versions.ROOM}"
     const val ROOM_PAGING = "androidx.room:room-paging:${Versions.ROOM}"
 
     const val KOTLIN_SERIALIZATION =

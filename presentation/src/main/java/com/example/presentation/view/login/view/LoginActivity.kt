@@ -1,9 +1,13 @@
 package com.example.presentation.view.login.view
 
 import android.content.Intent
+import androidx.activity.viewModels
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityLoginBinding
+import com.example.presentation.view.login.viewModel.LoginViewModel
+import com.example.presentation.view.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 //
 //import android.Manifest
@@ -272,8 +276,24 @@ import com.example.presentation.databinding.ActivityLoginBinding
 //
 //}
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
+    private val viewModel: LoginViewModel by viewModels()
     override fun initViewModel() {
+        viewModel.loginState.observe(this){
+            when(it){
+                true -> {
+                    showToast("Test: 로그인 성공")
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+                false ->{
+                    showToast("Test: 로그인 에러")
+                }
+            }
+        }
+
+
     }
 
     override fun init() {
@@ -283,14 +303,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun setOnClickLogin() {
         binding.btnLoginKakao.setOnClickListener {
-            // 서버랑 논의하고 kakao 로그인 추가 sdk
-            // kakao Token 운용방식 아직모름 위 코드 참고 할 것
-            // 사전 방식 kakao에서 승인 받고 개인 정보만 받아서 다시 우리쪽 서버에 넘긴 후
-            // access Token , refresh token 발급
-            val intent = Intent(this, OnboardingActivity::class.java)
-            startActivity(intent)
+            /** 임시 테스트 계정 **/
+            viewModel.signIn("test5@test.com","1")
         }
-
     }
-
 }
