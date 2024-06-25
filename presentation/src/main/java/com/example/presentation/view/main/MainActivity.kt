@@ -1,21 +1,17 @@
 package com.example.presentation.view.main
 
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.notification.Notification
+import com.example.domain.model.alarms.Alarm
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
-import com.example.presentation.config.navigation.home.HomeNavigationHandler
-import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.ActivityMainBinding
 import com.example.presentation.util.DrawerController
-import com.example.presentation.view.notification.NotificationNewRvAdapter
-import com.example.presentation.view.notification.NotificationOldRvAdapter
+import com.example.presentation.view.notification.NotificationReadRvAdapter
+import com.example.presentation.view.notification.NotificationUnreadRvAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.Instant
+import java.util.Date
 import javax.inject.Inject
 
 
@@ -40,15 +36,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val oldRecyclerView = binding.includedDrawer.rvOldNotification
 
         val list = mutableListOf(
-            Notification(1,"VEGAN","TEST111","1/2/3", false),
-            Notification(1,"VEGAN","TEST2222","1/2/3", true),
-            Notification(1,"VEGAN","TEST3333","1/2/3", false)
+            Alarm(1,"VEGAN","TEST111",1, Date.from(Instant.now())),
+            Alarm(1,"VEGAN","TEST2222",2, Date.from(Instant.now())),
+            Alarm(1,"VEGAN","TEST3333",3, Date.from(Instant.now()))
         )
-        val newRvAdapter = NotificationNewRvAdapter(list, this)
+        val newRvAdapter = NotificationUnreadRvAdapter(list, this)
         newRecyclerView.adapter = newRvAdapter
         newRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        val oldRvAdapter = NotificationOldRvAdapter(list, this)
+        val oldRvAdapter = NotificationReadRvAdapter(list, this)
         oldRecyclerView.adapter = oldRvAdapter
         oldRecyclerView.layoutManager = LinearLayoutManager(this)
     }

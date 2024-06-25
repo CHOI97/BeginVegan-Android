@@ -3,12 +3,8 @@ package com.example.presentation.config.drawer
 import android.app.Activity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.notification.Notification
 import com.example.presentation.R
 import com.example.presentation.util.DrawerController
-import com.example.presentation.view.notification.NotificationNewRvAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
