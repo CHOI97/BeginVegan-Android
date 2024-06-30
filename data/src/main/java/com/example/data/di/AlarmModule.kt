@@ -1,7 +1,6 @@
 package com.example.data.di
 
 import com.example.data.mapper.alarms.AlarmMapper
-import com.example.data.mapper.auth.AuthMapper
 import com.example.data.repository.remote.alarms.AlarmRemoteDataSource
 import com.example.data.repository.remote.alarms.AlarmRemoteDataSourceImpl
 import com.example.data.repository.remote.alarms.AlarmRepositoryImpl
@@ -30,6 +29,7 @@ object AlarmModule {
     }
 
     @Provides
+    @Singleton
     fun provideAlarmRepository(
         alarmRemoteDataSource: AlarmRemoteDataSource,
         alarmMapper: AlarmMapper
@@ -38,6 +38,7 @@ object AlarmModule {
     }
 
     @Provides
+    @Singleton
     fun provideAlarmMapper(): AlarmMapper {
         return AlarmMapper()
     }

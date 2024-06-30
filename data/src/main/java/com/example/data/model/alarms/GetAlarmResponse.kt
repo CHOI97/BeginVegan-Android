@@ -2,8 +2,6 @@ package com.example.data.model.alarms
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.coroutines.flow.Flow
-import java.util.Date
 
 @JsonClass(generateAdapter = true)
 data class GetAlarmResponse(
@@ -12,13 +10,14 @@ data class GetAlarmResponse(
     @Json(name = "information")
     val information: AlarmListDto
 )
-
+@JsonClass(generateAdapter = true)
 data class AlarmListDto(
     @Json(name = "unreadAlarmResList")
     val unreadAlarmResList: List<AlarmDto>,
     @Json(name = "readAlarmResList")
     val readAlarmResList: List<AlarmDto>
 )
+@JsonClass(generateAdapter = true)
 data class AlarmDto (
     @Json(name = "alarmId")
     val alarmId: Int,
@@ -27,9 +26,9 @@ data class AlarmDto (
     @Json(name = "content")
     val content: String,
     @Json(name = "itemId")
-    val itemId: Int,
+    val itemId: Int?,
     @Json(name = "createdDate")
-    val createdDate: Date,
+    val createdDate: String,
     @Json(name = "isRead")
     val isRead: Boolean
 )

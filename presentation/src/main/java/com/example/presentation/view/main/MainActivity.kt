@@ -1,17 +1,20 @@
 package com.example.presentation.view.main
 
+import androidx.activity.viewModels
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.alarms.Alarm
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityMainBinding
+import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.DrawerController
-import com.example.presentation.view.notification.NotificationReadRvAdapter
-import com.example.presentation.view.notification.NotificationUnreadRvAdapter
+import com.example.presentation.view.notification.adapter.NotificationReadRvAdapter
+import com.example.presentation.view.notification.adapter.NotificationUnreadRvAdapter
+import com.example.presentation.view.notification.viewModel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.Instant
-import java.util.Date
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -19,6 +22,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     @Inject
     lateinit var drawerController: DrawerController
+    private val notificationViewModel: NotificationViewModel by viewModels()
 
     override fun initViewModel() {
     }
@@ -32,20 +36,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             drawerController.closeDrawer()
         }
 
-        val newRecyclerView = binding.includedDrawer.rvNewNotification
-        val oldRecyclerView = binding.includedDrawer.rvOldNotification
+        lifecycleScope.launch {
+            notificationViewModel.alarmLists.collect{state->
+                when(state){
+                    is NetworkResult.Loading ->{
 
-        val list = mutableListOf(
-            Alarm(1,"VEGAN","TEST111",1, Date.from(Instant.now())),
-            Alarm(1,"VEGAN","TEST2222",2, Date.from(Instant.now())),
-            Alarm(1,"VEGAN","TEST3333",3, Date.from(Instant.now()))
-        )
+                    }
+                    is NetworkResult.Success ->{
+                        val unreadList = state.data!!.response!!.unreadAlarmList
+                        setUnreadAlarmList(unreadList)
+                        val readlist = state.data!!.response!!.readAlarmList
+                        setReadAlarmList(readlist)
+                    }
+                    is NetworkResult.Error ->{
+
+                    }
+                }
+            }
+        }
+
+    }
+    private fun setUnreadAlarmList(list:List<Alarm>){
+        val unreadRecyclerView = binding.includedDrawer.rvNewNotification
+
         val newRvAdapter = NotificationUnreadRvAdapter(list, this)
-        newRecyclerView.adapter = newRvAdapter
-        newRecyclerView.layoutManager = LinearLayoutManager(this)
+        unreadRecyclerView.adapter = newRvAdapter
+        unreadRecyclerView.layoutManager = LinearLayoutManager(this)
+    }
+    private fun setReadAlarmList(list:List<Alarm>){
+        val readRecyclerView = binding.includedDrawer.rvOldNotification
 
         val oldRvAdapter = NotificationReadRvAdapter(list, this)
-        oldRecyclerView.adapter = oldRvAdapter
-        oldRecyclerView.layoutManager = LinearLayoutManager(this)
+        readRecyclerView.adapter = oldRvAdapter
+        readRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
