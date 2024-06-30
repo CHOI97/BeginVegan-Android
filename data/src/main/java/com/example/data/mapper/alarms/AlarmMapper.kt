@@ -20,10 +20,8 @@ class AlarmMapper:Mapper<AlarmDto, Alarm> {
         return dtoList.map { mapFromEntity(it) }
     }
     fun mapToAlarmLists(dtolists: AlarmListDto): AlarmLists {
-//        val newList = listOf(AlarmDto(1,"information","test",1,"1-1-1",false))
         return AlarmLists(
             unreadAlarmList = fromDtoList(dtolists.unreadAlarmResList),
-//            unreadAlarmList = fromDtoList(newList),
             readAlarmList = fromDtoList(dtolists.readAlarmResList)
         )
     }

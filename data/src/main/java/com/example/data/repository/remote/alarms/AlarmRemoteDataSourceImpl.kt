@@ -1,6 +1,5 @@
 package com.example.data.repository.remote.alarms
 
-import com.example.data.mapper.alarms.AlarmMapper
 import com.example.data.model.alarms.GetAlarmResponse
 import com.example.data.model.alarms.PostAlarmResponse
 import com.example.data.retrofit.AlarmService
@@ -13,8 +12,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AlarmRemoteDataSourceImpl @Inject constructor(
-    private val alarmService: AlarmService,
-    private val alarmMapper: AlarmMapper
+    private val alarmService: AlarmService
 ) :AlarmRemoteDataSource {
     override suspend fun getAlarms(accessToken:String): ApiResponse<GetAlarmResponse> {
         return alarmService.getAlarms(accessToken).suspendOnSuccess {

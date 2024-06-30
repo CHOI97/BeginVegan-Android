@@ -24,8 +24,8 @@ object AlarmModule {
 
     @Provides
     @Singleton
-    fun provideAlarmRemoteDataSource(alarmService: AlarmService, alarmMapper: AlarmMapper): AlarmRemoteDataSource {
-        return AlarmRemoteDataSourceImpl(alarmService, alarmMapper)
+    fun provideAlarmRemoteDataSource(alarmService: AlarmService): AlarmRemoteDataSource {
+        return AlarmRemoteDataSourceImpl(alarmService)
     }
 
     @Provides
