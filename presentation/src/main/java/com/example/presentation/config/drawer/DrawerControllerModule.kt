@@ -19,7 +19,6 @@ object DrawerControllerModule {
             val drawerLayout: DrawerLayout = activity.findViewById(R.id.dl_drawer)
             drawerLayout.openDrawer(GravityCompat.END)
         }
-
         override fun closeDrawer() {
             val drawerLayout: DrawerLayout = activity.findViewById(R.id.dl_drawer)
             drawerLayout.closeDrawer(GravityCompat.END)

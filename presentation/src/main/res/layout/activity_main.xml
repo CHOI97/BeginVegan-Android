@@ -29,10 +29,21 @@
 
         <include
             android:id="@+id/included_drawer"
-            layout="@layout/include_notification_drawer"
+            layout="@layout/fragment_notification_drawer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right" />
-
+<!--        <androidx.fragment.app.FragmentContainerView-->
+<!--            android:id="@+id/fcw_drawer_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:name="androidx.navigation.fragment.NavHostFragment"-->
+<!--            app:defaultNavHost="true"-->
+<!--            app:navGraph="@navigation/nav_drawer_graph" />-->
+<!--        <FrameLayout-->
+<!--            android:id="@+id/fl_drawer_container"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            />-->
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

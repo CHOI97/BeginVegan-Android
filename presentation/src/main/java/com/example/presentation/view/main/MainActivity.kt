@@ -1,8 +1,12 @@
 package com.example.presentation.view.main
 
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.alarms.Alarm
 import com.example.presentation.R
@@ -12,6 +16,7 @@ import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.DrawerController
 import com.example.presentation.view.notification.adapter.NotificationReadRvAdapter
 import com.example.presentation.view.notification.adapter.NotificationUnreadRvAdapter
+import com.example.presentation.view.notification.view.NotificationDrawerFragment
 import com.example.presentation.view.notification.viewModel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,8 +32,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun initViewModel() {
     }
     override fun init() {
+        setDrawer()
+    }
+
+    private fun setDrawer(){
         binding.dlDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         setDrawerRv()
+//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcw_drawer_container) as NavHostFragment
+//        val navController = navHostFragment.findNavController()
+//        navController.navigate(R.id.notificationDrawerFragment)
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.fl_drawer_container,NotificationDrawerFragment())
+//            .commit()
     }
 
     private fun setDrawerRv(){
@@ -57,14 +72,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     }
     private fun setUnreadAlarmList(list:List<Alarm>){
-        val unreadRecyclerView = binding.includedDrawer.rvNewNotification
+        val unreadRecyclerView = binding.includedDrawer.rvUnreadNotification
 
-        val newRvAdapter = NotificationUnreadRvAdapter(list, this)
-        unreadRecyclerView.adapter = newRvAdapter
-        unreadRecyclerView.layoutManager = LinearLayoutManager(this)
+        if(list.isEmpty()){
+            binding.includedDrawer.tvUnreadTitle.isVisible = false
+            unreadRecyclerView.isVisible = false
+            binding.includedDrawer.vDivider.isVisible = false
+        }else{
+            val newRvAdapter = NotificationUnreadRvAdapter(list,this)
+            unreadRecyclerView.adapter = newRvAdapter
+            unreadRecyclerView.layoutManager = LinearLayoutManager(this)
+        }
     }
     private fun setReadAlarmList(list:List<Alarm>){
-        val readRecyclerView = binding.includedDrawer.rvOldNotification
+        val readRecyclerView = binding.includedDrawer.rvReadNotification
 
         val oldRvAdapter = NotificationReadRvAdapter(list, this)
         readRecyclerView.adapter = oldRvAdapter
