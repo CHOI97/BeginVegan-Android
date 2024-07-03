@@ -11,7 +11,7 @@ import com.example.presentation.base.BaseActivity
 import com.example.presentation.config.navigation.home.HomeNavigationHandler
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.ActivityMainBinding
-import com.example.presentation.view.home.viewModel.VeganTestViewModel
+import com.example.presentation.view.home.veganTest.viewModel.VeganTestViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
