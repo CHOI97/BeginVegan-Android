@@ -17,11 +17,11 @@
 <!--                비즈니스 신청으로 인한 사용 불가 - 원본 앱-->
 <!--                <data-->
 <!--                    android:host="oauth"-->
-<!--                    android:scheme="kakao17256ef458637114ac2cd1d6e2cd44c2" />-->
+<!--                    android:scheme="" />-->
 <!--                비즈니스 신청으로 인한 테스트 앱 키 -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao${KAKAO_REDIRECT_URI_TEST}"/>
+                    android:scheme="kakao${KAKAO_API_KEY_TEST}"/>
             </intent-filter>
         </activity>
         <activity

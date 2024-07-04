@@ -81,4 +81,7 @@ dependencies {
     implementation("com.github.skydoves:sandwich:2.0.8")
     implementation("com.github.skydoves:sandwich-retrofit:2.0.8") // For Retrofit (Android)
 
+
+    // KaKao Login
+    implementation(Dependencies.KAKAO_LOGIN)
 }
