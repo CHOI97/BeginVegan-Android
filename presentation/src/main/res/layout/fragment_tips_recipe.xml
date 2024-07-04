@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.tips.view.TipsRecipeFragment">
+        tools:context=".view.tips.view.TipsRecipeFragment"
+        android:background="@color/color_background">
         <ImageButton
             android:id="@+id/ib_tooltip_recipe_for_me"
             android:layout_width="wrap_content"
@@ -40,6 +41,17 @@
                 android:textColor="@color/color_text_01"
                 android:text="@string/tips_recipe_filter_for_me"/>
         </LinearLayout>
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/selector_ic_checkbox"
+            android:background="@color/color_background"
+            android:textOn="@string/tips_recipe_filter_for_me"
+            android:textOff="@string/tips_recipe_filter_for_me"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ib_tooltip_recipe_for_me"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_4"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recipe"
             android:layout_width="match_parent"
