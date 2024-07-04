@@ -23,8 +23,7 @@ object DrawerControllerModule {
         override fun closeDrawer() {
             val drawerLayout: DrawerLayout = activity.findViewById(R.id.dl_drawer)
             drawerLayout.closeDrawer(GravityCompat.END)
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
-
     }
 }

@@ -14,6 +14,9 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,43 +27,45 @@ class LoginViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase
 ) : ViewModel() {
 
-
     private val mCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Timber.d("KaKao Login | CallBack 로그인 실패 $error")
         } else if (token != null) {
             Timber.d("KaKao Login | CallBack 로그인 성공 ${token.accessToken}")
+            fetchJwtToken(token.accessToken,token.refreshToken)
             fetchKakaoUserData()
+            _loginState.value = true
         }
     }
 
+//    fun signUp(email: String, providerId: String) {
+//        viewModelScope.launch {
+//            val result = signUpUseCase.invoke(email, providerId)
+//            Timber.d("$result")
+//        }
+//    }
 
-    fun signUp(email: String, providerId: String) {
-        viewModelScope.launch {
-            val result = signUpUseCase.invoke(email, providerId)
-            Timber.d("$result")
-        }
-    }
-
-    private val _loginState = MutableLiveData<Boolean>()
+    private val _loginState = MutableLiveData(false)
     val loginState: LiveData<Boolean> = _loginState
 
-
-    fun signIn(email: String, providerId: String) {
-        viewModelScope.launch {
-            signInUseCase.invoke(email, providerId).onSuccess {
-                User.accessToken = it.accessToken
-                User.refreshToken = it.refreshToken
-                _loginState.postValue(true)
-            }.onFailure {
-                _loginState.postValue(false)
-            }
-        }
-    }
+//    fun signIn(email: String, providerId: String) {
+//        viewModelScope.launch {
+//            signInUseCase.invoke(email, providerId).onSuccess {
+//                User.accessToken = it.accessToken
+//                User.refreshToken = it.refreshToken
+//                _loginState.value = true
+//            }.onFailure {
+//                _loginState.value = false
+//            }
+//        }
+//    }
 
     fun kakaoLogin(context: Context) {
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+            Timber.d("카카오 로그인: isKakaoTalkLoginAvailable ")
             UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
+                Timber.d("카카오 로그인: loginWithKakaoTalk ")
+
                 if (error != null) {
                     Timber.d("카카오톡으로 로그인 실패 $error")
 
@@ -74,18 +79,27 @@ class LoginViewModel @Inject constructor(
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = mCallback)
                 } else if (token != null) {
                     Timber.d("카카오톡으로 로그인 성공 ${token.accessToken}")
+                    fetchJwtToken(token.accessToken,token.refreshToken)
+                    fetchKakaoUserData()
+                    _loginState.value = true
                 }
             }
         } else {
+            Timber.d("카카오 계정 로그인")
             UserApiClient.instance.loginWithKakaoAccount(context, callback = mCallback)
         }
     }
 
+    private fun fetchJwtToken(accessToken: String,refreshToken: String){
+        User.accessToken = accessToken
+        User.refreshToken = refreshToken
+    }
     private fun fetchKakaoUserData() {
         UserApiClient.instance.me { user, error ->
             if (error != null) {
                 Timber.d("KaKao User 사용자 정보 요청 실패 $error")
             } else if (user != null) {
+                var scopes = mutableListOf<String>()
                 Timber.d(
                     "KaKao User 사용자 정보 요청 성공" +
                             "\n회원번호: ${user.id}" +
@@ -93,9 +107,7 @@ class LoginViewModel @Inject constructor(
                             "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                             "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
                 )
-
             }
         }
     }
-
 }
