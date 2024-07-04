@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
-class VeganTypeModule {
+object VeganTypeModule {
     @Singleton
     @Provides
     fun provideVeganTypeService(retrofit: Retrofit): VeganTypeService {

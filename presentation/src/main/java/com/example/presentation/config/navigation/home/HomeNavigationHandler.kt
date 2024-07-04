@@ -5,6 +5,6 @@ import androidx.navigation.NavController
 interface HomeNavigationHandler {
     fun navigateToHome()
     fun navigateToMap()
-    fun navigateToTips()
+    fun navigateToTips(fromTest: Boolean)
     fun navigateToMypage()
 }

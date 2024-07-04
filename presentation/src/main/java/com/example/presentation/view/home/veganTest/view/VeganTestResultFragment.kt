@@ -70,7 +70,7 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     }
     private fun goRecommendRecipe(){
         binding.tvBtnGoRecommendRecipe.setOnClickListener {
-            mainNavigationHandler.navigateToMainHome()
+            mainNavigationHandler.navigateToMainHome(true)
         }
     }
 }

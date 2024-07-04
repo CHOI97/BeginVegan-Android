@@ -1,5 +1,8 @@
 package com.example.presentation.config.navigation.main
 
+import androidx.navigation.NavArgument
+import androidx.navigation.NavController
+
 interface MainNavigationHandler {
     fun navigateToEditProfile()
     fun navigateToMyRestaurant()
@@ -11,7 +14,9 @@ interface MainNavigationHandler {
 
     fun navigateToBeganTestResult()
 
-    fun navigateToMainHome()
+    fun navigateToMainHome(fromTest:Boolean = false)
 
     fun popBackStack()
+
+    fun navController():NavController
 }
