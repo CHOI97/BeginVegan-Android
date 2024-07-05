@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
-object AlarmModule {
+class AlarmModule {
     @Singleton
     @Provides
     fun provideAlarmService(retrofit: Retrofit): AlarmService {

@@ -1,9 +1,7 @@
 package com.example.data.repository.remote.alarms
 
 import com.example.data.model.alarms.GetAlarmResponse
-import com.example.data.model.alarms.PostAlarmResponse
 import com.example.data.retrofit.AlarmService
-import com.example.domain.model.AuthToken
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError
@@ -24,14 +22,4 @@ class AlarmRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-
-    override suspend fun postAlarms(): ApiResponse<PostAlarmResponse> {
-        return alarmService.postAlarms(AuthToken("","").accessToken).suspendOnSuccess {
-            Timber.d("GetAlarms successful")
-            ApiResponse.Success(true)
-        }.suspendOnError {
-            Timber.e("GetAlarms error: ${this.errorBody}")
-            ApiResponse.Failure.Error(this)
-        }
-    }
 }

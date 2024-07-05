@@ -92,8 +92,8 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun fetchJwtToken(accessToken: String,refreshToken: String){
-        User.accessToken = accessToken
-        User.refreshToken = refreshToken
+        User.accessToken = "Bearer $accessToken"
+        User.refreshToken = "Bearer $refreshToken"
     }
     private fun fetchKakaoUserData() {
         UserApiClient.instance.me { user, error ->

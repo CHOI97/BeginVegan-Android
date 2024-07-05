@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +30,7 @@ class NotificationViewModel @Inject constructor(
     }
 
     private suspend fun getAlarmList(){
+        Timber.d("GetAlarm Start: ${User.accessToken}")
         unreadAlarmUseCase.invoke(User.accessToken).catch {
             _alarmLists.value = NetworkResult.Loading(true)
         }.collectLatest {result ->
