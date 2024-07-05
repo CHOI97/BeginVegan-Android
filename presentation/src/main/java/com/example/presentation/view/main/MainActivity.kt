@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.alarms.Alarm
 import com.example.presentation.R
+import com.example.presentation.auth.User
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityMainBinding
 import com.example.presentation.network.NetworkResult

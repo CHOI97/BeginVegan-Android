@@ -83,4 +83,7 @@ dependencies {
 
     //Coroutine
     implementation(Dependencies.KOTLINX_COROUTINES)
+
+    // KaKao Login
+    implementation(Dependencies.KAKAO_LOGIN)
 }
