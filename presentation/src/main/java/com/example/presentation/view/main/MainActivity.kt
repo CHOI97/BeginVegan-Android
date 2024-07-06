@@ -1,26 +1,12 @@
 package com.example.presentation.view.main
 
-<<<<<<< Updated upstream
-import androidx.activity.viewModels
-=======
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.core.view.GravityCompat
->>>>>>> Stashed changes
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
-import com.example.presentation.auth.User
 import com.example.presentation.base.BaseActivity
-import com.example.presentation.config.navigation.home.HomeNavigationHandler
-import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.ActivityMainBinding
-import com.example.presentation.view.home.veganTest.viewModel.VeganTestViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
