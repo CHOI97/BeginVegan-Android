@@ -201,13 +201,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="tipsMagazineDetailFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-790" />
+                            <option name="y" value="708" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="veganTestFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-157" />
-                            <option name="y" value="374" />
+                            <option name="x" value="-119" />
+                            <option name="y" value="356" />
                           </Point>
                         </option>
                         <option name="myPositions">

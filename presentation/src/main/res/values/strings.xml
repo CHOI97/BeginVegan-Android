@@ -334,6 +334,7 @@
     <string name="vegan_type_pesco">페스코 베지테리언</string>
     <string name="vegan_type_pollo">폴로 베지테리언</string>
     <string name="vegan_type_flexitarian">플렉시테리언</string>
+
     <string-array name="vegan_type">
         <item>알고 있지 않아요</item>
         <item>비건</item>
@@ -343,6 +344,16 @@
         <item>페스코 베지테리언</item>
         <item>폴로 베지테리언</item>
         <item>플렉시테리언</item>
+    </string-array>
+    <string-array name="vegan_types_eng">
+        <item>NONE</item>
+        <item>VEGAN</item>
+        <item>LACTO_VEGETARIAN</item>
+        <item>OVO_VEGETARIAN</item>
+        <item>LACTO_OVO_VEGETARIAN</item>
+        <item>PASCATARIAN</item>
+        <item>POLLOTARIAN</item>
+        <item>FLEXITARIAN</item>
     </string-array>
 
     <!-- 온보딩 -->
@@ -398,31 +409,37 @@
     <!-- Vegan Test -->
     <string name="vegan_test_title">나의 채식 성향은?</string>
     <string name="vegan_test_description">비거너로의 여정을 떠나기 전,\n나는 어떤 채식 성향을 가지고 있는지 알아봐요!</string>
-    <string name="vegan_test_description_vegan">동물로부터 나오는 모든 것을 선호하지 않아요.</string>
-    <string name="vegan_test_description_lacto">채식을 지향하지만, 유제품도 선호해요.</string>
-    <string name="vegan_test_description_ovo">고기, 유제품은 선호하지 않지만, 달걀 섭취는 부담없어요.</string>
-    <string name="vegan_test_description_lacto_ovo">동물로부터 나온 우유나 달걀 섭취까지도 부담없어요.</string>
-    <string name="vegan_test_description_pesco">육류는 전혀 먹고싶지 않아요.</string>
-    <string name="vegan_test_description_pollo">돼지고기, 소고기같은 빨간 고기는 선호하지 않아요.</string>
-    <string name="vegan_test_description_flexitarian">채식도 좋아하지만, 다양한 음식을 즐기는 것을 좋아해요.</string>
+    <string-array name="vegan_test_descriptions">
+        <item>동물로부터 나오는 모든 것을 선호하지 않아요.</item>
+        <item>채식을 지향하지만, 유제품도 선호해요.</item>
+        <item>고기, 유제품은 선호하지 않지만, 달걀 섭취는 부담없어요.</item>
+        <item>동물로부터 나온 우유나 달걀 섭취까지도 부담없어요.</item>
+        <item>육류는 전혀 먹고싶지 않아요.</item>
+        <item>돼지고기, 소고기같은 빨간 고기는 선호하지 않아요.</item>
+        <item>채식도 좋아하지만, 다양한 음식을 즐기는 것을 좋아해요.</item>
+    </string-array>
 
     <string name="vegan_test_result_title">나는 어떤 비거너?</string>
     <string name="vegan_test_result_description">"<font color='#FF009861'>%1$s</font> 님은\n이런 채식 성향을 가지고 있어요!"</string>
     <string name="vegan_test_result_my_type">나의 채식 성향은</string>
-    <string name="vegan_test_result_vegan_description">Beginning + Vegetarian</string>
-    <string name="vegan_test_result_vegan_explanation">모든 동물성 식품을 섭취하지 않고, 식품 외에도 동물의 희생이 담긴 제품도 반대하는 등 완전한 비건이자 채식주의자예요!</string>
-    <string name="vegan_test_result_lacto_description">Lacto(우유) + Vegetarian</string>
-    <string name="vegan_test_result_lacto_explanation">고기, 생선, 달걀을 포함한 모든 동물성 식품을 섭취하지 않지만 우유, 꿀, 버터, 치즈, 요구르트 등의 유제품은 즐기기도 하는 채식주의자예요!</string>
-    <string name="vegan_test_result_ovo_description">Ovo(알) + Vegetarian</string>
-    <string name="vegan_test_result_ovo_explanation">고기, 생선, 유제품을 포함한 모든 동물성 식품을 섭취하지 않지만, 달걀과 같은 동물의 알은 섭취하기도 하는 채식주의자예요!</string>
-    <string name="vegan_test_result_lacto_ovo_description">Lacto(우유) + Ovo(알) + Vegetarian</string>
-    <string name="vegan_test_result_lacto_ovo_explanation">모든 육류와 해산물을 섭취하지 않지만,\n달걀이나 꿀, 우유처럼 동물에게서 자연스럽게\n얻을 수 있는 식품까지는 즐기기도 하는\n채식주의자예요!</string>
-    <string name="vegan_test_result_pesco_description">Pesco(생선) + Vegetarian</string>
-    <string name="vegan_test_result_pesco_explanation">가급적 육류를 피하지만,\n유제품, 달걀, 해산물 등의 약간의 동물성 식품을 \n즐기기도 하는 채식주의자예요!</string>
-    <string name="vegan_test_result_pollo_description">Pollo(닭고기) + Vegetarian</string>
-    <string name="vegan_test_result_pollo_explanation">채식을 중심으로 한 식생활을 즐기고,\n 돼지고기, 소고기와 같은 붉은 고기는 섭취하지 않지만 유제품, 생선, 닭고기는 섭취하는 비교적 자유로운 채식주의자예요!</string>
-    <string name="vegan_test_result_flexitarian_description">Flexible(유연한) + Vegetarian</string>
-    <string name="vegan_test_result_flexitarian_explanation">평소에는 채식을 하지만,\n상황에 따라 유동적으로 육식을 겸하기도 하는\n자유로운 채식주의자예요!</string>
+    <string-array name="vegan_test_result_descriptions">
+        <item>Beginning + Vegetarian</item>
+        <item>Lacto(우유) + Vegetarian</item>
+        <item>Ovo(알) + Vegetarian</item>
+        <item>Lacto(우유) + Ovo(알) + Vegetarian</item>
+        <item>Pesco(생선) + Vegetarian</item>
+        <item>Pollo(닭고기) + Vegetarian</item>
+        <item>Flexible(유연한) + Vegetarian</item>
+    </string-array>
+    <string-array name="vegan_test_result_explanations">
+        <item>모든 동물성 식품을 섭취하지 않고, 식품 외에도 동물의 희생이 담긴 제품도 반대하는 등 완전한 비건이자 채식주의자예요!</item>
+        <item>고기, 생선, 달걀을 포함한 모든 동물성 식품을 섭취하지 않지만 우유, 꿀, 버터, 치즈, 요구르트 등의 유제품은 즐기기도 하는 채식주의자예요!</item>
+        <item>고기, 생선, 유제품을 포함한 모든 동물성 식품을 섭취하지 않지만, 달걀과 같은 동물의 알은 섭취하기도 하는 채식주의자예요!</item>
+        <item>모든 육류와 해산물을 섭취하지 않지만,\n달걀이나 꿀, 우유처럼 동물에게서 자연스럽게\n얻을 수 있는 식품까지는 즐기기도 하는\n채식주의자예요!</item>
+        <item>가급적 육류를 피하지만,\n유제품, 달걀, 해산물 등의 약간의 동물성 식품을 \n즐기기도 하는 채식주의자예요!</item>
+        <item>채식을 중심으로 한 식생활을 즐기고,\n 돼지고기, 소고기와 같은 붉은 고기는 섭취하지 않지만 유제품, 생선, 닭고기는 섭취하는 비교적 자유로운 채식주의자예요!</item>
+        <item>평소에는 채식을 하지만,\n상황에 따라 유동적으로 육식을 겸하기도 하는\n자유로운 채식주의자예요!</item>
+    </string-array>
     <string name="vegan_test_result_recommend_recipe">"<font color='#FF009861'>%1$s</font> 님께 딱 맞는 레시피로\n비거너에 한 발짝 다가가 보세요!"</string>
 
     <!-- MyPage -->
