@@ -22,9 +22,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.ibTooltipRecipeForMe.setOnClickListener {
             openDialogRecipeForMe()
         }
-//        binding.llBtnRecipeForMe.setOnClickListener {
-//            //나를 위한 레시피 필터 기능
-//        }
+
+        setToggle()
     }
 
     private fun openDialogRecipeForMe(){
@@ -32,5 +31,15 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
     private fun openDialogRecipeDetail(){
         TipsRecipeDetailDialog().show(childFragmentManager, "TipsRecipeDetail")
+    }
+
+    private fun setToggle(){
+        binding.tbRecipeForMe.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+
+            }else{
+
+            }
+        }
     }
 }
