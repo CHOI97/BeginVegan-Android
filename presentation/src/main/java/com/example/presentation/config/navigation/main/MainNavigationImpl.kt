@@ -1,8 +1,10 @@
 package com.example.presentation.config.navigation.main
 
+import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
+import com.example.presentation.view.home.veganTest.view.VeganTestResultFragmentDirections
 import javax.inject.Inject
 
 class MainNavigationImpl @Inject constructor(private val navController: NavController) : MainNavigationHandler {
@@ -39,8 +41,17 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
         navController.navigate(R.id.action_veganTestFragment_to_veganTestResultFragment)
     }
 
-    override fun navigateToMainHome() {
-        navController.navigate(R.id.action_veganTestResultFragment_to_mainFragment)
+    override fun navigateToMainHome(fromTest: Boolean) {
+        val action = VeganTestResultFragmentDirections.actionVeganTestResultFragmentToMainFragment(fromTest)
+        navController.navigate(action)
+    }
+
+    override fun popBackStack() {
+        navController.popBackStack()
+    }
+
+    override fun navController():NavController {
+        return navController
     }
 
 

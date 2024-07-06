@@ -1,26 +1,20 @@
 package com.example.presentation.view.main
 
-import android.content.Context
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.alarms.Alarm
 import com.example.presentation.R
-import com.example.presentation.auth.User
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityMainBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.DrawerController
 import com.example.presentation.view.notification.adapter.NotificationReadRvAdapter
 import com.example.presentation.view.notification.adapter.NotificationUnreadRvAdapter
-import com.example.presentation.view.notification.view.NotificationDrawerFragment
 import com.example.presentation.view.notification.viewModel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

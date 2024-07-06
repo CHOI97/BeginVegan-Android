@@ -11,14 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_primary_variant_02"
-        tools:context=".view.home.VeganTestResultFragment">
+        tools:context=".view.home.veganTest.view.VeganTestResultFragment">
 
         <include
             android:id="@+id/included_toolbar"
             layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/vegan_test_result_title}" />
+            app:title="@{@string/vegan_test_result_title}"
+            app:backButtonVisible="@{true}"
+            app:notificationVisible="@{false}"
+            app:colorMode="@{true}"/>
 
         <TextView
             android:id="@+id/tv_description"
@@ -58,7 +61,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_4"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="@string/vegan_type_vegan"
                 android:textColor="@color/color_primary_variant_01"
                 android:textSize="@dimen/text_test_result" />
 
@@ -69,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginBottom="@dimen/margin_40"
-                android:text="@string/vegan_test_result_vegan_description"
                 android:textColor="@color/color_text_02" />
 
             <include
@@ -90,8 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_36"
-                android:gravity="center"
-                android:text="@string/vegan_test_result_vegan_explanation" />
+                android:gravity="center"/>
         </LinearLayout>
 
         <ImageView

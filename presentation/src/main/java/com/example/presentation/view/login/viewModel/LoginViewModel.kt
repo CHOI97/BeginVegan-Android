@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.AuthToken
 import com.example.domain.useCase.auth.SignInUseCase
-import com.example.domain.useCase.auth.SignUpUseCase
 import com.example.presentation.auth.User
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -24,8 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase,
-    private val signUpUseCase: SignUpUseCase
+    private val signInUseCase: SignInUseCase
 ) : ViewModel() {
 
     private val mCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -33,9 +31,8 @@ class LoginViewModel @Inject constructor(
             Timber.d("KaKao Login | CallBack 로그인 실패 $error")
         } else if (token != null) {
             Timber.d("KaKao Login | CallBack 로그인 성공 ${token.accessToken}")
-            fetchJwtToken(token.accessToken,token.refreshToken)
             fetchKakaoUserData()
-            _loginState.value = true
+
         }
     }
 
@@ -49,17 +46,17 @@ class LoginViewModel @Inject constructor(
     private val _loginState = MutableLiveData(false)
     val loginState: LiveData<Boolean> = _loginState
 
-//    fun signIn(email: String, providerId: String) {
-//        viewModelScope.launch {
-//            signInUseCase.invoke(email, providerId).onSuccess {
-//                User.accessToken = it.accessToken
-//                User.refreshToken = it.refreshToken
-//                _loginState.value = true
-//            }.onFailure {
-//                _loginState.value = false
-//            }
-//        }
-//    }
+    fun signIn(email: String, providerId: String) {
+        viewModelScope.launch {
+            signInUseCase.invoke(email, providerId).onSuccess {
+                User.accessToken = it.accessToken
+                User.refreshToken = it.refreshToken
+                _loginState.value = true
+            }.onFailure {
+                _loginState.value = false
+            }
+        }
+    }
 
     fun kakaoLogin(context: Context) {
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
@@ -80,9 +77,7 @@ class LoginViewModel @Inject constructor(
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = mCallback)
                 } else if (token != null) {
                     Timber.d("카카오톡으로 로그인 성공 ${token.accessToken}")
-                    fetchJwtToken(token.accessToken,token.refreshToken)
                     fetchKakaoUserData()
-                    _loginState.value = true
                 }
             }
         } else {
@@ -91,10 +86,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun fetchJwtToken(accessToken: String,refreshToken: String){
-        User.accessToken = "Bearer $accessToken"
-        User.refreshToken = "Bearer $refreshToken"
-    }
+//    private fun fetchJwtToken(accessToken: String,refreshToken: String){
+//        User.accessToken = "Bearer $accessToken"
+//        User.refreshToken = "Bearer $refreshToken"
+//    }
     private fun fetchKakaoUserData() {
         UserApiClient.instance.me { user, error ->
             if (error != null) {
@@ -108,6 +103,8 @@ class LoginViewModel @Inject constructor(
                             "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                             "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
                 )
+                user.kakaoAccount?.email?.let { signIn(it,user.id.toString()) }
+
             }
         }
     }

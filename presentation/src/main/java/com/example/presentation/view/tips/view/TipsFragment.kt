@@ -1,5 +1,6 @@
 package com.example.presentation.view.tips.view
 
+import androidx.navigation.fragment.navArgs
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainTipsBinding
@@ -15,9 +16,6 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
     @Inject
     lateinit var drawerController: DrawerController
     override fun init() {
-        binding.includedToolbar.ibNotification.setOnClickListener {
-        }
-
         binding.vpViewpagerArea.adapter = TipsVpAdapter(childFragmentManager, lifecycle)
         TabLayoutMediator(binding.tlTab, binding.vpViewpagerArea){ tab, position ->
             when(position){
@@ -26,12 +24,23 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
             }
         }.attach()
 
+        checkFromTest()
         setOpenDrawer()
     }
 
     private fun setOpenDrawer() {
         binding.includedToolbar.ibNotification.setOnClickListener {
             drawerController.openDrawer()
+        }
+    }
+
+    private fun checkFromTest(){
+        val args: TipsFragmentArgs by navArgs()
+        if(args.fromTest){
+            //나를 위한 레시피
+            binding.vpViewpagerArea.post{
+                binding.vpViewpagerArea.currentItem = 1
+            }
         }
     }
 }

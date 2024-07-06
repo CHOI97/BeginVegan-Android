@@ -33,8 +33,6 @@ object DrawerControllerModule {
             drawerLayout.closeDrawer(GravityCompat.END)
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
-//            val preventMissTouch: View = activity.findViewById(R.id.v_prevent_miss_touch)
-//            preventMissTouch.visibility = View.GONE
         }
     }
 }
