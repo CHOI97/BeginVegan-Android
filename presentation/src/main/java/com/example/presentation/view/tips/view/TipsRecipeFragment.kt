@@ -22,9 +22,9 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.ibTooltipRecipeForMe.setOnClickListener {
             openDialogRecipeForMe()
         }
-        binding.llBtnRecipeForMe.setOnClickListener {
-            //나를 위한 레시피 필터 기능
-        }
+//        binding.llBtnRecipeForMe.setOnClickListener {
+//            //나를 위한 레시피 필터 기능
+//        }
     }
 
     private fun openDialogRecipeForMe(){

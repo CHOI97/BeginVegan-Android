@@ -21,42 +21,45 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/margin_24"
             android:layout_marginEnd="@dimen/margin_16"/>
-        <LinearLayout
-            android:id="@+id/ll_btn_recipe_for_me"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_tooltip_recipe_for_me"
-            android:layout_marginTop="@dimen/margin_20"
-            android:layout_marginEnd="@dimen/margin_4"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_checkbox_on"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/body_2_regular"
-                android:textColor="@color/color_text_01"
-                android:text="@string/tips_recipe_filter_for_me"/>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ll_btn_recipe_for_me"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/ib_tooltip_recipe_for_me"-->
+<!--            android:layout_marginTop="@dimen/margin_20"-->
+<!--            android:layout_marginEnd="@dimen/margin_4"-->
+<!--            android:gravity="center">-->
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/ic_checkbox_on"/>-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/body_2_regular"-->
+<!--                android:textColor="@color/color_text_01"-->
+<!--                android:text="@string/tips_recipe_filter_for_me"/>-->
+<!--        </LinearLayout>-->
         <ToggleButton
+            android:id="@+id/tb_recipe_for_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/selector_ic_checkbox"
-            android:background="@color/color_background"
+            android:background="@color/color_transparent"
+            style="@style/body_2_regular"
             android:textOn="@string/tips_recipe_filter_for_me"
             android:textOff="@string/tips_recipe_filter_for_me"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ib_tooltip_recipe_for_me"
             android:layout_marginTop="@dimen/margin_20"
-            android:layout_marginEnd="@dimen/margin_4"/>
+            android:layout_marginEnd="@dimen/margin_4"
+            android:minHeight="@dimen/item_0"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recipe"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_0"
-            app:layout_constraintTop_toBottomOf="@id/ll_btn_recipe_for_me"
+            app:layout_constraintTop_toBottomOf="@id/tb_recipe_for_me"
             android:layout_marginTop="@dimen/margin_8"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/item_recipe"/>
