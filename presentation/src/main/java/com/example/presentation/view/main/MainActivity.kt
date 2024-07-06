@@ -1,6 +1,12 @@
 package com.example.presentation.view.main
 
+<<<<<<< Updated upstream
 import androidx.activity.viewModels
+=======
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.core.view.GravityCompat
+>>>>>>> Stashed changes
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -23,5 +29,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
     override fun init() {
         binding.dlDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if(binding.dlDrawer.isDrawerOpen(GravityCompat.END)){
+                    binding.dlDrawer.closeDrawer(GravityCompat.END)
+                }else{
+
+                }
+            }
+
+        })
+
     }
 }

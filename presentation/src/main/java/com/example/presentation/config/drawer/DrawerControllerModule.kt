@@ -24,6 +24,7 @@ object DrawerControllerModule {
             val drawerLayout: DrawerLayout = activity.findViewById(R.id.dl_drawer)
             drawerLayout.closeDrawer(GravityCompat.END)
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
         }
     }
 }

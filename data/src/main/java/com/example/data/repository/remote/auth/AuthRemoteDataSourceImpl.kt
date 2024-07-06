@@ -15,15 +15,15 @@ import javax.inject.Inject
 class AuthRemoteDataSourceImpl @Inject constructor(
     private val userService: UserService
 ) : AuthRemoteDataSource {
-    override suspend fun signUp(authRequest: AuthRequest): ApiResponse<SignUpResponse> {
-        return userService.signUp(authRequest).suspendOnSuccess {
-            Timber.d("SignUp successful")
-            ApiResponse.Success(true)
-        }.suspendOnError {
-            Timber.e("SignUp error: ${this.errorBody}")
-            ApiResponse.Failure.Error(this)
-        }
-    }
+//    override suspend fun signUp(authRequest: AuthRequest): ApiResponse<SignUpResponse> {
+//        return userService.signUp(authRequest).suspendOnSuccess {
+//            Timber.d("SignUp successful")
+//            ApiResponse.Success(true)
+//        }.suspendOnError {
+//            Timber.e("SignUp error: ${this.errorBody}")
+//            ApiResponse.Failure.Error(this)
+//        }
+//    }
 
     override suspend fun signIn(authRequest: AuthRequest): ApiResponse<SignInResponse> {
         return userService.signIn(authRequest).suspendOnSuccess {
