@@ -13,12 +13,20 @@ plugins {
 //    id(Plugins.KSP)
 }
 
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
+}
+
+val kakaoApiKey: String = localProperties.getProperty("KAKAO_API_KEY") ?: ""
+val kakaoApiKeyTest: String = localProperties.getProperty("KAKAO_API_KEY_TEST") ?: ""
+
+
 android {
     namespace = "com.example.presentation"
     compileSdk = DefaultConfig.COMPILE_SDK_VERSION
 
-    val localProperties = Properties()
-    localProperties.load(FileInputStream(rootProject.file("local.properties")))
 
 
     defaultConfig {
@@ -27,14 +35,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI" to localProperties.getProperty("KAKAO_API_KEY")))
-        buildConfigField("String", "KAKAO_API_KEY", localProperties.getProperty("KAKAO_API_KEY"))
-        addManifestPlaceholders(mapOf("KAKAO_REDIRECT_URI_TEST" to localProperties.getProperty("KAKAO_API_KEY_TEST")))
-        buildConfigField(
-            "String",
-            "KAKAO_API_KEY_TEST",
-            localProperties.getProperty("KAKAO_API_KEY_TEST")
-        )
+        manifestPlaceholders["KAKAO_API_KEY"] = kakaoApiKey
+        manifestPlaceholders["KAKAO_API_KEY_TEST"] = kakaoApiKeyTest
+
+        buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
+        buildConfigField("String", "KAKAO_API_KEY_TEST", "\"$kakaoApiKeyTest\"")
     }
 
     buildTypes {
