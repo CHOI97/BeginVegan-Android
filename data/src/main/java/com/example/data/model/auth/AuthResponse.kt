@@ -8,9 +8,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class AuthResponse(
     @Json(name= "message")
-    val message: String? = null,
+    val message: String? = null ,
     @Json(name= "authRes")
-    val authRes: TokenResponse? = null,
+    val authRes: TokenResponse,
     @Json(name= "signUpCompleted")
-    val signUpCompleted: Boolean? = null
+    val signUpCompleted: Boolean
 )
