@@ -36,9 +36,10 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         setErrorText()
         setInputHelper()
         setOnClickProfile()
-        setOnClickMain()
+        navigateToMain()
         setDropdown()
         setObserve()
+        setFocusTextInputLayout()
     }
 
     private fun setObserve() {
@@ -89,7 +90,16 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         }
     }
 
-    private fun setOnClickMain() {
+    private fun setFocusTextInputLayout(){
+        binding.etOnboardingEditNick.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                binding.svOnboarding.post {
+                    binding.svOnboarding.scrollTo(0, binding.tilOnboardingEditNick.top)
+                }
+            }
+        }
+    }
+    private fun navigateToMain() {
         binding.btnOnboardingNext.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

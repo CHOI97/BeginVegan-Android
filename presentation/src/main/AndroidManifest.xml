@@ -45,7 +45,7 @@
         <activity
             android:name=".view.login.view.OnboardingActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
