@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_clear" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../ic_clear.svg" />
+                            <entry key="outputName" value="ic_loading_logo" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../ic_loading_logo.svg" />
                           </map>
                         </option>
                       </PersistentState>

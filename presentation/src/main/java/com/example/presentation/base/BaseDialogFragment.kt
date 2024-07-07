@@ -64,7 +64,13 @@ abstract class BaseDialogFragment<T : ViewDataBinding>(@LayoutRes private val la
         Timber.tag(tag).d(message)
     }
 
+    protected fun setDim(dim: Float){
+        dialog?.window?.setDimAmount(dim)
+    }
 
+    protected fun setCancelAble(isAvailable: Boolean){
+        dialog?.setCancelable(isAvailable)
+    }
     protected fun View.onThrottleClick(action: (v: View) -> Unit) {
         val listener = View.OnClickListener { action(it) }
         setOnClickListener(OnThrottleClickListener(listener))
