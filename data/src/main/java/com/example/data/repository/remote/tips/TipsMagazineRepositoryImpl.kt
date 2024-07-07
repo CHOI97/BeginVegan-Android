@@ -2,7 +2,9 @@ package com.example.data.repository.remote.tips
 
 import com.example.data.mapper.tips.TipsMagazineDetailMapper
 import com.example.data.mapper.tips.TipsMagazineMapper
+import com.example.data.model.tips.TipsMagazineItemDto
 import com.example.domain.model.tips.TipsMagazineDetail
+import com.example.domain.model.tips.TipsMagazineItem
 import com.example.domain.model.tips.TipsMagazineList
 import com.example.domain.repository.tips.TipsMagazineRepository
 import com.skydoves.sandwich.ApiResponse
@@ -15,7 +17,7 @@ class TipsMagazineRepositoryImpl @Inject constructor(
     private val tipsMagazineMapper: TipsMagazineMapper,
     private val tipsMagazineDetailMapper: TipsMagazineDetailMapper
 ):TipsMagazineRepository {
-    override suspend fun getMagazineList(accessToken: String, page: Int): Result<TipsMagazineList> {
+    override suspend fun getMagazineList(accessToken: String, page: Int): Result<List<TipsMagazineItem>> {
         return try {
             val response = tipsMagazineRemoteDataSource.getMagazineList(accessToken, page)
             when (response) {
@@ -64,7 +66,7 @@ class TipsMagazineRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getHomeMagazine(accessToken: String): Result<TipsMagazineList> {
+    override suspend fun getHomeMagazine(accessToken: String): Result<List<TipsMagazineItem>> {
         return try {
             val response = tipsMagazineRemoteDataSource.getHomeMagazine(accessToken)
             when (response) {

@@ -20,7 +20,6 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
     private val magazineViewModel : MagazineViewModel by activityViewModels()
 
     private lateinit var magazineRvAdapter: TipsMagazineRvAdapter
-    private lateinit var magazineList: MutableList<MagazineResponse>
 
     override fun init() {
         binding.lifecycleOwner = this
@@ -29,24 +28,19 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
     }
 
     private fun setRvAdapter(){
-        magazineList = mutableListOf(
-            MagazineResponse(1,"title11", "editor11"),
-            MagazineResponse(2,"title22", "editor22"),
-            MagazineResponse(3,"title33", "editor33"),
-            MagazineResponse(4,"title44", "editor44")
-        )
+        magazineViewModel.magazineList.observe(this){
+            magazineRvAdapter = TipsMagazineRvAdapter(requireContext(), it)
+            binding.rvMagazine.adapter = magazineRvAdapter
+            binding.rvMagazine.layoutManager = LinearLayoutManager(this.context)
 
-        magazineRvAdapter = TipsMagazineRvAdapter(requireContext(), magazineList)
-        binding.rvMagazine.adapter = magazineRvAdapter
-        binding.rvMagazine.layoutManager = LinearLayoutManager(this.context)
-
-        magazineRvAdapter.setOnItemClickListener(object :
-            TipsMagazineRvAdapter.OnItemClickListener {
-            override fun onItemClick(magazineId:Int) {
-                mainNavigationHandler.navigateToTipsMagazineDetail()
-                magazineViewModel.setSelectedMagazineId(magazineId)
-            }
-        })
+            magazineRvAdapter.setOnItemClickListener(object :
+                TipsMagazineRvAdapter.OnItemClickListener {
+                override fun onItemClick(magazineId:Int) {
+                    mainNavigationHandler.navigateToTipsMagazineDetail()
+                    magazineViewModel.setSelectedMagazineId(magazineId)
+                }
+            })
+        }
     }
     private fun setTabBtn(){
         binding.ibFab.setOnClickListener {

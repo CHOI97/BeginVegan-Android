@@ -1,14 +1,13 @@
 package com.example.data.mapper.tips
 
 import com.example.data.model.tips.TipsMagazineItemDto
-import com.example.data.model.tips.TipsMagazineListDto
 import com.example.domain.mapper.Mapper
 import com.example.domain.model.tips.TipsMagazineItem
 import com.example.domain.model.tips.TipsMagazineList
 
-class TipsMagazineMapper:Mapper<TipsMagazineListDto, TipsMagazineList> {
-    override fun mapFromEntity(type: TipsMagazineListDto): TipsMagazineList {
-        return TipsMagazineList(type.tipsMagazineList.map { mapItem(it) })
+class TipsMagazineMapper:Mapper<List<TipsMagazineItemDto>, List<TipsMagazineItem>> {
+    override fun mapFromEntity(type: List<TipsMagazineItemDto>): List<TipsMagazineItem> {
+        return type.map { mapItem(it) }
     }
 
     private fun mapItem(type: TipsMagazineItemDto): TipsMagazineItem{

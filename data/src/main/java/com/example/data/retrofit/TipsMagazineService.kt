@@ -1,5 +1,6 @@
 package com.example.data.retrofit
 
+import com.example.data.model.tips.MagazineDetailRequest
 import com.example.data.model.tips.MagazineDetailResponse
 import com.example.data.model.tips.MagazineResponse
 import com.skydoves.sandwich.ApiResponse
@@ -18,7 +19,7 @@ interface TipsMagazineService {
     @GET("/api/v1/magazines/detail")
     suspend fun getMagazineDetail(
         @Header("Authorization") token: String,
-        @Body id: Int
+        @Query("id") id:Int
     ): ApiResponse<MagazineDetailResponse>
 
     @GET("/api/v1/home/magazine")

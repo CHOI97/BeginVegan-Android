@@ -4,10 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.tips.MagazineResponse
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.domain.model.tips.TipsMagazineItem
 import com.example.presentation.databinding.ItemMagazineBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class TipsMagazineRvAdapter(private val context:Context,private val list:MutableList<MagazineResponse>):RecyclerView.Adapter<TipsMagazineRvAdapter.RecyclerViewHolder>() {
+class TipsMagazineRvAdapter(private val context:Context,private val list:List<TipsMagazineItem>):RecyclerView.Adapter<TipsMagazineRvAdapter.RecyclerViewHolder>() {
     private var listener: OnItemClickListener? = null
 
     inner class RecyclerViewHolder(private val binding:ItemMagazineBinding):
@@ -16,6 +21,13 @@ class TipsMagazineRvAdapter(private val context:Context,private val list:Mutable
                 val item = list[position]
                 binding.tvMagazineTitle.text = item.title
                 binding.tvWriter.text = item.editor
+                binding.tbInterest.isChecked = item.isBookmarked
+                binding.tvDate.text = transferDate(item.createdDate)
+
+                Glide.with(context)
+                    .load(item.thumbnail)
+                    .transform(CenterCrop(), RoundedCorners(16))
+                    .into(binding.ivMagazineImg)
             }
         }
 
@@ -40,5 +52,13 @@ class TipsMagazineRvAdapter(private val context:Context,private val list:Mutable
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener
+    }
+
+    private fun transferDate(date:String):String{
+        val stringToDate = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+        val newDate = LocalDateTime.parse(date, stringToDate)
+
+        val dateToString = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return newDate.format(dateToString)
     }
 }

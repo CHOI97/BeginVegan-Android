@@ -8,13 +8,13 @@ data class MagazineResponse(
     @Json(name = "check")
     val check: Boolean,
     @Json(name = "information")
-    val information: TipsMagazineListDto
+    val information: List<TipsMagazineItemDto>
 )
 
-data class TipsMagazineListDto(
-    @Json(name = "tipsMagazineList")
-    val tipsMagazineList: List<TipsMagazineItemDto>
-)
+//data class TipsMagazineListDto(
+//    @Json(name = "tipsMagazineList")
+//    val tipsMagazineList: List<TipsMagazineItemDto>
+//)
 
 data class TipsMagazineItemDto(
     @Json(name = "id") val id: Int,
