@@ -108,7 +108,11 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
 
     private fun setOnClickProfile() {
         binding.civOnboardingProfile.onThrottleClick {
-            PhotoSelectDialog().show(supportFragmentManager, "PermissionDialog")
+            if(viewModel.profileImageUri.value == null){
+                PhotoSelectDialog(false).show(supportFragmentManager, "PermissionDialog")
+            }else{
+                PhotoSelectDialog(true).show(supportFragmentManager, "PermissionDialog")
+            }
         }
     }
 

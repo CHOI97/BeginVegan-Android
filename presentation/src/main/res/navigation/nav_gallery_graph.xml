@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_gallery_graph"
+    app:startDestination="@id/galleryListFragment">
+
+    <fragment
+        android:id="@+id/galleryListFragment"
+        android:name="com.example.presentation.view.gallery.view.GalleryListFragment"
+        android:label="GalleryListFragment" >
+        <action
+            android:id="@+id/action_galleryListFragment_to_selectImageFragment"
+            app:destination="@id/selectImageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectImageFragment"
+        android:name="com.example.presentation.view.gallery.view.SelectImageFragment"
+        android:label="SelectImageFragment" />
+</navigation>

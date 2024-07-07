@@ -72,6 +72,7 @@
                     android:text="@string/dialog_select_img_default"
                     android:textAlignment="textStart"
                     android:textColor="@color/color_text_01"
+                    android:visibility="gone"
                     android:textSize="14sp"/>
 
             </LinearLayout>

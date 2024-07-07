@@ -1,5 +1,6 @@
 package com.example.presentation.view.login.viewModel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,9 +17,14 @@ class OnboardingViewModel @Inject constructor() : ViewModel() {
     private var _validNickName = MutableLiveData<Boolean>()
     private var _validVeganLevel = MutableLiveData<Boolean>()
 
+    // 이름, 비건 레벨 유효성 검사 LiveData
     val validNickName: LiveData<Boolean> = _validNickName
     val validVeganLevel: LiveData<Boolean> = _validVeganLevel
 
+
+    // Profile Image LiveData
+    private val _profileImageUri = MutableLiveData<Uri?>(null)
+    val profileImageUri: LiveData<Uri?> get() = _profileImageUri
     init {
         _validNickName.value = false
         _validVeganLevel.value = false
