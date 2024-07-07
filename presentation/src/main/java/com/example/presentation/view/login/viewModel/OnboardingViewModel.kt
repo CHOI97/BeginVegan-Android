@@ -30,6 +30,9 @@ class OnboardingViewModel @Inject constructor() : ViewModel() {
         _validVeganLevel.value = false
     }
 
+    fun updateProfileImageUri(uri: Uri?){
+        _profileImageUri.value = uri
+    }
     fun validateNickName(input: String): Boolean {
         // 입력이 2~12자인지 확인
         if (input.length !in 2..12) {

@@ -46,6 +46,10 @@
             android:name=".view.login.view.OnboardingActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.gallery.view.GalleryActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

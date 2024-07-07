@@ -2,7 +2,7 @@ package com.example.data.repository.remote.auth
 
 import com.example.data.mapper.auth.AuthMapper
 import com.example.data.model.auth.AuthRequest
-import com.example.domain.model.AuthToken
+import com.example.domain.model.auth.AuthToken
 import com.example.domain.repository.auth.AuthRepository
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody

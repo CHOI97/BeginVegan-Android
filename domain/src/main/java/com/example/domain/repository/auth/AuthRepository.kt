@@ -1,6 +1,6 @@
 package com.example.domain.repository.auth
 
-import com.example.domain.model.AuthToken
+import com.example.domain.model.auth.AuthToken
 
 /** 회원 로그인, 회원가입, 추가정보 입력 Repository
  *  구현 Impl -> Data Module */

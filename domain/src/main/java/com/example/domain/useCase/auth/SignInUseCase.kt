@@ -1,6 +1,6 @@
 package com.example.domain.useCase.auth
 
-import com.example.domain.model.AuthToken
+import com.example.domain.model.auth.AuthToken
 import com.example.domain.repository.auth.AuthRepository
 import javax.inject.Inject
 

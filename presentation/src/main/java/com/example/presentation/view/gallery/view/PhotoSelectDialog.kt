@@ -18,7 +18,13 @@ class PhotoSelectDialog(private val isProfileImage: Boolean): BaseDialogFragment
     override fun init() {
         hasProfileImage()
         binding.btnGallery.setOnClickListener {
-
+            onGallery()
+        }
+        binding.btnCamera.setOnClickListener {
+            onCamera()
+        }
+        binding.btnDefault.setOnClickListener {
+            onDefault()
         }
     }
     private fun onCamera(){
