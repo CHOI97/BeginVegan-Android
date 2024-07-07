@@ -15,6 +15,10 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.presentation.config.navigation.home.HomeNavigationImpl
 import com.example.presentation.databinding.ActivityGalleryBinding
 import com.takusemba.cropme.CropLayout
 import com.takusemba.cropme.OnCropListener
@@ -27,7 +31,32 @@ class GalleryActivity: BaseActivity<ActivityGalleryBinding>(R.layout.activity_ga
     }
 
     override fun init() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcw_gallery) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        binding.ibNextUpload.setOnClickListener {
+
+        }
+        binding.ibBackUp.setOnClickListener {
+
+        }
     }
 
+//    private fun updateToolbar(fragment: Fragment) {
+//        when (fragment) {
+//            is HomeFragment -> {
+//                binding.toolbar.title = "Home"
+//                binding.toolbar.setOnClickListener {
+//                    // HomeFragment의 클릭 리스너
+//                }
+//            }
+//            is ProfileFragment -> {
+//                binding.toolbar.title = "Profile"
+//                binding.toolbar.setOnClickListener {
+//                    // ProfileFragment의 클릭 리스너
+//                }
+//            }
+//            // 다른 Fragment에 대한 설정
+//        }
+//    }
 
 }
