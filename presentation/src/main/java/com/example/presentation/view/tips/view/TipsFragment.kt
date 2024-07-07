@@ -1,5 +1,8 @@
 package com.example.presentation.view.tips.view
 
+import android.os.Bundle
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.navArgs
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
@@ -42,5 +45,26 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
                 binding.vpViewpagerArea.currentItem = 1
             }
         }
+    }
+
+
+    //Control Back Button
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupOnBackPressedCallback()
+    }
+    private fun setupOnBackPressedCallback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawerController.isDrawerOpen()) {
+                    drawerController.closeDrawer()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

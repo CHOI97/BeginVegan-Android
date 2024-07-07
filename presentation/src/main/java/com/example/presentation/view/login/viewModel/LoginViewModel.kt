@@ -11,6 +11,7 @@ import com.example.presentation.auth.User
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -85,6 +86,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+//    private fun fetchJwtToken(accessToken: String,refreshToken: String){
+//        User.accessToken = "Bearer $accessToken"
+//        User.refreshToken = "Bearer $refreshToken"
+//    }
     private fun fetchKakaoUserData() {
         UserApiClient.instance.me { user, error ->
             if (error != null) {

@@ -10,29 +10,24 @@
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/dl_drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main"
+        android:layout_height="match_parent"
+        tools:context=".view.notification.view.NotificationDrawerFragment"
+        android:background="@color/color_background"
+        android:layout_gravity="end">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcw_main_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fcw_main_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_main_graph" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <include
-            android:id="@+id/included_drawer"
-            layout="@layout/include_notification_drawer"
-            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="right" />
-
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_main_graph" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcw_drawer_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_drawer_graph"
+            android:layout_gravity="right"/>
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
