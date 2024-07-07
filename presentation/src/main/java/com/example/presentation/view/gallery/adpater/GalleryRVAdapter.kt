@@ -37,7 +37,7 @@ class GalleryRVAdapter() : ListAdapter<GalleryImage, GalleryRVAdapter.ViewHolder
         holder.bind(position, currentList[position])
         if (position != RecyclerView.NO_POSITION) {
             holder.itemView.setOnClickListener {
-                listener?.onItemClick(holder.itemView, currentList[position].imageUri, position)
+                listener?.onItemClick(holder.itemView, currentList[position], position)
                 Log.d("check position data", currentList[position].toString())
             }
         }
@@ -49,8 +49,7 @@ class GalleryRVAdapter() : ListAdapter<GalleryImage, GalleryRVAdapter.ViewHolder
     }
 
     interface OnItemClickListener {
-        fun onItemClick(v: View, data: Uri, position: Int)
-        fun onLongClick(v: View, data: Uri, position: Int)
+        fun onItemClick(v: View, data: GalleryImage, position: Int)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

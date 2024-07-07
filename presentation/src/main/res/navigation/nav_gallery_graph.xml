@@ -15,5 +15,6 @@
     <fragment
         android:id="@+id/selectImageFragment"
         android:name="com.example.presentation.view.gallery.view.SelectImageFragment"
-        android:label="SelectImageFragment" />
+        android:label="SelectImageFragment" >
+    </fragment>
 </navigation>

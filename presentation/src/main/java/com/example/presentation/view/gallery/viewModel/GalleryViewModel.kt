@@ -21,14 +21,26 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class GalleryViewModel  @Inject constructor(): ViewModel(){
+class GalleryViewModel @Inject constructor(): ViewModel(){
 
-    private val _permissionState = MutableLiveData<Boolean>(false)
+    private val _isDoneVisible = MutableLiveData(false)
+    val isDoneVisible: LiveData<Boolean> get() = _isDoneVisible
+    private val _permissionState = MutableLiveData(false)
     val permissionState: LiveData<Boolean> get() = _permissionState
 
     private val _imageList = MutableLiveData<MutableList<GalleryImage>>(mutableListOf())
     val imageList: LiveData<MutableList<GalleryImage>> get() = _imageList
 
+    private val _selectImage = MutableLiveData<GalleryImage?>(null)
+    val selectImage: LiveData<GalleryImage?> get() = _selectImage
+
+
+    fun setVisibleDone(isVisible: Boolean){
+        _isDoneVisible.value = isVisible
+    }
+    fun updateSelectImage(imageData: GalleryImage){
+        _selectImage.value = imageData
+    }
     fun updatePermissionState(isPermission: Boolean){
         _permissionState.value = isPermission
     }

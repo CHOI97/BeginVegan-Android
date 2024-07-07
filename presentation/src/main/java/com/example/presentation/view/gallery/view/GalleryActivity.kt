@@ -12,11 +12,13 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -54,26 +56,24 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
 
         }
         binding.ibBackUp.setOnClickListener {
-
+            when(navController.currentDestination?.id){
+                R.id.galleryListFragment -> finish()
+                R.id.selectImageFragment -> navController.popBackStack()
+                else -> showToast("잘못된 요청입니다")
+            }
+        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.galleryListFragment -> viewModel.setVisibleDone(false)
+                R.id.selectImageFragment -> viewModel.setVisibleDone(true)
+            }
         }
 
-        when {
-            // 갤러리 접근 권한이 있는 경우
-            ContextCompat.checkSelfPermission(
-                this,
-                galleryRequestPermission
-            ) == PackageManager.PERMISSION_GRANTED -> {
-//                showGallery()
-                Log.d("LOG", "갤러리 접근 권한이 있는 경우")
-            }
-            // 갤러리 접근 권한이 없는 경우 && 교육용 팝업
-            shouldShowRequestPermissionRationale( galleryRequestPermission) -> {
-//                requestPermission()
-                Log.d("LOG", "갤러리 접근 권한이 없는 경우 && 교육용 팝업")
-            }
-            // 권한 요청 하기
-            else -> {
-//                requestPermission()
+        viewModel.isDoneVisible.observe(this){
+            if(it){
+                binding.ibNextUpload.visibility = View.VISIBLE
+            }else{
+                binding.ibNextUpload.visibility = View.GONE
             }
         }
     }
@@ -83,35 +83,16 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
     ) {
         when (it) {
             true -> {
-                Toast.makeText(this, "권한 허가", Toast.LENGTH_SHORT).show()
+                logMessage("권한 허가")
                 viewModel.updatePermissionState(true)
             }
 
             false -> {
-                Toast.makeText(this, "권한 거부", Toast.LENGTH_SHORT).show()
+                logMessage("권한 거부")
                 viewModel.updatePermissionState(false)
             }
         }
     }
-
-        private fun getCursor(): Cursor? {
-        val projection = arrayOf(
-            MediaStore.Images.ImageColumns._ID,
-            MediaStore.Images.ImageColumns.TITLE,
-            MediaStore.Images.ImageColumns.DATE_TAKEN
-        )
-        val sortOrder = "${MediaStore.Images.ImageColumns.DATE_TAKEN} DESC"
-
-        return this.contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            projection,
-            null,
-            null,
-            sortOrder
-        )
-    }
-
-
 //    private fun updateToolbar(fragment: Fragment) {
 //        when (fragment) {
 //            is HomeFragment -> {

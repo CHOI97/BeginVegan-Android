@@ -9,12 +9,16 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentGalleryListBinding
@@ -33,9 +37,11 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>(R.layout.fr
 
     private val viewModel: GalleryViewModel by activityViewModels()
 
+    private lateinit var navController: NavController
     private lateinit var galleryRVAdapter: GalleryRVAdapter
     override fun init() {
 //        setupCropLayout()
+        navController = Navigation.findNavController(binding.root)
         viewModel.permissionState.observe(this){
             // 갤러리 이미지 가져와서 뿌리기
             showGallery()
@@ -46,10 +52,20 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>(R.layout.fr
         }
 
     }
+
     private fun setGalleryAdapter(){
         galleryRVAdapter = GalleryRVAdapter()
         binding.rvGallery.adapter = galleryRVAdapter
         galleryRVAdapter.submitList(viewModel.imageList.value)
+
+        galleryRVAdapter.setOnItemClickListener(object: GalleryRVAdapter.OnItemClickListener{
+            override fun onItemClick(v: View, data: GalleryImage, position: Int) {
+                if(data != null){
+                    viewModel.updateSelectImage(data)
+                    navController.navigate(R.id.action_galleryListFragment_to_selectImageFragment)
+                }
+            }
+        })
     }
 
 
@@ -124,13 +140,6 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>(R.layout.fr
         }
     }
 
-        companion object {
-        // REQUEST CODE
-        const val IMAGE_URI = "imageUri"
-        const val IMAGE_PATH = "imagePath"
-        const val REQUEST_CODE_FOR_INTENT = 1002
-        const val REQUEST_CODE_PERMISSIONS = 2000
-    }
 
 
 //
