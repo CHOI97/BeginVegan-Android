@@ -3,4 +3,5 @@ package com.example.domain.model
 data class AuthToken(
     val accessToken: String,
     val refreshToken: String,
+    val additionalInfo: Boolean,
 )

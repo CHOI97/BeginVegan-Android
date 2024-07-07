@@ -40,7 +40,7 @@ class AuthRepositoryImpl @Inject constructor(
             val response = authRemoteDataSource.signIn(authRequest)
             when (response) {
                 is ApiResponse.Success -> {
-                    val authToken = authMapper.mapFromEntity(response.data.information.authRes!!)
+                    val authToken = authMapper.mapFromEntity(response.data.information)
                     Result.success(authToken)
                 }
                 is ApiResponse.Failure.Error -> {

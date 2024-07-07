@@ -36,22 +36,22 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-//    fun signUp(email: String, providerId: String) {
-//        viewModelScope.launch {
-//            val result = signUpUseCase.invoke(email, providerId)
-//            Timber.d("$result")
-//        }
-//    }
-
     private val _loginState = MutableLiveData(false)
     val loginState: LiveData<Boolean> = _loginState
 
-    fun signIn(email: String, providerId: String) {
+    var additionalInfoProvided: Boolean = false
+
+    private fun signIn(email: String, providerId: String) {
         viewModelScope.launch {
             signInUseCase.invoke(email, providerId).onSuccess {
+                Timber.d("$it")
+
                 User.accessToken = it.accessToken
                 User.refreshToken = it.refreshToken
+
                 _loginState.value = true
+
+                additionalInfoProvided = it.additionalInfo
             }.onFailure {
                 _loginState.value = false
             }
@@ -95,7 +95,6 @@ class LoginViewModel @Inject constructor(
             if (error != null) {
                 Timber.d("KaKao User 사용자 정보 요청 실패 $error")
             } else if (user != null) {
-                var scopes = mutableListOf<String>()
                 Timber.d(
                     "KaKao User 사용자 정보 요청 성공" +
                             "\n회원번호: ${user.id}" +
