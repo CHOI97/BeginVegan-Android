@@ -21,11 +21,6 @@ object DrawerControllerModule {
             Timber.d("open Drawer")
             val drawerLayout: DrawerLayout = activity.findViewById(R.id.dl_drawer)
             drawerLayout.openDrawer(GravityCompat.END)
-//            val preventMissTouch: View = activity.findViewById(R.id.v_prevent_miss_touch)
-//            preventMissTouch.visibility = View.VISIBLE
-//            preventMissTouch.setOnClickListener {
-//                closeDrawer()
-//            }
         }
         override fun closeDrawer() {
             val drawerLayout: DrawerLayout = activity.findViewById(R.id.dl_drawer)

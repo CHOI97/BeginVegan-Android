@@ -8,13 +8,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.notification.view.NotificationDrawerFragment"
-        android:background="@color/color_background"
-        android:layout_gravity="end">
-
+        android:background="@color/color_background">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_background"
+            android:clickable="true"/>
         <LinearLayout
             android:id="@+id/tb_toolbar"
             android:layout_width="match_parent"
@@ -92,5 +93,5 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tv_read_title"
             tools:listitem="@layout/item_notification" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
