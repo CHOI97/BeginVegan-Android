@@ -464,4 +464,6 @@
     <string name="error_service">일시적인 오류로 비긴, 비건 서비스를 이용할 수 없어요.\n잠시 후 다시 시도해 주세요.\n더 노력하는 비긴, 비건이 될게요!</string>
     <string name="dialog_permission_headline">비긴, 비건 서비스의 원활한 이용을 위해\n이용 중에 권한 접근을 요청받으면 허용해 주세요.</string>
 
+    <!--    Gallery-->
+    <string name="gallery_all_photo">모든 사진</string>
 </resources>

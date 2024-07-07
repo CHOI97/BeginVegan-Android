@@ -47,5 +47,6 @@
     <color name="color_progress_bar">#FFA2D33F</color>
 
 
+
     <drawable name="onboarding_color">@drawable/selector_outline_box_color</drawable>
 </resources>
