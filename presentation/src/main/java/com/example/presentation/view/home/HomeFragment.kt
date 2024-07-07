@@ -1,5 +1,8 @@
 package com.example.presentation.view.home
 
+import android.os.Bundle
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import com.example.presentation.config.navigation.tips.TipsNavigationImpl
 import com.example.presentation.util.DrawerController
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -91,4 +95,25 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
         binding.rvRestaurantList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
+
+    //Control Back Button
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupOnBackPressedCallback()
+    }
+    private fun setupOnBackPressedCallback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Timber.d("backButton is drawer open : ${drawerController.isDrawerOpen()}")
+                if (drawerController.isDrawerOpen()) {
+                    drawerController.closeDrawer()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
 }

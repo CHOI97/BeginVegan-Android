@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
 import com.example.presentation.view.home.veganTest.view.VeganTestResultFragmentDirections
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainNavigationImpl @Inject constructor(private val navController: NavController) : MainNavigationHandler {
