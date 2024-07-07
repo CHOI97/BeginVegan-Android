@@ -1,12 +1,9 @@
 package com.example.presentation.view.main
 
-<<<<<<< Updated upstream
 import androidx.activity.viewModels
-=======
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.core.view.GravityCompat
->>>>>>> Stashed changes
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
