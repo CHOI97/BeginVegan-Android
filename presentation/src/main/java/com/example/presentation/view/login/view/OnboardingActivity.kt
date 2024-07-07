@@ -1,13 +1,21 @@
 package com.example.presentation.view.login.view
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import android.provider.ContactsContract.Contacts.Photo
+import android.util.Base64
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.example.presentation.R
 import com.example.presentation.adapter.onboarding.OnboardingAdapter
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityOnboardingBinding
+import com.example.presentation.view.gallery.model.GalleryImage
 import com.example.presentation.view.gallery.view.GalleryActivity
 import com.example.presentation.view.gallery.view.PhotoSelectDialog
 import com.example.presentation.view.login.viewModel.OnboardingViewModel
@@ -21,12 +29,16 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
     private lateinit var emptyErrorText: String
     private lateinit var invalidErrorText: String
     private val viewModel: OnboardingViewModel by viewModels()
+
+    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+
     override fun initViewModel() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
     }
 
     override fun init() {
+        setImageResultLauncher()
         setErrorText()
         setInputHelper()
         setOnClickProfile()
@@ -61,6 +73,18 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         }
     }
 
+    private fun setImageResultLauncher(){
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if(result.resultCode == RESULT_OK){
+                var imageData: GalleryImage? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    result.data?.getParcelableExtra("IMAGE_DATA",GalleryImage::class.java)
+                } else {
+                    intent.getParcelableExtra<GalleryImage>("IMAGE_DATA")
+                }
+                Glide.with(this).load(imageData?.imageUri).into(binding.civOnboardingProfile)
+            }
+        }
+    }
     private fun setInputHelper() {
         binding.tilOnboardingEditNick.error = emptyErrorText
         viewModel.setValidNickName(false)
@@ -102,6 +126,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
     }
 
     private fun setOnClickProfile() {
+
         binding.civOnboardingProfile.onThrottleClick {
             photoSelectDialog = if (viewModel.profileImageUri.value == null) {
                 PhotoSelectDialog(false)
@@ -117,7 +142,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
                 override fun onClickGallery() {
                     photoSelectDialog.dismiss()
                     val intent = Intent(this@OnboardingActivity,GalleryActivity::class.java)
-                    startActivity(intent)
+                    activityResultLauncher.launch(intent)
                 }
 
                 override fun onClickDefault() {
@@ -132,6 +157,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         }
     }
 
+
     companion object{
         val items = listOf(
             "알고 있지 않아요",
@@ -143,6 +169,8 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
             "폴로 베지테리언",
             "플렉시테리언"
         )
+        var IMAGE_URI = "IMAGE_URI"
+        var IMAGE_PATH = "IMAGE_PATH"
     }
 
 }

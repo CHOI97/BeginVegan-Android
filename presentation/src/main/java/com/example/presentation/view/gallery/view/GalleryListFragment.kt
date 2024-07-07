@@ -40,7 +40,6 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>(R.layout.fr
     private lateinit var navController: NavController
     private lateinit var galleryRVAdapter: GalleryRVAdapter
     override fun init() {
-//        setupCropLayout()
         navController = Navigation.findNavController(binding.root)
         viewModel.permissionState.observe(this){
             // 갤러리 이미지 가져와서 뿌리기
@@ -50,7 +49,9 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>(R.layout.fr
         viewModel.imageList.observe(this){
             Timber.d("Observe ImageList $imageList ")
         }
-
+        binding.ibBackUp.setOnClickListener {
+            activity?.finish()
+        }
     }
 
     private fun setGalleryAdapter(){
@@ -66,27 +67,6 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>(R.layout.fr
                 }
             }
         })
-    }
-
-
-    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(
-            context.contentResolver,
-            inImage,
-            "Title",
-            null
-        )
-        return Uri.parse(path)
-    }
-
-    fun absolutelyPath(path: Uri): String {
-        val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
-        val c: Cursor? = requireContext().contentResolver.query(path, proj, null, null, null)
-        val index = c!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        c.moveToFirst()
-        return c.getString(index)
     }
     private fun getCursor(): Cursor? {
         val projection = arrayOf(
@@ -125,7 +105,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>(R.layout.fr
                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                                 id
                             )
-                            images.add(GalleryImage(imageUri, false, dateTaken))
+                            images.add(GalleryImage(imageUri, false))
                             Timber.d("id: $id, title: $title, dateTaken: $dateTaken, imageUri: $imageUri")
                         }
                         Timber.d("fetch ImageList $imageList ")

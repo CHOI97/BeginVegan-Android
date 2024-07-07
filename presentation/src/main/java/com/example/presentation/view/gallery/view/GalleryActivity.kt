@@ -52,30 +52,36 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fcw_gallery) as NavHostFragment
         val navController = navHostFragment.findNavController()
-        binding.ibNextUpload.setOnClickListener {
+//        binding.ibNextUpload.setOnClickListener {
+//            val image = getImageUri(this,viewModel.selectImage.value?.imageFile)
+//            val path = absolutelyPath(image)
+//            intent.putExtra(IMAGE_URI,image.toString())
+//            intent.putExtra(IMAGE_PATH,path)
+//            setResult(RESULT_OK)
+//            finish()
+//        }
+//        binding.ibBackUp.setOnClickListener {
+//            when(navController.currentDestination?.id){
+//                R.id.galleryListFragment -> finish()
+//                R.id.selectImageFragment -> navController.popBackStack()
+//                else -> showToast("잘못된 요청입니다")
+//            }
+//        }
+        viewModel.resultImage.observe(this){
+            if(it != null){
+                intent.putExtra("IMAGE_DATA",viewModel.resultImage.value)
+                setResult(RESULT_OK,intent)
+                finish()
+            }
+        }
 
-        }
-        binding.ibBackUp.setOnClickListener {
-            when(navController.currentDestination?.id){
-                R.id.galleryListFragment -> finish()
-                R.id.selectImageFragment -> navController.popBackStack()
-                else -> showToast("잘못된 요청입니다")
-            }
-        }
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.galleryListFragment -> viewModel.setVisibleDone(false)
-                R.id.selectImageFragment -> viewModel.setVisibleDone(true)
-            }
-        }
-
-        viewModel.isDoneVisible.observe(this){
-            if(it){
-                binding.ibNextUpload.visibility = View.VISIBLE
-            }else{
-                binding.ibNextUpload.visibility = View.GONE
-            }
-        }
+//        viewModel.isDoneVisible.observe(this){
+//            if(it){
+//                binding.ibNextUpload.visibility = View.VISIBLE
+//            }else{
+//                binding.ibNextUpload.visibility = View.GONE
+//            }
+//        }
     }
 
     private val requestPermission = registerForActivityResult(
@@ -93,22 +99,28 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             }
         }
     }
-//    private fun updateToolbar(fragment: Fragment) {
-//        when (fragment) {
-//            is HomeFragment -> {
-//                binding.toolbar.title = "Home"
-//                binding.toolbar.setOnClickListener {
-//                    // HomeFragment의 클릭 리스너
-//                }
-//            }
-//            is ProfileFragment -> {
-//                binding.toolbar.title = "Profile"
-//                binding.toolbar.setOnClickListener {
-//                    // ProfileFragment의 클릭 리스너
-//                }
-//            }
-//            // 다른 Fragment에 대한 설정
-//        }
-//    }
+    private fun getImageUri(context: Context, inImage: Bitmap?): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(
+            context.contentResolver,
+            inImage,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
+    }
+    private fun absolutelyPath(path: Uri?): String {
+
+        val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        val c: Cursor? = path?.let { contentResolver.query(it, proj, null, null, null) }
+        val index = c!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c.moveToFirst()
+        return c.getString(index)
+    }
+    companion object{
+        var IMAGE_URI = "IMAGE_URI"
+        var IMAGE_PATH = "IMAGE_PATH"
+    }
 
 }
