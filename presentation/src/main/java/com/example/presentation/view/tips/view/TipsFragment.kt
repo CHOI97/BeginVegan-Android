@@ -1,7 +1,9 @@
 package com.example.presentation.view.tips.view
 
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import android.os.Bundle
+import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.navArgs
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.tips.TipsNavigationHandler
@@ -21,7 +23,6 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
     lateinit var drawerController: DrawerController
     override fun init() {
         setTipsTab()
-        setOpenDrawer()
     }
     private fun setTipsTab() {
         binding.vpViewpagerArea.adapter = TipsVpAdapter(childFragmentManager, lifecycle)
@@ -31,6 +32,9 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
                 1 -> tab.text = getString(R.string.recipe)
             }
         }.attach()
+
+        checkFromTest()
+        setOpenDrawer()
     }
 
     //이동
@@ -38,5 +42,36 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
         binding.includedToolbar.ibNotification.setOnClickListener {
             drawerController.openDrawer()
         }
+    }
+
+    private fun checkFromTest(){
+        val args: TipsFragmentArgs by navArgs()
+        if(args.fromTest){
+            //나를 위한 레시피
+            binding.vpViewpagerArea.post{
+                binding.vpViewpagerArea.currentItem = 1
+            }
+        }
+    }
+
+
+    //Control Back Button
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupOnBackPressedCallback()
+    }
+    private fun setupOnBackPressedCallback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawerController.isDrawerOpen()) {
+                    drawerController.closeDrawer()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

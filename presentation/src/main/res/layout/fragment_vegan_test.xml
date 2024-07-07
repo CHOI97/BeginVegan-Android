@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.home.VeganTestFragment">
+        tools:context=".view.home.veganTest.view.VeganTestFragment">
 
         <include
             android:id="@+id/included_toolbar"
@@ -125,15 +125,13 @@
 
             <include
                 android:id="@+id/included_vegan"
-                layout="@layout/include_illus_vegan_level"
-                app:description="@{@string/vegan_test_description_vegan}" />
+                layout="@layout/include_illus_vegan_level" />
             <View
                 android:layout_width="@dimen/item_0"
                 android:layout_height="@dimen/margin_16" />
             <include
                 android:id="@+id/included_lacto"
                 layout="@layout/include_illus_vegan_level"
-                app:description="@{@string/vegan_test_description_lacto}"
                 app:milk="@{true}"/>
             <View
                 android:layout_width="@dimen/item_0"
@@ -141,7 +139,6 @@
             <include
                 android:id="@+id/included_ovo"
                 layout="@layout/include_illus_vegan_level"
-                app:description="@{@string/vegan_test_description_ovo}"
                 app:egg="@{true}" />
             <View
                 android:layout_width="@dimen/item_0"
@@ -149,7 +146,6 @@
             <include
                 android:id="@+id/included_lacto_ovo"
                 layout="@layout/include_illus_vegan_level"
-                app:description="@{@string/vegan_test_description_lacto_ovo}"
                 app:egg="@{true}"
                 app:milk="@{true}" />
             <View
@@ -158,7 +154,6 @@
             <include
                 android:id="@+id/included_pesco"
                 layout="@layout/include_illus_vegan_level"
-                app:description="@{@string/vegan_test_description_pesco}"
                 app:egg="@{true}"
                 app:fish="@{true}"
                 app:milk="@{true}" />
@@ -169,7 +164,6 @@
                 android:id="@+id/included_pollo"
                 layout="@layout/include_illus_vegan_level"
                 app:chicken="@{true}"
-                app:description="@{@string/vegan_test_description_pollo}"
                 app:egg="@{true}"
                 app:fish="@{true}"
                 app:milk="@{true}" />
@@ -180,7 +174,6 @@
                 android:id="@+id/included_flexitarian"
                 layout="@layout/include_illus_vegan_level"
                 app:chicken="@{true}"
-                app:description="@{@string/vegan_test_description_flexitarian}"
                 app:egg="@{true}"
                 app:fish="@{true}"
                 app:meat="@{true}"

@@ -5,6 +5,7 @@ plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KAPT)
+//    id(Plugins.KSP)
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     implementation(Dependencies.MOSHI_ADAPTERS)
     kapt(Dependencies.MOSHI_KAPT)
 
+
     // Okhttp
     implementation(Dependencies.OKHTTP)
     implementation(Dependencies.OKHTTP_LOGGING_INTERCEPTOR)
@@ -69,9 +71,19 @@ dependencies {
     // Room
     implementation(Dependencies.ROOM_RUNTIME)
     implementation(Dependencies.ROOM_KTX)
-    kapt(Dependencies.ROOM_KAPT)
+    kapt(Dependencies.ROOM_KSP)
     implementation(Dependencies.ROOM_PAGING)
 
     // Timber
     implementation(Dependencies.TIMBER)
+
+
+    implementation("com.github.skydoves:sandwich:2.0.8")
+    implementation("com.github.skydoves:sandwich-retrofit:2.0.8") // For Retrofit (Android)
+
+    //Coroutine
+    implementation(Dependencies.KOTLINX_COROUTINES)
+
+    // KaKao Login
+    implementation(Dependencies.KAKAO_LOGIN)
 }
