@@ -1,6 +1,6 @@
 package com.example.data.retrofit
 
-import com.example.data.model.auth.SignUpResponse
+import com.example.data.model.core.BaseResponse
 import com.example.data.model.veganTest.VeganTypeRequest
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
@@ -14,5 +14,5 @@ interface VeganTypeService {
         @Header("Authorization") token: String,
         @Path("type") type: String,
         @Body request: VeganTypeRequest
-    ): ApiResponse<SignUpResponse>
+    ): ApiResponse<BaseResponse>
 }

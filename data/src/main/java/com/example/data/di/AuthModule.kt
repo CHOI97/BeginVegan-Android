@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
-class AuthModule {
+object AuthModule {
     @Singleton
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {

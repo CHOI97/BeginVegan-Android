@@ -56,7 +56,7 @@ class SelectImageFragment : BaseFragment<FragmentGallerySelectImageBinding>(R.la
             context.contentResolver,
             inImage,
             "Title",
-            null
+            null,
         )
         return Uri.parse(path)
     }

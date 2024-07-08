@@ -70,6 +70,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         viewModel.resultImage.observe(this){
             if(it != null){
                 intent.putExtra("IMAGE_DATA",viewModel.resultImage.value)
+                logMessage("Activity Result Launcher ${viewModel.resultImage.value}")
                 setResult(RESULT_OK,intent)
                 finish()
             }

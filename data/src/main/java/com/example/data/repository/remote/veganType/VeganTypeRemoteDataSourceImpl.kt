@@ -1,6 +1,6 @@
 package com.example.data.repository.remote.veganType
 
-import com.example.data.model.auth.SignUpResponse
+import com.example.data.model.core.BaseResponse
 import com.example.data.model.veganTest.VeganTypeRequest
 import com.example.data.retrofit.VeganTypeService
 import com.skydoves.sandwich.ApiResponse
@@ -14,7 +14,7 @@ class VeganTypeRemoteDataSourceImpl @Inject constructor(
     private val veganTypeService: VeganTypeService
 ) : VeganTypeRemoteDataSource {
 
-    override suspend fun patchVeganType(token:String, type:String, veganTypeRequest: VeganTypeRequest): ApiResponse<SignUpResponse> {
+    override suspend fun patchVeganType(token:String, type:String, veganTypeRequest: VeganTypeRequest): ApiResponse<BaseResponse> {
         return veganTypeService.patchVeganType(token, type, veganTypeRequest).suspendOnSuccess {
             Timber.d("PatchVeganType successful")
             ApiResponse.Success(true)

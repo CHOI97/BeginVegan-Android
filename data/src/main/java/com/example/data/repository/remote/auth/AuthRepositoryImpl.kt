@@ -37,8 +37,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun signIn(email: String, providerId: String): Result<AuthToken> {
         return try {
             val authRequest = AuthRequest(email = email, providerId = providerId)
-            val response = authRemoteDataSource.signIn(authRequest)
-            when (response) {
+            when (val response = authRemoteDataSource.signIn(authRequest)) {
                 is ApiResponse.Success -> {
                     val authToken = authMapper.mapFromEntity(response.data.information)
                     Result.success(authToken)

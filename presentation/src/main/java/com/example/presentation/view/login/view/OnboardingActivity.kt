@@ -28,9 +28,10 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
 
     private lateinit var emptyErrorText: String
     private lateinit var invalidErrorText: String
+
     private val viewModel: OnboardingViewModel by viewModels()
 
-    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun initViewModel() {
         binding.vm = viewModel
@@ -42,18 +43,36 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         setErrorText()
         setInputHelper()
         setOnClickProfile()
-        navigateToMain()
         setDropdown()
         setObserve()
-        setFocusTextInputLayout()
+        updateUserInfo()
+
+        viewModel.userInfoState.observe(this) { isUserInfoState ->
+            if (isUserInfoState) {
+                navigateToMain()
+            }else{
+                showToast("유저 추가 정보 입력 오류")
+            }
+        }
+    }
+
+    private fun updateUserInfo() {
+        binding.btnOnboardingNext.setOnClickListener {
+            showToast("nick: ${binding.etOnboardingEditNick.text}\nveganType: ${binding.actvOnboardingEditDropdown.text}")
+            val nickName = binding.etOnboardingEditNick.text.toString()
+            val veganLevel = binding.actvOnboardingEditDropdown.text.toString()
+            viewModel.saveUserInfo(nickName,veganLevel)
+        }
     }
 
     private fun setObserve() {
         viewModel.validNickName.observe(this) {
             binding.btnOnboardingNext.isEnabled = viewModel.checkValid()
+            logMessage("${viewModel.nickName}")
         }
         viewModel.validVeganLevel.observe(this) {
             binding.btnOnboardingNext.isEnabled = viewModel.checkValid()
+            logMessage("${viewModel.veganLevel}")
         }
     }
 
@@ -73,18 +92,28 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         }
     }
 
-    private fun setImageResultLauncher(){
-        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if(result.resultCode == RESULT_OK){
-                var imageData: GalleryImage? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    result.data?.getParcelableExtra("IMAGE_DATA",GalleryImage::class.java)
-                } else {
-                    intent.getParcelableExtra<GalleryImage>("IMAGE_DATA")
+    private fun setImageResultLauncher() {
+        activityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    var imageData: GalleryImage? =
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            result.data?.getParcelableExtra("IMAGE_DATA", GalleryImage::class.java)
+                        } else {
+                            intent.getParcelableExtra<GalleryImage>("IMAGE_DATA")
+                        }
+                    Glide.with(this).load(imageData?.imageUri).into(binding.civOnboardingProfile)
+                    viewModel.updateProfileImageUri(
+                        GalleryImage(
+                            imageData?.imageUri,
+                            false,
+                            imageData?.imagePath
+                        )
+                    )
                 }
-                Glide.with(this).load(imageData?.imageUri).into(binding.civOnboardingProfile)
             }
-        }
     }
+
     private fun setInputHelper() {
         binding.tilOnboardingEditNick.error = emptyErrorText
         viewModel.setValidNickName(false)
@@ -108,23 +137,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         }
     }
 
-    private fun setFocusTextInputLayout() {
-        binding.etOnboardingEditNick.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                binding.svOnboarding.post {
-                    binding.svOnboarding.scrollTo(0, binding.tilOnboardingEditNick.top)
-                }
-            }
-        }
-    }
-
-    private fun navigateToMain() {
-        binding.btnOnboardingNext.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
     private fun setOnClickProfile() {
 
         binding.civOnboardingProfile.onThrottleClick {
@@ -133,7 +145,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
             } else {
                 PhotoSelectDialog(true)
             }
-            photoSelectDialog.show(supportFragmentManager,"PhotoSelectDialog")
+            photoSelectDialog.show(supportFragmentManager, "PhotoSelectDialog")
             photoSelectDialog.setDialogClickListener(object :
                 PhotoSelectDialog.DialogPhotoSelectClickListener {
                 override fun onClickCamera() {
@@ -141,7 +153,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
 
                 override fun onClickGallery() {
                     photoSelectDialog.dismiss()
-                    val intent = Intent(this@OnboardingActivity,GalleryActivity::class.java)
+                    val intent = Intent(this@OnboardingActivity, GalleryActivity::class.java)
                     activityResultLauncher.launch(intent)
                 }
 
@@ -157,8 +169,12 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         }
     }
 
+    private fun navigateToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 
-    companion object{
+    companion object {
         val items = listOf(
             "알고 있지 않아요",
             "비건",
@@ -169,8 +185,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
             "폴로 베지테리언",
             "플렉시테리언"
         )
-        var IMAGE_URI = "IMAGE_URI"
-        var IMAGE_PATH = "IMAGE_PATH"
     }
 
 }
