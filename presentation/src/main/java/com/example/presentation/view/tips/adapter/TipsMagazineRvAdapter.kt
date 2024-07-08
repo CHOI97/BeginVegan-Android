@@ -2,7 +2,10 @@ package com.example.presentation.view.tips.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -28,6 +31,10 @@ class TipsMagazineRvAdapter(private val context:Context,private val list:List<Ti
                     .load(item.thumbnail)
                     .transform(CenterCrop(), RoundedCorners(16))
                     .into(binding.ivMagazineImg)
+
+                binding.tbInterest.setOnCheckedChangeListener { toggleButton, isChecked ->
+                    listener?.changeBookmark(toggleButton, isChecked, item)
+                }
             }
         }
 
@@ -49,6 +56,7 @@ class TipsMagazineRvAdapter(private val context:Context,private val list:List<Ti
 
     interface OnItemClickListener{
         fun onItemClick(magazineId:Int)
+        fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsMagazineItem)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener

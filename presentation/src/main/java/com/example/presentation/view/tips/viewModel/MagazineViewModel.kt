@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.tips.TipsMagazineDetail
 import com.example.domain.model.tips.TipsMagazineItem
+import com.example.domain.useCase.bookmarks.BookmarkUseCase
 import com.example.domain.useCase.tips.TipsMagazineUseCase
 import com.example.presentation.auth.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MagazineViewModel @Inject constructor(
-    private val tipsMagazineUseCase:TipsMagazineUseCase
+    private val tipsMagazineUseCase:TipsMagazineUseCase,
+    private val bookmarkUseCase: BookmarkUseCase
 ) :ViewModel() {
     private val _selectedMagazineId = MutableLiveData<Int>()
     val selectedMagazineId:LiveData<Int> = _selectedMagazineId
@@ -28,6 +30,12 @@ class MagazineViewModel @Inject constructor(
 
     private val _magazineDetail = MutableLiveData<TipsMagazineDetail>()
     val magazineDetail : LiveData<TipsMagazineDetail> = _magazineDetail
+
+    private val _isBookmarkSuccess = MutableLiveData<Boolean>()
+    val isBookmarkSuccess: LiveData<Boolean> = _isBookmarkSuccess
+
+    private val _isBookmarkDeleted = MutableLiveData<Boolean>()
+    val isBookmarkDeleted: LiveData<Boolean> = _isBookmarkDeleted
 
     init {
         getMagazineList()
@@ -50,6 +58,26 @@ class MagazineViewModel @Inject constructor(
                 _magazineDetail.value = it
             }.onFailure {
                 Timber.e(it.message)
+            }
+        }
+    }
+
+    fun postBookmark(contentId:Int, contentType:String){
+        viewModelScope.launch {
+            bookmarkUseCase.postBookmark(User.accessToken, contentId, contentType).onSuccess {
+                _isBookmarkSuccess.value = true
+            }.onFailure {
+                _isBookmarkSuccess.value = false
+            }
+        }
+    }
+
+    fun deleteBookmark(contentId:Int, contentType:String){
+        viewModelScope.launch {
+            bookmarkUseCase.deleteBookmark(User.accessToken, contentId, contentType).onSuccess {
+                _isBookmarkDeleted.value = true
+            }.onFailure {
+                _isBookmarkDeleted.value = false
             }
         }
     }
