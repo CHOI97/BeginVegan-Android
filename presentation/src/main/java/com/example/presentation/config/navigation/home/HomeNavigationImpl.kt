@@ -28,11 +28,13 @@ class HomeNavigationImpl(private val navController: NavController) : HomeNavigat
             navController.navigate(action)
         }else{
             controlBackStack(R.id.tipsFragment)
+//            navController.navigate(R.id.tipsFragment)
         }
     }
 
     override fun navigateToMypage() {
         controlBackStack(R.id.mainMypageFragment)
+//        navController.navigate(R.id.mainMypageFragment)
     }
 
     private fun controlBackStack(destinationId:Int){
