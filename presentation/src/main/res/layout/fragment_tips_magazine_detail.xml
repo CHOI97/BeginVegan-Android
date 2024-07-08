@@ -69,13 +69,31 @@
             app:layout_constraintTop_toBottomOf="@id/tb_interest"
             android:layout_marginTop="@dimen/margin_16"
             android:layout_marginHorizontal="@dimen/margin_16"/>
-        <ImageView
-            android:id="@+id/iv_thumbnail"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/v_divider"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_32"
-            android:layout_marginBottom="@dimen/margin_20"/>
+            app:layout_constraintTop_toBottomOf="@id/v_divider">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:layout_marginBottom="@dimen/margin_20"/>
+                <LinearLayout
+                    android:id="@+id/ll_magazine_contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+                    android:layout_marginHorizontal="@dimen/margin_20"
+                    android:orientation="vertical"
+                    android:gravity="center"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

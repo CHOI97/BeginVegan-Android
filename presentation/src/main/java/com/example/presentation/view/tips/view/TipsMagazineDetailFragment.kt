@@ -1,10 +1,15 @@
 package com.example.presentation.view.tips.view
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.example.domain.model.tips.MagazineContent
 import com.example.domain.model.tips.TipsMagazineDetail
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
@@ -32,6 +37,7 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
             setView(it)
         }
         goBackUp()
+        createContentTextView(MagazineContent("TEST", 1))
     }
 
     private fun goBackUp(){
@@ -58,6 +64,23 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
         Glide.with(this)
             .load(it.thumbnail)
             .into(binding.ivThumbnail)
+
+        for(content in it.magazineContents){
+            createContentTextView(content)
+        }
+    }
+
+    private fun createContentTextView(content: MagazineContent){
+        Timber.d("createContentTextView")
+        val textView = TextView(context).apply {
+            text = content.content
+            textSize = 14f
+            setTextColor(ContextCompat.getColor(context, R.color.color_text_01))
+            gravity = Gravity.CENTER
+        }
+
+        val parentLayout = binding.llMagazineContents
+        parentLayout.addView(textView)
     }
 
     //Control Back Button
