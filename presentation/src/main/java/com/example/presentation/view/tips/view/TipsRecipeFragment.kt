@@ -14,7 +14,9 @@ import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.adapter.TipsRecipeRvAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,6 +30,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.lifecycleOwner = this
 
         //RecyclerView List 세팅
+        recipeViewModel.addRecipeList(emptyList<TipsRecipeListItem>().toMutableList())
         currentPage = 0
         getRecipeList(currentPage)
 

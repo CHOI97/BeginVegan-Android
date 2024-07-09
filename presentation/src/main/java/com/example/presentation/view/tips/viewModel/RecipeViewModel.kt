@@ -28,7 +28,7 @@ class RecipeViewModel @Inject constructor(
     //RecyclerView List
     private val _recipeListState = MutableStateFlow<NetworkResult<RecipeListState>>(NetworkResult.Loading())
     val recipeListState: StateFlow<NetworkResult<RecipeListState>> = _recipeListState
-    private fun addRecipeList(list: MutableList<TipsRecipeListItem>){
+    fun addRecipeList(list: MutableList<TipsRecipeListItem>){
         _recipeListState.value = NetworkResult.Success(
             RecipeListState(response = list, isLoading = false))
     }
