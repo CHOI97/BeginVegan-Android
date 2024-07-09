@@ -31,11 +31,11 @@ class MagazineViewModel @Inject constructor(
     private val _magazineDetail = MutableLiveData<TipsMagazineDetail>()
     val magazineDetail : LiveData<TipsMagazineDetail> = _magazineDetail
 
-    private val _isBookmarkSuccess = MutableLiveData<Boolean>()
-    val isBookmarkSuccess: LiveData<Boolean> = _isBookmarkSuccess
-
-    private val _isBookmarkDeleted = MutableLiveData<Boolean>()
-    val isBookmarkDeleted: LiveData<Boolean> = _isBookmarkDeleted
+//    private val _isBookmarkSuccess = MutableLiveData<Boolean>()
+//    val isBookmarkSuccess: LiveData<Boolean> = _isBookmarkSuccess
+//
+//    private val _isBookmarkDeleted = MutableLiveData<Boolean>()
+//    val isBookmarkDeleted: LiveData<Boolean> = _isBookmarkDeleted
 
     init {
         getMagazineList()
@@ -65,9 +65,9 @@ class MagazineViewModel @Inject constructor(
     fun postBookmark(contentId:Int, contentType:String){
         viewModelScope.launch {
             bookmarkUseCase.postBookmark(User.accessToken, contentId, contentType).onSuccess {
-                _isBookmarkSuccess.value = true
+                Timber.d("postBookmark onSuccess")
             }.onFailure {
-                _isBookmarkSuccess.value = false
+                Timber.e("postBookmark onFailure")
             }
         }
     }
@@ -75,9 +75,9 @@ class MagazineViewModel @Inject constructor(
     fun deleteBookmark(contentId:Int, contentType:String){
         viewModelScope.launch {
             bookmarkUseCase.deleteBookmark(User.accessToken, contentId, contentType).onSuccess {
-                _isBookmarkDeleted.value = true
+                Timber.d("deleteBookmark onSuccess")
             }.onFailure {
-                _isBookmarkDeleted.value = false
+                Timber.e("deleteBookmark onFailure")
             }
         }
     }
