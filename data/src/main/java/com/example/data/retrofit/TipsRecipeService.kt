@@ -6,6 +6,7 @@ import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TipsRecipeService {
@@ -15,10 +16,10 @@ interface TipsRecipeService {
         @Query("page") page: Int
     ): ApiResponse<TipsRecipeListResponse>
 
-    @GET("/api/v1/foods/detail")
+    @GET("/api/v1/foods/{id}")
     suspend fun getRecipeDetail(
         @Header("Authorization") token: String,
-        @Body id: Int
+        @Path("id") id: Int
     ): ApiResponse<TipsRecipeDetailResponse>
 
     @GET("/api/v1/foods/my")

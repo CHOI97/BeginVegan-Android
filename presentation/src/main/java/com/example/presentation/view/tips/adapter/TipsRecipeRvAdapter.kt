@@ -17,7 +17,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
 
     inner class RecyclerViewHolder(private val binding: ItemRecipeBinding):
         RecyclerView.ViewHolder(binding.root){
-        fun bind(position:Int){
+        fun bind(position:Int): CompoundButton{
             val levels = listOf(
                 { binding.tbVeganLevelMilk.isChecked = true },
                 { binding.tbVeganLevelEgg.isChecked = true },
@@ -37,6 +37,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
             binding.tbInterest.setOnCheckedChangeListener { buttonView, isChecked ->
                 listener?.changeBookmark(buttonView, isChecked, item)
             }
+            return binding.tbInterest
         }
     }
 
@@ -48,16 +49,16 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.bind(position)
+        val toggleButton = holder.bind(position)
         if(position != RecyclerView.NO_POSITION){
             holder.itemView.setOnClickListener{
-                listener?.onItemClick()
+                listener?.onItemClick(list[position].id, toggleButton)
             }
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClick()
+        fun onItemClick(recipeId:Int, toggleButton: CompoundButton)
         fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsRecipeListItem)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
@@ -79,7 +80,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
             1 -> levels[0]()
             2 -> levels[1]()
             else -> {
-                for (i in 0 until index-1) {
+                for (i in 0 until index-2) {
                     levels[i]()
                 }
             }
