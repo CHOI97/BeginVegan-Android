@@ -16,9 +16,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     override fun initViewModel() {
         viewModel.loginState.observe(this) { isLoggedIn ->
             if (isLoggedIn) {
-                navigateToMainActivity()
-            } else {
-                showToast("error")
+                if(viewModel.additionalInfoProvided){
+                    navigateToMainActivity()
+                }else{
+                    navigateToOnboardingActivity()
+                }
             }
         }
     }
@@ -36,6 +38,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+    private fun navigateToOnboardingActivity(){
+        val intent = Intent(this, OnboardingActivity::class.java)
         startActivity(intent)
     }
 

@@ -1,16 +1,12 @@
 package com.example.presentation.view.mypage.view
 
+import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import androidx.activity.OnBackPressedCallback
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
-import com.example.presentation.config.navigation.main.MainNavigationImpl
-import com.example.presentation.config.navigation.tips.TipsNavigationHandler
-import com.example.presentation.config.navigation.tips.TipsNavigationImpl
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
@@ -194,5 +190,26 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 //            }
 //        dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 //        binding.sSetVeganType.adapter = dropdownAdapter
+    }
+
+
+    //Control Back Button
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupOnBackPressedCallback()
+    }
+    private fun setupOnBackPressedCallback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawerController.isDrawerOpen()) {
+                    drawerController.closeDrawer()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

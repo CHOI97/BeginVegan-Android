@@ -29,6 +29,14 @@
         <action
             android:id="@+id/action_mainFragment_to_mypageSettingFragment"
             app:destination="@id/mypageSettingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_tipsMagazineDetailFragment"
+            app:destination="@id/tipsMagazineDetailFragment" />
+        <argument
+            android:name="fromTest"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+
     </fragment>
     <fragment
         android:id="@+id/mypageEditProfileFragment"
@@ -36,7 +44,7 @@
         android:label="MypageEditProfileFragment" />
     <fragment
         android:id="@+id/veganTestFragment"
-        android:name="com.example.presentation.view.home.VeganTestFragment"
+        android:name="com.example.presentation.view.home.veganTest.view.VeganTestFragment"
         android:label="VeganTestFragment">
         <action
             android:id="@+id/action_veganTestFragment_to_veganTestResultFragment"
@@ -44,13 +52,11 @@
     </fragment>
     <fragment
         android:id="@+id/veganTestResultFragment"
-        android:name="com.example.presentation.view.home.VeganTestResultFragment"
+        android:name="com.example.presentation.view.home.veganTest.view.VeganTestResultFragment"
         android:label="VeganTestResultFragment">
         <action
             android:id="@+id/action_veganTestResultFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/veganTestFragment"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -80,5 +86,9 @@
     <include
         android:id="@+id/nav_home_graph"
         app:graph ="@navigation/nav_home_graph"/>
+    <fragment
+        android:id="@+id/tipsMagazineDetailFragment"
+        android:name="com.example.presentation.view.tips.view.TipsMagazineDetailFragment"
+        android:label="TipsMagazineDetailFragment" />
 
 </navigation>

@@ -5,7 +5,8 @@
     <application>
         <activity
             android:name=".view.main.MainActivity"
-            android:exported="true" />
+            android:exported="true" >
+        </activity>
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

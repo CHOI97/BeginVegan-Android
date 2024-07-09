@@ -107,6 +107,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_mainFragment_to_tipsMagazineDetailFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_mainFragment_to_veganTestFragment">
                               <value>
                                 <LayoutPositions />
@@ -201,13 +206,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="tipsMagazineDetailFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-754" />
+                            <option name="y" value="649" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="veganTestFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-157" />
-                            <option name="y" value="374" />
+                            <option name="x" value="-119" />
+                            <option name="y" value="356" />
                           </Point>
                         </option>
                         <option name="myPositions">
