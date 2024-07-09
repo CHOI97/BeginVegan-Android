@@ -7,6 +7,8 @@ import com.example.domain.model.TipsRecipeListItem
 import com.example.domain.repository.tips.TipsRecipeRepository
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -15,26 +17,28 @@ class TipsRecipeRepositoryImpl @Inject constructor(
     private val tipsRecipeMapper:TipsRecipeMapper,
     private val tipsrecipeDetailMapper: TipsRecipeDetailMapper
 ):TipsRecipeRepository {
-    override suspend fun getRecipeList(accessToken:String, page:Int): Result<List<TipsRecipeListItem>> {
-        return try{
-            val response = tipsRecipeRemoteDataSource.getRecipeList(accessToken, page)
-            when(response) {
-                is ApiResponse.Success -> {
-                    val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
-                    Result.success(recipeList)
+    override suspend fun getRecipeList(accessToken:String, page:Int): Flow<Result<List<TipsRecipeListItem>>> {
+        return flow{
+            try{
+                val response = tipsRecipeRemoteDataSource.getRecipeList(accessToken, page)
+                when(response) {
+                    is ApiResponse.Success -> {
+                        val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
+                        emit(Result.success(recipeList))
+                    }
+                    is ApiResponse.Failure.Error -> {
+                        Timber.e("GetAlarms error: ${response.errorBody}")
+                        emit(Result.failure(Exception("GetAlarms Failed")))
+                    }
+                    is ApiResponse.Failure.Exception -> {
+                        Timber.e("GetAlarms exception: ${response.message}")
+                        emit(Result.failure(response.throwable))
+                    }
                 }
-                is ApiResponse.Failure.Error -> {
-                    Timber.e("GetAlarms error: ${response.errorBody}")
-                    Result.failure(Exception("GetAlarms Failed"))
-                }
-                is ApiResponse.Failure.Exception -> {
-                    Timber.e("GetAlarms exception: ${response.message}")
-                    Result.failure(response.throwable)
-                }
+            }catch (e:Exception){
+                Timber.e(e, "SignUp exception")
+                emit(Result.failure(e))
             }
-        }catch (e:Exception){
-            Timber.e(e, "SignUp exception")
-            Result.failure(e)
         }
     }
 

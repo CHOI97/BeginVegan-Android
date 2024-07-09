@@ -1,7 +1,5 @@
 package com.example.presentation.config.bookmark
 
-import android.app.Activity
-import androidx.lifecycle.viewModelScope
 import com.example.domain.useCase.bookmarks.BookmarkUseCase
 import com.example.presentation.auth.User
 import com.example.presentation.util.BookmarkController
@@ -10,7 +8,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 @Module
 @InstallIn(ActivityComponent::class)

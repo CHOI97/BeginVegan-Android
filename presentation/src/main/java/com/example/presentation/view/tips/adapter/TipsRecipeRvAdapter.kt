@@ -3,10 +3,12 @@ package com.example.presentation.view.tips.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemRecipeBinding
+import timber.log.Timber
 
 class TipsRecipeRvAdapter(private val context: Context,private val list:List<TipsRecipeListItem>): RecyclerView.Adapter<TipsRecipeRvAdapter.RecyclerViewHolder>() {
     private var listener: OnItemClickListener? = null
@@ -27,7 +29,14 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
             val item = list[position]
             binding.tvRecipeName.text = item.name
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
+            Timber.d("${item.name} : ${item.isBookmarked}")
+
+            binding.tbInterest.setOnCheckedChangeListener(null)
             binding.tbInterest.isChecked = item.isBookmarked
+
+            binding.tbInterest.setOnCheckedChangeListener { buttonView, isChecked ->
+                listener?.changeBookmark(buttonView, isChecked, item)
+            }
         }
     }
 
@@ -49,6 +58,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
 
     interface OnItemClickListener{
         fun onItemClick()
+        fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsRecipeListItem)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener
