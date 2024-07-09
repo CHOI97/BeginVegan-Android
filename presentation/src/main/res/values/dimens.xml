@@ -156,5 +156,7 @@
 
 <!--    Photo Select-->
     <dimen name="dialog_width">280dp</dimen> //dialog 공통으로 사용돼서 이름 변경했습니다.
+    <dimen name="dialog_width_big">312dp</dimen>
+    <dimen name="dialog_height">506dp</dimen>
     <dimen name="photo_select_dialog_radius">8dp</dimen>
 </resources>

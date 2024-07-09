@@ -36,7 +36,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding>(@LayoutRes private val la
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window?.setDimAmount(0.2f)
+        dialog?.window?.setDimAmount(0.7f)
         binding.lifecycleOwner = viewLifecycleOwner
         logMessage("onCreateView")
         return binding.root
