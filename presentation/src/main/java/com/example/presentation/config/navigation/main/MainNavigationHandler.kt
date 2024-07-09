@@ -13,6 +13,7 @@ interface MainNavigationHandler {
     fun navigateToBeganTest()
 
     fun navigateToBeganTestResult()
+    fun navigateToTipsMagazineDetail()
 
     fun navigateToMainHome(fromTest:Boolean = false)
 

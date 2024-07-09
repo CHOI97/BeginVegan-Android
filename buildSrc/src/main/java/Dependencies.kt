@@ -72,4 +72,5 @@ object Dependencies {
 
     const val CIRCLE_IMAGEVIEW ="de.hdodenhof:circleimageview:${Versions.CIRCLE_IMAGEVIEW}"
 
+    const val KOTLINX_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES}"
 }

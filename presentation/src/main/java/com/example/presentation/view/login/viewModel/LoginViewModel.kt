@@ -11,6 +11,7 @@ import com.example.presentation.auth.User
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -35,22 +36,22 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-//    fun signUp(email: String, providerId: String) {
-//        viewModelScope.launch {
-//            val result = signUpUseCase.invoke(email, providerId)
-//            Timber.d("$result")
-//        }
-//    }
-
     private val _loginState = MutableLiveData(false)
     val loginState: LiveData<Boolean> = _loginState
 
-    fun signIn(email: String, providerId: String) {
+    var additionalInfoProvided: Boolean = false
+
+    private fun signIn(email: String, providerId: String) {
         viewModelScope.launch {
             signInUseCase.invoke(email, providerId).onSuccess {
+                Timber.d("$it")
+
                 User.accessToken = it.accessToken
                 User.refreshToken = it.refreshToken
+
                 _loginState.value = true
+
+                additionalInfoProvided = it.additionalInfo
             }.onFailure {
                 _loginState.value = false
             }
@@ -85,12 +86,15 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+//    private fun fetchJwtToken(accessToken: String,refreshToken: String){
+//        User.accessToken = "Bearer $accessToken"
+//        User.refreshToken = "Bearer $refreshToken"
+//    }
     private fun fetchKakaoUserData() {
         UserApiClient.instance.me { user, error ->
             if (error != null) {
                 Timber.d("KaKao User 사용자 정보 요청 실패 $error")
             } else if (user != null) {
-                var scopes = mutableListOf<String>()
                 Timber.d(
                     "KaKao User 사용자 정보 요청 성공" +
                             "\n회원번호: ${user.id}" +

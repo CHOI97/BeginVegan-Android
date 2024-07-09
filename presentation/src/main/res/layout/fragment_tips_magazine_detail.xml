@@ -10,26 +10,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.tips.view.TipsMagazineDetailFragment">
-        <Toolbar
-            android:id="@+id/tb_toolbar"
+        tools:context=".view.tips.view.TipsMagazineDetailFragment"
+        android:background="@color/color_background">
+        <include
+            android:id="@+id/included_toolbar"
+            layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" >
-            <ImageButton
-                android:id="@+id/ib_back_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_back"
-                android:backgroundTint="@color/color_primary"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/title_bold"
-                android:textColor="@color/color_primary"
-                android:text="@string/magazine"
-                android:layout_gravity="center"/>
-        </Toolbar>
+            app:title="@{@string/magazine}"
+            app:backButtonVisible="@{true}"
+            app:notificationVisible="@{false}"
+            app:colorMode="@{false}"/>
         <TextView
             android:id="@+id/tv_magazine_title"
             android:layout_width="match_parent"
@@ -37,7 +28,7 @@
             style="@style/heading_bold"
             android:textColor="@color/color_text_01"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/tb_toolbar"
+            app:layout_constraintTop_toBottomOf="@id/included_toolbar"
             android:layout_marginTop="@dimen/margin_24"
             android:layout_marginHorizontal="@dimen/margin_16"/>
         <TextView
@@ -78,5 +69,31 @@
             app:layout_constraintTop_toBottomOf="@id/tb_interest"
             android:layout_marginTop="@dimen/margin_16"
             android:layout_marginHorizontal="@dimen/margin_16"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/v_divider">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:layout_marginBottom="@dimen/margin_20"/>
+                <LinearLayout
+                    android:id="@+id/ll_magazine_contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+                    android:layout_marginHorizontal="@dimen/margin_20"
+                    android:orientation="vertical"
+                    android:gravity="center"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
