@@ -1,7 +1,7 @@
 package com.example.presentation.view.tips.view
 
 import android.widget.CompoundButton
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.TipsRecipeListItem
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.fragment_tips_recipe) {
     private lateinit var recipeRvAdapter: TipsRecipeRvAdapter
-    private val recipeViewModel: RecipeViewModel by viewModels()
+    private val recipeViewModel: RecipeViewModel by activityViewModels()
     @Inject
     lateinit var bookmarkController:BookmarkController
     override fun init() {
@@ -40,6 +40,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
 
     private fun getRecipeList(){
+        recipeViewModel.getRecipeList()
         lifecycleScope.launch {
             recipeViewModel.recipeList.collect{state->
                 when(state){
@@ -63,8 +64,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.rvRecipe.layoutManager = LinearLayoutManager(this.context)
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
-            override fun onItemClick() {
-                openDialogRecipeDetail()
+            override fun onItemClick(recipeId: Int, toggleButton: CompoundButton) {
+                openDialogRecipeDetail(recipeId, toggleButton)
             }
 
             override fun changeBookmark(
@@ -87,7 +88,9 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
             }
         })
     }
-    private fun openDialogRecipeDetail(){
+    private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
+        recipeViewModel.getRecipeDetail(recipeId)
+        recipeViewModel.setSelectedTb(toggleButton)
         TipsRecipeDetailDialog().show(childFragmentManager, "TipsRecipeDetail")
     }
 }
