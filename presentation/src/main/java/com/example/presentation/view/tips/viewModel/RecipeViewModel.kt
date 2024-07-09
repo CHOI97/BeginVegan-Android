@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.TipsRecipeDetail
+import com.example.domain.model.TipsRecipeListItem
 import com.example.domain.useCase.tips.TipsRecipeUseCase
 import com.example.presentation.auth.User
 import com.example.presentation.network.NetworkResult
@@ -24,9 +25,17 @@ class RecipeViewModel @Inject constructor(
     private val recipeUseCase: TipsRecipeUseCase
 ) : ViewModel(){
 
-    private val _recipeList = MutableStateFlow<NetworkResult<RecipeListState>>(NetworkResult.Loading())
-    val recipeList: StateFlow<NetworkResult<RecipeListState>> = _recipeList
+    //RecyclerView List
+    private val _recipeListState = MutableStateFlow<NetworkResult<RecipeListState>>(NetworkResult.Loading())
+    val recipeListState: StateFlow<NetworkResult<RecipeListState>> = _recipeListState
+    private fun addRecipeList(list: MutableList<TipsRecipeListItem>){
+        _recipeListState.value = NetworkResult.Success(
+            RecipeListState(response = list, isLoading = false))
+    }
+    private val _isContinueGetList = MutableLiveData(true)
+    val isContinueGetList:LiveData<Boolean> = _isContinueGetList
 
+    //Recipe Detail
     private val _recipeDetailData = MutableLiveData<TipsRecipeDetail>()
     val recipeDetailData : LiveData<TipsRecipeDetail> = _recipeDetailData
 
@@ -39,17 +48,25 @@ class RecipeViewModel @Inject constructor(
         selectedTb.value!!.isChecked = isChecked
     }
 
-    fun getRecipeList(){
+    fun getRecipeList(page:Int){
         viewModelScope.launch {
-            recipeUseCase.getRecipeList(User.accessToken, 0).collectLatest{
+            recipeUseCase.getRecipeList(User.accessToken, page).collectLatest{
                 it.onSuccess {result ->
-                    _recipeList.value = NetworkResult.Success(
-                        RecipeListState(
-                            response = result,
-                            isLoading = false
-                        ))
+                    if(result.isEmpty()){
+                       _isContinueGetList.value = false
+                    }else{
+                        if(recipeListState.value.data!=null){
+                            val list = recipeListState.value.data!!.response
+                            list?.let {list ->
+                                list.addAll(result)
+                                addRecipeList(list)
+                            }
+                        }else{
+                            addRecipeList(result.toMutableList())
+                        }
+                    }
                 }.onFailure {
-                    _recipeList.value = NetworkResult.Error("getRecipeList Failed")
+                    _recipeListState.value = NetworkResult.Error("getRecipeList Failed")
                 }
             }
         }

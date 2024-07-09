@@ -4,6 +4,7 @@ import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
@@ -22,43 +23,39 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     private val recipeViewModel: RecipeViewModel by activityViewModels()
     @Inject
     lateinit var bookmarkController:BookmarkController
+    private var currentPage = 0
     override fun init() {
         binding.lifecycleOwner = this
 
-        getRecipeList()
+        //RecyclerView List 세팅
+        currentPage = 0
+        getRecipeList(currentPage)
 
         openDialogRecipeForMe()
         binding.llBtnRecipeForMe.setOnClickListener {
             //나를 위한 레시피 필터 기능
         }
     }
+    private fun getRecipeList(page:Int){
+        //api 호출
+        recipeViewModel.getRecipeList(page)
 
-    private fun openDialogRecipeForMe(){
-        binding.ibTooltipRecipeForMe.setOnClickListener {
-            TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
-        }
-    }
-
-    private fun getRecipeList(){
-        recipeViewModel.getRecipeList()
         lifecycleScope.launch {
-            recipeViewModel.recipeList.collect{state->
+            recipeViewModel.recipeListState.collect{state->
                 when(state){
-                    is NetworkResult.Loading -> {
-
-                    }
+                    is NetworkResult.Loading -> {}
                     is NetworkResult.Success -> {
+                        //api result 받으면 setRecipeList 실행
                         setRecipeList(state.data?.response!!)
                     }
-                    is NetworkResult.Error -> {
-
-                    }
+                    is NetworkResult.Error -> {}
                 }
             }
         }
-
+        currentPage++
     }
     private fun setRecipeList(list:List<TipsRecipeListItem>){
+        //RecyclerView Adapter 설정
         recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), list)
         binding.rvRecipe.adapter = recipeRvAdapter
         binding.rvRecipe.layoutManager = LinearLayoutManager(this.context)
@@ -87,10 +84,27 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 }
             }
         })
+
+        //RecyclerView 페이징 처리
+        binding.rvRecipe.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val rvPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                val totalCount = recyclerView.adapter?.itemCount?.minus(1)
+                if(rvPosition == totalCount && recipeViewModel.isContinueGetList.value!!){
+                    getRecipeList(currentPage)
+                }
+            }
+        })
     }
     private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
         recipeViewModel.getRecipeDetail(recipeId)
         recipeViewModel.setSelectedTb(toggleButton)
         TipsRecipeDetailDialog().show(childFragmentManager, "TipsRecipeDetail")
+    }
+    private fun openDialogRecipeForMe(){
+        binding.ibTooltipRecipeForMe.setOnClickListener {
+            TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
+        }
     }
 }

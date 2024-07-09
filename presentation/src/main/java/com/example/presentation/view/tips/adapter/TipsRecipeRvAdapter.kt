@@ -80,7 +80,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
             1 -> levels[0]()
             2 -> levels[1]()
             else -> {
-                for (i in 0 until index-1) {
+                for (i in 0 until index-2) {
                     levels[i]()
                 }
             }
