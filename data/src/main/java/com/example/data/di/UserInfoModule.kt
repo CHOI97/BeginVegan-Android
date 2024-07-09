@@ -2,6 +2,7 @@ package com.example.data.di
 
 import com.example.data.mapper.auth.AuthMapper
 import com.example.data.mapper.core.BaseMapper
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.auth.AuthRemoteDataSource
 import com.example.data.repository.remote.auth.AuthRemoteDataSourceImpl
 import com.example.data.repository.remote.auth.AuthRepositoryImpl
@@ -20,7 +21,7 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 
-@Module(includes = [NetworkModule::class])
+@Module(includes = [NetworkModule::class,DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
 object UserInfoModule {
     @Singleton
@@ -31,8 +32,11 @@ object UserInfoModule {
 
     @Provides
     @Singleton
-    fun provideUserInfoRemoteDataSource(userService: UserInfoService): SaveUserInfoDataSource {
-        return SaveUserInfoDataSourceImpl(userService)
+    fun provideUserInfoRemoteDataSource(
+        userServiceInfo: UserInfoService,
+        authTokenDataSource: AuthTokenDataSource
+    ): SaveUserInfoDataSource {
+        return SaveUserInfoDataSourceImpl(userServiceInfo, authTokenDataSource)
     }
 
     @Provides

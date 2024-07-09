@@ -84,4 +84,7 @@ dependencies {
 
     // KaKao Login
     implementation(Dependencies.KAKAO_LOGIN)
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 }

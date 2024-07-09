@@ -13,7 +13,7 @@ interface UserInfoService {
     @Multipart
     @PUT("/auth/sign-up/detail")
     suspend fun updateUserInfo(
-        @Header("token") token: String,
+        @Header("Authorization") token: String,
         @Part("addUserInfoReq") addUserInfoReq: AddUserInfoReq,
         @Part("isDefaultImage") isDefaultImage: Boolean,
         @Part file: MultipartBody.Part?

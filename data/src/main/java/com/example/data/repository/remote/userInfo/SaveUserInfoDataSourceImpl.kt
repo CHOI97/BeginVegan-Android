@@ -1,23 +1,20 @@
 package com.example.data.repository.remote.userInfo
 
-import com.example.data.model.auth.AuthRequest
-import com.example.data.model.auth.SignInResponse
 import com.example.data.model.core.BaseResponse
 import com.example.data.model.userInfo.AddUserInfoRequest
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.retrofit.UserInfoService
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.retrofit.errorBody
-import com.skydoves.sandwich.suspendOnError
-import com.skydoves.sandwich.suspendOnSuccess
+import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
 class SaveUserInfoDataSourceImpl @Inject constructor(
-    private val userInfoService: UserInfoService
+    private val userInfoService: UserInfoService,
+    private val authTokenDataSource: AuthTokenDataSource
 ) : SaveUserInfoDataSource {
 
     override suspend fun updateUserInfo(
@@ -30,11 +27,16 @@ class SaveUserInfoDataSourceImpl @Inject constructor(
             val requestBody = file!!.asRequestBody("file".toMediaTypeOrNull())
             multiPartBody = MultipartBody.Part.createFormData("file", file.name, requestBody)
         }
+
+        // `accessToken`을 가져와서 헤더로 추가
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+
         return userInfoService.updateUserInfo(
+            authHeader,
             addUserInfoRequest.addUserInfoReq,
             addUserInfoRequest.isDefaultImage,
             multiPartBody
         )
     }
-
 }

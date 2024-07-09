@@ -1,6 +1,6 @@
 package com.example.domain.useCase.userInfo
 
-import com.example.domain.model.core.OperationResult
+import com.example.domain.model.core.BasicResult
 import com.example.domain.repository.userInfo.SaveUserInfoRepository
 import javax.inject.Inject
 
@@ -10,6 +10,6 @@ class SaveUserInfoUseCase @Inject constructor(private val saveUserInfoRepository
         veganType: String,
         isDefaultImage: Boolean,
         imageUri: String?
-    ): Result<OperationResult> =
+    ): Result<BasicResult> =
         saveUserInfoRepository.updateUserInfo(nickName, veganType, isDefaultImage, imageUri)
 }

@@ -1,13 +1,9 @@
 package com.example.data.repository.remote.userInfo
 
-import com.example.data.mapper.auth.AuthMapper
 import com.example.data.mapper.core.BaseMapper
-import com.example.data.model.auth.AuthRequest
 import com.example.data.model.userInfo.AddUserInfoReq
 import com.example.data.model.userInfo.AddUserInfoRequest
-import com.example.data.repository.remote.auth.AuthRemoteDataSource
-import com.example.domain.model.core.OperationResult
-import com.example.domain.repository.auth.AuthRepository
+import com.example.domain.model.core.BasicResult
 import com.example.domain.repository.userInfo.SaveUserInfoRepository
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
@@ -23,7 +19,7 @@ class SaveUserInfoRepositoryImpl @Inject constructor(
         veganType: String,
         isDefaultImage: Boolean,
         imageUri: String?
-    ): Result<OperationResult> {
+    ): Result<BasicResult> {
         return try {
             val addUserInfoReq = AddUserInfoReq(nickName,veganType)
             // viewModel에서 이미지 여부 따라 받아올 것
