@@ -85,4 +85,28 @@ class RecipeViewModel @Inject constructor(
             }
         }
     }
+
+    fun getRecipeForMe(page: Int){
+        viewModelScope.launch {
+            recipeUseCase.getRecipeMy(page).collectLatest {
+                it.onSuccess { result ->
+                    if (result.isEmpty()) {
+                        _isContinueGetList.value = false
+                    } else {
+                        if (recipeListState.value.data != null) {
+                            val list = recipeListState.value.data!!.response
+                            list?.let { list ->
+                                list.addAll(result)
+                                addRecipeList(list)
+                            }
+                        } else {
+                            addRecipeList(result.toMutableList())
+                        }
+                    }
+                }.onFailure {
+                    _recipeListState.value = NetworkResult.Error("getRecipeList Failed")
+                }
+            }
+        }
+    }
 }

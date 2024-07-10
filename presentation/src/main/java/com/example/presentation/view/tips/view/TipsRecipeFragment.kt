@@ -26,6 +26,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     @Inject
     lateinit var bookmarkController:BookmarkController
     private var currentPage = 0
+    private var isForMe = false
+
     override fun init() {
         binding.lifecycleOwner = this
 
@@ -35,9 +37,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         getRecipeList(currentPage)
 
         openDialogRecipeForMe()
-//        binding.llBtnRecipeForMe.setOnClickListener {
-//            //나를 위한 레시피 필터 기능
-//        }
+
+        setRecipeForMe()
     }
     private fun getRecipeList(page:Int){
         //api 호출
@@ -94,7 +95,11 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 val rvPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
                 val totalCount = recyclerView.adapter?.itemCount?.minus(1)
                 if(rvPosition == totalCount && recipeViewModel.isContinueGetList.value!!){
-                    getRecipeList(currentPage)
+                    if(isForMe){
+                        getRecipeForMeList(currentPage)
+                    }else{
+                        getRecipeList(currentPage)
+                    }
                 }
             }
         })
@@ -108,5 +113,41 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.ibTooltipRecipeForMe.setOnClickListener {
             TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
         }
+    }
+
+    //나를 위한 레시피
+    private fun setRecipeForMe(){
+        binding.tbRecipeForMe.setOnCheckedChangeListener { _, isChecked ->
+            //유저 veganType: NONE 이면 return
+            if(isChecked){
+                recipeViewModel.addRecipeList(emptyList<TipsRecipeListItem>().toMutableList())
+                currentPage = 0
+                isForMe = true
+                getRecipeForMeList(currentPage)
+            }else{
+                recipeViewModel.addRecipeList(emptyList<TipsRecipeListItem>().toMutableList())
+                currentPage = 0
+                isForMe = false
+                getRecipeList(currentPage)
+            }
+        }
+    }
+    private fun getRecipeForMeList(page:Int){
+        //api 호출
+        recipeViewModel.getRecipeForMe(page)
+
+        lifecycleScope.launch {
+            recipeViewModel.recipeListState.collect{state->
+                when(state){
+                    is NetworkResult.Loading -> {}
+                    is NetworkResult.Success -> {
+                        //api result 받으면 setRecipeList 실행
+                        setRecipeList(state.data?.response!!)
+                    }
+                    is NetworkResult.Error -> {}
+                }
+            }
+        }
+        currentPage++
     }
 }
