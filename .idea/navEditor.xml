@@ -150,6 +150,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_mainFragment_to_tipsMagazineDetailFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_mainFragment_to_veganTestFragment">
                               <value>
                                 <LayoutPositions />
@@ -249,8 +254,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-790" />
-                            <option name="y" value="708" />
+                            <option name="x" value="-754" />
+                            <option name="y" value="649" />
                           </Point>
                         </option>
                       </LayoutPositions>

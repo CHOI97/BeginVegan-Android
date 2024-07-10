@@ -166,6 +166,9 @@ dependencies {
     // Image Cropper
     implementation ("com.github.takusemba:cropme:2.0.8")
 
+    //Coroutine
+    implementation (Dependencies.KOTLINX_COROUTINES)
+
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
 //    implementation 'com.google.android.material:material:1.5.0'

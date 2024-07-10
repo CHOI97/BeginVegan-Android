@@ -405,6 +405,8 @@
     <!-- Tips -->
     <string name="tips_title">Tips</string>
     <string name="tips_recipe_filter_for_me">나를 위한 레시피</string>
+    <string name="tips_recipe_detail_ingredient">요리재료:</string>
+    <string name="tips_recipe_detail_process">요리과정:</string>
 
     <!-- Vegan Test -->
     <string name="vegan_test_title">나의 채식 성향은?</string>

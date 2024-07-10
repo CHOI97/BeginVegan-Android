@@ -8,44 +8,48 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background"
-        android:layout_gravity="end">
-
-        <Toolbar
+        android:background="@color/color_background">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_background"
+            android:clickable="true"/>
+        <LinearLayout
             android:id="@+id/tb_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
+            android:layout_height="@dimen/item_56"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center">
             <ImageButton
                 android:id="@+id/ib_back_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_back"
                 android:backgroundTint="@color/color_primary"
-                android:layout_marginEnd="@dimen/margin_4" />
-
+                android:layout_marginEnd="@dimen/margin_4"
+                android:layout_marginStart="@dimen/margin_16"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/title_bold"
                 android:textColor="@color/color_primary"
                 android:text="@string/notification" />
-
+            <View
+                android:layout_width="@dimen/item_0"
+                android:layout_height="@dimen/item_0"
+                android:layout_weight="1"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_notification_filled"
                 android:backgroundTint="@color/color_primary"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/margin_16" />
-        </Toolbar>
+                android:layout_marginEnd="@dimen/margin_16"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_new_title"
+            android:id="@+id/tv_unread_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/heading_bold"
@@ -57,10 +61,10 @@
             android:layout_marginStart="@dimen/margin_24" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_new_notification"
+            android:id="@+id/rv_unread_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_unread_title"
             tools:listitem="@layout/item_notification" />
 
         <View
@@ -68,11 +72,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_5"
             android:background="@color/color_gray_00"
-            app:layout_constraintTop_toBottomOf="@id/rv_new_notification"
+            app:layout_constraintTop_toBottomOf="@id/rv_unread_notification"
             android:layout_marginTop="@dimen/margin_10" />
 
         <TextView
-            android:id="@+id/tv_old_title"
+            android:id="@+id/tv_read_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/heading_bold"
@@ -84,10 +88,10 @@
             android:layout_marginStart="@dimen/margin_24" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_old_notification"
+            android:id="@+id/rv_read_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_old_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_read_title"
             tools:listitem="@layout/item_notification" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

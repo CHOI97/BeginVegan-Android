@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.useCase.auth.SignInUseCase
-import com.example.presentation.auth.User
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -40,10 +39,6 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             signInUseCase.invoke(email, providerId).onSuccess {
                 Timber.d("$it")
-
-                User.accessToken = it.accessToken
-                User.refreshToken = it.refreshToken
-
                 _loginState.value = true
 
                 additionalInfoProvided = it.additionalInfo

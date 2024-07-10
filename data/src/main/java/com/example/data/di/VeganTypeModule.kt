@@ -2,7 +2,7 @@ package com.example.data.di
 
 import com.example.data.repository.remote.veganType.VeganTypeRemoteDataSource
 import com.example.data.repository.remote.veganType.VeganTypeRemoteDataSourceImpl
-import com.example.data.repository.remote.veganType.VeganTypeRepositoryImlp
+import com.example.data.repository.remote.veganType.VeganTypeRepositoryImpl
 import com.example.data.retrofit.VeganTypeService
 import com.example.domain.repository.veganType.VeganTypeRepository
 import dagger.Module
@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class])
+@Module(includes = [NetworkModule::class,DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
 object VeganTypeModule {
     @Singleton
@@ -32,6 +32,6 @@ object VeganTypeModule {
     fun provideVeganTypeRepository(
         veganTypeRemoteDataSource: VeganTypeRemoteDataSource,
     ): VeganTypeRepository {
-        return VeganTypeRepositoryImlp(veganTypeRemoteDataSource)
+        return VeganTypeRepositoryImpl(veganTypeRemoteDataSource)
     }
 }

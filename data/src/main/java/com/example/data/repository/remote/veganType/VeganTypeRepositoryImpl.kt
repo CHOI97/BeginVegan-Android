@@ -7,13 +7,13 @@ import com.skydoves.sandwich.retrofit.errorBody
 import timber.log.Timber
 import javax.inject.Inject
 
-class VeganTypeRepositoryImlp @Inject constructor(
+class VeganTypeRepositoryImpl @Inject constructor(
     private val veganTypeRemoteDataSource: VeganTypeRemoteDataSource
 ):VeganTypeRepository {
-    override suspend fun patchVeganType(token:String, type:String, veganType: String): Result<Boolean> {
+    override suspend fun patchVeganType(type:String, veganType: String): Result<Boolean> {
         return try {
             val veganTypeRequest = VeganTypeRequest(veganType)
-            val response = veganTypeRemoteDataSource.patchVeganType(token, type, veganTypeRequest)
+            val response = veganTypeRemoteDataSource.patchVeganType(type, veganTypeRequest)
             when (response) {
                 is ApiResponse.Success -> Result.success(response.data.check)
                 is ApiResponse.Failure.Error -> {

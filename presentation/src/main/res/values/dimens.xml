@@ -24,6 +24,7 @@
     <dimen name="margin_20">20dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_28">28dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_36">36dp</dimen>
     <dimen name="margin_40">40dp</dimen>
     <dimen name="margin_44">44dp</dimen>
@@ -35,7 +36,6 @@
     <!-- 삭제 예정 -->
     <dimen name="margin_6">6dp</dimen>
     <dimen name="margin_14">14dp</dimen>
-    <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_34">34dp</dimen>
     <dimen name="margin_64">64dp</dimen>
     <dimen name="margin_68">68dp</dimen>
@@ -157,5 +157,7 @@
 
 <!--    Photo Select-->
     <dimen name="dialog_width">280dp</dimen> //dialog 공통으로 사용돼서 이름 변경했습니다.
+    <dimen name="dialog_width_big">312dp</dimen>
+    <dimen name="dialog_height">506dp</dimen>
     <dimen name="photo_select_dialog_radius">8dp</dimen>
 </resources>
