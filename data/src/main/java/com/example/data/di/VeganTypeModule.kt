@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.veganType.VeganTypeRemoteDataSource
 import com.example.data.repository.remote.veganType.VeganTypeRemoteDataSourceImpl
 import com.example.data.repository.remote.veganType.VeganTypeRepositoryImpl
@@ -12,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class,DataStoreModule::class])
+@Module(includes = [NetworkModule::class, DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
 object VeganTypeModule {
     @Singleton
@@ -23,8 +24,11 @@ object VeganTypeModule {
 
     @Provides
     @Singleton
-    fun provideVeganTypeRemoteDataSource(veganTypeService: VeganTypeService): VeganTypeRemoteDataSource {
-        return VeganTypeRemoteDataSourceImpl(veganTypeService)
+    fun provideVeganTypeRemoteDataSource(
+        veganTypeService: VeganTypeService,
+        authTokenDataSource: AuthTokenDataSource
+    ): VeganTypeRemoteDataSource {
+        return VeganTypeRemoteDataSourceImpl(veganTypeService, authTokenDataSource)
     }
 
     @Provides
