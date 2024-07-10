@@ -14,60 +14,58 @@ import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.adapter.TipsRecipeRvAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.fragment_tips_recipe) {
-    private lateinit var recipeRvAdapter: TipsRecipeRvAdapter
-    private val recipeViewModel: RecipeViewModel by activityViewModels()
     @Inject
     lateinit var bookmarkController:BookmarkController
+    private lateinit var recipeRvAdapter: TipsRecipeRvAdapter
+    private val recipeViewModel: RecipeViewModel by activityViewModels()
+
     private var currentPage = 0
     private var isForMe = false
+    private var recipeList = mutableListOf<TipsRecipeListItem>()
+    private var totalCount = 0
 
     override fun init() {
         binding.lifecycleOwner = this
 
-        //RecyclerView List 세팅
-        recipeViewModel.addRecipeList(emptyList<TipsRecipeListItem>().toMutableList())
-        currentPage = 0
+        reset()
         getRecipeList(currentPage)
+        setListener()
 
         openDialogRecipeForMe()
-
-        setRecipeForMe()
+        setToggleRecipeForMe()
     }
+    private fun reset(){
+        recipeList = mutableListOf()
+        currentPage = 0
+        totalCount = 0
+        isForMe = false
+        recipeViewModel.reSetIsContinueGetList()
+        recipeViewModel.addRecipeList(recipeList)
+        setAdapter(recipeList)
+    }
+    //api 호출
     private fun getRecipeList(page:Int){
-        //api 호출
         recipeViewModel.getRecipeList(page)
-
-        lifecycleScope.launch {
-            recipeViewModel.recipeListState.collect{state->
-                when(state){
-                    is NetworkResult.Loading -> {}
-                    is NetworkResult.Success -> {
-                        //api result 받으면 setRecipeList 실행
-                        setRecipeList(state.data?.response!!)
-                    }
-                    is NetworkResult.Error -> {}
-                }
-            }
-        }
         currentPage++
     }
-    private fun setRecipeList(list:List<TipsRecipeListItem>){
-        //RecyclerView Adapter 설정
+    private fun getRecipeForMeList(page:Int){
+        recipeViewModel.getRecipeForMe(page)
+        currentPage++
+    }
+    //RecyclerView Adapter 설정
+    private fun setAdapter(list:MutableList<TipsRecipeListItem>){
         recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), list)
         binding.rvRecipe.adapter = recipeRvAdapter
         binding.rvRecipe.layoutManager = LinearLayoutManager(this.context)
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int, toggleButton: CompoundButton) {
-                openDialogRecipeDetail(recipeId, toggleButton)
-            }
+                openDialogRecipeDetail(recipeId, toggleButton) }
 
             override fun changeBookmark(
                 toggleButton: CompoundButton,
@@ -77,23 +75,20 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 when(isBookmarked){
                     true -> {
                         lifecycleScope.launch {
-                            bookmarkController.postBookmark(data.id, "RECIPE")
-                        }
-                    }
+                            bookmarkController.postBookmark(data.id, "RECIPE") } }
                     false -> {
                         lifecycleScope.launch {
-                            bookmarkController.deleteBookmark(data.id, "RECIPE")
-                        }
-                    }
-                }
-            }
+                            bookmarkController.deleteBookmark(data.id, "RECIPE") } }
+                } }
         })
+    }
+    private fun setListener(){
         //RecyclerView 페이징 처리
         binding.rvRecipe.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val rvPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-                val totalCount = recyclerView.adapter?.itemCount?.minus(1)
+                totalCount = recyclerView.adapter?.itemCount?.minus(1)!!
                 if(rvPosition == totalCount && recipeViewModel.isContinueGetList.value!!){
                     if(isForMe){
                         getRecipeForMeList(currentPage)
@@ -103,7 +98,44 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 }
             }
         })
+
+        //api result 받으면 setRecipeList 실행
+        lifecycleScope.launch {
+            recipeViewModel.recipeListState.collect{state->
+                when(state){
+                    is NetworkResult.Loading -> {}
+                    is NetworkResult.Success -> {
+                        recipeList.addAll(state.data?.response!!)
+                        recipeRvAdapter.notifyItemRangeInserted(totalCount,state.data.response.size)
+                    }
+                    is NetworkResult.Error -> {}
+                }
+            }
+        }
     }
+
+    //나를 위한 레시피 토글 처리
+    private fun setToggleRecipeForMe(){
+        binding.tbRecipeForMe.setOnCheckedChangeListener { _, isChecked ->
+            //유저 veganType: NONE 이면 return
+            if(isChecked){
+                reset()
+                getRecipeForMeList(currentPage)
+            }else{
+                reset()
+                getRecipeList(currentPage)
+            }
+        }
+        //From VeganTest
+        recipeViewModel.isFromTest.observe(this){
+            if(it){
+                binding.tbRecipeForMe.isChecked = true
+                recipeViewModel.setIsFromTest(false)
+            }
+        }
+    }
+
+    //Dialog
     private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
         recipeViewModel.getRecipeDetail(recipeId)
         recipeViewModel.setSelectedTb(toggleButton)
@@ -113,41 +145,5 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.ibTooltipRecipeForMe.setOnClickListener {
             TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
         }
-    }
-
-    //나를 위한 레시피
-    private fun setRecipeForMe(){
-        binding.tbRecipeForMe.setOnCheckedChangeListener { _, isChecked ->
-            //유저 veganType: NONE 이면 return
-            if(isChecked){
-                recipeViewModel.addRecipeList(emptyList<TipsRecipeListItem>().toMutableList())
-                currentPage = 0
-                isForMe = true
-                getRecipeForMeList(currentPage)
-            }else{
-                recipeViewModel.addRecipeList(emptyList<TipsRecipeListItem>().toMutableList())
-                currentPage = 0
-                isForMe = false
-                getRecipeList(currentPage)
-            }
-        }
-    }
-    private fun getRecipeForMeList(page:Int){
-        //api 호출
-        recipeViewModel.getRecipeForMe(page)
-
-        lifecycleScope.launch {
-            recipeViewModel.recipeListState.collect{state->
-                when(state){
-                    is NetworkResult.Loading -> {}
-                    is NetworkResult.Success -> {
-                        //api result 받으면 setRecipeList 실행
-                        setRecipeList(state.data?.response!!)
-                    }
-                    is NetworkResult.Error -> {}
-                }
-            }
-        }
-        currentPage++
     }
 }

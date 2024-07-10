@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemRecipeBinding
-import timber.log.Timber
 
 class TipsRecipeRvAdapter(private val context: Context,private val list:List<TipsRecipeListItem>): RecyclerView.Adapter<TipsRecipeRvAdapter.RecyclerViewHolder>() {
     private var listener: OnItemClickListener? = null
@@ -19,17 +18,16 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
         RecyclerView.ViewHolder(binding.root){
         fun bind(position:Int): CompoundButton{
             val levels = listOf(
-                { binding.tbVeganLevelMilk.isChecked = true },
-                { binding.tbVeganLevelEgg.isChecked = true },
-                { binding.tbVeganLevelFish.isChecked = true },
-                { binding.tbVeganLevelChicken.isChecked = true },
-                { binding.tbVeganLevelMeat.isChecked = true }
+                binding.tbVeganLevelMilk,
+                binding.tbVeganLevelEgg,
+                binding.tbVeganLevelFish,
+                binding.tbVeganLevelChicken,
+                binding.tbVeganLevelMeat
             )
 
             val item = list[position]
             binding.tvRecipeName.text = item.name
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
-            Timber.d("${item.name} : ${item.isBookmarked}")
 
             binding.tbInterest.setOnCheckedChangeListener(null)
             binding.tbInterest.isChecked = item.isBookmarked
@@ -65,7 +63,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
         this.listener = listener
     }
 
-    private fun setVeganType(type:String, levels:List<()->Unit>):String{
+    private fun setVeganType(type:String, levels:List<CompoundButton>):String{
         veganTypesKr = context.resources.getStringArray(R.array.vegan_type)
         veganTypesEng = context.resources.getStringArray(R.array.vegan_types_eng)
 
@@ -74,15 +72,13 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
         return veganTypesKr[index]
     }
 
-    private fun setVeganIcon(index: Int, levels:List<()->Unit>){
-        when(index-1){
-            0 -> return
-            1 -> levels[0]()
-            2 -> levels[1]()
-            else -> {
-                for (i in 0 until index-2) {
-                    levels[i]()
-                }
+    private fun setVeganIcon(index: Int, levels:List<CompoundButton>){
+        for (i in 0..4) {
+            when(index-1){
+                0 -> levels[i].isChecked = false
+                1 -> levels[i].isChecked = i<index-1
+                2 -> levels[i].isChecked = i==1
+                else -> levels[i].isChecked = i<index-2
             }
         }
     }
