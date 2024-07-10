@@ -2,7 +2,7 @@ package com.example.domain.model
 
 
 enum class VeganTypes(val veganType: String) {
-    NONE("알고 있지 않아요"),
+    UNKNOWN("알고 있지 않아요"),
     VEGAN("비건"),
     LACTO_VEGETARIAN("락토 베지테리언"),
     OVO_VEGETARIAN("오보 베지테리언"),

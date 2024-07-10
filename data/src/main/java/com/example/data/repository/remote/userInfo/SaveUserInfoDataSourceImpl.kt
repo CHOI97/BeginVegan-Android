@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -21,12 +22,16 @@ class SaveUserInfoDataSourceImpl @Inject constructor(
         addUserInfoRequest: AddUserInfoRequest,
         imageUri: String?
     ): ApiResponse<BaseResponse> {
-        var multiPartBody: MultipartBody.Part? = null
-        if (imageUri != null) {
-            val file = File(imageUri)
-            val requestBody = file!!.asRequestBody("file".toMediaTypeOrNull())
-            multiPartBody = MultipartBody.Part.createFormData("file", file.name, requestBody)
-        }
+        val multiPartBody: MultipartBody.Part =
+            if (imageUri != null) {
+                val file = File(imageUri)
+                val requestBody = file.asRequestBody("file".toMediaTypeOrNull())
+                MultipartBody.Part.createFormData("file", file.name, requestBody)
+            } else {
+                // 빈 RequestBody 생성
+                val requestBody = "".toRequestBody("text/plain".toMediaTypeOrNull())
+                MultipartBody.Part.createFormData("file", "", requestBody)
+            }
 
         // `accessToken`을 가져와서 헤더로 추가
         val accessToken = authTokenDataSource.accessToken.first()
