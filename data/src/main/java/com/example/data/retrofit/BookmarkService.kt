@@ -1,7 +1,7 @@
 package com.example.data.retrofit
 
-import com.example.data.model.auth.SignUpResponse
 import com.example.data.model.bookmarks.BookmarkRequest
+import com.example.data.model.core.BaseResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.HTTP
@@ -13,11 +13,11 @@ interface BookmarkService {
     suspend fun postBookmark(
         @Header("Authorization") token: String,
         @Body bookmarkRequest: BookmarkRequest
-    ): ApiResponse<SignUpResponse>
+    ): ApiResponse<BaseResponse>
 
     @HTTP(method = "DELETE", path = "/api/v1/bookmarks", hasBody = true)
     suspend fun deleteBookmark(
         @Header("Authorization") token: String,
         @Body bookmarkRequest: BookmarkRequest
-    ): ApiResponse<SignUpResponse>
+    ): ApiResponse<BaseResponse>
 }

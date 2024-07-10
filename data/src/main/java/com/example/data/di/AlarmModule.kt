@@ -1,6 +1,7 @@
 package com.example.data.di
 
 import com.example.data.mapper.alarms.AlarmMapper
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.alarms.AlarmRemoteDataSource
 import com.example.data.repository.remote.alarms.AlarmRemoteDataSourceImpl
 import com.example.data.repository.remote.alarms.AlarmRepositoryImpl
@@ -13,7 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class])
+@Module(includes = [NetworkModule::class, DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
 class AlarmModule {
     @Singleton
@@ -24,8 +25,11 @@ class AlarmModule {
 
     @Provides
     @Singleton
-    fun provideAlarmRemoteDataSource(alarmService: AlarmService): AlarmRemoteDataSource {
-        return AlarmRemoteDataSourceImpl(alarmService)
+    fun provideAlarmRemoteDataSource(
+        alarmService: AlarmService,
+        authTokenDataSource: AuthTokenDataSource
+    ): AlarmRemoteDataSource {
+        return AlarmRemoteDataSourceImpl(alarmService, authTokenDataSource)
     }
 
     @Provides

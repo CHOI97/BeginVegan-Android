@@ -3,6 +3,7 @@ package com.example.data.repository.remote.tips
 import com.example.data.mapper.tips.TipsMagazineDetailMapper
 import com.example.data.mapper.tips.TipsMagazineMapper
 import com.example.data.model.tips.TipsMagazineItemDto
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.domain.model.tips.TipsMagazineDetail
 import com.example.domain.model.tips.TipsMagazineItem
 import com.example.domain.model.tips.TipsMagazineList
@@ -14,21 +15,26 @@ import javax.inject.Inject
 
 class TipsMagazineRepositoryImpl @Inject constructor(
     private val tipsMagazineRemoteDataSource: TipsMagazineRemoteDataSource,
+    private val authTokenDataSource: AuthTokenDataSource,
     private val tipsMagazineMapper: TipsMagazineMapper,
     private val tipsMagazineDetailMapper: TipsMagazineDetailMapper
-):TipsMagazineRepository {
-    override suspend fun getMagazineList(accessToken: String, page: Int): Result<List<TipsMagazineItem>> {
+) : TipsMagazineRepository {
+    override suspend fun getMagazineList(
+        page: Int
+    ): Result<List<TipsMagazineItem>> {
         return try {
-            val response = tipsMagazineRemoteDataSource.getMagazineList(accessToken, page)
+            val response = tipsMagazineRemoteDataSource.getMagazineList(page)
             when (response) {
                 is ApiResponse.Success -> {
                     val magazineList = tipsMagazineMapper.mapFromEntity(response.data.information)
                     Result.success(magazineList)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("getMagazineList error: ${response.errorBody}")
                     Result.failure(Exception("getMagazineList failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("getMagazineList exception: ${response.message}")
                     Result.failure(response.throwable)
@@ -41,20 +47,22 @@ class TipsMagazineRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMagazineDetail(
-        accessToken: String,
         id: Int
     ): Result<TipsMagazineDetail> {
         return try {
-            val response = tipsMagazineRemoteDataSource.getMagazineDetail(accessToken, id)
+            val response = tipsMagazineRemoteDataSource.getMagazineDetail(id)
             when (response) {
                 is ApiResponse.Success -> {
-                    val magazineDetail = tipsMagazineDetailMapper.mapFromEntity(response.data.information)
+                    val magazineDetail =
+                        tipsMagazineDetailMapper.mapFromEntity(response.data.information)
                     Result.success(magazineDetail)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("getMagazineDetail error: ${response.errorBody}")
                     Result.failure(Exception("getMagazineDetail failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("getMagazineDetail exception: ${response.message}")
                     Result.failure(response.throwable)
@@ -66,18 +74,20 @@ class TipsMagazineRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getHomeMagazine(accessToken: String): Result<List<TipsMagazineItem>> {
+    override suspend fun getHomeMagazine(): Result<List<TipsMagazineItem>> {
         return try {
-            val response = tipsMagazineRemoteDataSource.getHomeMagazine(accessToken)
+            val response = tipsMagazineRemoteDataSource.getHomeMagazine()
             when (response) {
                 is ApiResponse.Success -> {
                     val magazineList = tipsMagazineMapper.mapFromEntity(response.data.information)
                     Result.success(magazineList)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("getHomeMagazine error: ${response.errorBody}")
                     Result.failure(Exception("getHomeMagazine failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("getHomeMagazine exception: ${response.message}")
                     Result.failure(response.throwable)

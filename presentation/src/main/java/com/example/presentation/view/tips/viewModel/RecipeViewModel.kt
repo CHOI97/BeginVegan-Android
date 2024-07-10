@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.model.TipsRecipeDetail
 import com.example.domain.model.TipsRecipeListItem
 import com.example.domain.useCase.tips.TipsRecipeUseCase
-import com.example.presentation.auth.User
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.tips.viewModel.state.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,45 +22,49 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
     private val recipeUseCase: TipsRecipeUseCase
-) : ViewModel(){
+) : ViewModel() {
 
     //RecyclerView List
-    private val _recipeListState = MutableStateFlow<NetworkResult<RecipeListState>>(NetworkResult.Loading())
+    private val _recipeListState =
+        MutableStateFlow<NetworkResult<RecipeListState>>(NetworkResult.Loading())
     val recipeListState: StateFlow<NetworkResult<RecipeListState>> = _recipeListState
-    private fun addRecipeList(list: MutableList<TipsRecipeListItem>){
+    private fun addRecipeList(list: MutableList<TipsRecipeListItem>) {
         _recipeListState.value = NetworkResult.Success(
-            RecipeListState(response = list, isLoading = false))
+            RecipeListState(response = list, isLoading = false)
+        )
     }
+
     private val _isContinueGetList = MutableLiveData(true)
-    val isContinueGetList:LiveData<Boolean> = _isContinueGetList
+    val isContinueGetList: LiveData<Boolean> = _isContinueGetList
 
     //Recipe Detail
     private val _recipeDetailData = MutableLiveData<TipsRecipeDetail>()
-    val recipeDetailData : LiveData<TipsRecipeDetail> = _recipeDetailData
+    val recipeDetailData: LiveData<TipsRecipeDetail> = _recipeDetailData
 
     private val _selectedTb = MutableLiveData<CompoundButton>()
     val selectedTb: LiveData<CompoundButton> = _selectedTb
-    fun setSelectedTb(view:CompoundButton){
+    fun setSelectedTb(view: CompoundButton) {
         _selectedTb.value = view
     }
-    fun setSelectedTbIsChecked(isChecked:Boolean){
+
+    fun setSelectedTbIsChecked(isChecked: Boolean) {
         selectedTb.value!!.isChecked = isChecked
     }
 
-    fun getRecipeList(page:Int){
+    fun getRecipeList(page: Int) {
         viewModelScope.launch {
-            recipeUseCase.getRecipeList(User.accessToken, page).collectLatest{
-                it.onSuccess {result ->
-                    if(result.isEmpty()){
-                       _isContinueGetList.value = false
-                    }else{
-                        if(recipeListState.value.data!=null){
+            recipeUseCase.getRecipeList(page).collectLatest {
+                it.onSuccess { result ->
+                    if (result.isEmpty()) {
+                        _isContinueGetList.value = false
+                    } else {
+                        if (recipeListState.value.data != null) {
                             val list = recipeListState.value.data!!.response
-                            list?.let {list ->
+                            list?.let { list ->
                                 list.addAll(result)
                                 addRecipeList(list)
                             }
-                        }else{
+                        } else {
                             addRecipeList(result.toMutableList())
                         }
                     }
@@ -72,9 +75,9 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
-    fun getRecipeDetail(recipeId:Int){
+    fun getRecipeDetail(recipeId: Int) {
         viewModelScope.launch {
-            recipeUseCase.getRecipeDetail(User.accessToken, recipeId).onSuccess {
+            recipeUseCase.getRecipeDetail(recipeId).onSuccess {
                 _recipeDetailData.value = it
             }.onFailure {
                 Timber.e(it.message)

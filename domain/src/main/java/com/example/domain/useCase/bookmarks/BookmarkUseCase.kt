@@ -6,9 +6,9 @@ import javax.inject.Inject
 class BookmarkUseCase @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) {
-    suspend fun postBookmark(accessToken:String, contentId:Int, contentType:String): Result<Boolean> =
-        bookmarkRepository.postBookmark(accessToken, contentId, contentType)
+    suspend fun postBookmark(contentId:Int, contentType:String): Result<Boolean> =
+        bookmarkRepository.postBookmark(contentId, contentType)
 
-    suspend fun deleteBookmark(accessToken:String, contentId:Int, contentType:String): Result<Boolean> =
-        bookmarkRepository.deleteBookmark(accessToken, contentId, contentType)
+    suspend fun deleteBookmark(contentId:Int, contentType:String): Result<Boolean> =
+        bookmarkRepository.deleteBookmark(contentId, contentType)
 }

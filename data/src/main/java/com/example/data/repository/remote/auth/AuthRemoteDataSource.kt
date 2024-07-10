@@ -1,9 +1,8 @@
 package com.example.data.repository.remote.auth
 
 import com.example.data.model.auth.AuthRequest
+import com.example.data.model.auth.AuthResponse
 import com.example.data.model.auth.SignInResponse
-import com.example.data.model.auth.SignUpResponse
-import com.example.data.model.auth.TokenResponse
 import com.skydoves.sandwich.ApiResponse
 
 /** RemoteDataSource

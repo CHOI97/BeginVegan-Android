@@ -1,7 +1,6 @@
 package com.example.presentation.config.bookmark
 
 import com.example.domain.useCase.bookmarks.BookmarkUseCase
-import com.example.presentation.auth.User
 import com.example.presentation.util.BookmarkController
 import dagger.Module
 import dagger.Provides
@@ -18,7 +17,7 @@ object BookmarkModule {
         override suspend fun postBookmark(contentId:Int, contentType:String): Boolean {
             var onSuccess = false
             coroutineScope {
-                bookmarkUseCase.postBookmark(User.accessToken, contentId, contentType).onSuccess {
+                bookmarkUseCase.postBookmark(contentId, contentType).onSuccess {
                     onSuccess = true
                 }.onFailure {
                     onSuccess = false
@@ -30,7 +29,7 @@ object BookmarkModule {
         override suspend fun deleteBookmark(contentId:Int, contentType:String): Boolean {
             var onSuccess = false
             coroutineScope {
-                bookmarkUseCase.deleteBookmark(User.accessToken, contentId, contentType).onSuccess {
+                bookmarkUseCase.deleteBookmark(contentId, contentType).onSuccess {
                     onSuccess = true
                 }.onFailure {
                     onSuccess = false

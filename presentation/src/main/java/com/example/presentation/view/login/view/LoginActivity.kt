@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityLoginBinding
+import com.example.presentation.util.LoadingDialog
 import com.example.presentation.view.login.viewModel.LoginViewModel
 import com.example.presentation.view.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint

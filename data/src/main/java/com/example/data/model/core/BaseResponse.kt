@@ -1,10 +1,10 @@
-package com.example.data.model.auth
+package com.example.data.model.core
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SignUpResponse(
+data class BaseResponse(
     @Json(name = "check") val check: Boolean,
     @Json(name = "information") val information: Information
 ) {

@@ -2,6 +2,7 @@ package com.example.data.repository.remote.tips
 
 import com.example.data.mapper.tips.TipsRecipeDetailMapper
 import com.example.data.mapper.tips.TipsRecipeMapper
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.domain.model.TipsRecipeDetail
 import com.example.domain.model.TipsRecipeListItem
 import com.example.domain.repository.tips.TipsRecipeRepository
@@ -13,102 +14,110 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class TipsRecipeRepositoryImpl @Inject constructor(
-    private val tipsRecipeRemoteDataSource:TipsRecipeRemoteDataSource,
-    private val tipsRecipeMapper:TipsRecipeMapper,
+    private val tipsRecipeRemoteDataSource: TipsRecipeRemoteDataSource,
+    private val tipsRecipeMapper: TipsRecipeMapper,
     private val tipsrecipeDetailMapper: TipsRecipeDetailMapper
-):TipsRecipeRepository {
-    override suspend fun getRecipeList(accessToken:String, page:Int): Flow<Result<List<TipsRecipeListItem>>> {
-        return flow{
-            try{
-                val response = tipsRecipeRemoteDataSource.getRecipeList(accessToken, page)
-                when(response) {
+) : TipsRecipeRepository {
+    override suspend fun getRecipeList(page: Int): Flow<Result<List<TipsRecipeListItem>>> {
+        return flow {
+            try {
+                val response = tipsRecipeRemoteDataSource.getRecipeList(page)
+                when (response) {
                     is ApiResponse.Success -> {
                         val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
                         emit(Result.success(recipeList))
                     }
+
                     is ApiResponse.Failure.Error -> {
                         Timber.e("GetAlarms error: ${response.errorBody}")
                         emit(Result.failure(Exception("GetAlarms Failed")))
                     }
+
                     is ApiResponse.Failure.Exception -> {
                         Timber.e("GetAlarms exception: ${response.message}")
                         emit(Result.failure(response.throwable))
                     }
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 Timber.e(e, "SignUp exception")
                 emit(Result.failure(e))
             }
         }
     }
 
-    override suspend fun getRecipeDetail(accessToken: String, id: Int): Result<TipsRecipeDetail> {
-        return try{
-            val response = tipsRecipeRemoteDataSource.getRecipeDetail(accessToken, id)
-            when(response) {
+    override suspend fun getRecipeDetail(id: Int): Result<TipsRecipeDetail> {
+        return try {
+            val response = tipsRecipeRemoteDataSource.getRecipeDetail(id)
+            when (response) {
                 is ApiResponse.Success -> {
-                    val recipeDetail = tipsrecipeDetailMapper.mapFromEntity(response.data.information)
+                    val recipeDetail =
+                        tipsrecipeDetailMapper.mapFromEntity(response.data.information)
                     Result.success(recipeDetail)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("GetAlarms error: ${response.errorBody}")
                     Result.failure(Exception("GetAlarms Failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("GetAlarms exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Timber.e(e, "SignUp exception")
             Result.failure(e)
         }
     }
 
     override suspend fun getRecipeForMe(
-        accessToken: String,
         page: Int
     ): Result<List<TipsRecipeListItem>> {
-        return try{
-            val response = tipsRecipeRemoteDataSource.getRecipeMy(accessToken, page)
-            when(response) {
+        return try {
+            val response = tipsRecipeRemoteDataSource.getRecipeMy(page)
+            when (response) {
                 is ApiResponse.Success -> {
                     val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
                     Result.success(recipeList)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("GetAlarms error: ${response.errorBody}")
                     Result.failure(Exception("GetAlarms Failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("GetAlarms exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Timber.e(e, "SignUp exception")
             Result.failure(e)
         }
     }
 
-    override suspend fun getHomeRecipe(accessToken: String): Result<List<TipsRecipeListItem>> {
-        return try{
-            val response = tipsRecipeRemoteDataSource.getHomeRecipe(accessToken)
-            when(response) {
+    override suspend fun getHomeRecipe(): Result<List<TipsRecipeListItem>> {
+        return try {
+            val response = tipsRecipeRemoteDataSource.getHomeRecipe()
+            when (response) {
                 is ApiResponse.Success -> {
                     val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
                     Result.success(recipeList)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("GetAlarms error: ${response.errorBody}")
                     Result.failure(Exception("GetAlarms Failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("GetAlarms exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Timber.e(e, "SignUp exception")
             Result.failure(e)
         }

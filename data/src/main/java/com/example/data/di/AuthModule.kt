@@ -1,6 +1,7 @@
 package com.example.data.di
 
 import com.example.data.mapper.auth.AuthMapper
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.auth.AuthRepositoryImpl
 import com.example.data.repository.remote.auth.AuthRemoteDataSource
 import com.example.data.repository.remote.auth.AuthRemoteDataSourceImpl
@@ -14,9 +15,9 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 
-@Module(includes = [NetworkModule::class])
+@Module(includes = [NetworkModule::class,DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
-class AuthModule {
+object AuthModule {
     @Singleton
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {
@@ -32,9 +33,10 @@ class AuthModule {
     @Provides
     fun provideAuthRepository(
         authRemoteDataSource: AuthRemoteDataSource,
+        authTokenDataSource: AuthTokenDataSource,
         authMapper: AuthMapper
     ): AuthRepository {
-        return AuthRepositoryImpl(authRemoteDataSource, authMapper)
+        return AuthRepositoryImpl(authRemoteDataSource, authTokenDataSource,authMapper)
     }
 
     @Provides

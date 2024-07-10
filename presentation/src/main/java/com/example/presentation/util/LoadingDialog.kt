@@ -1,28 +1,13 @@
-//package com.example.presentation.util
-//
-//import android.app.Dialog
-//import android.content.Context
-//import android.graphics.drawable.ColorDrawable
-//import android.os.Bundle
-//import android.view.Window
-//import com.example.beginvegan.databinding.DialogLoadingBinding
-//
-//class LoadingDialog(context: Context) : Dialog(context) {
-//    private lateinit var binding: DialogLoadingBinding
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        init()
-//    }
-//    private fun init(){
-//        requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        binding = DialogLoadingBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//        setCanceledOnTouchOutside(false)
-//        setCancelable(false)
-//        window!!.setBackgroundDrawable(ColorDrawable())
-//        window!!.setDimAmount(0.2f)
-//    }
-//    override fun show() {
-//        if(!this.isShowing) super.show()
-//    }
-//}
+package com.example.presentation.util
+
+import com.example.presentation.R
+import com.example.presentation.base.BaseDialogFragment
+import com.example.presentation.databinding.DialogLoadingBinding
+
+class LoadingDialog: BaseDialogFragment<DialogLoadingBinding>(R.layout.dialog_loading) {
+    override fun init() {
+        setDim(0.7f)
+        setCancelAble(false)
+    }
+
+}
