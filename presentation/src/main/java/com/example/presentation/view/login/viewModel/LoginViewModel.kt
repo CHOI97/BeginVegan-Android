@@ -5,18 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.AuthToken
 import com.example.domain.useCase.auth.SignInUseCase
-import com.example.presentation.auth.User
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -45,13 +39,8 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             signInUseCase.invoke(email, providerId).onSuccess {
                 Timber.d("$it")
-
-                User.accessToken = it.accessToken
-                User.refreshToken = it.refreshToken
-
-                _loginState.value = true
-
                 additionalInfoProvided = it.additionalInfo
+                _loginState.value = true
             }.onFailure {
                 _loginState.value = false
             }
@@ -86,10 +75,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-//    private fun fetchJwtToken(accessToken: String,refreshToken: String){
-//        User.accessToken = "Bearer $accessToken"
-//        User.refreshToken = "Bearer $refreshToken"
-//    }
     private fun fetchKakaoUserData() {
         UserApiClient.instance.me { user, error ->
             if (error != null) {

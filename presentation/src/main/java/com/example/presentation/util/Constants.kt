@@ -1,5 +1,7 @@
 package com.example.presentation.util
 
+import com.example.presentation.R
+
 object Constants {
     const val BASE_URL = "http://beginvegan.p-e.kr/"
 
@@ -35,4 +37,6 @@ object Constants {
     // Fragment request Key
     const val HOME_TODAY_RECIPE_TO_RECIPE = "HOME_TODAY_RECIPE_TO_RECIPE"
     const val HOME_RECOMMEND_RESTAURANT_TO_VEGAN_MAP = "HOME_RECOMMEND_RESTAURANT_TO_VEGAN_MAP"
+
+    // Profile Default Image Path
 }

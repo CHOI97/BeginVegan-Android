@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.bookmarks.BookmarkRemoteDataSource
 import com.example.data.repository.remote.bookmarks.BookmarkRemoteDataSourceImpl
 import com.example.data.repository.remote.bookmarks.BookmarkRepositoryImpl
@@ -12,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class])
+@Module(includes = [NetworkModule::class,DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
 class BookmarkModule {
     @Singleton
@@ -23,8 +24,8 @@ class BookmarkModule {
 
     @Provides
     @Singleton
-    fun provideBookmarkRemoteDataSource(bookmarkService: BookmarkService): BookmarkRemoteDataSource {
-        return BookmarkRemoteDataSourceImpl(bookmarkService)
+    fun provideBookmarkRemoteDataSource(bookmarkService: BookmarkService,authTokenDataSource: AuthTokenDataSource): BookmarkRemoteDataSource {
+        return BookmarkRemoteDataSourceImpl(bookmarkService,authTokenDataSource)
     }
 
     @Provides

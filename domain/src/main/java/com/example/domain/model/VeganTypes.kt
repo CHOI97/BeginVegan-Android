@@ -1,7 +1,7 @@
-package com.example.presentation.util
+package com.example.domain.model
 
 
-enum class VeganTypes(val veganType:String) {
+enum class VeganTypes(val veganType: String) {
     NONE("알고 있지 않아요"),
     VEGAN("비건"),
     LACTO_VEGETARIAN("락토 베지테리언"),
@@ -11,8 +11,11 @@ enum class VeganTypes(val veganType:String) {
     POLLOTARIAN("폴로 베지테리언"),
     FLEXITARIAN("플렉시테리언");
 
-    companion object{
-        fun getValues(): MutableList<VeganTypes> =  values().toMutableList()
+    companion object {
+        fun getValues(): MutableList<VeganTypes> = values().toMutableList()
+        fun fromString(value: String): VeganTypes? {
+            return values().find { it.veganType == value }
+        }
     }
 
 }

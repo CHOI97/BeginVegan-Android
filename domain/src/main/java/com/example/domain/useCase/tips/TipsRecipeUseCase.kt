@@ -9,16 +9,16 @@ import javax.inject.Inject
 class TipsRecipeUseCase @Inject constructor(
     private val tipsRecipeRepository: TipsRecipeRepository
 ) {
-    suspend fun getRecipeList(accessToken:String, page:Int): Flow<Result<List<TipsRecipeListItem>>> =
-        tipsRecipeRepository.getRecipeList(accessToken, page)
+    suspend fun getRecipeList(page:Int): Flow<Result<List<TipsRecipeListItem>>> =
+        tipsRecipeRepository.getRecipeList(page)
 
-    suspend fun getRecipeDetail(accessToken:String, id:Int): Result<TipsRecipeDetail> =
-        tipsRecipeRepository.getRecipeDetail(accessToken, id)
+    suspend fun getRecipeDetail(id:Int): Result<TipsRecipeDetail> =
+        tipsRecipeRepository.getRecipeDetail(id)
 
-    suspend fun getRecipeMy(accessToken:String, page:Int): Result<List<TipsRecipeListItem>> =
-        tipsRecipeRepository.getRecipeForMe(accessToken, page)
+    suspend fun getRecipeMy(page:Int): Result<List<TipsRecipeListItem>> =
+        tipsRecipeRepository.getRecipeForMe(page)
 
-    suspend fun getHomeRecipe(accessToken:String): Result<List<TipsRecipeListItem>> =
-        tipsRecipeRepository.getHomeRecipe(accessToken)
+    suspend fun getHomeRecipe(): Result<List<TipsRecipeListItem>> =
+        tipsRecipeRepository.getHomeRecipe()
 
 }

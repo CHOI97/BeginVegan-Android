@@ -2,22 +2,26 @@ package com.example.data.repository.remote.tips
 
 import com.example.data.model.tips.MagazineDetailResponse
 import com.example.data.model.tips.MagazineResponse
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.retrofit.TipsMagazineService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnSuccess
+import kotlinx.coroutines.flow.first
 import timber.log.Timber
 import javax.inject.Inject
 
 class TipsMagazineRemoteDataSourceImpl @Inject constructor(
-    private val tipsMagazineService: TipsMagazineService
+    private val tipsMagazineService: TipsMagazineService,
+    private val authTokenDataSource: AuthTokenDataSource,
 ) : TipsMagazineRemoteDataSource {
     override suspend fun getMagazineList(
-        accessToken: String,
         page: Int
     ): ApiResponse<MagazineResponse> {
-        return tipsMagazineService.getMagazineList(accessToken, page).suspendOnSuccess {
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+        return tipsMagazineService.getMagazineList(authHeader, page).suspendOnSuccess {
             Timber.d("GetMagazineList successful")
             ApiResponse.Success(this.data)
         }.suspendOnError {
@@ -27,10 +31,11 @@ class TipsMagazineRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getMagazineDetail(
-        accessToken: String,
         id: Int
     ): ApiResponse<MagazineDetailResponse> {
-        return tipsMagazineService.getMagazineDetail(accessToken, id).suspendOnSuccess {
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+        return tipsMagazineService.getMagazineDetail(authHeader, id).suspendOnSuccess {
             Timber.d("GetMagazineDetail successful")
             ApiResponse.Success(this.data)
         }.suspendOnError {
@@ -39,8 +44,10 @@ class TipsMagazineRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getHomeMagazine(accessToken: String): ApiResponse<MagazineResponse> {
-        return tipsMagazineService.getHomeMagazine(accessToken).suspendOnSuccess {
+    override suspend fun getHomeMagazine(): ApiResponse<MagazineResponse> {
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+        return tipsMagazineService.getHomeMagazine(authHeader).suspendOnSuccess {
             Timber.d("GetHomeMagazine successful")
             ApiResponse.Success(this.data)
         }.suspendOnError {
