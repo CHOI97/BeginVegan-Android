@@ -31,7 +31,7 @@ class NotificationViewModel @Inject constructor(
 
     private suspend fun getAlarmList(){
         Timber.d("GetAlarm Start: ${User.accessToken}")
-        unreadAlarmUseCase.invoke(User.accessToken).catch {
+        unreadAlarmUseCase.invoke().catch {
             _alarmLists.value = NetworkResult.Loading(true)
         }.collectLatest {result ->
             result.onSuccess {lists ->

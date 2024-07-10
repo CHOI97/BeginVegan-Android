@@ -11,13 +11,12 @@ class BookmarkRepositoryImpl @Inject constructor(
     private val bookmarkRemoteDataSource: BookmarkRemoteDataSource
 ) : BookmarkRepository{
     override suspend fun postBookmark(
-        accessToken: String,
         contentId: Int,
         contentType: String
     ): Result<Boolean> {
         return try {
             val request = BookmarkRequest(contentId, contentType)
-            val response = bookmarkRemoteDataSource.postBookmark(accessToken, request)
+            val response = bookmarkRemoteDataSource.postBookmark(request)
             when (response) {
                 is ApiResponse.Success -> {
                     Result.success(true)
@@ -38,13 +37,12 @@ class BookmarkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteBookmark(
-        accessToken: String,
         contentId: Int,
         contentType: String
     ): Result<Boolean> {
         return try {
             val request = BookmarkRequest(contentId, contentType)
-            val response = bookmarkRemoteDataSource.deleteBookmark(accessToken, request)
+            val response = bookmarkRemoteDataSource.deleteBookmark(request)
             when (response) {
                 is ApiResponse.Success -> {
                     Result.success(true)

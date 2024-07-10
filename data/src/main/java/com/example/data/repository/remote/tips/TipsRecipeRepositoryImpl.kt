@@ -2,6 +2,7 @@ package com.example.data.repository.remote.tips
 
 import com.example.data.mapper.tips.TipsRecipeDetailMapper
 import com.example.data.mapper.tips.TipsRecipeMapper
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.domain.model.TipsRecipeDetail
 import com.example.domain.model.TipsRecipeListItem
 import com.example.domain.repository.tips.TipsRecipeRepository
@@ -20,7 +21,7 @@ class TipsRecipeRepositoryImpl @Inject constructor(
     override suspend fun getRecipeList(accessToken:String, page:Int): Flow<Result<List<TipsRecipeListItem>>> {
         return flow{
             try{
-                val response = tipsRecipeRemoteDataSource.getRecipeList(accessToken, page)
+                val response = tipsRecipeRemoteDataSource.getRecipeList(page)
                 when(response) {
                     is ApiResponse.Success -> {
                         val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
@@ -44,7 +45,7 @@ class TipsRecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getRecipeDetail(accessToken: String, id: Int): Result<TipsRecipeDetail> {
         return try{
-            val response = tipsRecipeRemoteDataSource.getRecipeDetail(accessToken, id)
+            val response = tipsRecipeRemoteDataSource.getRecipeDetail(id)
             when(response) {
                 is ApiResponse.Success -> {
                     val recipeDetail = tipsrecipeDetailMapper.mapFromEntity(response.data.information)
@@ -70,7 +71,7 @@ class TipsRecipeRepositoryImpl @Inject constructor(
         page: Int
     ): Result<List<TipsRecipeListItem>> {
         return try{
-            val response = tipsRecipeRemoteDataSource.getRecipeMy(accessToken, page)
+            val response = tipsRecipeRemoteDataSource.getRecipeMy(page)
             when(response) {
                 is ApiResponse.Success -> {
                     val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
@@ -93,7 +94,7 @@ class TipsRecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getHomeRecipe(accessToken: String): Result<List<TipsRecipeListItem>> {
         return try{
-            val response = tipsRecipeRemoteDataSource.getHomeRecipe(accessToken)
+            val response = tipsRecipeRemoteDataSource.getHomeRecipe()
             when(response) {
                 is ApiResponse.Success -> {
                     val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)

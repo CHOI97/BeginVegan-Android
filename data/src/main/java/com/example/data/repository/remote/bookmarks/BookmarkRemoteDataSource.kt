@@ -5,6 +5,6 @@ import com.example.data.model.core.BaseResponse
 import com.skydoves.sandwich.ApiResponse
 
 interface BookmarkRemoteDataSource {
-    suspend fun postBookmark(accessToken:String, bookmarkRequest: BookmarkRequest): ApiResponse<BaseResponse>
-    suspend fun deleteBookmark(accessToken:String, bookmarkRequest: BookmarkRequest): ApiResponse<BaseResponse>
+    suspend fun postBookmark(bookmarkRequest: BookmarkRequest): ApiResponse<BaseResponse>
+    suspend fun deleteBookmark(bookmarkRequest: BookmarkRequest): ApiResponse<BaseResponse>
 }

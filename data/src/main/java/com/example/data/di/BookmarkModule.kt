@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.bookmarks.BookmarkRemoteDataSource
 import com.example.data.repository.remote.bookmarks.BookmarkRemoteDataSourceImpl
 import com.example.data.repository.remote.bookmarks.BookmarkRepositoryImpl
@@ -23,8 +24,8 @@ class BookmarkModule {
 
     @Provides
     @Singleton
-    fun provideBookmarkRemoteDataSource(bookmarkService: BookmarkService): BookmarkRemoteDataSource {
-        return BookmarkRemoteDataSourceImpl(bookmarkService)
+    fun provideBookmarkRemoteDataSource(bookmarkService: BookmarkService,authTokenDataSource: AuthTokenDataSource): BookmarkRemoteDataSource {
+        return BookmarkRemoteDataSourceImpl(bookmarkService,authTokenDataSource)
     }
 
     @Provides

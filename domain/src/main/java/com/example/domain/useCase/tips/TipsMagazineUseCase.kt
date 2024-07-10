@@ -8,12 +8,12 @@ import javax.inject.Inject
 
 class TipsMagazineUseCase @Inject constructor(private val tipsMagazineRepository: TipsMagazineRepository) {
 
-    suspend fun getMagazineList(accessToken: String, page: Int): Result<List<TipsMagazineItem>> =
-        tipsMagazineRepository.getMagazineList(accessToken, page)
+    suspend fun getMagazineList(page: Int): Result<List<TipsMagazineItem>> =
+        tipsMagazineRepository.getMagazineList(page)
 
-    suspend fun getMagazineDetail(accessToken: String, id:Int):Result<TipsMagazineDetail> =
-        tipsMagazineRepository.getMagazineDetail(accessToken, id)
+    suspend fun getMagazineDetail(id: Int): Result<TipsMagazineDetail> =
+        tipsMagazineRepository.getMagazineDetail(id)
 
-    suspend fun getHomeMagazine(accessToken: String): Result<List<TipsMagazineItem>> =
-        tipsMagazineRepository.getHomeMagazine(accessToken)
+    suspend fun getHomeMagazine(): Result<List<TipsMagazineItem>> =
+        tipsMagazineRepository.getHomeMagazine()
 }

@@ -2,6 +2,7 @@ package com.example.data.di
 
 import com.example.data.mapper.tips.TipsMagazineDetailMapper
 import com.example.data.mapper.tips.TipsMagazineMapper
+import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.tips.TipsMagazineRemoteDataSource
 import com.example.data.repository.remote.tips.TipsMagazineRemoteDataSourceImpl
 import com.example.data.repository.remote.tips.TipsMagazineRepositoryImpl
@@ -14,7 +15,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class,DataStoreModule::class])
+@Module(includes = [NetworkModule::class, DataStoreModule::class])
 @InstallIn(SingletonComponent::class)
 class TipsMagazineModule {
     @Singleton
@@ -25,18 +26,27 @@ class TipsMagazineModule {
 
     @Provides
     @Singleton
-    fun provideTipsMagazineDataSource(tipsMagazineService: TipsMagazineService): TipsMagazineRemoteDataSource {
-        return TipsMagazineRemoteDataSourceImpl(tipsMagazineService)
+    fun provideTipsMagazineDataSource(
+        tipsMagazineService: TipsMagazineService,
+        authTokenDataSource: AuthTokenDataSource
+    ): TipsMagazineRemoteDataSource {
+        return TipsMagazineRemoteDataSourceImpl(tipsMagazineService, authTokenDataSource)
     }
 
     @Provides
     @Singleton
     fun provideTipsMagazineRepository(
         tipsMagazineRemoteDataSource: TipsMagazineRemoteDataSource,
+        authTokenDataSource: AuthTokenDataSource,
         tipsMagazineMapper: TipsMagazineMapper,
         tipsMagazineDetailMapper: TipsMagazineDetailMapper
     ): TipsMagazineRepository {
-        return TipsMagazineRepositoryImpl(tipsMagazineRemoteDataSource, tipsMagazineMapper, tipsMagazineDetailMapper)
+        return TipsMagazineRepositoryImpl(
+            tipsMagazineRemoteDataSource,
+            authTokenDataSource,
+            tipsMagazineMapper,
+            tipsMagazineDetailMapper
+        )
     }
 
     @Provides
