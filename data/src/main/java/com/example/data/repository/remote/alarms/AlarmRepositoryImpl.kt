@@ -14,8 +14,8 @@ class AlarmRepositoryImpl @Inject constructor(
     private val alarmRemoteDataSource: AlarmRemoteDataSource,
     private val alarmMapper: AlarmMapper
 ):AlarmRepository{
-    override suspend fun getAlarms(accessToken:String): Flow<Result<AlarmLists>> = flow {
-        val response = alarmRemoteDataSource.getAlarms(accessToken)
+    override suspend fun getAlarms(): Flow<Result<AlarmLists>> = flow {
+        val response = alarmRemoteDataSource.getAlarms()
         when(response) {
             is ApiResponse.Success -> {
                 val newAlarmList = alarmMapper.mapToAlarmLists(response.data.information)

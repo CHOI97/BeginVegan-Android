@@ -3,7 +3,6 @@ package com.example.presentation.view.notification.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.useCase.alarms.UnreadAlarmUseCase
-import com.example.presentation.auth.User
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.notification.viewModel.state.NotificationState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +29,6 @@ class NotificationViewModel @Inject constructor(
     }
 
     private suspend fun getAlarmList(){
-        Timber.d("GetAlarm Start: ${User.accessToken}")
         unreadAlarmUseCase.invoke().catch {
             _alarmLists.value = NetworkResult.Loading(true)
         }.collectLatest {result ->

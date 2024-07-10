@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.useCase.veganType.PatchVeganTypeUseCase
-import com.example.presentation.auth.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,7 +26,7 @@ class VeganTestViewModel @Inject constructor(
 
     fun patchVeganType(type:String, veganType:String) {
         viewModelScope.launch {
-            veganTypeUseCase.invoke(User.accessToken, type, veganType).onSuccess {
+            veganTypeUseCase.invoke(type, veganType).onSuccess {
                 _patchVeganTypeState.postValue(true)
             }.onFailure {
                 _patchVeganTypeState.postValue(false)
