@@ -39,9 +39,8 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             signInUseCase.invoke(email, providerId).onSuccess {
                 Timber.d("$it")
-                _loginState.value = true
-
                 additionalInfoProvided = it.additionalInfo
+                _loginState.value = true
             }.onFailure {
                 _loginState.value = false
             }

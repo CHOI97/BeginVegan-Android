@@ -14,102 +14,110 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class TipsRecipeRepositoryImpl @Inject constructor(
-    private val tipsRecipeRemoteDataSource:TipsRecipeRemoteDataSource,
-    private val tipsRecipeMapper:TipsRecipeMapper,
+    private val tipsRecipeRemoteDataSource: TipsRecipeRemoteDataSource,
+    private val tipsRecipeMapper: TipsRecipeMapper,
     private val tipsrecipeDetailMapper: TipsRecipeDetailMapper
-):TipsRecipeRepository {
-    override suspend fun getRecipeList(accessToken:String, page:Int): Flow<Result<List<TipsRecipeListItem>>> {
-        return flow{
-            try{
+) : TipsRecipeRepository {
+    override suspend fun getRecipeList(page: Int): Flow<Result<List<TipsRecipeListItem>>> {
+        return flow {
+            try {
                 val response = tipsRecipeRemoteDataSource.getRecipeList(page)
-                when(response) {
+                when (response) {
                     is ApiResponse.Success -> {
                         val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
                         emit(Result.success(recipeList))
                     }
+
                     is ApiResponse.Failure.Error -> {
                         Timber.e("GetAlarms error: ${response.errorBody}")
                         emit(Result.failure(Exception("GetAlarms Failed")))
                     }
+
                     is ApiResponse.Failure.Exception -> {
                         Timber.e("GetAlarms exception: ${response.message}")
                         emit(Result.failure(response.throwable))
                     }
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 Timber.e(e, "SignUp exception")
                 emit(Result.failure(e))
             }
         }
     }
 
-    override suspend fun getRecipeDetail(accessToken: String, id: Int): Result<TipsRecipeDetail> {
-        return try{
+    override suspend fun getRecipeDetail(id: Int): Result<TipsRecipeDetail> {
+        return try {
             val response = tipsRecipeRemoteDataSource.getRecipeDetail(id)
-            when(response) {
+            when (response) {
                 is ApiResponse.Success -> {
-                    val recipeDetail = tipsrecipeDetailMapper.mapFromEntity(response.data.information)
+                    val recipeDetail =
+                        tipsrecipeDetailMapper.mapFromEntity(response.data.information)
                     Result.success(recipeDetail)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("GetAlarms error: ${response.errorBody}")
                     Result.failure(Exception("GetAlarms Failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("GetAlarms exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Timber.e(e, "SignUp exception")
             Result.failure(e)
         }
     }
 
     override suspend fun getRecipeForMe(
-        accessToken: String,
         page: Int
     ): Result<List<TipsRecipeListItem>> {
-        return try{
+        return try {
             val response = tipsRecipeRemoteDataSource.getRecipeMy(page)
-            when(response) {
+            when (response) {
                 is ApiResponse.Success -> {
                     val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
                     Result.success(recipeList)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("GetAlarms error: ${response.errorBody}")
                     Result.failure(Exception("GetAlarms Failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("GetAlarms exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Timber.e(e, "SignUp exception")
             Result.failure(e)
         }
     }
 
-    override suspend fun getHomeRecipe(accessToken: String): Result<List<TipsRecipeListItem>> {
-        return try{
+    override suspend fun getHomeRecipe(): Result<List<TipsRecipeListItem>> {
+        return try {
             val response = tipsRecipeRemoteDataSource.getHomeRecipe()
-            when(response) {
+            when (response) {
                 is ApiResponse.Success -> {
                     val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
                     Result.success(recipeList)
                 }
+
                 is ApiResponse.Failure.Error -> {
                     Timber.e("GetAlarms error: ${response.errorBody}")
                     Result.failure(Exception("GetAlarms Failed"))
                 }
+
                 is ApiResponse.Failure.Exception -> {
                     Timber.e("GetAlarms exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Timber.e(e, "SignUp exception")
             Result.failure(e)
         }

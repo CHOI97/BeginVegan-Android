@@ -38,8 +38,8 @@ android {
         manifestPlaceholders["KAKAO_API_KEY"] = kakaoApiKey
         manifestPlaceholders["KAKAO_API_KEY_TEST"] = kakaoApiKeyTest
 
-        buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
-        buildConfigField("String", "KAKAO_API_KEY_TEST", "\"$kakaoApiKeyTest\"")
+        buildConfigField("String", "KAKAO_API_KEY", "$kakaoApiKey")
+        buildConfigField("String", "KAKAO_API_KEY_TEST", "$kakaoApiKeyTest")
     }
 
     buildTypes {
