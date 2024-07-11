@@ -1,10 +1,8 @@
 package com.example.data.retrofit
 
-import com.example.data.model.tips.MagazineDetailRequest
 import com.example.data.model.tips.MagazineDetailResponse
 import com.example.data.model.tips.MagazineResponse
 import com.skydoves.sandwich.ApiResponse
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path

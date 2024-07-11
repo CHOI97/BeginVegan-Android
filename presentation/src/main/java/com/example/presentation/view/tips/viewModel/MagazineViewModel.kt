@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.impl.constraints.NetworkState
 import com.example.domain.model.tips.TipsMagazineDetail
 import com.example.domain.model.tips.TipsMagazineItem
-import com.example.domain.useCase.bookmarks.BookmarkUseCase
 import com.example.domain.useCase.tips.TipsMagazineUseCase
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.tips.viewModel.state.MagazineListState
@@ -23,11 +21,6 @@ import javax.inject.Inject
 class MagazineViewModel @Inject constructor(
     private val tipsMagazineUseCase: TipsMagazineUseCase
 ) : ViewModel() {
-//    private val _selectedMagazineId = MutableLiveData<Int>()
-//    val selectedMagazineId: LiveData<Int> = _selectedMagazineId
-//    fun setSelectedMagazineId(magazineId: Int) {
-//        _selectedMagazineId.value = magazineId
-//    }
 
     private val _magazineListState = MutableStateFlow<NetworkResult<MagazineListState>>(NetworkResult.Loading())
     val magazineListState: StateFlow<NetworkResult<MagazineListState>> = _magazineListState

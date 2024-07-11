@@ -1,13 +1,10 @@
 package com.example.presentation.view.tips.view
 
-import android.view.View
 import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.tips.MagazineResponse
-import com.example.domain.model.TipsRecipeListItem
 import com.example.domain.model.tips.TipsMagazineItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
@@ -20,7 +17,6 @@ import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -62,7 +58,6 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
             TipsMagazineRvAdapter.OnItemClickListener {
             override fun onItemClick(magazineId:Int) {
                 mainNavigationHandler.navigateToTipsMagazineDetail()
-//                magazineViewModel.setSelectedMagazineId(magazineId)
                 magazineViewModel.resetMagazineDetail()
                 magazineViewModel.getMagazineDetail(magazineId)
             }

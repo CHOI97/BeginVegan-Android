@@ -1,6 +1,6 @@
 package com.example.presentation.view.tips.view
 
-import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -20,7 +20,6 @@ import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -36,7 +35,6 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
     override fun init() {
         binding.lifecycleOwner = this
 
-//        magazineViewModel.getMagazineDetail()
         magazineViewModel.magazineDetail.observe(this){
             if(it != null) setView(it)
         }
@@ -88,6 +86,7 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
             textSize = 14f
             setTextColor(ContextCompat.getColor(context, R.color.color_text_01))
             gravity = Gravity.CENTER
+            if(content.isBold) setTypeface(null, Typeface.BOLD)
         }
 
         val parentLayout = binding.llMagazineContents
