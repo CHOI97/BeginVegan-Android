@@ -1,9 +1,7 @@
 package com.example.presentation.view.mypage.view
 
-import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +12,6 @@ import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyMagazineBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
-import com.example.presentation.view.main.MainFragment
 import com.example.presentation.view.mypage.adapter.MyMagazineRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyScrapViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,8 +41,8 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
         setListener()
     }
     private fun reset(){
-        myScrapViewModel.reSetIsContinueGetList()
-        myScrapViewModel.setMyMagazineList(myMagazineList)
+        myScrapViewModel.reSetVieModel()
+//        myScrapViewModel.setMyMagazineList(myMagazineList)
     }
     private fun setRvAdapter(){
         myMagazineRvAdapter = MyMagazineRvAdapter(requireContext(), myMagazineList)
@@ -89,7 +86,6 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
                 when(state){
                     is NetworkResult.Loading -> {}
                     is NetworkResult.Success -> {
-                        Timber.d("viewModel collect list:${state.data?.response!!}")
                         myMagazineList.addAll(state.data?.response!!)
                         myMagazineRvAdapter.notifyItemRangeInserted(totalCount,state.data.response.size)
                     }
@@ -98,6 +94,9 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
             }
         }
 
+        myScrapViewModel.isMagazineEmpty.observe(this){
+            setEmptyState(it)
+        }
     }
     private fun setBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
@@ -106,11 +105,11 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     }
     private fun setFabButton(){
         binding.ibFab.setOnClickListener {
-            //클릭시 상단으로 이동
+            binding.rvMyMagazine.smoothScrollToPosition(0)
         }
     }
-    private fun setEmptyState(){
-        binding.llEmptyArea.isVisible = true
+    private fun setEmptyState(emptyState:Boolean){
+        binding.llEmptyArea.isVisible = emptyState
         binding.btnMoveToMagazine.setOnClickListener {
             //Recipe로 이동
         }

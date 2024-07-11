@@ -34,15 +34,23 @@ class MyScrapViewModel @Inject constructor(
 
     private val _isContinueGetList = MutableLiveData(true)
     val isContinueGetList: LiveData<Boolean> = _isContinueGetList
-    fun reSetIsContinueGetList(){
+    fun reSetVieModel(){
         _isContinueGetList.value = true
+        setMyMagazineList(mutableListOf())
+        _isMagazineEmpty.value = false
     }
+
+    private val _isMagazineEmpty = MutableLiveData(false)
+    val isMagazineEmpty:LiveData<Boolean> = _isMagazineEmpty
 
     fun getMyMagazine(page:Int){
         viewModelScope.launch {
             myScrapUseCase.getMyMagazineList(page).collectLatest {
                 it.onSuccess {list->
-                    if(list.isEmpty()) _isContinueGetList.value = false
+                    if(list.isEmpty()) {
+                        if(page==0) _isMagazineEmpty.value = true
+                        else _isContinueGetList.value = false
+                    }
                     else setMyMagazineList(list.toMutableList())
                 }.onFailure {
                     _myMagazinesState.value = NetworkResult.Error("getMyMagazineList Failure")
