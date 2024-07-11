@@ -27,5 +27,6 @@ data class TipsMagazineDetail(
 
 data class MagazineContent(
     val content: String,
-    val sequence: Int
+    val sequence: Int,
+    val isBold:Boolean
 )

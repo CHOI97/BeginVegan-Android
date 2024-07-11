@@ -10,6 +10,8 @@ import com.example.domain.model.tips.TipsMagazineList
 import com.example.domain.repository.tips.TipsMagazineRepository
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,28 +23,30 @@ class TipsMagazineRepositoryImpl @Inject constructor(
 ) : TipsMagazineRepository {
     override suspend fun getMagazineList(
         page: Int
-    ): Result<List<TipsMagazineItem>> {
-        return try {
-            val response = tipsMagazineRemoteDataSource.getMagazineList(page)
-            when (response) {
-                is ApiResponse.Success -> {
-                    val magazineList = tipsMagazineMapper.mapFromEntity(response.data.information)
-                    Result.success(magazineList)
-                }
+    ): Flow<Result<List<TipsMagazineItem>>> {
+        return flow{
+            try {
+                val response = tipsMagazineRemoteDataSource.getMagazineList(page)
+                when (response) {
+                    is ApiResponse.Success -> {
+                        val magazineList = tipsMagazineMapper.mapFromEntity(response.data.information)
+                        emit(Result.success(magazineList))
+                    }
 
-                is ApiResponse.Failure.Error -> {
-                    Timber.e("getMagazineList error: ${response.errorBody}")
-                    Result.failure(Exception("getMagazineList failed"))
-                }
+                    is ApiResponse.Failure.Error -> {
+                        Timber.e("getMagazineList error: ${response.errorBody}")
+                        emit(Result.failure(Exception("getMagazineList failed")))
+                    }
 
-                is ApiResponse.Failure.Exception -> {
-                    Timber.e("getMagazineList exception: ${response.message}")
-                    Result.failure(response.throwable)
+                    is ApiResponse.Failure.Exception -> {
+                        Timber.e("getMagazineList exception: ${response.message}")
+                        emit(Result.failure(response.throwable))
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.e(e, "getMagazineList exception")
+                emit(Result.failure(e))
             }
-        } catch (e: Exception) {
-            Timber.e(e, "getMagazineList exception")
-            Result.failure(e)
         }
     }
 

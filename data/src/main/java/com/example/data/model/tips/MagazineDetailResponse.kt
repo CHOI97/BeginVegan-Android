@@ -24,5 +24,6 @@ data class TipsMagazineDetailDto(
 
 data class MagazineContentDto(
     @Json(name = "content") val content: String,
-    @Json(name = "sequence") val sequence: Int
+    @Json(name = "sequence") val sequence: Int,
+    @Json(name = "isBold") val isBold: Boolean
 )
