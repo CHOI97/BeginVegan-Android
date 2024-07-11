@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.VeganTypes
 import com.example.domain.useCase.userInfo.SaveUserInfoUseCase
-import com.example.presentation.view.gallery.model.GalleryImage
+import com.example.presentation.view.Image.gallery.model.GalleryImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber

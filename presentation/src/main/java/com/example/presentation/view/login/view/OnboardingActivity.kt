@@ -1,11 +1,13 @@
 package com.example.presentation.view.login.view
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract.Contacts.Photo
+import android.provider.MediaStore
 import android.util.Base64
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,9 +17,10 @@ import com.example.presentation.R
 import com.example.presentation.adapter.onboarding.OnboardingAdapter
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityOnboardingBinding
-import com.example.presentation.view.gallery.model.GalleryImage
-import com.example.presentation.view.gallery.view.GalleryActivity
-import com.example.presentation.view.gallery.view.PhotoSelectDialog
+import com.example.presentation.view.Image.camera.view.CameraActivity
+import com.example.presentation.view.Image.gallery.model.GalleryImage
+import com.example.presentation.view.Image.gallery.view.GalleryActivity
+import com.example.presentation.view.Image.gallery.view.PhotoSelectDialog
 import com.example.presentation.view.login.viewModel.OnboardingViewModel
 import com.example.presentation.view.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +34,16 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
 
     private val viewModel: OnboardingViewModel by viewModels()
 
-    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var galleryResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cameraResultLauncher: ActivityResultLauncher<Intent>
+
+    private val cameraPermission = Manifest.permission.CAMERA
+    private val storagePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    private val gallerytPermission = if (Build.VERSION.SDK_INT < 33) {
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    } else {
+        Manifest.permission.READ_MEDIA_IMAGES
+    }
 
     override fun initViewModel() {
         binding.vm = viewModel
@@ -39,7 +51,8 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
     }
 
     override fun init() {
-        setImageResultLauncher()
+        setGalleryResultLauncher()
+        setCameraResultLauncher()
         setErrorText()
         setInputHelper()
         setOnClickProfile()
@@ -50,18 +63,19 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         viewModel.userInfoState.observe(this) { isUserInfoState ->
             if (isUserInfoState) {
                 navigateToMain()
-            }else{
+            } else {
                 showToast("유저 추가 정보 입력 오류")
             }
         }
     }
+
 
     private fun updateUserInfo() {
         binding.btnOnboardingNext.setOnClickListener {
             showToast("nick: ${binding.etOnboardingEditNick.text}\nveganType: ${binding.actvOnboardingEditDropdown.text}")
             val nickName = binding.etOnboardingEditNick.text.toString()
             val veganLevel = binding.actvOnboardingEditDropdown.text.toString()
-            viewModel.saveUserInfo(nickName,veganLevel)
+            viewModel.saveUserInfo(nickName, veganLevel)
         }
     }
 
@@ -92,15 +106,37 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
         }
     }
 
-    private fun setImageResultLauncher() {
-        activityResultLauncher =
+    private fun setGalleryResultLauncher() {
+        galleryResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
                     var imageData: GalleryImage? =
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             result.data?.getParcelableExtra("IMAGE_DATA", GalleryImage::class.java)
                         } else {
-                            intent.getParcelableExtra<GalleryImage>("IMAGE_DATA")
+                            intent.getParcelableExtra("IMAGE_DATA") as? GalleryImage
+                        }
+                    Glide.with(this).load(imageData?.imageUri).into(binding.civOnboardingProfile)
+                    viewModel.updateProfileImageUri(
+                        GalleryImage(
+                            imageData?.imageUri,
+                            false,
+                            imageData?.imagePath
+                        )
+                    )
+                }
+            }
+    }
+
+    private fun setCameraResultLauncher() {
+        cameraResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    var imageData: GalleryImage? =
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            result.data?.getParcelableExtra("IMAGE_DATA", GalleryImage::class.java)
+                        } else {
+                            intent.getParcelableExtra("IMAGE_DATA") as? GalleryImage
                         }
                     Glide.with(this).load(imageData?.imageUri).into(binding.civOnboardingProfile)
                     viewModel.updateProfileImageUri(
@@ -148,15 +184,31 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
             photoSelectDialog.show(supportFragmentManager, "PhotoSelectDialog")
             photoSelectDialog.setDialogClickListener(object :
                 PhotoSelectDialog.DialogPhotoSelectClickListener {
+                // 카메라
                 override fun onClickCamera() {
+
+                    // 접근 권한 체크하기
+                    // 접근 권한 가능하면 ActivityResultlauncher를 실행
+
+                    photoSelectDialog.dismiss()
+                    val intent = Intent(this@OnboardingActivity, CameraActivity::class.java)
+                    startActivity(intent)
+//                    val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//                    if (cameraIntent.resolveActivity(packageManager) != null) {
+//                        cameraResultLauncher.launch(cameraIntent)
+//                    }
                 }
 
+                // 갤러리
                 override fun onClickGallery() {
+                    // 접근 권한 체크하기
+                    // 접근 권한 가능하면 ActivityResultlauncher를 실행
                     photoSelectDialog.dismiss()
                     val intent = Intent(this@OnboardingActivity, GalleryActivity::class.java)
-                    activityResultLauncher.launch(intent)
+                    galleryResultLauncher.launch(intent)
                 }
 
+                // Default
                 override fun onClickDefault() {
                     photoSelectDialog.dismiss()
                     viewModel.updateProfileImageUri(null)

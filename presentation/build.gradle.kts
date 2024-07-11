@@ -43,12 +43,13 @@ android {
     }
 
     buildTypes {
-        named("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -168,6 +169,14 @@ dependencies {
 
     //Coroutine
     implementation (Dependencies.KOTLINX_COROUTINES)
+
+    implementation ("androidx.camera:camera-core:1.3.4")
+    implementation ("androidx.camera:camera-camera2:1.3.4")
+    implementation ("androidx.camera:camera-lifecycle:1.3.4")
+    implementation ("androidx.camera:camera-video:1.3.4")
+
+    implementation ("androidx.camera:camera-view:1.3.4")
+    implementation ("androidx.camera:camera-extensions:1.3.4")
 
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
