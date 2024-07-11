@@ -23,16 +23,15 @@ import javax.inject.Inject
 class MagazineViewModel @Inject constructor(
     private val tipsMagazineUseCase: TipsMagazineUseCase
 ) : ViewModel() {
-    private val _selectedMagazineId = MutableLiveData<Int>()
-    val selectedMagazineId: LiveData<Int> = _selectedMagazineId
-    fun setSelectedMagazineId(magazineId: Int) {
-        _selectedMagazineId.value = magazineId
-    }
+//    private val _selectedMagazineId = MutableLiveData<Int>()
+//    val selectedMagazineId: LiveData<Int> = _selectedMagazineId
+//    fun setSelectedMagazineId(magazineId: Int) {
+//        _selectedMagazineId.value = magazineId
+//    }
 
     private val _magazineListState = MutableStateFlow<NetworkResult<MagazineListState>>(NetworkResult.Loading())
     val magazineListState: StateFlow<NetworkResult<MagazineListState>> = _magazineListState
     fun addMagazineList(list:MutableList<TipsMagazineItem>){
-        Timber.d("in viewModel: $list")
         _magazineListState.value = NetworkResult.Success(
             MagazineListState(list, false)
         )
@@ -44,8 +43,11 @@ class MagazineViewModel @Inject constructor(
         _isContinueGetList.value = true
     }
 
-    private val _magazineDetail = MutableLiveData<TipsMagazineDetail>()
-    val magazineDetail: LiveData<TipsMagazineDetail> = _magazineDetail
+    private val _magazineDetail = MutableLiveData<TipsMagazineDetail?>()
+    val magazineDetail: LiveData<TipsMagazineDetail?> = _magazineDetail
+    fun resetMagazineDetail(){
+        _magazineDetail.value = null
+    }
 
     fun getMagazineList(page:Int) {
         viewModelScope.launch {
@@ -63,9 +65,9 @@ class MagazineViewModel @Inject constructor(
         }
     }
 
-    fun getMagazineDetail() {
+    fun getMagazineDetail(id:Int) {
         viewModelScope.launch {
-            tipsMagazineUseCase.getMagazineDetail(selectedMagazineId.value!!).onSuccess {
+            tipsMagazineUseCase.getMagazineDetail(id).onSuccess {
                 _magazineDetail.value = it
             }.onFailure {
                 Timber.e(it.message)

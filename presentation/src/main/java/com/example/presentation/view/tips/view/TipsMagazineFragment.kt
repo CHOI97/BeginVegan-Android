@@ -62,7 +62,10 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
             TipsMagazineRvAdapter.OnItemClickListener {
             override fun onItemClick(magazineId:Int) {
                 mainNavigationHandler.navigateToTipsMagazineDetail()
-                magazineViewModel.setSelectedMagazineId(magazineId) }
+//                magazineViewModel.setSelectedMagazineId(magazineId)
+                magazineViewModel.resetMagazineDetail()
+                magazineViewModel.getMagazineDetail(magazineId)
+            }
 
             override fun changeBookmark(
                 toggleButton: CompoundButton,
