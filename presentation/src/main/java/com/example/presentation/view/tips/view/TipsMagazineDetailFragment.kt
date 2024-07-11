@@ -26,11 +26,11 @@ import javax.inject.Inject
 class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBinding>(R.layout.fragment_tips_magazine_detail) {
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
-
     private val magazineViewModel:MagazineViewModel by activityViewModels()
 
     override fun init() {
         binding.lifecycleOwner = this
+
         magazineViewModel.getMagazineDetail()
         magazineViewModel.magazineDetail.observe(this){
             Timber.d("Observed")

@@ -24,7 +24,6 @@ class TipsMagazineRvAdapter(private val context:Context,private val list:List<Ti
                 val item = list[position]
                 binding.tvMagazineTitle.text = item.title
                 binding.tvWriter.text = item.editor
-                binding.tbInterest.isChecked = item.isBookmarked
                 binding.tvDate.text = transferDate(item.createdDate)
 
                 Glide.with(context)
@@ -32,6 +31,8 @@ class TipsMagazineRvAdapter(private val context:Context,private val list:List<Ti
                     .transform(CenterCrop(), RoundedCorners(16))
                     .into(binding.ivMagazineImg)
 
+                binding.tbInterest.setOnCheckedChangeListener(null)
+                binding.tbInterest.isChecked = item.isBookmarked
                 binding.tbInterest.setOnCheckedChangeListener { toggleButton, isChecked ->
                     listener?.changeBookmark(toggleButton, isChecked, item)
                 }

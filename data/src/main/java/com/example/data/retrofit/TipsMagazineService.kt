@@ -7,19 +7,20 @@ import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TipsMagazineService {
-    @GET("/api/v1/magazines")
+    @GET("/api/v1/magazines/all")
     suspend fun getMagazineList(
         @Header("Authorization") token: String,
         @Query("page") page: Int
     ): ApiResponse<MagazineResponse>
 
-    @GET("/api/v1/magazines/detail")
+    @GET("/api/v1/magazines/{id}")
     suspend fun getMagazineDetail(
         @Header("Authorization") token: String,
-        @Query("id") id:Int
+        @Path("id") id:Int
     ): ApiResponse<MagazineDetailResponse>
 
     @GET("/api/v1/home/magazine")

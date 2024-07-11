@@ -4,19 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.impl.constraints.NetworkState
 import com.example.domain.model.tips.TipsMagazineDetail
 import com.example.domain.model.tips.TipsMagazineItem
 import com.example.domain.useCase.bookmarks.BookmarkUseCase
 import com.example.domain.useCase.tips.TipsMagazineUseCase
+import com.example.presentation.network.NetworkResult
+import com.example.presentation.view.tips.viewModel.state.MagazineListState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MagazineViewModel @Inject constructor(
-    private val tipsMagazineUseCase: TipsMagazineUseCase,
-    private val bookmarkUseCase: BookmarkUseCase
+    private val tipsMagazineUseCase: TipsMagazineUseCase
 ) : ViewModel() {
     private val _selectedMagazineId = MutableLiveData<Int>()
     val selectedMagazineId: LiveData<Int> = _selectedMagazineId
@@ -24,29 +29,36 @@ class MagazineViewModel @Inject constructor(
         _selectedMagazineId.value = magazineId
     }
 
-    private val _magazineList = MutableLiveData<List<TipsMagazineItem>>()
-    val magazineList: LiveData<List<TipsMagazineItem>> = _magazineList
+    private val _magazineListState = MutableStateFlow<NetworkResult<MagazineListState>>(NetworkResult.Loading())
+    val magazineListState: StateFlow<NetworkResult<MagazineListState>> = _magazineListState
+    fun addMagazineList(list:MutableList<TipsMagazineItem>){
+        Timber.d("in viewModel: $list")
+        _magazineListState.value = NetworkResult.Success(
+            MagazineListState(list, false)
+        )
+    }
+
+    private val _isContinueGetList = MutableLiveData(true)
+    val isContinueGetList: LiveData<Boolean> = _isContinueGetList
+    fun reSetIsContinueGetList(){
+        _isContinueGetList.value = true
+    }
 
     private val _magazineDetail = MutableLiveData<TipsMagazineDetail>()
     val magazineDetail: LiveData<TipsMagazineDetail> = _magazineDetail
 
-//    private val _isBookmarkSuccess = MutableLiveData<Boolean>()
-//    val isBookmarkSuccess: LiveData<Boolean> = _isBookmarkSuccess
-//
-//    private val _isBookmarkDeleted = MutableLiveData<Boolean>()
-//    val isBookmarkDeleted: LiveData<Boolean> = _isBookmarkDeleted
-
-    init {
-        getMagazineList()
-    }
-
-    private fun getMagazineList() {
+    fun getMagazineList(page:Int) {
         viewModelScope.launch {
-            tipsMagazineUseCase.getMagazineList(0).onSuccess {
-                _magazineList.value = it
-            }.onFailure {
-                Timber.e(it.message)
-                _magazineList.value = emptyList()
+            tipsMagazineUseCase.getMagazineList(page).collectLatest {
+                 it.onSuccess {result ->
+                     if (result.isEmpty()) {
+                         _isContinueGetList.value = false
+                     } else {
+                         addMagazineList(result.toMutableList())
+                     }
+                 }.onFailure {e->
+                     _magazineListState.value = NetworkResult.Error(e.message!!)
+                 }
             }
         }
     }
@@ -57,26 +69,6 @@ class MagazineViewModel @Inject constructor(
                 _magazineDetail.value = it
             }.onFailure {
                 Timber.e(it.message)
-            }
-        }
-    }
-
-    fun postBookmark(contentId: Int, contentType: String) {
-        viewModelScope.launch {
-            bookmarkUseCase.postBookmark(contentId, contentType).onSuccess {
-                Timber.d("postBookmark onSuccess")
-            }.onFailure {
-                Timber.e("postBookmark onFailure")
-            }
-        }
-    }
-
-    fun deleteBookmark(contentId: Int, contentType: String) {
-        viewModelScope.launch {
-            bookmarkUseCase.deleteBookmark(contentId, contentType).onSuccess {
-                Timber.d("deleteBookmark onSuccess")
-            }.onFailure {
-                Timber.e("deleteBookmark onFailure")
             }
         }
     }
