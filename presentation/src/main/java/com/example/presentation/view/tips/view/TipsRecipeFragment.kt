@@ -34,9 +34,9 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.lifecycleOwner = this
 
         reset()
-//        getRecipeList(currentPage)
         setToggleRecipeForMe()
         setListener()
+        setFabButton()
 
         openDialogRecipeForMe()
     }
@@ -51,12 +51,10 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
     //api 호출
     private fun getRecipeList(page:Int){
-        Timber.d("getRecipeList page:$page")
         recipeViewModel.getRecipeList(page)
         currentPage++
     }
     private fun getRecipeForMeList(page:Int){
-        Timber.d("getRecipeForMeList page:$page")
         recipeViewModel.getRecipeForMe(page)
         currentPage++
     }
@@ -132,14 +130,18 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         }
         //From VeganTest
         recipeViewModel.isFromTest.observe(this){
-            Timber.d("isFromTest: $it")
             if(it){
                 binding.tbRecipeForMe.isChecked = true
                 recipeViewModel.setIsFromTest(false)
             }else if(!binding.tbRecipeForMe.isChecked){
-                Timber.d("isFromTest else 실행")
                 getRecipeList(currentPage)
             }
+        }
+    }
+
+    private fun setFabButton(){
+        binding.ibFab.setOnClickListener {
+            binding.rvRecipe.smoothScrollToPosition(0)
         }
     }
 
@@ -154,4 +156,5 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
             TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
         }
     }
+
 }
