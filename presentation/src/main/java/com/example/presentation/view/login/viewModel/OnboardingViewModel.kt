@@ -1,13 +1,12 @@
 package com.example.presentation.view.login.viewModel
 
-import android.provider.ContactsContract.CommonDataKinds.Nickname
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.VeganTypes
 import com.example.domain.useCase.userInfo.SaveUserInfoUseCase
-import com.example.presentation.view.Image.gallery.model.GalleryImage
+import com.example.presentation.view.image.gallery.model.GalleryImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber

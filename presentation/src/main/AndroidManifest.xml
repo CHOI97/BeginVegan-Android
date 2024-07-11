@@ -42,10 +42,10 @@
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".view.Image.gallery.view.GalleryActivity"
+            android:name=".view.image.gallery.view.GalleryActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".view.Image.camera.view.CameraActivity"
+        <activity android:name=".view.image.camera.view.CameraActivity"
             android:exported="true"/>
     </application>
 

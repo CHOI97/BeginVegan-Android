@@ -2,13 +2,7 @@ package com.example.presentation.view.login.view
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
-import android.provider.ContactsContract.Contacts.Photo
-import android.provider.MediaStore
-import android.util.Base64
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -17,10 +11,10 @@ import com.example.presentation.R
 import com.example.presentation.adapter.onboarding.OnboardingAdapter
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityOnboardingBinding
-import com.example.presentation.view.Image.camera.view.CameraActivity
-import com.example.presentation.view.Image.gallery.model.GalleryImage
-import com.example.presentation.view.Image.gallery.view.GalleryActivity
-import com.example.presentation.view.Image.gallery.view.PhotoSelectDialog
+import com.example.presentation.view.image.camera.view.CameraActivity
+import com.example.presentation.view.image.gallery.model.GalleryImage
+import com.example.presentation.view.image.gallery.view.GalleryActivity
+import com.example.presentation.view.image.gallery.view.PhotoSelectDialog
 import com.example.presentation.view.login.viewModel.OnboardingViewModel
 import com.example.presentation.view.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
