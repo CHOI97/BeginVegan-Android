@@ -23,7 +23,8 @@ class TipsMagazineDetailMapper:Mapper<TipsMagazineDetailDto, TipsMagazineDetail>
     private fun mapItem(type: List<MagazineContentDto>): List<MagazineContent>{
         return type.map { MagazineContent(
             content = it.content,
-            sequence = it.sequence
+            sequence = it.sequence,
+            isBold = it.isBold
         ) }
     }
 }
