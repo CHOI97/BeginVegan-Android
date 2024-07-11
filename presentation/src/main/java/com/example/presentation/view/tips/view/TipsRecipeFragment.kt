@@ -62,7 +62,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     private fun setAdapter(list:MutableList<TipsRecipeListItem>){
         recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), list)
         binding.rvRecipe.adapter = recipeRvAdapter
-        binding.rvRecipe.layoutManager = LinearLayoutManager(this.context)
+        binding.rvRecipe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int, toggleButton: CompoundButton) {
