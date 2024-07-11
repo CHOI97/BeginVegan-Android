@@ -21,10 +21,10 @@ class TipsRecipeRemoteDataSourceImpl @Inject constructor(
         val accessToken = authTokenDataSource.accessToken.first()
         val authHeader = "Bearer $accessToken"
         return tipsRecipeService.getRecipeList(authHeader, page).suspendOnSuccess {
-            Timber.d("SignUp successful")
+            Timber.d("getRecipeList successful")
             ApiResponse.Success(data)
         }.suspendOnError {
-            Timber.e("SignUp error: ${this.errorBody}")
+            Timber.e("getRecipeList error: ${this.errorBody}")
             ApiResponse.Failure.Error(this)
         }
     }
@@ -33,10 +33,10 @@ class TipsRecipeRemoteDataSourceImpl @Inject constructor(
         val accessToken = authTokenDataSource.accessToken.first()
         val authHeader = "Bearer $accessToken"
         return tipsRecipeService.getRecipeDetail(authHeader, id).suspendOnSuccess {
-            Timber.d("SignUp successful")
+            Timber.d("getRecipeDetail successful")
             ApiResponse.Success(data)
         }.suspendOnError {
-            Timber.e("SignUp error: ${this.errorBody}")
+            Timber.e("getRecipeDetail error: ${this.errorBody}")
             ApiResponse.Failure.Error(this)
         }
     }
@@ -47,10 +47,10 @@ class TipsRecipeRemoteDataSourceImpl @Inject constructor(
         val accessToken = authTokenDataSource.accessToken.first()
         val authHeader = "Bearer $accessToken"
         return tipsRecipeService.getRecipeMy(authHeader, page).suspendOnSuccess {
-            Timber.d("SignUp successful")
+            Timber.d("getRecipeMy successful")
             ApiResponse.Success(data)
         }.suspendOnError {
-            Timber.e("SignUp error: ${this.errorBody}")
+            Timber.e("getRecipeMy error: ${this.errorBody}")
             ApiResponse.Failure.Error(this)
         }
     }
@@ -59,10 +59,10 @@ class TipsRecipeRemoteDataSourceImpl @Inject constructor(
         val accessToken = authTokenDataSource.accessToken.first()
         val authHeader = "Bearer $accessToken"
         return tipsRecipeService.getHomeRecipe(authHeader).suspendOnSuccess {
-            Timber.d("SignUp successful")
+            Timber.d("getHomeRecipe successful")
             ApiResponse.Success(data)
         }.suspendOnError {
-            Timber.e("SignUp error: ${this.errorBody}")
+            Timber.e("getHomeRecipe error: ${this.errorBody}")
             ApiResponse.Failure.Error(this)
         }
     }
