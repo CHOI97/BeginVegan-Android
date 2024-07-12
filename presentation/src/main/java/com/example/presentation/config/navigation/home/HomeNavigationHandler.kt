@@ -7,4 +7,7 @@ interface HomeNavigationHandler {
     fun navigateToMap()
     fun navigateToTips(fromTest: Boolean)
     fun navigateToMypage()
+
+    fun navigationToMypageNotBackStack()
+    fun navigationToTipsNotBackStack()
 }

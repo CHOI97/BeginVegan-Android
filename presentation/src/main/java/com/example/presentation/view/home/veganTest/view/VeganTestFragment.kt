@@ -88,16 +88,15 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
         binding.tvGoResult.setOnClickListener {
             viewModel.setUserVeganTypeNum(selectedVeganTypeNum)
             patchVeganType(selectedVeganTypeNum)
-//            viewModel.patchVeganTypeState.observe(this){
-//                when(it){
-//                    true ->{
-//                        Timber.d("PatchVeganType Successful")
-//                        mainNavigationHandler.navigateToBeganTestResult()
-//                    }
-//                    false -> Timber.e("PatchVeganType Failure")
-//                }
-//            }
-            mainNavigationHandler.navigateToBeganTestResult()
+            viewModel.patchVeganTypeState.observe(this){
+                when(it){
+                    true ->{
+                        Timber.d("PatchVeganType Successful")
+                        mainNavigationHandler.navigateToBeganTestResult()
+                    }
+                    false -> Timber.e("PatchVeganType Failure")
+                }
+            }
         }
     }
 
