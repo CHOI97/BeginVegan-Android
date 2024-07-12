@@ -2,6 +2,7 @@ package com.example.presentation.config.navigation.main
 
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
 import com.example.presentation.view.home.veganTest.view.VeganTestResultFragmentDirections

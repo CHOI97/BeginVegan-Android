@@ -1,14 +1,9 @@
 package com.example.presentation.config.navigation.home
 
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.example.presentation.R
 import com.example.presentation.view.home.HomeFragmentDirections
-import com.example.presentation.view.home.veganTest.view.VeganTestResultFragmentDirections
-import com.example.presentation.view.tips.view.TipsFragmentArgs
-import timber.log.Timber
-import javax.inject.Inject
 
 class HomeNavigationImpl(private val navController: NavController) : HomeNavigationHandler {
 
@@ -28,13 +23,23 @@ class HomeNavigationImpl(private val navController: NavController) : HomeNavigat
             navController.navigate(action)
         }else{
             controlBackStack(R.id.tipsFragment)
-//            navController.navigate(R.id.tipsFragment)
         }
     }
 
     override fun navigateToMypage() {
         controlBackStack(R.id.mainMypageFragment)
-//        navController.navigate(R.id.mainMypageFragment)
+    }
+
+    override fun navigationToMypageNotBackStack() {
+        navController.navigate(R.id.mainMypageFragment, null,
+            NavOptions.Builder().setPopUpTo(navController.currentDestination?.id!!, true).build())
+    }
+
+    override fun navigationToTipsNotBackStack() {
+        navController.navigate(R.id.tipsFragment, null,
+            NavOptions.Builder().setPopUpTo(navController.currentDestination?.id!!, true).build())
+//        val action = HomeFragmentDirections.actionMainHomeFragmentToTipsFragment(false)
+//        navController.navigate(action)
     }
 
     private fun controlBackStack(destinationId:Int){
