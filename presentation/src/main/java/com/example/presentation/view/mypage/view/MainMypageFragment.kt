@@ -1,9 +1,6 @@
 package com.example.presentation.view.mypage.view
 
-import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
-import androidx.activity.OnBackPressedCallback
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
@@ -192,24 +189,4 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 //        binding.sSetVeganType.adapter = dropdownAdapter
     }
 
-
-    //Control Back Button
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupOnBackPressedCallback()
-    }
-    private fun setupOnBackPressedCallback() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (drawerController.isDrawerOpen()) {
-                    drawerController.closeDrawer()
-                } else {
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-    }
 }

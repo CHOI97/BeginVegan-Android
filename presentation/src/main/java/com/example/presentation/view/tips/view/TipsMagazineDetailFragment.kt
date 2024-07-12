@@ -92,20 +92,4 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
         val parentLayout = binding.llMagazineContents
         parentLayout.addView(textView)
     }
-
-    //Control Back Button
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupOnBackPressedCallback()
-    }
-    private fun setupOnBackPressedCallback() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-    }
 }

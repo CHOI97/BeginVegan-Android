@@ -1,5 +1,9 @@
 package com.example.presentation.view.main
 
+import android.os.Bundle
+import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -9,17 +13,23 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.home.HomeNavigationHandler
 import com.example.presentation.config.navigation.home.HomeNavigationImpl
 import com.example.presentation.databinding.FragmentMainBinding
+import com.example.presentation.util.DrawerController
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
     private lateinit var homeNavigationHandler: HomeNavigationHandler
+    @Inject
+    lateinit var drawerController: DrawerController
+    private lateinit var navController:NavController
 
     override fun init() {
         val navHostFragment = childFragmentManager.findFragmentById(R.id.fcw_home) as NavHostFragment
-        val navController = navHostFragment.findNavController()
+        navController = navHostFragment.findNavController()
         homeNavigationHandler = HomeNavigationImpl(navController)
-
+        setupOnBackPressedCallback()
         checkFromTest()
 
         with(binding) {
@@ -50,5 +60,20 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         if(args.fromTest){
             homeNavigationHandler.navigateToTips(true)
         }
+    }
+
+    private fun setupOnBackPressedCallback(){
+        requireActivity().onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                Timber.d("navController.backQueue.size: ${navController.backQueue.size}")
+                if(drawerController.isDrawerOpen()){
+                    drawerController.closeDrawer()
+                }else if(navController.backQueue.size > 2){
+                    navController.popBackStack()
+                }else{
+                    requireActivity().finish()
+                }
+            }
+        })
     }
 }

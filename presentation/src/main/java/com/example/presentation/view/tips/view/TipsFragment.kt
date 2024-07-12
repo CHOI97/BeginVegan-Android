@@ -1,8 +1,5 @@
 package com.example.presentation.view.tips.view
 
-import android.os.Bundle
-import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.example.presentation.R
@@ -13,7 +10,6 @@ import com.example.presentation.view.tips.adapter.TipsVpAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -57,27 +53,4 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
         }
     }
 
-
-    //Control Back Button
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupOnBackPressedCallback()
-    }
-    private fun setupOnBackPressedCallback() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-//                val navHostFragment = childFragmentManager.findFragmentById(R.id.fcw_home) as NavHostFragment
-//                val navController = navHostFragment.findNavController()
-                Timber.d("Tips onBackPressed")
-                if (drawerController.isDrawerOpen()) {
-                    drawerController.closeDrawer()
-                } else {
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-            }
-        })
-    }
 }
