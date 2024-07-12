@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.impl.constraints.NetworkState
 import com.example.domain.model.mypage.MypageMyMagazineItem
 import com.example.domain.useCase.mypage.MypageMyScrapUseCase
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.mypage.viewModel.state.MyMagazineState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -19,7 +17,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MyScrapViewModel @Inject constructor(
+class MyMagazineViewModel @Inject constructor(
     private val myScrapUseCase: MypageMyScrapUseCase
 ):ViewModel() {
 

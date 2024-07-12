@@ -13,10 +13,10 @@ import com.example.presentation.databinding.FragmentMypageMyMagazineBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.mypage.adapter.MyMagazineRvAdapter
-import com.example.presentation.view.mypage.viewModel.MyScrapViewModel
+import com.example.presentation.view.mypage.viewModel.MyMagazineViewModel
+import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,8 +25,9 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     lateinit var mainNavigationHandler: MainNavigationHandler
     @Inject
     lateinit var bookmarkController: BookmarkController
+    private val magazineViewModel:MagazineViewModel by activityViewModels()
 
-    private val myScrapViewModel: MyScrapViewModel by activityViewModels()
+    private val myScrapViewModel: MyMagazineViewModel by activityViewModels()
     private lateinit var myMagazineRvAdapter: MyMagazineRvAdapter
     private val myMagazineList = mutableListOf<MypageMyMagazineItem>()
     private var currentPage = 0
@@ -52,6 +53,9 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
         myMagazineRvAdapter.setOnItemClickListener(object :MyMagazineRvAdapter.OnItemClickListener{
             override fun onItemClick(id: Int) {
                 //Magazine Detail로 이동
+                mainNavigationHandler.navigationMyMagazineToMagazineDetail()
+                magazineViewModel.resetMagazineDetail()
+                magazineViewModel.getMagazineDetail(id)
             }
 
             override fun setToggleButton(isChecked: Boolean, magazineId: Int) {
