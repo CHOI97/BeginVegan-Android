@@ -1,6 +1,7 @@
 package com.example.presentation.view.mypage.view
 
 import android.widget.ArrayAdapter
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
@@ -8,6 +9,7 @@ import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -119,6 +121,9 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     lateinit var mainNavigationHandler: MainNavigationHandler
 
     override fun init() {
+        Timber.d("mypage init")
+        Timber.d("findNavController().backQueue.size:${findNavController().backQueue.size}")
+
         binding.llUserLevelExplain.setOnClickListener {
             openDialogUserLevelExplain()
         }
@@ -126,8 +131,6 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         setOpenDrawer()
         setProgressBar(5, 1)
         setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
-
-
 
         binding.llEditProfile.setOnClickListener {
             mainNavigationHandler.navigateToEditProfile()

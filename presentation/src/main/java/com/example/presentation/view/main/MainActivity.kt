@@ -1,7 +1,10 @@
 package com.example.presentation.view.main
 
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
@@ -22,11 +25,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun setupOnBackPressedCallback(){
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                val navController = findNavController(R.id.fcw_main_container)
-                Timber.d("mainNavController: ${navController.backQueue.size}")
+                var navController = findNavController(R.id.fcw_main_container)
+                if(navController.currentDestination?.id==R.id.mainFragment)
+                    navController = findNavController(R.id.fcw_home)
+
+                if(binding.dlDrawer.isDrawerOpen(GravityCompat.END)){
+                    binding.dlDrawer.closeDrawer(GravityCompat.END)
+                }
                 if(navController.backQueue.size > 2){
                     navController.popBackStack()
                 }else{
+                    isEnabled = false
                     finish()
                 }
             }

@@ -10,6 +10,7 @@ import com.example.presentation.view.tips.adapter.TipsVpAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,6 +45,7 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
 
     private fun checkFromTest(){
         val args: TipsFragmentArgs by navArgs()
+        Timber.d("args.fromTest:${args.fromTest}")
         if(args.fromTest){
             //나를 위한 레시피
             binding.vpViewpagerArea.post{
