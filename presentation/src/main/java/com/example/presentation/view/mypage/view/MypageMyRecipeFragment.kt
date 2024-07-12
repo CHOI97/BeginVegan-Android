@@ -16,6 +16,8 @@ import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.mypage.adapter.MyRecipeRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyRecipeViewModel
+import com.example.presentation.view.tips.view.TipsRecipeDetailDialog
+import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +28,8 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     lateinit var mainNavigationHandler:MainNavigationHandler
     @Inject
     lateinit var bookmarkController: BookmarkController
-    private val myRecipeViewModel:MyRecipeViewModel by activityViewModels()
+    private val myRecipeViewModel:MyRecipeViewModel by viewModels()
+    private val recipeViewModel:RecipeViewModel by activityViewModels()
 
     private lateinit var myRecipeRvAdapter:MyRecipeRvAdapter
     private var myRecipeList = mutableListOf<MypageMyRecipeItem>()
@@ -55,6 +58,7 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
         myRecipeRvAdapter.setOnItemClickListener(object : MyRecipeRvAdapter.OnItemClickListener{
             override fun onItemClick(id: Int, toggleButton: CompoundButton) {
                 //Magazine Detail로 이동
+                openDialogRecipeDetail(id, toggleButton)
             }
 
             override fun setToggleButton(isChecked: Boolean, recipeId: Int) {
@@ -117,5 +121,12 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
                 //Recipe로 이동
             }
         }
+    }
+
+    //Dialog
+    private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
+        recipeViewModel.getRecipeDetail(recipeId)
+        recipeViewModel.setSelectedTb(toggleButton)
+        TipsRecipeDetailDialog().show(childFragmentManager, "MyRecipeDetail")
     }
 }
