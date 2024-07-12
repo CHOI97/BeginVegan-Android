@@ -24,7 +24,6 @@ class MyMagazineViewModel @Inject constructor(
     private val _myMagazinesState = MutableStateFlow<NetworkResult<MyMagazineState>>(NetworkResult.Loading())
     val myMagazineState: StateFlow<NetworkResult<MyMagazineState>> = _myMagazinesState
     fun setMyMagazineList(list:MutableList<MypageMyMagazineItem>){
-        Timber.d("inViewModel list: $list")
         _myMagazinesState.value = NetworkResult.Success(
             MyMagazineState(list, false)
         )
@@ -47,7 +46,7 @@ class MyMagazineViewModel @Inject constructor(
                 it.onSuccess {list->
                     if(list.isEmpty()) {
                         if(page==0) _isMagazineEmpty.value = true
-                        else _isContinueGetList.value = false
+                        _isContinueGetList.value = false
                     }
                     else setMyMagazineList(list.toMutableList())
                 }.onFailure {
