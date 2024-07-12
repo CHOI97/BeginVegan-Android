@@ -59,9 +59,14 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         val args: MainFragmentArgs by navArgs()
         if(args.fromTest) {
             homeNavigationHandler.navigateToTips(true)
-
             val nArg = this.arguments ?:Bundle()
             nArg.putBoolean("fromTest", false)
+            this.arguments = nArg
+
+        }else if(args.fromMyMagazine){
+            homeNavigationHandler.navigateToTips(false)
+            val nArg = this.arguments ?:Bundle()
+            nArg.putBoolean("fromMyMagazine", false)
             this.arguments = nArg
         } else{
             if(navController.currentDestination?.id==R.id.mainMypageFragment)

@@ -17,9 +17,11 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentTipsMagazineDetailBinding
 import com.example.presentation.util.BookmarkController
+import com.example.presentation.view.mypage.viewModel.MyMagazineViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -69,7 +71,7 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
             createContentTextView(content)
         }
 
-        binding.tbInterest.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
             lifecycleScope.launch {
                 if(isChecked){
                     bookmarkController.postBookmark(it.id, "MAGAZINE")
