@@ -53,7 +53,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
         myMagazineRvAdapter.setOnItemClickListener(object :MyMagazineRvAdapter.OnItemClickListener{
             override fun onItemClick(id: Int) {
                 //Magazine Detail로 이동
-                mainNavigationHandler.navigationMyMagazineToMagazineDetail()
+                mainNavigationHandler.navigateMyMagazineToMagazineDetail()
                 magazineViewModel.resetMagazineDetail()
                 magazineViewModel.getMagazineDetail(id)
             }
@@ -115,7 +115,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     private fun setEmptyState(emptyState:Boolean){
         binding.llEmptyArea.isVisible = emptyState
         binding.btnMoveToMagazine.setOnClickListener {
-            //Recipe로 이동
+            mainNavigationHandler.navigateMyMagazineToMainHome(true)
         }
     }
 }

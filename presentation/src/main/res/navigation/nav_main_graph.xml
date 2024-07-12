@@ -36,7 +36,10 @@
             android:name="fromTest"
             app:argType="boolean"
             android:defaultValue="false"/>
-
+        <argument
+            android:name="fromMyMagazine"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
     <fragment
         android:id="@+id/mypageEditProfileFragment"
@@ -81,6 +84,10 @@
         <action
             android:id="@+id/action_mypageMyMagazineFragment_to_tipsMagazineDetailFragment"
             app:destination="@id/tipsMagazineDetailFragment" />
+        <action
+            android:id="@+id/action_mypageMyMagazineFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
     </fragment>
     <fragment
         android:id="@+id/mypageMyRecipeFragment"
