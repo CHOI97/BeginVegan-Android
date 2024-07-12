@@ -2,6 +2,7 @@ package com.example.presentation.view.mypage.view
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     lateinit var bookmarkController: BookmarkController
     private val magazineViewModel:MagazineViewModel by activityViewModels()
 
-    private val myMagazineViewModel: MyMagazineViewModel by activityViewModels()
+    private val myMagazineViewModel: MyMagazineViewModel by viewModels()
     private lateinit var myMagazineRvAdapter: MyMagazineRvAdapter
     private var myMagazineList = mutableListOf<MypageMyMagazineItem>()
     private var currentPage = 0

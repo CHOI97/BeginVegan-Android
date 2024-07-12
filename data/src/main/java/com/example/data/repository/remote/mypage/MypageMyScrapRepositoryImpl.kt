@@ -1,7 +1,9 @@
 package com.example.data.repository.remote.mypage
 
 import com.example.data.mapper.mypage.MypageMyMagazineMapper
+import com.example.data.mapper.mypage.MypageMyRecipeMapper
 import com.example.domain.model.mypage.MypageMyMagazineItem
+import com.example.domain.model.mypage.MypageMyRecipeItem
 import com.example.domain.repository.mypage.MypageMyScrapRepository
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 class MypageMyScrapRepositoryImpl @Inject constructor(
     private val mypageMyScrapRemoteDataSource: MypageMyScrapRemoteDataSource,
-    private val mypageMyMagazineMapper: MypageMyMagazineMapper
+    private val mypageMyMagazineMapper: MypageMyMagazineMapper,
+    private val mypageMyRecipeMapper: MypageMyRecipeMapper
 ): MypageMyScrapRepository {
     override suspend fun getMyMagazineList(page: Int): Flow<Result<List<MypageMyMagazineItem>>> {
         return flow{
@@ -36,6 +39,33 @@ class MypageMyScrapRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 Timber.e(e, "getMyMagazineList exception")
+                emit(Result.failure(e))
+            }
+        }
+    }
+
+    override suspend fun getMyRecipeList(page: Int): Flow<Result<List<MypageMyRecipeItem>>> {
+        return flow{
+            try {
+                val response = mypageMyScrapRemoteDataSource.getMyRecipeList(page)
+                when (response) {
+                    is ApiResponse.Success -> {
+                        val magazineList = mypageMyRecipeMapper.mapFromEntity(response.data.information)
+                        emit(Result.success(magazineList))
+                    }
+
+                    is ApiResponse.Failure.Error -> {
+                        Timber.e("getMyRecipeList error: ${response.errorBody}")
+                        emit(Result.failure(Exception("getMyRecipeList failed")))
+                    }
+
+                    is ApiResponse.Failure.Exception -> {
+                        Timber.e("getMyRecipeList exception: ${response.message}")
+                        emit(Result.failure(response.throwable))
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "getMyRecipeList exception")
                 emit(Result.failure(e))
             }
         }
