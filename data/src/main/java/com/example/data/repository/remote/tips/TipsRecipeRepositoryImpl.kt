@@ -29,17 +29,17 @@ class TipsRecipeRepositoryImpl @Inject constructor(
                     }
 
                     is ApiResponse.Failure.Error -> {
-                        Timber.e("GetAlarms error: ${response.errorBody}")
-                        emit(Result.failure(Exception("GetAlarms Failed")))
+                        Timber.e("getRecipeList error: ${response.errorBody}")
+                        emit(Result.failure(Exception("getRecipeList Failed")))
                     }
 
                     is ApiResponse.Failure.Exception -> {
-                        Timber.e("GetAlarms exception: ${response.message}")
+                        Timber.e("getRecipeList exception: ${response.message}")
                         emit(Result.failure(response.throwable))
                     }
                 }
             } catch (e: Exception) {
-                Timber.e(e, "SignUp exception")
+                Timber.e(e, "getRecipeList exception")
                 emit(Result.failure(e))
             }
         }
@@ -56,17 +56,17 @@ class TipsRecipeRepositoryImpl @Inject constructor(
                 }
 
                 is ApiResponse.Failure.Error -> {
-                    Timber.e("GetAlarms error: ${response.errorBody}")
-                    Result.failure(Exception("GetAlarms Failed"))
+                    Timber.e("getRecipeDetail error: ${response.errorBody}")
+                    Result.failure(Exception("getRecipeDetail Failed"))
                 }
 
                 is ApiResponse.Failure.Exception -> {
-                    Timber.e("GetAlarms exception: ${response.message}")
+                    Timber.e("getRecipeDetail exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
         } catch (e: Exception) {
-            Timber.e(e, "SignUp exception")
+            Timber.e(e, "getRecipeDetail exception")
             Result.failure(e)
         }
     }
@@ -84,17 +84,17 @@ class TipsRecipeRepositoryImpl @Inject constructor(
                     }
 
                     is ApiResponse.Failure.Error -> {
-                        Timber.e("GetAlarms error: ${response.errorBody}")
+                        Timber.e("getRecipeForMe error: ${response.errorBody}")
                         emit(Result.failure(Exception("GetAlarms Failed")))
                     }
 
                     is ApiResponse.Failure.Exception -> {
-                        Timber.e("GetAlarms exception: ${response.message}")
+                        Timber.e("getRecipeForMe exception: ${response.message}")
                         emit(Result.failure(response.throwable))
                     }
                 }
             } catch (e: Exception) {
-                Timber.e(e, "SignUp exception")
+                Timber.e(e, "getRecipeForMe exception")
                 emit(Result.failure(e))
             }
         }
@@ -110,17 +110,17 @@ class TipsRecipeRepositoryImpl @Inject constructor(
                 }
 
                 is ApiResponse.Failure.Error -> {
-                    Timber.e("GetAlarms error: ${response.errorBody}")
-                    Result.failure(Exception("GetAlarms Failed"))
+                    Timber.e("getHomeRecipe error: ${response.errorBody}")
+                    Result.failure(Exception("getHomeRecipe Failed"))
                 }
 
                 is ApiResponse.Failure.Exception -> {
-                    Timber.e("GetAlarms exception: ${response.message}")
+                    Timber.e("getHomeRecipe exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
         } catch (e: Exception) {
-            Timber.e(e, "SignUp exception")
+            Timber.e(e, "getHomeRecipe exception")
             Result.failure(e)
         }
     }

@@ -15,6 +15,7 @@ import com.example.presentation.view.tips.adapter.TipsRecipeRvAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,11 +34,11 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.lifecycleOwner = this
 
         reset()
-        getRecipeList(currentPage)
+        setToggleRecipeForMe()
         setListener()
+        setFabButton()
 
         openDialogRecipeForMe()
-        setToggleRecipeForMe()
     }
     private fun reset(){
         recipeList = mutableListOf()
@@ -61,7 +62,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     private fun setAdapter(list:MutableList<TipsRecipeListItem>){
         recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), list)
         binding.rvRecipe.adapter = recipeRvAdapter
-        binding.rvRecipe.layoutManager = LinearLayoutManager(this.context)
+        binding.rvRecipe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int, toggleButton: CompoundButton) {
@@ -120,6 +121,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
             //유저 veganType: NONE 이면 return
             if(isChecked){
                 reset()
+                isForMe = true
                 getRecipeForMeList(currentPage)
             }else{
                 reset()
@@ -131,7 +133,15 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
             if(it){
                 binding.tbRecipeForMe.isChecked = true
                 recipeViewModel.setIsFromTest(false)
+            }else if(!binding.tbRecipeForMe.isChecked){
+                getRecipeList(currentPage)
             }
+        }
+    }
+
+    private fun setFabButton(){
+        binding.ibFab.setOnClickListener {
+            binding.rvRecipe.smoothScrollToPosition(0)
         }
     }
 
@@ -146,4 +156,5 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
             TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
         }
     }
+
 }
