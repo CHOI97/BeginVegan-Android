@@ -17,7 +17,9 @@
             layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/mypage_my_recipe}"/>
+            app:title="@{@string/mypage_my_recipe}"
+            app:backButtonVisible="@{true}"
+            app:colorMode="@{true}"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_my_recipe"
             android:layout_width="match_parent"
