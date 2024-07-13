@@ -27,20 +27,16 @@ class MyReviewRvAdapter(
             binding.tvDate.text = item.date
             binding.tvReviewContent.text = item.content
             binding.tvRecommend.text = context.resources.getString(R.string.btn_review_recommend,item.countRecommendation)
-            if(item.recommendation){
-                binding.ivRecommendIcon.setImageDrawable(
-                    context.getDrawable(R.drawable.ic_recommend_filled)
-                )
-            }else{
-                binding.ivRecommendIcon.setImageDrawable(
-                    context.getDrawable(R.drawable.ic_recommend_empty)
-                )
-            }
 
             for(url in item.images){
                 createImageView(url, binding.llImages)
             }
 
+            binding.tbRecommend.setOnCheckedChangeListener(null)
+            binding.tbRecommend.isChecked = item.recommendation
+            binding.tbRecommend.setOnCheckedChangeListener { _, isChecked ->
+                listener?.setToggleButton(isChecked, item.reviewId)
+            }
         }
     }
 
@@ -53,15 +49,16 @@ class MyReviewRvAdapter(
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.bind(position)
-        if(position != RecyclerView.NO_POSITION){
-            holder.itemView.setOnClickListener {
-                listener?.onItemClick(list[position].reviewId)
-            }
-        }
+//        if(position != RecyclerView.NO_POSITION){
+//            holder.itemView.setOnClickListener {
+//                listener?.onItemClick(list[position].reviewId)
+//            }
+//        }
     }
 
     interface OnItemClickListener{
-        fun onItemClick(reviewId:Int)
+//        fun onItemClick(reviewId:Int)
+        fun setToggleButton(isChecked:Boolean, reviewId: Int)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener

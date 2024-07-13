@@ -128,13 +128,12 @@
             android:paddingVertical="@dimen/margin_4"
             android:paddingHorizontal="@dimen/margin_8"
             android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_recommend_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_recommend_empty"/>
-
+            <ToggleButton
+                android:id="@+id/tb_recommend"
+                android:layout_width="@dimen/item_18"
+                android:layout_height="@dimen/item_18"
+                android:background="@drawable/selector_review_recommend"
+                android:textColor="@color/color_transparent" />
             <TextView
                 android:id="@+id/tv_recommend"
                 android:layout_width="wrap_content"

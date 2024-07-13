@@ -11,6 +11,7 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyReviewBinding
 import com.example.presentation.network.NetworkResult
+import com.example.presentation.util.ReviewRecommendController
 import com.example.presentation.view.mypage.adapter.MyReviewRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyReviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,8 @@ import javax.inject.Inject
 class MypageMyReviewFragment : BaseFragment<FragmentMypageMyReviewBinding>(R.layout.fragment_mypage_my_review) {
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
+    @Inject
+    lateinit var reviewRecommendController: ReviewRecommendController
     private val myReviewViewModel: MyReviewViewModel by viewModels()
 
     private lateinit var myReviewRvAdapter: MyReviewRvAdapter
@@ -50,8 +53,14 @@ class MypageMyReviewFragment : BaseFragment<FragmentMypageMyReviewBinding>(R.lay
         binding.rvMyReview.layoutManager = LinearLayoutManager(this.context)
 
         myReviewRvAdapter.setOnItemClickListener(object : MyReviewRvAdapter.OnItemClickListener{
-            override fun onItemClick(id: Int) {
-                //리뷰는 이동이 없나여,,?
+//            override fun onItemClick(id: Int) {
+//                //리뷰는 이동이 없나여,,?
+//            }
+
+            override fun setToggleButton(isChecked: Boolean, reviewId: Int) {
+                lifecycleScope.launch {
+                    reviewRecommendController.updateReviewRecommend(reviewId)
+                }
             }
         })
 
