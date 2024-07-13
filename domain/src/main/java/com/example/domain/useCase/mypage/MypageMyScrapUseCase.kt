@@ -1,5 +1,6 @@
 package com.example.domain.useCase.mypage
 
+import com.example.domain.model.mypage.MyReview
 import com.example.domain.model.mypage.MypageMyMagazineItem
 import com.example.domain.model.mypage.MypageMyRecipeItem
 import com.example.domain.model.mypage.MypageMyRestaurantItem
@@ -18,4 +19,7 @@ class MypageMyScrapUseCase @Inject constructor(
 
     suspend fun getMyRestaurantList(page: Int):Flow<Result<List<MypageMyRestaurantItem>>> =
         mypageMyScrapRepository.getMyRestaurantList(page)
+
+    suspend fun getMyReviewList(page: Int): Flow<Result<List<MyReview>>> =
+        mypageMyScrapRepository.getMyReviewList(page)
 }

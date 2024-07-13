@@ -3,7 +3,7 @@ package com.example.data.retrofit
 import com.example.data.model.mypage.MyMagazineResponse
 import com.example.data.model.mypage.MyRecipeResponse
 import com.example.data.model.mypage.MyRestaurantResponse
-import com.example.data.model.tips.MagazineResponse
+import com.example.data.model.mypage.MyReviewResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -27,4 +27,10 @@ interface MypageMyScrapService {
         @Header("Authorization") token: String,
         @Query("page") page: Int
     ): ApiResponse<MyRestaurantResponse>
+
+    @GET("/api/v1/reviews")
+    suspend fun getMyReviewList(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int
+    ): ApiResponse<MyReviewResponse>
 }
