@@ -26,13 +26,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 var navController = findNavController(R.id.fcw_main_container)
-                if(navController.currentDestination?.id==R.id.mainFragment)
+                var nowNav:String
+                if(navController.currentDestination?.id==R.id.mainFragment){
                     navController = findNavController(R.id.fcw_home)
-
+                    nowNav = "homeNav"
+                }else nowNav = "mainNav"
+                Timber.d("$nowNav : ${navController.backQueue.size}")
+                
                 if(binding.dlDrawer.isDrawerOpen(GravityCompat.END)){
                     binding.dlDrawer.closeDrawer(GravityCompat.END)
-                }
-                if(navController.backQueue.size > 2){
+                }else if(navController.backQueue.size > 2){
                     navController.popBackStack()
                 }else{
                     isEnabled = false
