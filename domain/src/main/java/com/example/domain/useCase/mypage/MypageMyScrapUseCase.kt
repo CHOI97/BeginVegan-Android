@@ -2,6 +2,7 @@ package com.example.domain.useCase.mypage
 
 import com.example.domain.model.mypage.MypageMyMagazineItem
 import com.example.domain.model.mypage.MypageMyRecipeItem
+import com.example.domain.model.mypage.MypageMyRestaurantItem
 import com.example.domain.repository.mypage.MypageMyScrapRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -14,4 +15,7 @@ class MypageMyScrapUseCase @Inject constructor(
 
     suspend fun getMyRecipeList(page:Int): Flow<Result<List<MypageMyRecipeItem>>> =
         mypageMyScrapRepository.getMyRecipeList(page)
+
+    suspend fun getMyRestaurantList(page: Int):Flow<Result<List<MypageMyRestaurantItem>>> =
+        mypageMyScrapRepository.getMyRestaurantList(page)
 }

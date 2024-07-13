@@ -17,6 +17,7 @@ interface MainNavigationHandler {
     fun navigateMyMagazineToMagazineDetail()
     fun navigateMyMagazineToMainHome(fromMagazine:Boolean = false)
     fun navigateMyRecipeToMainHome(fromMyRecipe:Boolean = false)
+    fun navigateMyRestaurantToMainHome(fromMyRestaurant:Boolean = false)
 
     fun navigateToMainHome(fromTest:Boolean = false)
 

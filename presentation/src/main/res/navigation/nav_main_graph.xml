@@ -44,6 +44,10 @@
             android:name="fromMyRecipe"
             app:argType="boolean"
             android:defaultValue="false"/>
+        <argument
+            android:name="fromMyRestaurant"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
     <fragment
         android:id="@+id/mypageEditProfileFragment"
@@ -80,7 +84,12 @@
     <fragment
         android:id="@+id/mypageMyRestaurantFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyRestaurantFragment"
-        android:label="MypageMyRestaurantFragment" />
+        android:label="MypageMyRestaurantFragment" >
+        <action
+            android:id="@+id/action_mypageMyRestaurantFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/mypageMyMagazineFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyMagazineFragment"

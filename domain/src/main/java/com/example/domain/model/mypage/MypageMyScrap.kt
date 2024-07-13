@@ -13,3 +13,17 @@ data class MypageMyRecipeItem(
     val name:String,
     val veganType:String
 )
+
+data class MypageMyRestaurantItem(
+    val restaurantId:Int,
+    val thumbnail:String,
+    val name:String,
+    val restaurantType:String,
+    val address:List<RestaurantAddress>
+)
+data class RestaurantAddress(
+    val province:String,
+    val city:String,
+    val roadName:String,
+    val detailAddress:String
+)

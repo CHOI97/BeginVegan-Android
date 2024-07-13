@@ -73,6 +73,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
             val nArg = this.arguments ?:Bundle()
             nArg.putBoolean("fromMyRecipe", false)
             this.arguments = nArg
+        }else if(args.fromMyRestaurant){
+            homeNavigationHandler.navigateToMap(fromMyRestaurant = true)
+            val nArg = this.arguments ?:Bundle()
+            nArg.putBoolean("fromMyRestaurant", false)
+            this.arguments = nArg
 
         }else{
             if(navController.currentDestination?.id==R.id.mainMypageFragment)
