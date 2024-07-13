@@ -31,8 +31,6 @@ class MyRecipeViewModel @Inject constructor(
 
     private val _isContinueGetList = MutableLiveData(true)
     val isContinueGetList: LiveData<Boolean> = _isContinueGetList
-    fun reSetVieModel(){
-    }
 
     private val _isRecipeEmpty = MutableLiveData(false)
     val isRecipeEmpty: LiveData<Boolean> = _isRecipeEmpty

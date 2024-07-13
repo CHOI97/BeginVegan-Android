@@ -17,6 +17,10 @@
             android:name="fromTest"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="fromMyRecipe"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/mainHomeFragment"

@@ -119,6 +119,7 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
             binding.llEmptyArea.isVisible = it
             binding.btnMoveToRecipe.setOnClickListener {
                 //Recipe로 이동
+                mainNavigationHandler.navigateMyRecipeToMainHome(true)
             }
         }
     }
