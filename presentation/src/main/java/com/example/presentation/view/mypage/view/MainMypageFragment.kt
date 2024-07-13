@@ -125,6 +125,7 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val mypageUserInfoViewModel:MypageUserInfoViewModel by viewModels()
     private lateinit var veganTypeKr:Array<String>
+    private lateinit var veganTypeEng:Array<String>
 
     override fun init() {
         binding.vm = mypageUserInfoViewModel
@@ -146,7 +147,7 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         val userLevelKr = resources.getStringArray(R.array.user_levels_kr)
         val userLevelEng = resources.getStringArray(R.array.user_levels_eng)
         veganTypeKr = resources.getStringArray(R.array.vegan_type)
-        val veganTypeEng = resources.getStringArray(R.array.vegan_types_eng)
+        veganTypeEng = resources.getStringArray(R.array.vegan_types_eng)
         val userLevelLists = UserLevelLists(requireContext())
         val levelIllusts = userLevelLists.userLevelIllus
         val levelIcons = userLevelLists.userLevelIcons
@@ -198,6 +199,7 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         }
         dropdownView.setOnItemClickListener { parent, view, position, id ->
 //            Timber.d("position:$position, selected Item: ${veganTypeKr[position]}")
+            mypageUserInfoViewModel.patchUserVeganType(veganTypeEng[position])
         }
     }
 
