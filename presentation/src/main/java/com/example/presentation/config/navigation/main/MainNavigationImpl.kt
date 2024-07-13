@@ -9,6 +9,7 @@ import com.example.presentation.view.home.veganTest.view.VeganTestResultFragment
 import com.example.presentation.view.mypage.view.MypageMyMagazineFragment
 import com.example.presentation.view.mypage.view.MypageMyMagazineFragmentDirections
 import com.example.presentation.view.mypage.view.MypageMyRecipeFragmentDirections
+import com.example.presentation.view.mypage.view.MypageMyRestaurantFragmentDirections
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -61,6 +62,11 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
 
     override fun navigateMyRecipeToMainHome(fromMyRecipe: Boolean) {
         val action = MypageMyRecipeFragmentDirections.actionMypageMyRecipeFragmentToMainFragment(fromMyRecipe = fromMyRecipe)
+        navController.navigate(action)
+    }
+
+    override fun navigateMyRestaurantToMainHome(fromMyRestaurant: Boolean) {
+        val action = MypageMyRestaurantFragmentDirections.actionMypageMyRestaurantFragmentToMainFragment(fromMyRestaurant = fromMyRestaurant)
         navController.navigate(action)
     }
 

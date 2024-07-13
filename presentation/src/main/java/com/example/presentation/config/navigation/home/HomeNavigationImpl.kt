@@ -13,8 +13,14 @@ class HomeNavigationImpl(private val navController: NavController) : HomeNavigat
             NavOptions.Builder().setPopUpTo(currentId, true).build())
     }
 
-    override fun navigateToMap() {
-        controlBackStack(R.id.veganMapFragment)
+    override fun navigateToMap(fromMyRestaurant: Boolean, fromMyReview: Boolean) {
+        if(fromMyRestaurant||fromMyReview){
+            val action = HomeFragmentDirections.actionMainHomeFragmentToVeganMapFragment(
+                fromMyRestaurant = fromMyRestaurant, fromMyReview = fromMyReview)
+            navController.navigate(action)
+        }else{
+            controlBackStack(R.id.veganMapFragment)
+        }
     }
 
     override fun navigateToTips(fromTest: Boolean, fromMyRecipe:Boolean) {

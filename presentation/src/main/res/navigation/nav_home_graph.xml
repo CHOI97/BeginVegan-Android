@@ -8,6 +8,14 @@
         android:id="@+id/veganMapFragment"
         android:name="com.example.presentation.view.map.view.VeganMapFragment"
         android:label="VeganMapFragment" >
+        <argument
+            android:name="fromMyRestaurant"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="fromMyReview"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/tipsFragment"
@@ -29,6 +37,9 @@
         <action
             android:id="@+id/action_mainHomeFragment_to_tipsFragment"
             app:destination="@id/tipsFragment" />
+        <action
+            android:id="@+id/action_mainHomeFragment_to_veganMapFragment"
+            app:destination="@id/veganMapFragment" />
     </fragment>
 
     <fragment

@@ -2,6 +2,7 @@ package com.example.data.di
 
 import com.example.data.mapper.mypage.MypageMyMagazineMapper
 import com.example.data.mapper.mypage.MypageMyRecipeMapper
+import com.example.data.mapper.mypage.MypageMyRestaurantMapper
 import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.remote.mypage.MypageMyScrapRemoteDataSource
 import com.example.data.repository.remote.mypage.MypageMyScrapRemoteDataSourceImpl
@@ -38,12 +39,14 @@ class MypageMyScrapModule {
     fun provideMyScrapRepository(
         myScrapRemoteDataSource: MypageMyScrapRemoteDataSource,
         mypageMyMagazineMapper: MypageMyMagazineMapper,
-        mypageMyRecipeMapper: MypageMyRecipeMapper
+        mypageMyRecipeMapper: MypageMyRecipeMapper,
+        mypageMyRestaurantMapper: MypageMyRestaurantMapper
     ): MypageMyScrapRepository {
         return MypageMyScrapRepositoryImpl(
             myScrapRemoteDataSource,
             mypageMyMagazineMapper,
-            mypageMyRecipeMapper
+            mypageMyRecipeMapper,
+            mypageMyRestaurantMapper
         )
     }
 
@@ -57,5 +60,11 @@ class MypageMyScrapModule {
     @Singleton
     fun provideMypageMyRecipeMapper(): MypageMyRecipeMapper {
         return MypageMyRecipeMapper()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMypageMyRestaurantMapper():MypageMyRestaurantMapper{
+        return MypageMyRestaurantMapper()
     }
 }
