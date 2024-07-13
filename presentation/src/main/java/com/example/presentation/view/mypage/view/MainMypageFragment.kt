@@ -1,15 +1,9 @@
 package com.example.presentation.view.mypage.view
 
 import android.widget.ArrayAdapter
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.domain.model.mypage.MypageUserInfo
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
@@ -17,7 +11,7 @@ import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
-import com.example.presentation.util.UserLevelIllusts
+import com.example.presentation.util.UserLevelLists
 import com.example.presentation.view.mypage.viewModel.MypageUserInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -136,7 +130,6 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 
         setOpenDrawer()
         openDialogUserLevelExplain()
-        setProgressBar(5, 1)
         setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
         moveFuns()
 
@@ -151,8 +144,10 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     private fun setUserInfo(userInfo:MypageUserInfo){
         val userLevelKr = requireContext().resources.getStringArray(R.array.user_levels_kr)
         val userLevelEng = requireContext().resources.getStringArray(R.array.user_levels_eng)
-        val levelIllusts = UserLevelIllusts(requireContext()).userLevelIllus
-        val levelIcons = UserLevelIllusts(requireContext()).userLevelIcons
+        val userLevelLists = UserLevelLists(requireContext())
+        val levelIllusts = userLevelLists.userLevelIllus
+        val levelIcons = userLevelLists.userLevelIcons
+        val maxPoints = userLevelLists.userLevelMaxPoint
 
         val index = userLevelEng.indexOf(userInfo.userLevel)
         Glide.with(this)
@@ -171,6 +166,8 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 
         binding.tvUserName.text = userInfo.nickname
 
+        setProgressBar(maxPoints[index],userInfo.point)
+        Timber.d("maxPoints[index]:${maxPoints[index]},userInfo.point:${userInfo.point}")
     }
 
     private fun setOpenDrawer() {
