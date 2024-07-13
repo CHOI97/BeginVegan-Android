@@ -1,13 +1,24 @@
 package com.example.presentation.view.mypage.view
 
 import android.widget.ArrayAdapter
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.domain.model.mypage.MypageUserInfo
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
+import com.example.presentation.util.UserLevelIllusts
+import com.example.presentation.view.mypage.viewModel.MypageUserInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -116,40 +127,50 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 
     @Inject
     lateinit var drawerController: DrawerController
-
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
+    private val mypageUserInfoViewModel:MypageUserInfoViewModel by viewModels()
 
     override fun init() {
-        Timber.d("mypage init")
-        Timber.d("findNavController().backQueue.size:${findNavController().backQueue.size}")
-
-        binding.llUserLevelExplain.setOnClickListener {
-            openDialogUserLevelExplain()
-        }
+        binding.lifecycleOwner = this
 
         setOpenDrawer()
+        openDialogUserLevelExplain()
         setProgressBar(5, 1)
         setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
+        moveFuns()
 
-        binding.llEditProfile.setOnClickListener {
-            mainNavigationHandler.navigateToEditProfile()
+        getUserInfo()
+    }
+
+    private fun getUserInfo(){
+        mypageUserInfoViewModel.userInfo.observe(this){
+            setUserInfo(it)
         }
-        binding.llMyReview.setOnClickListener {
-            mainNavigationHandler.navigateToReview()
-        }
-        binding.llMyRestaurant.setOnClickListener {
-            mainNavigationHandler.navigateToMyRestaurant()
-        }
-        binding.llMyMagazine.setOnClickListener {
-            mainNavigationHandler.navigateToMyMagazine()
-        }
-        binding.llMyRecipe.setOnClickListener {
-            mainNavigationHandler.navigateToMyRecipe()
-        }
-        binding.llSetting.setOnClickListener {
-            mainNavigationHandler.navigateToMySetting()
-        }
+    }
+    private fun setUserInfo(userInfo:MypageUserInfo){
+        val userLevelKr = requireContext().resources.getStringArray(R.array.user_levels_kr)
+        val userLevelEng = requireContext().resources.getStringArray(R.array.user_levels_eng)
+        val levelIllusts = UserLevelIllusts(requireContext()).userLevelIllus
+        val levelIcons = UserLevelIllusts(requireContext()).userLevelIcons
+
+        val index = userLevelEng.indexOf(userInfo.userLevel)
+        Glide.with(this)
+            .load(levelIllusts[index])
+            .into(binding.ivIllusUserLevel)
+        binding.tvUserLevel.text = "${userLevelKr[index]} 레벨"
+
+        Glide.with(this)
+            .load(userInfo.imageUrl)
+            .transform(CircleCrop())
+            .into(binding.ivUserProfileImg)
+
+        Glide.with(this)
+            .load(levelIcons[index])
+            .into(binding.ivUserProfileUserLevel)
+
+        binding.tvUserName.text = userInfo.nickname
+
     }
 
     private fun setOpenDrawer() {
@@ -159,8 +180,10 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     }
 
     private fun openDialogUserLevelExplain() {
-        val dialog = MypageUserLevelExplainDialog(requireContext())
-        dialog.show()
+        binding.llUserLevelExplain.setOnClickListener {
+            val dialog = MypageUserLevelExplainDialog(requireContext())
+            dialog.show()
+        }
     }
 
     private fun setProgressBar(maxInt: Int, nowGauge: Int) {
@@ -190,6 +213,28 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 //            }
 //        dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 //        binding.sSetVeganType.adapter = dropdownAdapter
+    }
+
+    private fun moveFuns(){
+
+        binding.llEditProfile.setOnClickListener {
+            mainNavigationHandler.navigateToEditProfile()
+        }
+        binding.llMyReview.setOnClickListener {
+            mainNavigationHandler.navigateToReview()
+        }
+        binding.llMyRestaurant.setOnClickListener {
+            mainNavigationHandler.navigateToMyRestaurant()
+        }
+        binding.llMyMagazine.setOnClickListener {
+            mainNavigationHandler.navigateToMyMagazine()
+        }
+        binding.llMyRecipe.setOnClickListener {
+            mainNavigationHandler.navigateToMyRecipe()
+        }
+        binding.llSetting.setOnClickListener {
+            mainNavigationHandler.navigateToMySetting()
+        }
     }
 
 }
