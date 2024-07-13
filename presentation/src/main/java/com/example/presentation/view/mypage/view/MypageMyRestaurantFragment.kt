@@ -30,8 +30,6 @@ import javax.inject.Inject
 class MypageMyRestaurantFragment : BaseFragment<FragmentMypageMyRestaurantBinding>(R.layout.fragment_mypage_my_restaurant) {
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
-    @Inject
-    lateinit var bookmarkController: BookmarkController
     private val myRestaurantViewModel:MyRestaurantViewModel by viewModels()
 
     private lateinit var myRestaurantRvAdapter: MyRestaurantRvAdapter

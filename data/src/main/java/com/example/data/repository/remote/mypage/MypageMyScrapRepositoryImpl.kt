@@ -3,6 +3,8 @@ package com.example.data.repository.remote.mypage
 import com.example.data.mapper.mypage.MypageMyMagazineMapper
 import com.example.data.mapper.mypage.MypageMyRecipeMapper
 import com.example.data.mapper.mypage.MypageMyRestaurantMapper
+import com.example.data.mapper.mypage.MypageMyReviewMapper
+import com.example.domain.model.mypage.MyReview
 import com.example.domain.model.mypage.MypageMyMagazineItem
 import com.example.domain.model.mypage.MypageMyRecipeItem
 import com.example.domain.model.mypage.MypageMyRestaurantItem
@@ -18,7 +20,8 @@ class MypageMyScrapRepositoryImpl @Inject constructor(
     private val mypageMyScrapRemoteDataSource: MypageMyScrapRemoteDataSource,
     private val mypageMyMagazineMapper: MypageMyMagazineMapper,
     private val mypageMyRecipeMapper: MypageMyRecipeMapper,
-    private val mypageMyRestaurantMapper: MypageMyRestaurantMapper
+    private val mypageMyRestaurantMapper: MypageMyRestaurantMapper,
+    private val mypageMyReviewMapper: MypageMyReviewMapper
 ): MypageMyScrapRepository {
     override suspend fun getMyMagazineList(page: Int): Flow<Result<List<MypageMyMagazineItem>>> {
         return flow{
@@ -96,6 +99,33 @@ class MypageMyScrapRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 Timber.e(e, "getMyRestaurantList exception")
+                emit(Result.failure(e))
+            }
+        }
+    }
+
+    override suspend fun getMyReviewList(page: Int): Flow<Result<List<MyReview>>> {
+        return flow{
+            try {
+                val response = mypageMyScrapRemoteDataSource.getMyReviewList(page)
+                when (response) {
+                    is ApiResponse.Success -> {
+                        val reviewList = mypageMyReviewMapper.mapFromEntity(response.data.information)
+                        emit(Result.success(reviewList))
+                    }
+
+                    is ApiResponse.Failure.Error -> {
+                        Timber.e("getMyReviewList error: ${response.errorBody}")
+                        emit(Result.failure(Exception("getMyReviewList failed")))
+                    }
+
+                    is ApiResponse.Failure.Exception -> {
+                        Timber.e("getMyReviewList exception: ${response.message}")
+                        emit(Result.failure(response.throwable))
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "getMyReviewList exception")
                 emit(Result.failure(e))
             }
         }
