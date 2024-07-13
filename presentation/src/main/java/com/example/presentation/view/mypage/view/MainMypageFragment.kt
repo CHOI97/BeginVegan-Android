@@ -124,13 +124,15 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val mypageUserInfoViewModel:MypageUserInfoViewModel by viewModels()
+    private lateinit var veganTypeKr:Array<String>
+    private lateinit var veganTypeEng:Array<String>
 
     override fun init() {
+        binding.vm = mypageUserInfoViewModel
         binding.lifecycleOwner = this
 
         setOpenDrawer()
         openDialogUserLevelExplain()
-        setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
         moveFuns()
 
         getUserInfo()
@@ -142,18 +144,20 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         }
     }
     private fun setUserInfo(userInfo:MypageUserInfo){
-        val userLevelKr = requireContext().resources.getStringArray(R.array.user_levels_kr)
-        val userLevelEng = requireContext().resources.getStringArray(R.array.user_levels_eng)
+        val userLevelKr = resources.getStringArray(R.array.user_levels_kr)
+        val userLevelEng = resources.getStringArray(R.array.user_levels_eng)
+        veganTypeKr = resources.getStringArray(R.array.vegan_type)
+        veganTypeEng = resources.getStringArray(R.array.vegan_types_eng)
         val userLevelLists = UserLevelLists(requireContext())
         val levelIllusts = userLevelLists.userLevelIllus
         val levelIcons = userLevelLists.userLevelIcons
         val maxPoints = userLevelLists.userLevelMaxPoint
 
-        val index = userLevelEng.indexOf(userInfo.userLevel)
+        val userLevelIndex = userLevelEng.indexOf(userInfo.userLevel)
         Glide.with(this)
-            .load(levelIllusts[index])
+            .load(levelIllusts[userLevelIndex])
             .into(binding.ivIllusUserLevel)
-        binding.tvUserLevel.text = "${userLevelKr[index]} 레벨"
+        binding.tvUserLevel.text = "${userLevelKr[userLevelIndex]} 레벨"
 
         Glide.with(this)
             .load(userInfo.imageUrl)
@@ -161,55 +165,42 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
             .into(binding.ivUserProfileImg)
 
         Glide.with(this)
-            .load(levelIcons[index])
+            .load(levelIcons[userLevelIndex])
             .into(binding.ivUserProfileUserLevel)
 
         binding.tvUserName.text = userInfo.nickname
 
-        setProgressBar(maxPoints[index],userInfo.point)
-        Timber.d("maxPoints[index]:${maxPoints[index]},userInfo.point:${userInfo.point}")
-    }
+        setProgressBar(maxPoints[userLevelIndex],userInfo.point)
+        Timber.d("maxPoints[index]:${maxPoints[userLevelIndex]},userInfo.point:${userInfo.point}")
 
-    private fun setOpenDrawer() {
-        binding.includedToolbar.ibNotification.setOnClickListener {
-            drawerController.openDrawer()
-        }
+        val veganTypelIndex = veganTypeEng.indexOf(userInfo.veganType)
+        setVeganTypeDropdown(veganTypeKr[veganTypelIndex])
     }
-
-    private fun openDialogUserLevelExplain() {
-        binding.llUserLevelExplain.setOnClickListener {
-            val dialog = MypageUserLevelExplainDialog(requireContext())
-            dialog.show()
-        }
-    }
-
     private fun setProgressBar(maxInt: Int, nowGauge: Int) {
         binding.pbUserLevelExp.max = maxInt
         binding.pbUserLevelExp.progress = nowGauge
     }
-
     private fun setVeganTypeDropdown(userVeganType: String) {
-        val dropdownAdapter = ArrayAdapter(
+        val dropdownView = binding.actvMypageEditVegantype
+        val adapter = ArrayAdapter(
             requireContext(),
             R.layout.item_dropdown_mypage_set_vegan_type,
             resources.getStringArray(R.array.vegan_type)
         )
-        binding.acsSetVeganType.adapter = dropdownAdapter
-//        binding.acsSetVeganType.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>,
-//                    view: View,
-//                    position: Int,
-//                    id: Long
-//                ) {
-//                    // 선택됐을 경우
-//
-//                }
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//        dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.sSetVeganType.adapter = dropdownAdapter
+        adapter.setDropDownViewResource(R.layout.item_dropdown_mypage_set_vegan_type)
+        dropdownView.setAdapter(adapter)
+        dropdownView.hint = userVeganType
+
+        binding.ivDropdownIcon.setOnClickListener {
+            dropdownView.showDropDown()
+        }
+        dropdownView.setOnClickListener {
+            dropdownView.showDropDown()
+        }
+        dropdownView.setOnItemClickListener { parent, view, position, id ->
+//            Timber.d("position:$position, selected Item: ${veganTypeKr[position]}")
+            mypageUserInfoViewModel.patchUserVeganType(veganTypeEng[position])
+        }
     }
 
     private fun moveFuns(){
@@ -231,6 +222,18 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
         }
         binding.llSetting.setOnClickListener {
             mainNavigationHandler.navigateToMySetting()
+        }
+    }
+    private fun setOpenDrawer() {
+        binding.includedToolbar.ibNotification.setOnClickListener {
+            drawerController.openDrawer()
+        }
+    }
+
+    private fun openDialogUserLevelExplain() {
+        binding.llUserLevelExplain.setOnClickListener {
+            val dialog = MypageUserLevelExplainDialog(requireContext())
+            dialog.show()
         }
     }
 
