@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.example.presentation.R
 
-data class UserLevelIllusts(
+data class UserLevelLists(
     val context:Context,
     val userLevelIllus:List<Drawable?> = listOf(
         ContextCompat.getDrawable(context, R.drawable.illus_user_level_1_seed),
@@ -26,5 +26,8 @@ data class UserLevelIllusts(
         ContextCompat.getDrawable(context, R.drawable.ic_user_level_6_tree),
         ContextCompat.getDrawable(context, R.drawable.ic_user_level_7_flower),
         ContextCompat.getDrawable(context, R.drawable.ic_user_level_8_fruit),
+    ),
+    val userLevelMaxPoint:List<Int> = listOf(
+        2,5,10,20,30,50,100,100
     )
 )
