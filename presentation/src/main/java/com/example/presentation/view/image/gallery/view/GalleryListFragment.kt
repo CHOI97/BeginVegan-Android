@@ -73,7 +73,6 @@ class GalleryListFragment :
 
     private fun showGallery() {
         lifecycleScope.launch {
-            Timber.d("비동기 시작: ShowGallery")
             try {
                 val cursor = getCursor()
                 cursor?.use {

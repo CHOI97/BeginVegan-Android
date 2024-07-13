@@ -87,8 +87,6 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         }
 
     override fun init() {
-//        requestPermissionsLauncher.launch(galleryPermissions)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             logMessage("Build Version above Upside Down Cake")
             checkPermissionUpsideDownCake()
@@ -98,6 +96,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         }
     }
 
+    // Check self permission denial for Android 14 (UpsideDownCake) above.
     private fun checkPermissionUpsideDownCake() {
         val isSelfReadImages = ActivityCompat.checkSelfPermission(
             this,
@@ -113,12 +112,10 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         if (isSelfReadImages && isSelfUserSelected) {
             // 모든 권한이 승인이 되어있는 상태 추가적인 요청 없음 , PermissionState true
             logMessage("모든 권한에 대해 승인")
-            viewModel.updatePermissionState(true)
         } else if (!isSelfReadImages && isSelfUserSelected) {
-            // 유저 선택 이미지만 승인했을 경우 따로 퍼미션 요청 없음 -
-            // 선택형이미지를 한번 골랐다면 위에 승인권한에서 이미 끝남 즉, 더이상 어떠한 행동도 하지 않지만 추가적으로 호출은 가능한 상태.
-            logMessage("유저 선택 이미지만 승인")
-            viewModel.updatePermissionState(true)
+            // 유저 선택 이미지 상태는 초기값이 true
+            logMessage("유저 선택 이미지만 승인 상태(Default)")
+//            requestPermissionsLauncher.launch(galleryPermissions)
         } else if (!isSelfReadImages && !isSelfUserSelected) {
             // 모든 권한이 거부된 상태
             if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -143,7 +140,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
                         )
                     }"
                 )
-                showPermissionRationaleDialog(this)
+                showPermissionDeniedDialog(this)
                 logMessage("사용자 거부 경험 있음 ")
             } else {
                 logMessage(
@@ -159,11 +156,10 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
                         )
                     }"
                 )
-                // 처음으로 거부 사용자 거부 경험 없음
+                // 처음으로 거부 사용자 거부 경험 없음 && 처음 권한요청시 권한에 대한 모든 처리도 False
                 logMessage("처음으로 거부 사용자 거부 경험 없음")
-                showPermissionDeniedDialog(this)
+                requestPermissionsLauncher.launch(galleryPermissions)
             }
-            showToast("모든 권한에 대해 거부")
         } else {
             // 이론 상 존재하지 않으나 예외처리
             showToast("잘못된 요청입니다.")
@@ -171,7 +167,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         }
     }
 
-    // Handles permission denial for Android 13 and below
+    // Check self permission denial for Android 13 below
     private fun checkPermissionLegacy() {
         val isSelfReadImages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.checkSelfPermission(
@@ -198,11 +194,12 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         logMessage("handlePermissionLegacy")
         if (isSelfReadImages) {
             // 권한이 허용되어있는 상태
+            viewModel.updatePermissionState(true)
         } else {
             // 권한이 허용되어있지 않은 상태
             if (isRequestRationale) {
                 // 사용자가 거부 경험이 있는 상태 - 권한 허용 x
-                showPermissionRationaleDialog(this)
+                showPermissionDeniedDialog(this)
             } else {
                 // 사용자 거부 경험이 없는 상태
                 // 권한 요청 런처 실행
@@ -221,21 +218,9 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         } else if (!isReadImages && isUserSelected) {
             logMessage("유저 선택 이미지만 승인")
         } else if (!isReadImages && !isUserSelected) {
-            // 둘다 승인안함
-            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) && shouldShowRequestPermissionRationale(
-                    Manifest.permission.READ_MEDIA_IMAGES
-                )
-            ) {
-                // 사용자 거부 경험 있음
-                showPermissionDeniedDialog(this)
-                logMessage("사용자 거부 경험 있음")
-            } else {
-                // 처음으로 거부 사용자 거부 경험 없음
-                showPermissionRationaleDialog(this)
-                logMessage("처음으로 거부 사용자 거부 경험 없음")
-            }
+            logMessage("사용자 거부 경험 없음")
+            showPermissionRationaleDialog(this)
         } else {
-            // 이론 상 존재하지 않으나 예외처리
             showToast("잘못된 요청입니다.")
             finish()
         }
@@ -268,7 +253,6 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             )
             .setPositiveButton("권한재요청") { _, _ ->
                 isRetry = true
-//                requestPermissionsLauncher.launch(galleryPermissions)
             }
             .setNegativeButton("닫기") { dialog, _ ->
                 dialog.dismiss()
