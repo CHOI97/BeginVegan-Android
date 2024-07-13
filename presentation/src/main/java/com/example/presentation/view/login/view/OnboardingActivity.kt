@@ -58,7 +58,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
             if (isUserInfoState) {
                 navigateToMain()
             } else {
-                showToast("유저 추가 정보 입력 오류")
             }
         }
     }

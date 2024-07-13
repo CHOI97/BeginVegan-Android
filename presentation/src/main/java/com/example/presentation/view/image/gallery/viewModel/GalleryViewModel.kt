@@ -11,8 +11,8 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(): ViewModel(){
 
-    private val _permissionState = MutableLiveData(false)
-    val permissionState: LiveData<Boolean> get() = _permissionState
+    private val _permissionState = MutableLiveData<Boolean?>(null)
+    val permissionState: LiveData<Boolean?> get() = _permissionState
 
     private val _imageList = MutableLiveData<MutableList<GalleryImage>>(mutableListOf())
     val imageList: LiveData<MutableList<GalleryImage>> get() = _imageList

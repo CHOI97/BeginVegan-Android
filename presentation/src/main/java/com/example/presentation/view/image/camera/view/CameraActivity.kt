@@ -9,7 +9,9 @@ import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityCameraBinding
 import com.example.presentation.view.image.camera.viewModel.CameraViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_camera) {
 
     private val viewModel: CameraViewModel by viewModels()

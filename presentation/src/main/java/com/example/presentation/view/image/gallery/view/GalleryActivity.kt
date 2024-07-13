@@ -1,8 +1,10 @@
 package com.example.presentation.view.image.gallery.view
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.pm.PackageManager
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import android.os.Build
@@ -12,7 +14,9 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.example.presentation.databinding.ActivityGalleryBinding
 import com.example.presentation.view.image.gallery.viewModel.GalleryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_gallery) {
 
     private val viewModel: GalleryViewModel by viewModels()
@@ -26,45 +30,221 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
                 finish()
             }
         }
+        viewModel.permissionState.observe(this) {
+            if (it == false) {
+                finish()
+            }
+        }
     }
 
     // 여러 권한을 배열로 요청
     private val galleryPermissions: Array<String> = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
             arrayOf(
-                Manifest.permission.READ_MEDIA_IMAGES,
-                Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                READ_MEDIA_IMAGES,
+                READ_MEDIA_VISUAL_USER_SELECTED
             )
         }
 
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
             arrayOf(
-                Manifest.permission.READ_MEDIA_IMAGES,
+                READ_MEDIA_IMAGES
             )
         }
 
         else -> {
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            arrayOf(READ_EXTERNAL_STORAGE)
         }
     }
 
-    private lateinit var requestPermissionsLauncher: ActivityResultLauncher<Array<String>>
-
-    override fun init() {
-        requestPermissionsLauncher = registerForActivityResult(
+    private val requestPermissionsLauncher: ActivityResultLauncher<Array<String>> =
+        registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            if (permissions.all { it.value }) {
-                logMessage("모든 권한이 승인되었습니다.")
+        )
+        { isGranted ->
+            var isReadImages: Boolean
+            var isUserSelected = false
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
+                    isReadImages = isGranted[Manifest.permission.READ_MEDIA_IMAGES] ?: false
+                    isUserSelected =
+                        isGranted[Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED] ?: false
+                }
+
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                    isReadImages = isGranted[Manifest.permission.READ_MEDIA_IMAGES] ?: false
+                }
+
+                else -> {
+                    isReadImages = isGranted[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+                }
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                handlePermissionUpsideDownCake(isReadImages, isUserSelected)
             } else {
-                logMessage("일부 권한이 거부되었습니다.")
-                handlePermissionDenial()
+                handlePermissionLegacy(isReadImages)
             }
         }
-        requestPermissionsLauncher.launch(galleryPermissions)
+
+    override fun init() {
+//        requestPermissionsLauncher.launch(galleryPermissions)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            logMessage("Build Version above Upside Down Cake")
+            checkPermissionUpsideDownCake()
+        } else {
+            logMessage("Build Version below Tiramisu")
+            checkPermissionLegacy()
+        }
     }
 
-    private fun handlePermissionDenial() {
+    private fun checkPermissionUpsideDownCake() {
+        val isSelfReadImages = ActivityCompat.checkSelfPermission(
+            this,
+            READ_MEDIA_IMAGES
+        ) == PackageManager.PERMISSION_GRANTED
+        val isSelfUserSelected = ActivityCompat.checkSelfPermission(
+            this,
+            READ_MEDIA_VISUAL_USER_SELECTED
+        ) == PackageManager.PERMISSION_GRANTED
+
+        logMessage("| 셀프 권한 체크 | \n이미지 권한: $isSelfReadImages, \n유저 선택 권한: $isSelfUserSelected")
+
+        if (isSelfReadImages && isSelfUserSelected) {
+            // 모든 권한이 승인이 되어있는 상태 추가적인 요청 없음 , PermissionState true
+            logMessage("모든 권한에 대해 승인")
+            viewModel.updatePermissionState(true)
+        } else if (!isSelfReadImages && isSelfUserSelected) {
+            // 유저 선택 이미지만 승인했을 경우 따로 퍼미션 요청 없음 -
+            // 선택형이미지를 한번 골랐다면 위에 승인권한에서 이미 끝남 즉, 더이상 어떠한 행동도 하지 않지만 추가적으로 호출은 가능한 상태.
+            logMessage("유저 선택 이미지만 승인")
+            viewModel.updatePermissionState(true)
+        } else if (!isSelfReadImages && !isSelfUserSelected) {
+            // 모든 권한이 거부된 상태
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                ) && ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                )
+            ) {
+                // 사용자 거부 경험 있음 - 더 이상 묻지않고, 권한 관리자를 통해 직접 변경하라는 다이얼로그 띄워주기
+                logMessage(
+                    "USER SELECTED =${
+                        ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                        )
+                    }\nIMAGES =${
+                        ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.READ_MEDIA_IMAGES
+                        )
+                    }"
+                )
+                showPermissionRationaleDialog(this)
+                logMessage("사용자 거부 경험 있음 ")
+            } else {
+                logMessage(
+                    "USER SELECTED =${
+                        ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                        )
+                    }\nIMAGES =${
+                        ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.READ_MEDIA_IMAGES
+                        )
+                    }"
+                )
+                // 처음으로 거부 사용자 거부 경험 없음
+                logMessage("처음으로 거부 사용자 거부 경험 없음")
+                showPermissionDeniedDialog(this)
+            }
+            showToast("모든 권한에 대해 거부")
+        } else {
+            // 이론 상 존재하지 않으나 예외처리
+            showToast("잘못된 요청입니다.")
+            finish()
+        }
+    }
+
+    // Handles permission denial for Android 13 and below
+    private fun checkPermissionLegacy() {
+        val isSelfReadImages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.checkSelfPermission(
+                this,
+                READ_MEDIA_IMAGES
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            ActivityCompat.checkSelfPermission(
+                this,
+                READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+        val isRequestRationale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                READ_MEDIA_IMAGES
+            )
+        } else {
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                READ_EXTERNAL_STORAGE
+            )
+        }
+        logMessage("handlePermissionLegacy")
+        if (isSelfReadImages) {
+            // 권한이 허용되어있는 상태
+        } else {
+            // 권한이 허용되어있지 않은 상태
+            if (isRequestRationale) {
+                // 사용자가 거부 경험이 있는 상태 - 권한 허용 x
+                showPermissionRationaleDialog(this)
+            } else {
+                // 사용자 거부 경험이 없는 상태
+                // 권한 요청 런처 실행
+                requestPermissionsLauncher.launch(galleryPermissions)
+            }
+        }
+        viewModel.updatePermissionState(true)
+    }
+
+    // Handles permission denial for Android 14 (UpsideDownCake) and above.
+    private fun handlePermissionUpsideDownCake(isReadImages: Boolean, isUserSelected: Boolean) {
+        logMessage("handlePermissionUpsideDownCake")
+        logMessage("이미지 권한: $isReadImages, \n유저 선택 권한: $isUserSelected")
+        if (isReadImages && isUserSelected) {
+            logMessage("모든 권한에 대해 승인")
+        } else if (!isReadImages && isUserSelected) {
+            logMessage("유저 선택 이미지만 승인")
+        } else if (!isReadImages && !isUserSelected) {
+            // 둘다 승인안함
+            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) && shouldShowRequestPermissionRationale(
+                    Manifest.permission.READ_MEDIA_IMAGES
+                )
+            ) {
+                // 사용자 거부 경험 있음
+                showPermissionDeniedDialog(this)
+                logMessage("사용자 거부 경험 있음")
+            } else {
+                // 처음으로 거부 사용자 거부 경험 없음
+                showPermissionRationaleDialog(this)
+                logMessage("처음으로 거부 사용자 거부 경험 없음")
+            }
+        } else {
+            // 이론 상 존재하지 않으나 예외처리
+            showToast("잘못된 요청입니다.")
+            finish()
+        }
+        viewModel.updatePermissionState(true)
+    }
+
+    // Handles permission denial for Android 13 and below
+    private fun handlePermissionLegacy(isReadImages: Boolean) {
+        logMessage("handlePermissionLegacy")
         if (galleryPermissions.any {
                 ActivityCompat.shouldShowRequestPermissionRationale(this, it)
             }
@@ -73,10 +253,13 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         } else {
             showPermissionDeniedDialog(this)
         }
+        viewModel.updatePermissionState(true)
     }
 
+    // 권한 재요청
     private fun showPermissionRationaleDialog(context: Context) {
-        AlertDialog.Builder(context)
+        var isRetry = false
+        val dialog = AlertDialog.Builder(context)
             .setTitle("권한 재요청 안내")
             .setMessage(
                 "해당 권한을 거부할 경우, 다음 기능의 사용이 불가능해요." +
@@ -84,21 +267,38 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
                         "\n· Mypage 프로필 이미지 등록"
             )
             .setPositiveButton("권한재요청") { _, _ ->
-                requestPermissionsLauncher.launch(galleryPermissions)
+                isRetry = true
+//                requestPermissionsLauncher.launch(galleryPermissions)
             }
-            .setNegativeButton("닫기") { _, _ ->
+            .setNegativeButton("닫기") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+        dialog.setOnDismissListener {
+            if (!isRetry) {
                 showPermissionDeniedDialog(context)
             }
-            .show()
+        }
     }
 
+    // 권한 허용 안함
     private fun showPermissionDeniedDialog(context: Context) {
-        AlertDialog.Builder(context)
+        val dialog = AlertDialog.Builder(context)
             .setTitle("기능 사용 불가 안내")
             .setMessage("저장소에 대한 권한 사용을 거부하셨어요.\n\n기능사용을 원하실 경우 '휴대폰 설정 > 애플리케이션 관리자'에서 해당 앱의 권한을 허용해 주세요.")
-            .setNegativeButton("확인") { _, _ ->
-                this@GalleryActivity.finish()
+            .setNegativeButton("확인") { dialog, _ ->
+                dialog.dismiss()
             }
             .show()
+        dialog.setOnDismissListener {
+            this@GalleryActivity.finish()
+        }
+    }
+
+    companion object {
+        const val READ_MEDIA_IMAGES = Manifest.permission.READ_MEDIA_IMAGES
+        const val READ_MEDIA_VISUAL_USER_SELECTED =
+            Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+        const val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
     }
 }
