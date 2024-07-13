@@ -280,9 +280,9 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
     }
 
     companion object {
-        const val READ_MEDIA_IMAGES = Manifest.permission.READ_MEDIA_IMAGES
-        const val READ_MEDIA_VISUAL_USER_SELECTED =
+        private const val READ_MEDIA_IMAGES = Manifest.permission.READ_MEDIA_IMAGES
+        private const val READ_MEDIA_VISUAL_USER_SELECTED =
             Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
-        const val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
+        private const val READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
     }
 }
