@@ -32,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     nowNav = "homeNav"
                 }else nowNav = "mainNav"
                 Timber.d("$nowNav : ${navController.backQueue.size}")
-                
+
                 if(binding.dlDrawer.isDrawerOpen(GravityCompat.END)){
                     binding.dlDrawer.closeDrawer(GravityCompat.END)
                 }else if(navController.backQueue.size > 2){
