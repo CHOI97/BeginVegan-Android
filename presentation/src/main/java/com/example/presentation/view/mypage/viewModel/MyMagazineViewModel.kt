@@ -54,6 +54,5 @@ class MyMagazineViewModel @Inject constructor(
                 }
             }
         }
-
     }
 }

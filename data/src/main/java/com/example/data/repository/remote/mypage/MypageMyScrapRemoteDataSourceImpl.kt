@@ -1,6 +1,7 @@
 package com.example.data.repository.remote.mypage
 
 import com.example.data.model.mypage.MyMagazineResponse
+import com.example.data.model.mypage.MyRecipeResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.retrofit.MypageMyScrapService
 import com.skydoves.sandwich.ApiResponse
@@ -23,6 +24,18 @@ class MypageMyScrapRemoteDataSourceImpl @Inject constructor(
             ApiResponse.Success(this.data)
         }.suspendOnError {
             Timber.e("getMyMagazineList error: ${this.errorBody}")
+            ApiResponse.Failure.Error(this.errorBody)
+        }
+    }
+
+    override suspend fun getMyRecipeList(page: Int): ApiResponse<MyRecipeResponse> {
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+        return mypageMyScrapService.getMyRecipeList(authHeader, page).suspendOnSuccess {
+            Timber.d("getMyRecipeList successful")
+            ApiResponse.Success(this.data)
+        }.suspendOnError {
+            Timber.e("getMyRecipeList error: ${this.errorBody}")
             ApiResponse.Failure.Error(this.errorBody)
         }
     }

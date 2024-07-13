@@ -40,6 +40,10 @@
             android:name="fromMyMagazine"
             app:argType="boolean"
             android:defaultValue="false"/>
+        <argument
+            android:name="fromMyRecipe"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
     <fragment
         android:id="@+id/mypageEditProfileFragment"
@@ -92,7 +96,12 @@
     <fragment
         android:id="@+id/mypageMyRecipeFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyRecipeFragment"
-        android:label="MypageMyRecipeFragment" />
+        android:label="MypageMyRecipeFragment" >
+        <action
+            android:id="@+id/action_mypageMyRecipeFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
+    </fragment>
 
     <include
         android:id="@+id/nav_home_graph"

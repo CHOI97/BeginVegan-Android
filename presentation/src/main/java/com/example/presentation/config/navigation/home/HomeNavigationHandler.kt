@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 interface HomeNavigationHandler {
     fun navigateToHome()
     fun navigateToMap()
-    fun navigateToTips(fromTest: Boolean)
+    fun navigateToTips(fromTest: Boolean,fromMyRecipe:Boolean)
     fun navigateToMypage()
 
     fun navigationToMypageNotBackStack()

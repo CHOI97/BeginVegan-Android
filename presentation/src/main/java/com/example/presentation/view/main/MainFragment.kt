@@ -45,7 +45,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
                 when (menuItem.itemId) {
                     R.id.item_home -> homeNavigationHandler.navigateToHome()
                     R.id.item_map ->  homeNavigationHandler.navigateToMap()
-                    R.id.item_tips -> homeNavigationHandler.navigateToTips(false)
+                    R.id.item_tips -> homeNavigationHandler.navigateToTips(false,false)
                     R.id.item_profile -> homeNavigationHandler.navigateToMypage()
                 }
                 true
@@ -57,21 +57,26 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     private fun checkFromOthers(){
         val args: MainFragmentArgs by navArgs()
+        Timber.d("args.fromTest:${args.fromTest}, args.fromMyMagazine:${args.fromMyMagazine}, args.fromMyRecipe:${args.fromMyRecipe}")
         if(args.fromTest) {
-            homeNavigationHandler.navigateToTips(true)
+            homeNavigationHandler.navigateToTips(true,false)
             val nArg = this.arguments ?:Bundle()
             nArg.putBoolean("fromTest", false)
             this.arguments = nArg
-
         }else if(args.fromMyMagazine){
-            homeNavigationHandler.navigateToTips(false)
+            homeNavigationHandler.navigateToTips(false,false)
             val nArg = this.arguments ?:Bundle()
             nArg.putBoolean("fromMyMagazine", false)
             this.arguments = nArg
-        } else{
+        }else if(args.fromMyRecipe){
+            homeNavigationHandler.navigateToTips(false,true)
+            val nArg = this.arguments ?:Bundle()
+            nArg.putBoolean("fromMyRecipe", false)
+            this.arguments = nArg
+
+        }else{
             if(navController.currentDestination?.id==R.id.mainMypageFragment)
                 homeNavigationHandler.navigationToMypageNotBackStack()
-
             if(navController.currentDestination?.id==R.id.tipsFragment)
                 homeNavigationHandler.navigationToTipsNotBackStack()
         }

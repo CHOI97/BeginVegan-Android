@@ -17,9 +17,9 @@ class HomeNavigationImpl(private val navController: NavController) : HomeNavigat
         controlBackStack(R.id.veganMapFragment)
     }
 
-    override fun navigateToTips(fromTest: Boolean) {
-        if(fromTest){
-            val action = HomeFragmentDirections.actionMainHomeFragmentToTipsFragment(fromTest)
+    override fun navigateToTips(fromTest: Boolean, fromMyRecipe:Boolean) {
+        if(fromTest||fromMyRecipe){
+            val action = HomeFragmentDirections.actionMainHomeFragmentToTipsFragment(fromTest=fromTest, fromMyRecipe = fromMyRecipe)
             navController.navigate(action)
         }else{
             controlBackStack(R.id.tipsFragment)
@@ -38,8 +38,6 @@ class HomeNavigationImpl(private val navController: NavController) : HomeNavigat
     override fun navigationToTipsNotBackStack() {
         navController.navigate(R.id.tipsFragment, null,
             NavOptions.Builder().setPopUpTo(navController.currentDestination?.id!!, true).build())
-//        val action = HomeFragmentDirections.actionMainHomeFragmentToTipsFragment(false)
-//        navController.navigate(action)
     }
 
     private fun controlBackStack(destinationId:Int){
