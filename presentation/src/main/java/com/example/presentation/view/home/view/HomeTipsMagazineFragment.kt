@@ -11,7 +11,7 @@ import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentHomeTipsMagazineBinding
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.home.adapter.HomeMagazineVpAdapter
-import com.example.presentation.view.home.viewModel.HomeTipsMagazineViewModel
+import com.example.presentation.view.home.viewModel.HomeTipsViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
 
-    private val viewModel:HomeTipsMagazineViewModel by viewModels()
+    private val viewModel:HomeTipsViewModel by viewModels()
     private val magazineViewModel:MagazineViewModel by activityViewModels()
 
     override fun init() {
