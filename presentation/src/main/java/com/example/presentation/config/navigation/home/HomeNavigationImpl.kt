@@ -3,7 +3,7 @@ package com.example.presentation.config.navigation.home
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.example.presentation.R
-import com.example.presentation.view.home.HomeFragmentDirections
+import com.example.presentation.view.home.view.HomeFragmentDirections
 
 class HomeNavigationImpl(private val navController: NavController) : HomeNavigationHandler {
 

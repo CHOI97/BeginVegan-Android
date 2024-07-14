@@ -21,7 +21,7 @@ interface TipsMagazineService {
         @Path("id") id:Int
     ): ApiResponse<MagazineDetailResponse>
 
-    @GET("/api/v1/home/magazine")
+    @GET("api/v1/magazines/home/magazine")
     suspend fun getHomeMagazine(
         @Header("Authorization") token: String
     ): ApiResponse<MagazineResponse>
