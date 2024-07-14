@@ -1,6 +1,7 @@
 package com.example.presentation.view.home.view
 
 import android.widget.CompoundButton
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.TipsRecipeListItem
@@ -14,6 +15,8 @@ import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.home.adapter.HomeMagazineVpAdapter
 import com.example.presentation.view.home.adapter.HomeRecipeVpAdapter
 import com.example.presentation.view.home.viewModel.HomeTipsViewModel
+import com.example.presentation.view.tips.view.TipsRecipeDetailDialog
+import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +30,7 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
     lateinit var mainNavigationHandler: MainNavigationHandler
 
     private val viewModel: HomeTipsViewModel by viewModels()
+    private val recipeViewModel: RecipeViewModel by activityViewModels()
 
     override fun init() {
         binding.lifecycleOwner = this
@@ -43,8 +47,8 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
         binding.ciTipsRecipe.setViewPager(binding.vpTipsRecipe)
 
         vpAdapter.setOnItemClickListener(object : HomeRecipeVpAdapter.OnItemClickListener{
-            override fun onItemClick(recipeId: Int) {
-//                mainNavigationHandler.navigateToTipsMagazineDetail()
+            override fun onItemClick(recipeId: Int,toggleButton: CompoundButton) {
+                openDialogRecipeDetail(recipeId, toggleButton)
             }
 
             override fun changeBookmark(
@@ -61,4 +65,10 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
         })
     }
 
+    //Dialog
+    private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
+        recipeViewModel.getRecipeDetail(recipeId)
+        recipeViewModel.setSelectedTb(toggleButton)
+        TipsRecipeDetailDialog().show(childFragmentManager, "MyRecipeDetail")
+    }
 }
