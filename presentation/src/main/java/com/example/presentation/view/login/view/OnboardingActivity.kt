@@ -31,13 +31,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
     private lateinit var galleryResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var cameraResultLauncher: ActivityResultLauncher<Intent>
 
-    private val cameraPermission = Manifest.permission.CAMERA
-    private val storagePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-    private val gallerytPermission = if (Build.VERSION.SDK_INT < 33) {
-        Manifest.permission.READ_EXTERNAL_STORAGE
-    } else {
-        Manifest.permission.READ_MEDIA_IMAGES
-    }
 
     override fun initViewModel() {
         binding.vm = viewModel
@@ -179,17 +172,9 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
                 PhotoSelectDialog.DialogPhotoSelectClickListener {
                 // 카메라
                 override fun onClickCamera() {
-
-                    // 접근 권한 체크하기
-                    // 접근 권한 가능하면 ActivityResultlauncher를 실행
-
                     photoSelectDialog.dismiss()
                     val intent = Intent(this@OnboardingActivity, CameraActivity::class.java)
-                    startActivity(intent)
-//                    val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//                    if (cameraIntent.resolveActivity(packageManager) != null) {
-//                        cameraResultLauncher.launch(cameraIntent)
-//                    }
+                    cameraResultLauncher.launch(intent)
                 }
 
                 // 갤러리

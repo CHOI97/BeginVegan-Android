@@ -386,6 +386,7 @@
     <inspection_tool class="AndroidLintTextViewEdits" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintTilePreviewImageFormat" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="AndroidLintTileProviderPermissions" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="AndroidLintTimberExceptionLogging" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="AndroidLintTooDeepLayout" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintTooManyViews" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintTranslucentOrientation" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -470,6 +471,7 @@
     <inspection_tool class="AndroidLintWrongCommentType" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintWrongConstant" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="AndroidLintWrongFolder" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="AndroidLintWrongManifestParent" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="AndroidLintWrongRegion" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintWrongThread" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="AndroidLintWrongThreadInterprocedural" enabled="false" level="ERROR" enabled_by_default="false" />
@@ -1156,7 +1158,7 @@
     <inspection_tool class="IndexOfReplaceableByContains" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="InfiniteLoopStatement" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="InfinitePropertiesLabel" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="InfiniteRecursion" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="InfiniteRecursion" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="InfiniteTransitionLabel" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="InjectedReferences" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="InjectionNotApplicable" enabled="true" level="ERROR" enabled_by_default="true" />

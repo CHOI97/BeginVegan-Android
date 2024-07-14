@@ -41,8 +41,7 @@ class LoginViewModel @Inject constructor(
             signInUseCase.invoke(email, providerId).onSuccess {
                 Timber.d("$it")
               /** 카메라 테스트를 위해 막아둔 거 나중에 지워야함 **/
-//                additionalInfoProvided = it.additionalInfo
-
+                additionalInfoProvided = it.additionalInfo
                 _loginState.value = true
             }.onFailure {
                 _loginState.value = false
