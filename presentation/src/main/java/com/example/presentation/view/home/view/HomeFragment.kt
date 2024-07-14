@@ -1,11 +1,14 @@
 package com.example.presentation.view.home.view
 
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.NearRestaurant
 import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.home.HomeNavigationHandler
+import com.example.presentation.config.navigation.home.HomeNavigationImpl
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.util.DrawerController
@@ -17,19 +20,21 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main_home){
     private lateinit var homeRestaurantRVAdapter: HomeRestaurantRVAdapter
+    private lateinit var homeNavigationHandler: HomeNavigationHandler
 
     @Inject
     lateinit var drawerController: DrawerController
 
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
-
+    private var tipsNowTab = "MAGAZINE"
 //    private lateinit var tipsNavigationHandler: TipsNavigationHandler
 
     // ViewModel 분리
     private var list: ArrayList<NearRestaurant> = ArrayList()
 
     override fun init() {
+        homeNavigationHandler = HomeNavigationImpl(findNavController())
         setRestaurantRecyclerView()
         setTipsTab()
         setOpenDrawer()
@@ -53,18 +58,38 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
 //        val navController = navHostFragment.findNavController()
 //        tipsNavigationHandler = TipsNavigationImpl(navController)
         replaceFragment(HomeTipsMagazineFragment())
+        tipsNowTab = "MAGAZINE"
 
         binding.tlTips.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> replaceFragment(HomeTipsMagazineFragment())
-                    1 -> replaceFragment(HomeTipsRecipeFragment())
+                    0 -> {
+                        replaceFragment(HomeTipsMagazineFragment())
+                        tipsNowTab = "MAGAZINE"
+                    }
+                    1 -> {
+                        replaceFragment(HomeTipsRecipeFragment())
+                        tipsNowTab = "RECIPE"
+                    }
                 }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
+        setTipsMoreButton()
+    }
+    private fun setTipsMoreButton(){
+        binding.btnTipsMore.setOnClickListener {
+            when(tipsNowTab){
+                "MAGAZINE" -> {
+                    homeNavigationHandler.navigateToTips(fromMyRecipe = false)
+                }
+                "RECIPE" -> {
+                    homeNavigationHandler.navigateToTips(fromMyRecipe = true)
+                }
+            }
+        }
     }
     private fun replaceFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
@@ -91,4 +116,6 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
         homeRestaurantRVAdapter.submitList(list.toMutableList())
         binding.rvRestaurantList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
+
+
 }
