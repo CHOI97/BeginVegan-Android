@@ -61,7 +61,6 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
         binding.tvMagazineTitle.text = it.title
         binding.tvWriter.text = it.editor
         binding.tvDate.text = transferDate(it.createdDate)
-        binding.tbInterest.isChecked = it.isBookmarked
 
         Glide.with(this)
             .load(it.thumbnail)
@@ -71,6 +70,8 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
             createContentTextView(content)
         }
 
+        binding.tbInterest.setOnCheckedChangeListener(null)
+        binding.tbInterest.isChecked = it.isBookmarked
         binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
             lifecycleScope.launch {
                 if(isChecked){

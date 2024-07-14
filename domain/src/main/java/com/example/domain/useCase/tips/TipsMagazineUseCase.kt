@@ -2,7 +2,6 @@ package com.example.domain.useCase.tips
 
 import com.example.domain.model.tips.TipsMagazineDetail
 import com.example.domain.model.tips.TipsMagazineItem
-import com.example.domain.model.tips.TipsMagazineList
 import com.example.domain.repository.tips.TipsMagazineRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
