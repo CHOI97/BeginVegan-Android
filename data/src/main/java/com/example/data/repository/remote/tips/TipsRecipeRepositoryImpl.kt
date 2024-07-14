@@ -29,17 +29,17 @@ class TipsRecipeRepositoryImpl @Inject constructor(
                     }
 
                     is ApiResponse.Failure.Error -> {
-                        Timber.e("GetAlarms error: ${response.errorBody}")
-                        emit(Result.failure(Exception("GetAlarms Failed")))
+                        Timber.e("getRecipeList error: ${response.errorBody}")
+                        emit(Result.failure(Exception("getRecipeList Failed")))
                     }
 
                     is ApiResponse.Failure.Exception -> {
-                        Timber.e("GetAlarms exception: ${response.message}")
+                        Timber.e("getRecipeList exception: ${response.message}")
                         emit(Result.failure(response.throwable))
                     }
                 }
             } catch (e: Exception) {
-                Timber.e(e, "SignUp exception")
+                Timber.e(e, "getRecipeList exception")
                 emit(Result.failure(e))
             }
         }
@@ -56,45 +56,47 @@ class TipsRecipeRepositoryImpl @Inject constructor(
                 }
 
                 is ApiResponse.Failure.Error -> {
-                    Timber.e("GetAlarms error: ${response.errorBody}")
-                    Result.failure(Exception("GetAlarms Failed"))
+                    Timber.e("getRecipeDetail error: ${response.errorBody}")
+                    Result.failure(Exception("getRecipeDetail Failed"))
                 }
 
                 is ApiResponse.Failure.Exception -> {
-                    Timber.e("GetAlarms exception: ${response.message}")
+                    Timber.e("getRecipeDetail exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
         } catch (e: Exception) {
-            Timber.e(e, "SignUp exception")
+            Timber.e(e, "getRecipeDetail exception")
             Result.failure(e)
         }
     }
 
     override suspend fun getRecipeForMe(
         page: Int
-    ): Result<List<TipsRecipeListItem>> {
-        return try {
-            val response = tipsRecipeRemoteDataSource.getRecipeMy(page)
-            when (response) {
-                is ApiResponse.Success -> {
-                    val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
-                    Result.success(recipeList)
-                }
+    ): Flow<Result<List<TipsRecipeListItem>>> {
+        return flow{
+            try {
+                val response = tipsRecipeRemoteDataSource.getRecipeMy(page)
+                when (response) {
+                    is ApiResponse.Success -> {
+                        val recipeList = tipsRecipeMapper.mapToRecipeList(response.data.information)
+                        emit(Result.success(recipeList))
+                    }
 
-                is ApiResponse.Failure.Error -> {
-                    Timber.e("GetAlarms error: ${response.errorBody}")
-                    Result.failure(Exception("GetAlarms Failed"))
-                }
+                    is ApiResponse.Failure.Error -> {
+                        Timber.e("getRecipeForMe error: ${response.errorBody}")
+                        emit(Result.failure(Exception("GetAlarms Failed")))
+                    }
 
-                is ApiResponse.Failure.Exception -> {
-                    Timber.e("GetAlarms exception: ${response.message}")
-                    Result.failure(response.throwable)
+                    is ApiResponse.Failure.Exception -> {
+                        Timber.e("getRecipeForMe exception: ${response.message}")
+                        emit(Result.failure(response.throwable))
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.e(e, "getRecipeForMe exception")
+                emit(Result.failure(e))
             }
-        } catch (e: Exception) {
-            Timber.e(e, "SignUp exception")
-            Result.failure(e)
         }
     }
 
@@ -108,17 +110,17 @@ class TipsRecipeRepositoryImpl @Inject constructor(
                 }
 
                 is ApiResponse.Failure.Error -> {
-                    Timber.e("GetAlarms error: ${response.errorBody}")
-                    Result.failure(Exception("GetAlarms Failed"))
+                    Timber.e("getHomeRecipe error: ${response.errorBody}")
+                    Result.failure(Exception("getHomeRecipe Failed"))
                 }
 
                 is ApiResponse.Failure.Exception -> {
-                    Timber.e("GetAlarms exception: ${response.message}")
+                    Timber.e("getHomeRecipe exception: ${response.message}")
                     Result.failure(response.throwable)
                 }
             }
         } catch (e: Exception) {
-            Timber.e(e, "SignUp exception")
+            Timber.e(e, "getHomeRecipe exception")
             Result.failure(e)
         }
     }

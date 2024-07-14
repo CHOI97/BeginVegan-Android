@@ -151,6 +151,26 @@
     <string name="user_level_6_tree">나무</string>
     <string name="user_level_7_flower">꽃</string>
     <string name="user_level_8_fruit">열매</string>
+    <string-array name="user_levels_kr">
+        <item>씨앗</item>
+        <item>떡잎</item>
+        <item>새싹</item>
+        <item>줄기</item>
+        <item>잎사귀</item>
+        <item>나무</item>
+        <item>꽃</item>
+        <item>열매</item>
+    </string-array>
+    <string-array name="user_levels_eng">
+        <item>SEED</item>
+        <item>ROOT</item>
+        <item>SPROUT</item>
+        <item>STEM</item>
+        <item>LEAF</item>
+        <item>TREE</item>
+        <item>FLOWER</item>
+        <item>FRUIT</item>
+    </string-array>
 
     <!-- Button -->
     <string name="btn_close">닫기</string>
@@ -346,7 +366,7 @@
         <item>플렉시테리언</item>
     </string-array>
     <string-array name="vegan_types_eng">
-        <item>NONE</item>
+        <item>UNKNOWN</item>
         <item>VEGAN</item>
         <item>LACTO_VEGETARIAN</item>
         <item>OVO_VEGETARIAN</item>

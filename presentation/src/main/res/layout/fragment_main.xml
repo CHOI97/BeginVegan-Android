@@ -22,7 +22,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/nav_home_graph" />
+            app:navGraph="@navigation/nav_home_graph"
+            android:tag="tag_fcw_home"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_main"

@@ -17,11 +17,16 @@
             layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/mypage_my_magazine}"/>
+            app:title="@{@string/mypage_my_magazine}"
+            app:backButtonVisible="@{true}"
+            app:colorMode="@{true}"/>
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_my_magazine"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_0"
             app:layout_constraintTop_toBottomOf="@id/included_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingTop="@dimen/margin_16"
             tools:listitem="@layout/item_magazine"/>
         <ImageButton
             android:id="@+id/ib_fab"

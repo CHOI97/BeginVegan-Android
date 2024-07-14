@@ -1,16 +1,20 @@
 package com.example.presentation.view.mypage.view
 
-import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
-import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.example.domain.model.mypage.MypageUserInfo
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
+import com.example.presentation.util.UserLevelLists
+import com.example.presentation.view.mypage.viewModel.MypageUserInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -117,20 +121,89 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
 
     @Inject
     lateinit var drawerController: DrawerController
-
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
+    private val mypageUserInfoViewModel:MypageUserInfoViewModel by viewModels()
+    private lateinit var veganTypeKr:Array<String>
+    private lateinit var veganTypeEng:Array<String>
 
     override fun init() {
-        binding.llUserLevelExplain.setOnClickListener {
-            openDialogUserLevelExplain()
-        }
+        binding.vm = mypageUserInfoViewModel
+        binding.lifecycleOwner = this
 
         setOpenDrawer()
-        setProgressBar(5, 1)
-        setVeganTypeDropdown(getString(R.string.vegan_type_unknown))
+        openDialogUserLevelExplain()
+        moveFuns()
 
+        getUserInfo()
+    }
 
+    private fun getUserInfo(){
+        mypageUserInfoViewModel.userInfo.observe(this){
+            setUserInfo(it)
+        }
+    }
+    private fun setUserInfo(userInfo:MypageUserInfo){
+        val userLevelKr = resources.getStringArray(R.array.user_levels_kr)
+        val userLevelEng = resources.getStringArray(R.array.user_levels_eng)
+        veganTypeKr = resources.getStringArray(R.array.vegan_type)
+        veganTypeEng = resources.getStringArray(R.array.vegan_types_eng)
+        val userLevelLists = UserLevelLists(requireContext())
+        val levelIllusts = userLevelLists.userLevelIllus
+        val levelIcons = userLevelLists.userLevelIcons
+        val maxPoints = userLevelLists.userLevelMaxPoint
+
+        val userLevelIndex = userLevelEng.indexOf(userInfo.userLevel)
+        Glide.with(this)
+            .load(levelIllusts[userLevelIndex])
+            .into(binding.ivIllusUserLevel)
+        binding.tvUserLevel.text = "${userLevelKr[userLevelIndex]} 레벨"
+
+        Glide.with(this)
+            .load(userInfo.imageUrl)
+            .transform(CircleCrop())
+            .into(binding.ivUserProfileImg)
+
+        Glide.with(this)
+            .load(levelIcons[userLevelIndex])
+            .into(binding.ivUserProfileUserLevel)
+
+        binding.tvUserName.text = userInfo.nickname
+
+        setProgressBar(maxPoints[userLevelIndex],userInfo.point)
+        Timber.d("maxPoints[index]:${maxPoints[userLevelIndex]},userInfo.point:${userInfo.point}")
+
+        val veganTypelIndex = veganTypeEng.indexOf(userInfo.veganType)
+        setVeganTypeDropdown(veganTypeKr[veganTypelIndex])
+    }
+    private fun setProgressBar(maxInt: Int, nowGauge: Int) {
+        binding.pbUserLevelExp.max = maxInt
+        binding.pbUserLevelExp.progress = nowGauge
+    }
+    private fun setVeganTypeDropdown(userVeganType: String) {
+        val dropdownView = binding.actvMypageEditVegantype
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.item_dropdown_mypage_set_vegan_type,
+            resources.getStringArray(R.array.vegan_type)
+        )
+        adapter.setDropDownViewResource(R.layout.item_dropdown_mypage_set_vegan_type)
+        dropdownView.setAdapter(adapter)
+        dropdownView.hint = userVeganType
+
+        binding.ivDropdownIcon.setOnClickListener {
+            dropdownView.showDropDown()
+        }
+        dropdownView.setOnClickListener {
+            dropdownView.showDropDown()
+        }
+        dropdownView.setOnItemClickListener { parent, view, position, id ->
+//            Timber.d("position:$position, selected Item: ${veganTypeKr[position]}")
+            mypageUserInfoViewModel.patchUserVeganType(veganTypeEng[position])
+        }
+    }
+
+    private fun moveFuns(){
 
         binding.llEditProfile.setOnClickListener {
             mainNavigationHandler.navigateToEditProfile()
@@ -151,7 +224,6 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
             mainNavigationHandler.navigateToMySetting()
         }
     }
-
     private fun setOpenDrawer() {
         binding.includedToolbar.ibNotification.setOnClickListener {
             drawerController.openDrawer()
@@ -159,57 +231,10 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     }
 
     private fun openDialogUserLevelExplain() {
-        val dialog = MypageUserLevelExplainDialog(requireContext())
-        dialog.show()
-    }
-
-    private fun setProgressBar(maxInt: Int, nowGauge: Int) {
-        binding.pbUserLevelExp.max = maxInt
-        binding.pbUserLevelExp.progress = nowGauge
-    }
-
-    private fun setVeganTypeDropdown(userVeganType: String) {
-        val dropdownAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.item_dropdown_mypage_set_vegan_type,
-            resources.getStringArray(R.array.vegan_type)
-        )
-        binding.acsSetVeganType.adapter = dropdownAdapter
-//        binding.acsSetVeganType.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>,
-//                    view: View,
-//                    position: Int,
-//                    id: Long
-//                ) {
-//                    // 선택됐을 경우
-//
-//                }
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//        dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.sSetVeganType.adapter = dropdownAdapter
-    }
-
-
-    //Control Back Button
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupOnBackPressedCallback()
-    }
-    private fun setupOnBackPressedCallback() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (drawerController.isDrawerOpen()) {
-                    drawerController.closeDrawer()
-                } else {
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-            }
+        binding.llUserLevelExplain.setOnClickListener {
+            val dialog = MypageUserLevelExplainDialog(requireContext())
+            dialog.show()
         }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
 }

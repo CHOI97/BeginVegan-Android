@@ -15,7 +15,7 @@ class TipsRecipeUseCase @Inject constructor(
     suspend fun getRecipeDetail(id:Int): Result<TipsRecipeDetail> =
         tipsRecipeRepository.getRecipeDetail(id)
 
-    suspend fun getRecipeMy(page:Int): Result<List<TipsRecipeListItem>> =
+    suspend fun getRecipeMy(page:Int): Flow<Result<List<TipsRecipeListItem>>> =
         tipsRecipeRepository.getRecipeForMe(page)
 
     suspend fun getHomeRecipe(): Result<List<TipsRecipeListItem>> =

@@ -1,14 +1,17 @@
 
 package com.example.presentation.view.map.view
 import android.view.View
+import androidx.navigation.fragment.navArgs
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
+import com.example.presentation.view.tips.view.TipsFragmentArgs
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 //
@@ -254,6 +257,9 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         })
 //        setOnSearchFocus()
         setOnSearchBack()
+
+        //나의 식당, 나의 리뷰에서 왔을 때 처리
+        checkFromMypage()
     }
 
     private fun setOnSearchBack() {
@@ -272,5 +278,19 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
 //                }
 //            }
 //    }
+
+    //나의 식당, 나의 리뷰에서 왔을 때 처리
+    private fun checkFromMypage(){
+        val args: VeganMapFragmentArgs by navArgs()
+        Timber.d("args.fromMyRestaurant:${args.fromMyRestaurant}, args.fromMyReview:${args.fromMyReview}")
+        if(args.fromMyRestaurant){
+            //나의 식당
+            //Mypage에서 이동할때 map의 viewModel에 식당 id 넣어서 처리
+        }
+        if(args.fromMyReview){
+            //나의 리뷰
+            //Mypage에서 이동할때 map의 viewModel에 리뷰 id 넣어서 처리
+        }
+    }
 
 }
