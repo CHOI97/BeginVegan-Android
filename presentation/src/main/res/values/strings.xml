@@ -400,6 +400,7 @@
     <string name="notification_badge_mypage">mypage</string>
 
     <!-- Map -->
+    <string name="map_search_hint">검색어를 입력해주세요.(ex.강남, 한식)</string>
     <string name="map_bottom_sheet_title_nearby">&lt;%1$s&gt; 님의 주변에 위치한 식당이에요.</string>
     <string name="map_how_far">"내 위치로부터 <font color='#FF005536'>%dkm</font>"</string>
     <string name="map_search_history">최근 검색 기록</string>
@@ -407,6 +408,7 @@
     <string name="map_search_result_order_scrap">스크랩 많은 순</string>
     <string name="map_search_result_order_near">가까운 순</string>
 
+    <string name="map_restaurant_title_empty">식당명</string>
     <string name="map_restaurant_navigate">길찾기</string>
     <string name="map_restaurant_scrap">저장</string>
     <string name="map_restaurant_call">전화</string>

@@ -35,7 +35,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.mainHomeFragment -> bnvMain.menu.findItem(R.id.item_home).isChecked = true
-                    R.id.veganMapFragment -> bnvMain.menu.findItem(R.id.item_map).isChecked = true
+                    R.id.veganMapBaseFragment -> bnvMain.menu.findItem(R.id.item_map).isChecked = true
                     R.id.tipsFragment -> bnvMain.menu.findItem(R.id.item_tips).isChecked = true
                     R.id.mainMypageFragment -> bnvMain.menu.findItem(R.id.item_profile).isChecked = true
                 }

@@ -19,19 +19,20 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         binding.lottieAnimationView.playAnimation()
 
         if (isVersionSOrHigher()) {
-//            splashScreen.setKeepOnScreenCondition { true }
+//            splashScreen.installSplashScreen()
         } else {
-//            delayForSplashScreen { }
+            delayForSplashScreen { }
         }
     }
+
     private fun isVersionSOrHigher() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-//    private fun delayForSplashScreen(action: () -> Unit) {
+    private fun delayForSplashScreen(action: () -> Unit) {
 //        handler.postDelayed({
 //            run(action)
 //        }, 1000)
-//    }
+    }
 }

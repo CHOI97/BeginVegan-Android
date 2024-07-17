@@ -1,7 +1,9 @@
 package com.example.presentation.view.home.view
 
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.NearRestaurant
 import com.example.presentation.R
@@ -12,6 +14,7 @@ import com.example.presentation.config.navigation.home.HomeNavigationImpl
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.util.DrawerController
+import com.example.presentation.view.home.viewModel.HomeTipsViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

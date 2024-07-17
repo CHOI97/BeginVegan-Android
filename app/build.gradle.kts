@@ -19,6 +19,7 @@ android {
     val localProperties = Properties()
     localProperties.load(FileInputStream(rootProject.file("local.properties")))
 
+
     defaultConfig {
         applicationId = "com.example.beginvegan"
         minSdk = DefaultConfig.MIN_SDK_VERSION

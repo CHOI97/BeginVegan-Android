@@ -19,7 +19,7 @@ class HomeNavigationImpl(private val navController: NavController) : HomeNavigat
                 fromMyRestaurant = fromMyRestaurant, fromMyReview = fromMyReview)
             navController.navigate(action)
         }else{
-            controlBackStack(R.id.veganMapFragment)
+            controlBackStack(R.id.veganMapBaseFragment)
         }
     }
 

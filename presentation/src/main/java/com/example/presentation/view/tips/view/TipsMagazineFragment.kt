@@ -27,6 +27,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
     @Inject
     lateinit var bookmarkController: BookmarkController
     private val magazineViewModel : MagazineViewModel by activityViewModels()
+
     private lateinit var magazineRvAdapter: TipsMagazineRvAdapter
     private var collectJob: Job? = null
 

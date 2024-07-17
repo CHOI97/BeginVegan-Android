@@ -5,9 +5,9 @@
     app:startDestination="@id/mainHomeFragment">
 
     <fragment
-        android:id="@+id/veganMapFragment"
-        android:name="com.example.presentation.view.map.view.VeganMapFragment"
-        android:label="VeganMapFragment" >
+        android:id="@+id/veganMapBaseFragment"
+        android:name="com.example.presentation.view.map.view.VeganMapBaseFragment"
+        android:label="VeganMapBaseFragment" >
         <argument
             android:name="fromMyRestaurant"
             app:argType="boolean"
@@ -33,15 +33,14 @@
     <fragment
         android:id="@+id/mainHomeFragment"
         android:name="com.example.presentation.view.home.view.HomeFragment"
-        android:label="MainHomeFragment" >
+        android:label="MainHomeFragment">
         <action
             android:id="@+id/action_mainHomeFragment_to_tipsFragment"
             app:destination="@id/tipsFragment" />
         <action
             android:id="@+id/action_mainHomeFragment_to_veganMapFragment"
-            app:destination="@id/veganMapFragment" />
+            app:destination="@id/veganMapBaseFragment"/>
     </fragment>
-
     <fragment
         android:id="@+id/mainMypageFragment"
         android:name="com.example.presentation.view.mypage.view.MainMypageFragment"

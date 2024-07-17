@@ -141,4 +141,24 @@
         <item name="android:textColor">@color/color_white</item>
     </style>
 
+    <style name="AppSearchView" parent="Widget.Material3.SearchView" >
+
+    </style>
+    <style name="AppSearchBar" parent="ShapeAppearanceOverlay.Material3.SearchBar">
+    </style>
+    <style name="AppSearchBar.TextAppearance" parent="TextAppearance.Material3.SearchBar">
+        <item name="hintTextColor">@color/color_gray_02</item>
+    </style>
+
+    <style name="SearchViewTextAppearance" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@style/body_1_regular</item>
+        <item name="hintTextColor">@color/color_gray_02</item>
+        <item name="iconSize">10dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="SearchViewToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:iconTint">@color/color_white</item>
+        <item name="navigationIconTint">@color/color_white</item>
+    </style>
 </resources>

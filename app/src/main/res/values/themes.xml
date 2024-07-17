@@ -7,6 +7,7 @@
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
             @drawable/data
         </item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />

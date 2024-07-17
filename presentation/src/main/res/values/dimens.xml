@@ -160,4 +160,6 @@
     <dimen name="dialog_width_big">312dp</dimen>
     <dimen name="dialog_height">506dp</dimen>
     <dimen name="photo_select_dialog_radius">8dp</dimen>
+
+    <dimen name="restaurant_image_height">180dp</dimen>
 </resources>
