@@ -1,11 +1,9 @@
 
 package com.example.presentation.view.map.view
 import android.view.View
-import androidx.navigation.fragment.navArgs
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
-import com.example.presentation.view.tips.view.TipsFragmentArgs
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.MapLifeCycleCallback

@@ -56,27 +56,16 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
         navController.navigate(R.id.mainHomeFragment, null,
             NavOptions.Builder().setPopUpTo(currentId, true).build())
     }
-
-    override fun navigateToMap() {
-        controlBackStack(R.id.veganMapFragment)
-    }
-
-    override fun navigateToTips() {
-        controlBackStack(R.id.mainTipsFragment)
-    }
-
-    override fun navigateToMypage() {
-        controlBackStack(R.id.mainMypageFragment)
-    }
+    override fun navigateToMap() { controlBackStack(R.id.veganMapFragment) }
+    override fun navigateToTips() { controlBackStack(R.id.mainTipsFragment) }
+    override fun navigateToMypage() { controlBackStack(R.id.mainMypageFragment) }
 
     override fun navigateHomeToVeganTest() {
         navController.navigate(R.id.action_homeFragment_to_veganTestFragment)
     }
-
     override fun navigateTestToVeganTestResult() {
         navController.navigate(R.id.action_veganTestFragment_to_veganTestResultFragment)
     }
-
     override fun navigateTestResultToTips() {
         navController.navigate(R.id.action_veganTestResultFragment_to_tipsFragment)
     }

@@ -23,7 +23,9 @@
         android:label="VeganTestResultFragment">
         <action
             android:id="@+id/action_veganTestResultFragment_to_tipsFragment"
-            app:destination="@id/mainTipsFragment" />
+            app:destination="@id/mainTipsFragment"
+            app:popUpTo="@id/mainHomeFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
 
     <fragment

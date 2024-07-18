@@ -1,44 +1,50 @@
 package com.example.presentation.view.main
 
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.main.MainNavigationImpl
 import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-//    @Inject
-//    lateinit var mainNavigationHandler: MainNavigationHandler
+    lateinit var mainNavigationHandler: MainNavigationHandler
+    lateinit var navController: NavController
 
     override fun initViewModel() {
     }
 
     override fun init() {
-        Timber.d("mainActivity init")
         binding.dlDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        setNavController()
         setBottomNav()
         setupOnBackPressedCallback()
     }
+    private fun setNavController(){
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcw_main_container) as NavHostFragment
+        navController = navHostFragment.navController
+        mainNavigationHandler = MainNavigationImpl(navController)
+    }
 
     private fun setBottomNav(){
-//        val navController = findNavController(R.id.fcw_main_container)
-        Timber.d("setBottomNav")
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcw_main_container) as NavHostFragment
-        val navController = navHostFragment.navController
-//        val navController = mainNavigationHandler.navController()
-//        Timber.d("mainNavigationHandler.navController(): ${mainNavigationHandler.navController()}")
         with(binding) {
             bnvMain.setupWithNavController(navController)
             navController.addOnDestinationChangedListener { _, destination, _ ->
+                if(destination.id == R.id.mainHomeFragment || destination.id == R.id.veganMapFragment ||
+                    destination.id == R.id.mainTipsFragment || destination.id == R.id.mainMypageFragment){
+                    binding.bnvMain.visibility = View.VISIBLE
+                }
+                else binding.bnvMain.visibility = View.GONE
                 when (destination.id) {
                     R.id.mainHomeFragment -> bnvMain.menu.findItem(R.id.item_home).isChecked = true
                     R.id.veganMapFragment -> bnvMain.menu.findItem(R.id.item_map).isChecked = true
@@ -49,10 +55,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
             bnvMain.setOnItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
-//                    R.id.item_home -> mainNavigationHandler.navigateToHome()
-//                    R.id.item_map ->  mainNavigationHandler.navigateToMap()
-//                    R.id.item_tips -> mainNavigationHandler.navigateToTips()
-//                    R.id.item_profile -> mainNavigationHandler.navigateToMypage()
+                    R.id.item_home -> mainNavigationHandler.navigateToHome()
+                    R.id.item_map ->  mainNavigationHandler.navigateToMap()
+                    R.id.item_tips -> mainNavigationHandler.navigateToTips()
+                    R.id.item_profile -> mainNavigationHandler.navigateToMypage()
                 }
                 true
             }
@@ -63,13 +69,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun setupOnBackPressedCallback(){
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                var navController = findNavController(R.id.fcw_main_container)
-//                var nowNav:String
-//                if(navController.currentDestination?.id==R.id.mainFragment){
-//                    navController = findNavController(R.id.fcw_home)
-//                    nowNav = "homeNav"
-//                }else nowNav = "mainNav"
-//                Timber.d("$nowNav : ${navController.backQueue.size}")
+                val navController = findNavController(R.id.fcw_main_container)
 
                 if(binding.dlDrawer.isDrawerOpen(GravityCompat.END)){
                     binding.dlDrawer.closeDrawer(GravityCompat.END)

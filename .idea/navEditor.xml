@@ -73,7 +73,33 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="mainHomeFragment">
+                  <entry key="mainHomeFragment1">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="368" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_mainHomeFragment_to_tipsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_mainHomeFragment_to_veganMapFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="mainMypageFragment1">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -85,37 +111,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="mainMypageFragment">
+                  <entry key="tipsFragment1">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="247" />
-                            <option name="y" value="7" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="tipsFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
+                            <option name="x" value="256" />
                             <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="veganMapFragment">
+                  <entry key="veganMapFragment1">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
-                            <option name="y" value="368" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -131,53 +145,85 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="mainFragment">
+                  <entry key="mainHomeFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-806" />
-                            <option name="y" value="175" />
+                            <option name="x" value="-300" />
+                            <option name="y" value="-1896" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_mainFragment_to_mypageEditProfileFragment">
+                            <entry key="action_homeFragment_to_veganTestFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_mypageMyMagazineFragment">
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="mainMypageFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-284" />
+                            <option name="y" value="-298" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_mainMypageFragment_to_mypageEditProfileFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_mypageMyRecipeFragment">
+                            <entry key="action_mainMypageFragment_to_mypageMyMagazineFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_mypageMyRestaurantFragment">
+                            <entry key="action_mainMypageFragment_to_mypageMyRecipeFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_mypageMyReviewFragment">
+                            <entry key="action_mainMypageFragment_to_mypageMyRestaurantFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_mypageSettingFragment">
+                            <entry key="action_mainMypageFragment_to_mypageMyReviewFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_tipsMagazineDetailFragment">
+                            <entry key="action_mainMypageFragment_to_mypageSettingFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_veganTestFragment">
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="mainTipsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-296" />
+                            <option name="y" value="-900" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_tipsFragment_to_tipsMagazineDetailFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -192,8 +238,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-315" />
-                            <option name="y" value="-368" />
+                            <option name="x" value="79" />
+                            <option name="y" value="-120" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -204,12 +250,17 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="84" />
-                            <option name="y" value="29" />
+                            <option name="x" value="462" />
+                            <option name="y" value="168" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_mypageMyMagazineFragment_to_tipsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_mypageMyMagazineFragment_to_tipsMagazineDetailFragment">
                               <value>
                                 <LayoutPositions />
@@ -225,9 +276,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-114" />
-                            <option name="y" value="25" />
+                            <option name="x" value="260" />
+                            <option name="y" value="180" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_mypageMyRecipeFragment_to_tipsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -237,9 +297,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-307" />
-                            <option name="y" value="34" />
+                            <option name="x" value="67" />
+                            <option name="y" value="189" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_mypageMyRestaurantFragment_to_veganMapFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -249,9 +318,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-94" />
-                            <option name="y" value="-362" />
+                            <option name="x" value="276" />
+                            <option name="y" value="-126" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_mypageMyReviewFragment_to_veganMapFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -261,20 +339,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-641" />
-                            <option name="y" value="-379" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="nav_home_graph">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-998" />
-                            <option name="y" value="167" />
+                            <option name="x" value="67" />
+                            <option name="y" value="591" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -285,8 +351,20 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="257" />
-                            <option name="y" value="340" />
+                            <option name="x" value="272" />
+                            <option name="y" value="-845" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="veganMapFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-296" />
+                            <option name="y" value="-1436" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -297,8 +375,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-653" />
-                            <option name="y" value="533" />
+                            <option name="x" value="25" />
+                            <option name="y" value="-1888" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -318,13 +396,13 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1005" />
-                            <option name="y" value="493" />
+                            <option name="x" value="300" />
+                            <option name="y" value="-1892" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_veganTestResultFragment_to_mainFragment">
+                            <entry key="action_veganTestResultFragment_to_tipsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
