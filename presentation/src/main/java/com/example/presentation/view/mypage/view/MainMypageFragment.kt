@@ -204,24 +204,23 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     }
 
     private fun moveFuns(){
-
         binding.llEditProfile.setOnClickListener {
-            mainNavigationHandler.navigateToEditProfile()
+            mainNavigationHandler.navigateMypageToEditProfile()
         }
         binding.llMyReview.setOnClickListener {
-            mainNavigationHandler.navigateToReview()
+            mainNavigationHandler.navigateMypageToMyReview()
         }
         binding.llMyRestaurant.setOnClickListener {
-            mainNavigationHandler.navigateToMyRestaurant()
+            mainNavigationHandler.navigateMypageToMyRestaurant()
         }
         binding.llMyMagazine.setOnClickListener {
-            mainNavigationHandler.navigateToMyMagazine()
+            mainNavigationHandler.navigateMypageToMyMagazine()
         }
         binding.llMyRecipe.setOnClickListener {
-            mainNavigationHandler.navigateToMyRecipe()
+            mainNavigationHandler.navigateMypageToMyRecipe()
         }
         binding.llSetting.setOnClickListener {
-            mainNavigationHandler.navigateToMySetting()
+            mainNavigationHandler.navigateMypageToMySetting()
         }
     }
     private fun setOpenDrawer() {

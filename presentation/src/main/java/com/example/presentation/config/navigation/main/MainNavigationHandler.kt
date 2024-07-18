@@ -1,27 +1,31 @@
 package com.example.presentation.config.navigation.main
 
-import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 
 interface MainNavigationHandler {
-    fun navigateToEditProfile()
-    fun navigateToMyRestaurant()
-    fun navigateToMyMagazine()
-    fun navigateToMyRecipe()
-    fun navigateToMySetting()
-    fun navigateToReview()
-    fun navigateToBeganTest()
+    fun navigateToHome()
+    fun navigateToMap()
+    fun navigateToTips()
+    fun navigateToMypage()
 
-    fun navigateToBeganTestResult()
-    fun navigateToTipsMagazineDetail()
+    fun navigateHomeToVeganTest()
+    fun navigateTestToVeganTestResult()
+    fun navigateTestResultToTips()
+
+    fun navigateTipsToMagazineDetail()
+
+    fun navigateMypageToEditProfile()
+    fun navigateMypageToMyReview()
+    fun navigateMypageToMyRestaurant()
+    fun navigateMypageToMyMagazine()
+    fun navigateMypageToMyRecipe()
+    fun navigateMypageToMySetting()
+
+    fun navigateMyReviewToMap()
+    fun navigateMyRestaurantToMap()
+    fun navigateMyRecipeToTips()
+    fun navigateMyMagazineToTips()
     fun navigateMyMagazineToMagazineDetail()
-    fun navigateMyMagazineToMainHome(fromMagazine:Boolean = false)
-    fun navigateMyRecipeToMainHome(fromMyRecipe:Boolean = false)
-    fun navigateMyRestaurantToMainHome(fromMyRestaurant:Boolean = false)
-
-    fun navigateToMainHome(fromTest:Boolean = false)
-
-    fun popBackStack()
 
     fun navController():NavController
 }

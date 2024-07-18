@@ -3,6 +3,7 @@ package com.example.presentation.view.mypage.view
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MyReview
@@ -106,7 +107,8 @@ class MypageMyReviewFragment : BaseFragment<FragmentMypageMyReviewBinding>(R.lay
 
     private fun setBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun setFabButton(){

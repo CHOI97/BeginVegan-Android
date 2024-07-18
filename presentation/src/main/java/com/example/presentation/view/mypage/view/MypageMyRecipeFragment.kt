@@ -5,6 +5,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MypageMyRecipeItem
@@ -106,7 +107,8 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
 
     private fun setBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun setFabButton(){
@@ -119,7 +121,7 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
             binding.llEmptyArea.isVisible = it
             binding.btnMoveToRecipe.setOnClickListener {
                 //Recipe로 이동
-                mainNavigationHandler.navigateMyRecipeToMainHome(true)
+                mainNavigationHandler.navigateMyRecipeToTips()
             }
         }
     }

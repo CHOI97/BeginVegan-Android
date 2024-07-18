@@ -2,6 +2,7 @@ package com.example.presentation.view.home.veganTest.view
 
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
@@ -65,12 +66,13 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     //이동
     private fun goBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun goRecommendRecipe(){
         binding.tvBtnGoRecommendRecipe.setOnClickListener {
-            mainNavigationHandler.navigateToMainHome(true)
+            mainNavigationHandler.navigateTestResultToTips()
         }
     }
 }

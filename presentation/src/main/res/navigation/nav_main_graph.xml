@@ -1,54 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/mainHomeFragment">
 
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.presentation.view.main.MainFragment"
-        android:label="MainFragment">
-        <action
-            android:id="@+id/action_mainFragment_to_mypageEditProfileFragment"
-            app:destination="@id/mypageEditProfileFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_veganTestFragment"
-            app:destination="@id/veganTestFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_mypageMyRecipeFragment"
-            app:destination="@id/mypageMyRecipeFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_mypageMyMagazineFragment"
-            app:destination="@id/mypageMyMagazineFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_mypageMyRestaurantFragment"
-            app:destination="@id/mypageMyRestaurantFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_mypageMyReviewFragment"
-            app:destination="@id/mypageMyReviewFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_mypageSettingFragment"
-            app:destination="@id/mypageSettingFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_tipsMagazineDetailFragment"
-            app:destination="@id/tipsMagazineDetailFragment" />
-        <argument
-            android:name="fromTest"
-            app:argType="boolean"
-            android:defaultValue="false"/>
-        <argument
-            android:name="fromMyMagazine"
-            app:argType="boolean"
-            android:defaultValue="false"/>
-        <argument
-            android:name="fromMyRecipe"
-            app:argType="boolean"
-            android:defaultValue="false"/>
-        <argument
-            android:name="fromMyRestaurant"
-            app:argType="boolean"
-            android:defaultValue="false"/>
-    </fragment>
     <fragment
         android:id="@+id/mypageEditProfileFragment"
         android:name="com.example.presentation.view.mypage.view.MypageEditProfileFragment"
@@ -66,9 +22,8 @@
         android:name="com.example.presentation.view.home.veganTest.view.VeganTestResultFragment"
         android:label="VeganTestResultFragment">
         <action
-            android:id="@+id/action_veganTestResultFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"/>
+            android:id="@+id/action_veganTestResultFragment_to_tipsFragment"
+            app:destination="@id/mainTipsFragment" />
     </fragment>
 
     <fragment
@@ -80,15 +35,18 @@
     <fragment
         android:id="@+id/mypageMyReviewFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyReviewFragment"
-        android:label="MypageMyReviewFragment" />
+        android:label="MypageMyReviewFragment" >
+        <action
+            android:id="@+id/action_mypageMyReviewFragment_to_veganMapFragment"
+            app:destination="@id/veganMapFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mypageMyRestaurantFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyRestaurantFragment"
         android:label="MypageMyRestaurantFragment" >
         <action
-            android:id="@+id/action_mypageMyRestaurantFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"/>
+            android:id="@+id/action_mypageMyRestaurantFragment_to_veganMapFragment"
+            app:destination="@id/veganMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/mypageMyMagazineFragment"
@@ -98,26 +56,65 @@
             android:id="@+id/action_mypageMyMagazineFragment_to_tipsMagazineDetailFragment"
             app:destination="@id/tipsMagazineDetailFragment" />
         <action
-            android:id="@+id/action_mypageMyMagazineFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"/>
+            android:id="@+id/action_mypageMyMagazineFragment_to_tipsFragment"
+            app:destination="@id/mainTipsFragment" />
     </fragment>
     <fragment
         android:id="@+id/mypageMyRecipeFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyRecipeFragment"
         android:label="MypageMyRecipeFragment" >
         <action
-            android:id="@+id/action_mypageMyRecipeFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"/>
+            android:id="@+id/action_mypageMyRecipeFragment_to_tipsFragment"
+            app:destination="@id/mainTipsFragment" />
     </fragment>
 
-    <include
-        android:id="@+id/nav_home_graph"
-        app:graph ="@navigation/nav_home_graph"/>
     <fragment
         android:id="@+id/tipsMagazineDetailFragment"
         android:name="com.example.presentation.view.tips.view.TipsMagazineDetailFragment"
         android:label="TipsMagazineDetailFragment" />
+    <fragment
+        android:id="@+id/mainHomeFragment"
+        android:name="com.example.presentation.view.home.view.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_veganTestFragment"
+            app:destination="@id/veganTestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/veganMapFragment"
+        android:name="com.example.presentation.view.map.view.VeganMapFragment"
+        android:label="VeganMapFragment" />
+    <fragment
+        android:id="@+id/mainTipsFragment"
+        android:name="com.example.presentation.view.tips.view.TipsFragment"
+        android:label="TipsFragment" >
+        <action
+            android:id="@+id/action_tipsFragment_to_tipsMagazineDetailFragment"
+            app:destination="@id/tipsMagazineDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainMypageFragment"
+        android:name="com.example.presentation.view.mypage.view.MainMypageFragment"
+        android:label="fragment_main_mypage"
+        tools:layout="@layout/fragment_main_mypage" >
+        <action
+            android:id="@+id/action_mainMypageFragment_to_mypageSettingFragment"
+            app:destination="@id/mypageSettingFragment" />
+        <action
+            android:id="@+id/action_mainMypageFragment_to_mypageEditProfileFragment"
+            app:destination="@id/mypageEditProfileFragment" />
+        <action
+            android:id="@+id/action_mainMypageFragment_to_mypageMyReviewFragment"
+            app:destination="@id/mypageMyReviewFragment" />
+        <action
+            android:id="@+id/action_mainMypageFragment_to_mypageMyRestaurantFragment"
+            app:destination="@id/mypageMyRestaurantFragment" />
+        <action
+            android:id="@+id/action_mainMypageFragment_to_mypageMyRecipeFragment"
+            app:destination="@id/mypageMyRecipeFragment" />
+        <action
+            android:id="@+id/action_mainMypageFragment_to_mypageMyMagazineFragment"
+            app:destination="@id/mypageMyMagazineFragment" />
+    </fragment>
 
 </navigation>

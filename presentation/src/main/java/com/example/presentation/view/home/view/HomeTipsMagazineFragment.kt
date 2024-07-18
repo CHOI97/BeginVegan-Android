@@ -45,7 +45,7 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
         vpAdapter.setOnItemClickListener(object : HomeMagazineVpAdapter.OnItemClickListener{
             override fun onItemClick(magazineId: Int) {
                 magazineViewModel.getMagazineDetail(magazineId)
-                mainNavigationHandler.navigateToTipsMagazineDetail()
+                mainNavigationHandler.navigateTipsToMagazineDetail()
             }
 
             override fun changeBookmark(

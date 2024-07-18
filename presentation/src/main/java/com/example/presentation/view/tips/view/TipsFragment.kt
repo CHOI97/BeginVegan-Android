@@ -32,7 +32,7 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
             }
         }.attach()
 
-        checkFromTest()
+//        checkFromTest()
         setOpenDrawer()
     }
 
@@ -43,20 +43,20 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
         }
     }
 
-    private fun checkFromTest(){
-        val args: TipsFragmentArgs by navArgs()
-        Timber.d("args.fromTest:${args.fromTest}, args.fromMyRecipe:${args.fromMyRecipe}")
-        if(args.fromTest){
-            //나를 위한 레시피
-            binding.vpViewpagerArea.post{
-                binding.vpViewpagerArea.currentItem = 1
-                recipeViewModel.setIsFromTest(true)
-            }
-        }
-        if(args.fromMyRecipe){
-            binding.vpViewpagerArea.post{
-                binding.vpViewpagerArea.currentItem = 1
-            }
-        }
-    }
+//    private fun checkFromTest(){
+//        val args: TipsFragmentArgs by navArgs()
+//        Timber.d("args.fromTest:${args.fromTest}, args.fromMyRecipe:${args.fromMyRecipe}")
+//        if(args.fromTest){
+//            //나를 위한 레시피
+//            binding.vpViewpagerArea.post{
+//                binding.vpViewpagerArea.currentItem = 1
+//                recipeViewModel.setIsFromTest(true)
+//            }
+//        }
+//        if(args.fromMyRecipe){
+//            binding.vpViewpagerArea.post{
+//                binding.vpViewpagerArea.currentItem = 1
+//            }
+//        }
+//    }
 }

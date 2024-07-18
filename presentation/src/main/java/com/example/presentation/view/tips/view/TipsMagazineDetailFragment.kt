@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.domain.model.tips.MagazineContent
 import com.example.domain.model.tips.TipsMagazineDetail
@@ -45,7 +46,8 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
 
     private fun goBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
 

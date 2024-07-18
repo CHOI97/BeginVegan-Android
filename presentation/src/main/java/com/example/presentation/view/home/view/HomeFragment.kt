@@ -1,14 +1,11 @@
 package com.example.presentation.view.home.view
 
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.NearRestaurant
 import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.home.HomeNavigationHandler
-import com.example.presentation.config.navigation.home.HomeNavigationImpl
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.util.DrawerController
@@ -20,7 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main_home){
     private lateinit var homeRestaurantRVAdapter: HomeRestaurantRVAdapter
-    private lateinit var homeNavigationHandler: HomeNavigationHandler
+//    private lateinit var homeNavigationHandler: HomeNavigationHandler
 
     @Inject
     lateinit var drawerController: DrawerController
@@ -34,7 +31,7 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
     private var list: ArrayList<NearRestaurant> = ArrayList()
 
     override fun init() {
-        homeNavigationHandler = HomeNavigationImpl(findNavController())
+//        homeNavigationHandler = HomeNavigationImpl(findNavController())
         setRestaurantRecyclerView()
         setTipsTab()
         setOpenDrawer()
@@ -43,7 +40,7 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
 
     private fun setBeganTest() {
         binding.ivBannerVeganTest.setOnClickListener{
-            mainNavigationHandler.navigateToBeganTest()
+            mainNavigationHandler.navigateHomeToVeganTest()
         }
     }
 
@@ -83,10 +80,10 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
         binding.btnTipsMore.setOnClickListener {
             when(tipsNowTab){
                 "MAGAZINE" -> {
-                    homeNavigationHandler.navigateToTips(fromMyRecipe = false)
+                    mainNavigationHandler.navigateToTips()
                 }
                 "RECIPE" -> {
-                    homeNavigationHandler.navigateToTips(fromMyRecipe = true)
+                    mainNavigationHandler.navigateToTips()
                 }
             }
         }

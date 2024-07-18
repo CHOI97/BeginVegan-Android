@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_home_graph"
-    app:startDestination="@id/mainHomeFragment">
+    app:startDestination="@id/mainHomeFragment1">
 
     <fragment
-        android:id="@+id/veganMapFragment"
+        android:id="@+id/veganMapFragment1"
         android:name="com.example.presentation.view.map.view.VeganMapFragment"
         android:label="VeganMapFragment" >
         <argument
@@ -18,7 +18,7 @@
             android:defaultValue="false" />
     </fragment>
     <fragment
-        android:id="@+id/tipsFragment"
+        android:id="@+id/tipsFragment1"
         android:name="com.example.presentation.view.tips.view.TipsFragment"
         android:label="TipsFragment" >
         <argument
@@ -31,19 +31,19 @@
             android:defaultValue="false" />
     </fragment>
     <fragment
-        android:id="@+id/mainHomeFragment"
+        android:id="@+id/mainHomeFragment1"
         android:name="com.example.presentation.view.home.view.HomeFragment"
         android:label="MainHomeFragment" >
         <action
             android:id="@+id/action_mainHomeFragment_to_tipsFragment"
-            app:destination="@id/tipsFragment" />
+            app:destination="@id/tipsFragment1" />
         <action
             android:id="@+id/action_mainHomeFragment_to_veganMapFragment"
             app:destination="@id/veganMapFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/mainMypageFragment"
+        android:id="@+id/mainMypageFragment1"
         android:name="com.example.presentation.view.mypage.view.MainMypageFragment"
         android:label="fragment_main_mypage"
         >

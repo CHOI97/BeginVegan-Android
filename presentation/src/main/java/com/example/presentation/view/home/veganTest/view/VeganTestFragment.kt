@@ -4,14 +4,13 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentVeganTestBinding
 import com.example.presentation.databinding.IncludeIllusVeganLevelBinding
 import com.example.presentation.view.home.veganTest.viewModel.VeganTestViewModel
-import com.example.presentation.view.main.MainFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -81,7 +80,8 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     //이동
     private fun goBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun goResult(){
@@ -92,7 +92,7 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
                 when(it){
                     true ->{
                         Timber.d("PatchVeganType Successful")
-                        mainNavigationHandler.navigateToBeganTestResult()
+                        mainNavigationHandler.navigateTestToVeganTestResult()
                     }
                     false -> Timber.e("PatchVeganType Failure")
                 }

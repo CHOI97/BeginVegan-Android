@@ -60,7 +60,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
         magazineRvAdapter.setOnItemClickListener(object :
             TipsMagazineRvAdapter.OnItemClickListener {
             override fun onItemClick(magazineId:Int) {
-                mainNavigationHandler.navigateToTipsMagazineDetail()
+                mainNavigationHandler.navigateTipsToMagazineDetail()
                 magazineViewModel.resetMagazineDetail()
                 magazineViewModel.getMagazineDetail(magazineId)
             }
