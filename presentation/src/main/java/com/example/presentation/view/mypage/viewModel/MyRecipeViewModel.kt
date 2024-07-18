@@ -35,6 +35,12 @@ class MyRecipeViewModel @Inject constructor(
     private val _isRecipeEmpty = MutableLiveData(false)
     val isRecipeEmpty: LiveData<Boolean> = _isRecipeEmpty
 
+    fun resetViewModel(){
+        _isContinueGetList.value = true
+        setMyRecipeList(mutableListOf())
+        _isRecipeEmpty.value = false
+    }
+
     fun getMyRecipe(page:Int){
         viewModelScope.launch {
             myScrapUseCase.getMyRecipeList(page).collectLatest {

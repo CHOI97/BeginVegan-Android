@@ -1,6 +1,7 @@
 package com.example.presentation.view.home.view
 
 import androidx.fragment.app.Fragment
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.NearRestaurant
 import com.example.presentation.R
@@ -9,6 +10,7 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.util.DrawerController
+import com.example.presentation.view.main.MainViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -17,7 +19,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main_home){
     private lateinit var homeRestaurantRVAdapter: HomeRestaurantRVAdapter
-//    private lateinit var homeNavigationHandler: HomeNavigationHandler
+    private val mainViewModel:MainViewModel by navGraphViewModels(R.id.nav_main_graph)
 
     @Inject
     lateinit var drawerController: DrawerController
@@ -25,13 +27,13 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
     private var tipsNowTab = "MAGAZINE"
-//    private lateinit var tipsNavigationHandler: TipsNavigationHandler
 
     // ViewModel 분리
     private var list: ArrayList<NearRestaurant> = ArrayList()
 
     override fun init() {
-//        homeNavigationHandler = HomeNavigationImpl(findNavController())
+        binding.lifecycleOwner = this
+
         setRestaurantRecyclerView()
         setTipsTab()
         setOpenDrawer()
@@ -83,6 +85,7 @@ class HomeFragment: BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main
                     mainNavigationHandler.navigateToTips()
                 }
                 "RECIPE" -> {
+                    mainViewModel.setTipsMoveToRecipe(true)
                     mainNavigationHandler.navigateToTips()
                 }
             }

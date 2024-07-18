@@ -37,6 +37,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     private var currentPage = 0
     private var totalCount = 0
     private var collectJob: Job? = null
+
     override fun init() {
         binding.lifecycleOwner = this
         setBackUp()

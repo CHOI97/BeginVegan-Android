@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MypageMyRecipeItem
@@ -15,11 +16,13 @@ import com.example.presentation.config.navigation.main.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyRecipeBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
+import com.example.presentation.view.main.MainViewModel
 import com.example.presentation.view.mypage.adapter.MyRecipeRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyRecipeViewModel
 import com.example.presentation.view.tips.view.TipsRecipeDetailDialog
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,11 +34,14 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     lateinit var bookmarkController: BookmarkController
     private val myRecipeViewModel:MyRecipeViewModel by viewModels()
     private val recipeViewModel:RecipeViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
 
     private lateinit var myRecipeRvAdapter:MyRecipeRvAdapter
     private var myRecipeList = mutableListOf<MypageMyRecipeItem>()
     private var currentPage = 0
     private var totalCount = 0
+    private var collectJob: Job? = null
+
     override fun init() {
         binding.lifecycleOwner = this
         setBackUp()
@@ -43,11 +49,11 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
 
         reset()
         setRvAdapter()
-        setEmptyState()
     }
     private fun reset(){
+        collectJob?.cancel()
         myRecipeList = mutableListOf()
-        myRecipeViewModel.setMyRecipeList(myRecipeList)
+        myRecipeViewModel.resetViewModel()
         currentPage = 0
         totalCount = 0
     }
@@ -91,7 +97,7 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
             }
         })
 
-        lifecycleScope.launch {
+        collectJob = lifecycleScope.launch {
             myRecipeViewModel.myRecipesState.collect{state->
                 when(state){
                     is NetworkResult.Loading -> {}
@@ -102,6 +108,10 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
                     is NetworkResult.Error -> {}
                 }
             }
+        }
+
+        myRecipeViewModel.isRecipeEmpty.observe(this){
+            setEmptyState(it)
         }
     }
 
@@ -116,13 +126,12 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
             binding.rvMyRecipe.smoothScrollToPosition(0)
         }
     }
-    private fun setEmptyState(){
-        myRecipeViewModel.isRecipeEmpty.observe(this){
-            binding.llEmptyArea.isVisible = it
-            binding.btnMoveToRecipe.setOnClickListener {
-                //Recipe로 이동
-                mainNavigationHandler.navigateMyRecipeToTips()
-            }
+    private fun setEmptyState(emptyState:Boolean){
+        binding.llEmptyArea.isVisible = emptyState
+        binding.btnMoveToRecipe.setOnClickListener {
+            //Recipe로 이동
+            mainViewModel.setTipsMoveToRecipe(true)
+            mainNavigationHandler.navigateMyRecipeToTips()
         }
     }
 

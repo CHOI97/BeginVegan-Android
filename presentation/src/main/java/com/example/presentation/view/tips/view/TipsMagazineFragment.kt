@@ -36,20 +36,17 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
 
     override fun init() {
         binding.lifecycleOwner = this
-        Timber.d("magazine init")
         reset()
         setRvAdapter()
         setListener()
         setTabBtn()
     }
     private fun reset(){
-        Timber.d("magazine reset")
         collectJob?.cancel()
         recipeList = mutableListOf()
-        magazineViewModel.addMagazineList(recipeList)
-        magazineViewModel.reSetIsContinueGetList()
-//        currentPage = 0
-//        totalCount = 0
+        magazineViewModel.resetViewModel()
+        currentPage = 0
+        totalCount = 0
     }
 
     private fun setRvAdapter(){

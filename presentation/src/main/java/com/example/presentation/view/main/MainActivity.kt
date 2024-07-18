@@ -69,7 +69,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun setupOnBackPressedCallback(){
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                val navController = findNavController(R.id.fcw_main_container)
+//                val navController = findNavController(R.id.fcw_main_container)
 
                 if(binding.dlDrawer.isDrawerOpen(GravityCompat.END)){
                     binding.dlDrawer.closeDrawer(GravityCompat.END)
