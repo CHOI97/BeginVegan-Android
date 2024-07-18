@@ -42,8 +42,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
     private fun reset(){
         recipeList = mutableListOf()
-        currentPage = 0
-        totalCount = 0
+//        currentPage = 0
+//        totalCount = 0
         isForMe = false
         recipeViewModel.reSetIsContinueGetList()
         recipeViewModel.addRecipeList(recipeList)

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.tips.TipsMagazineItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentTipsMagazineBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
@@ -17,7 +17,6 @@ import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,20 +35,17 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
 
     override fun init() {
         binding.lifecycleOwner = this
-        Timber.d("magazine init")
         reset()
         setRvAdapter()
         setListener()
         setTabBtn()
     }
     private fun reset(){
-        Timber.d("magazine reset")
         collectJob?.cancel()
         recipeList = mutableListOf()
-        magazineViewModel.addMagazineList(recipeList)
-        magazineViewModel.reSetIsContinueGetList()
-//        currentPage = 0
-//        totalCount = 0
+        magazineViewModel.resetViewModel()
+        currentPage = 0
+        totalCount = 0
     }
 
     private fun setRvAdapter(){
@@ -60,7 +56,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
         magazineRvAdapter.setOnItemClickListener(object :
             TipsMagazineRvAdapter.OnItemClickListener {
             override fun onItemClick(magazineId:Int) {
-                mainNavigationHandler.navigateToTipsMagazineDetail()
+                mainNavigationHandler.navigateTipsToMagazineDetail()
                 magazineViewModel.resetMagazineDetail()
                 magazineViewModel.getMagazineDetail(magazineId)
             }

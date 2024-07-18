@@ -4,12 +4,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MypageMyMagazineItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyMagazineBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
@@ -19,7 +20,6 @@ import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,6 +36,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     private var currentPage = 0
     private var totalCount = 0
     private var collectJob: Job? = null
+
     override fun init() {
         binding.lifecycleOwner = this
         setBackUp()
@@ -113,7 +114,8 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     }
     private fun setBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun setFabButton(){
@@ -124,7 +126,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     private fun setEmptyState(emptyState:Boolean){
         binding.llEmptyArea.isVisible = emptyState
         binding.btnMoveToMagazine.setOnClickListener {
-            mainNavigationHandler.navigateMyMagazineToMainHome(true)
+            mainNavigationHandler.navigateMyMagazineToTips()
         }
     }
 }

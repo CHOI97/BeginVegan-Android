@@ -2,11 +2,14 @@ package com.example.presentation.view.home.veganTest.view
 
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentVeganTestResultBinding
 import com.example.presentation.view.home.veganTest.viewModel.VeganTestViewModel
+import com.example.presentation.view.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -16,6 +19,7 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val viewModel: VeganTestViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
 
     private lateinit var veganTypes:Array<String>
     private lateinit var resultDescriptions:Array<String>
@@ -23,6 +27,8 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     private var typeNum = 0
 
     override fun init() {
+        binding.lifecycleOwner = this
+
         veganTypes = resources.getStringArray(R.array.vegan_type)
         resultDescriptions = resources.getStringArray(R.array.vegan_test_result_descriptions)
         resultExplanations = resources.getStringArray(R.array.vegan_test_result_explanations)
@@ -65,12 +71,13 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     //이동
     private fun goBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun goRecommendRecipe(){
         binding.tvBtnGoRecommendRecipe.setOnClickListener {
-            mainNavigationHandler.navigateToMainHome(true)
+            mainViewModel.setFromTest(true)
+            mainNavigationHandler.navigateTestResultToTips()
         }
     }
 }

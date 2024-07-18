@@ -7,7 +7,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.domain.model.mypage.MypageUserInfo
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog
@@ -204,24 +204,23 @@ class MainMypageFragment : BaseFragment<FragmentMainMypageBinding>(R.layout.frag
     }
 
     private fun moveFuns(){
-
         binding.llEditProfile.setOnClickListener {
-            mainNavigationHandler.navigateToEditProfile()
+            mainNavigationHandler.navigateMypageToEditProfile()
         }
         binding.llMyReview.setOnClickListener {
-            mainNavigationHandler.navigateToReview()
+            mainNavigationHandler.navigateMypageToMyReview()
         }
         binding.llMyRestaurant.setOnClickListener {
-            mainNavigationHandler.navigateToMyRestaurant()
+            mainNavigationHandler.navigateMypageToMyRestaurant()
         }
         binding.llMyMagazine.setOnClickListener {
-            mainNavigationHandler.navigateToMyMagazine()
+            mainNavigationHandler.navigateMypageToMyMagazine()
         }
         binding.llMyRecipe.setOnClickListener {
-            mainNavigationHandler.navigateToMyRecipe()
+            mainNavigationHandler.navigateMypageToMyRecipe()
         }
         binding.llSetting.setOnClickListener {
-            mainNavigationHandler.navigateToMySetting()
+            mainNavigationHandler.navigateMypageToMySetting()
         }
     }
     private fun setOpenDrawer() {

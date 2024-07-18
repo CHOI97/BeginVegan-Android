@@ -5,14 +5,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.TipsRecipeListItem
-import com.example.domain.model.tips.TipsMagazineItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentHomeTipsRecipeBinding
-import com.example.presentation.databinding.FragmentTipsRecipeBinding
 import com.example.presentation.util.BookmarkController
-import com.example.presentation.view.home.adapter.HomeMagazineVpAdapter
 import com.example.presentation.view.home.adapter.HomeRecipeVpAdapter
 import com.example.presentation.view.home.viewModel.HomeTipsViewModel
 import com.example.presentation.view.tips.view.TipsRecipeDetailDialog

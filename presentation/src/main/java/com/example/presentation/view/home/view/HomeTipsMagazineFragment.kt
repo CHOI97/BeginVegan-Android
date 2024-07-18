@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.tips.TipsMagazineItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentHomeTipsMagazineBinding
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.home.adapter.HomeMagazineVpAdapter
@@ -45,7 +45,7 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
         vpAdapter.setOnItemClickListener(object : HomeMagazineVpAdapter.OnItemClickListener{
             override fun onItemClick(magazineId: Int) {
                 magazineViewModel.getMagazineDetail(magazineId)
-                mainNavigationHandler.navigateToTipsMagazineDetail()
+                mainNavigationHandler.navigateTipsToMagazineDetail()
             }
 
             override fun changeBookmark(
