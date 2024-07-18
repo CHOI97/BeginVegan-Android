@@ -7,7 +7,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.domain.model.mypage.MypageUserInfo
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainMypageBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.MypageUserLevelExplainDialog

@@ -1,11 +1,8 @@
 package com.example.presentation.view.tips.view
 
 import android.graphics.Typeface
-import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,14 +12,12 @@ import com.example.domain.model.tips.MagazineContent
 import com.example.domain.model.tips.TipsMagazineDetail
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentTipsMagazineDetailBinding
 import com.example.presentation.util.BookmarkController
-import com.example.presentation.view.mypage.viewModel.MyMagazineViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject

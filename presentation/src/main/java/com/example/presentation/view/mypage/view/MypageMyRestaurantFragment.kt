@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MypageMyRestaurantItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyRestaurantBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.mypage.adapter.MyRestaurantRvAdapter

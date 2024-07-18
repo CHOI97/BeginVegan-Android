@@ -5,16 +5,14 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
-import com.example.presentation.config.navigation.main.MainNavigationHandler
-import com.example.presentation.config.navigation.main.MainNavigationImpl
+import com.example.presentation.config.navigation.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationImpl
 import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {

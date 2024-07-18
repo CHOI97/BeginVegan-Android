@@ -1,4 +1,4 @@
-package com.example.presentation.config.navigation.main
+package com.example.presentation.config.navigation
 
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController

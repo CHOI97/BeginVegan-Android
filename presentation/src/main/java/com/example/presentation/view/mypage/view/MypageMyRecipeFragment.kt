@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MypageMyRecipeItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyRecipeBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
@@ -29,7 +29,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.layout.fragment_mypage_my_recipe) {
     @Inject
-    lateinit var mainNavigationHandler:MainNavigationHandler
+    lateinit var mainNavigationHandler: MainNavigationHandler
     @Inject
     lateinit var bookmarkController: BookmarkController
     private val myRecipeViewModel:MyRecipeViewModel by viewModels()

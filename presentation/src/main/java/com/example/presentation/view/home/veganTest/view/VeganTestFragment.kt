@@ -7,7 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentVeganTestBinding
 import com.example.presentation.databinding.IncludeIllusVeganLevelBinding
 import com.example.presentation.view.home.veganTest.viewModel.VeganTestViewModel

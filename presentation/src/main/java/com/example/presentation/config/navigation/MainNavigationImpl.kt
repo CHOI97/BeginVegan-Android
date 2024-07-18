@@ -1,19 +1,12 @@
-package com.example.presentation.config.navigation.main
+package com.example.presentation.config.navigation
 
-import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment
 import com.example.presentation.R
-import com.example.presentation.view.home.veganTest.view.VeganTestResultFragmentDirections
-import com.example.presentation.view.mypage.view.MypageMyMagazineFragment
-import com.example.presentation.view.mypage.view.MypageMyMagazineFragmentDirections
-import com.example.presentation.view.mypage.view.MypageMyRecipeFragmentDirections
-import com.example.presentation.view.mypage.view.MypageMyRestaurantFragmentDirections
-import timber.log.Timber
 import javax.inject.Inject
 
-class MainNavigationImpl @Inject constructor(private val navController: NavController) : MainNavigationHandler {
+class MainNavigationImpl @Inject constructor(private val navController: NavController) :
+    MainNavigationHandler {
 
 //    override fun navigateToEditProfile() {
 //        navController.navigate(R.id.action_mainFragment_to_mypageEditProfileFragment)
