@@ -17,6 +17,7 @@ import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.mypage.adapter.MyMagazineRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyMagazineViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -67,8 +68,17 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
 
             override fun setToggleButton(isChecked: Boolean, magazineId: Int) {
                 lifecycleScope.launch {
-                    if(isChecked) bookmarkController.postBookmark(magazineId, "MAGAZINE")
-                    else bookmarkController.deleteBookmark(magazineId, "MAGAZINE")
+                    if(isChecked) {
+                        if(bookmarkController.postBookmark(magazineId, "MAGAZINE")){
+                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                    } else {
+                        if(bookmarkController.deleteBookmark(magazineId, "MAGAZINE")){
+                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
                 }
             }
         })
