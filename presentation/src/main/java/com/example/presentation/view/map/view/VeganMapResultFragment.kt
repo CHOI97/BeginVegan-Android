@@ -234,9 +234,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class VeganMapResultFragment :
     BaseFragment<FragmentMapResultBinding>(R.layout.fragment_map_result) {
-        private val resultArgs by navArgs<VeganMapResultFragmentArgs>()
+    private val resultArgs by navArgs<VeganMapResultFragmentArgs>()
     override fun init() {
         binding.btnSearch.text = resultArgs.contents
+        binding.ibBackUp.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.ibBackUp.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -244,5 +247,4 @@ class VeganMapResultFragment :
             findNavController().popBackStack()
         }
     }
-
 }

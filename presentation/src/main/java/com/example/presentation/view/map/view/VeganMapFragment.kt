@@ -261,8 +261,6 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
     }
 
     private fun setOnSearchBack() {
-//        binding.includedSearchToolbar.ibBack.setOnClickListener {
-//            it.visibility = View.GONE
     }
 }
 
