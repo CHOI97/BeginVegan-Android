@@ -1,4 +1,4 @@
-package com.example.presentation.view.map.restaurant
+package com.example.presentation.view.restaurant.view
 
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment

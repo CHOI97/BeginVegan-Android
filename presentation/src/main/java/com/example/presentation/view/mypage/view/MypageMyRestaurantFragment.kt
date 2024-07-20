@@ -1,26 +1,19 @@
 package com.example.presentation.view.mypage.view
 
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.mypage.MypageMyRecipeItem
 import com.example.domain.model.mypage.MypageMyRestaurantItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyRestaurantBinding
 import com.example.presentation.network.NetworkResult
-import com.example.presentation.util.BookmarkController
-import com.example.presentation.view.main.MainFragment
-import com.example.presentation.view.mypage.adapter.MyMagazineRvAdapter
-import com.example.presentation.view.mypage.adapter.MyRecipeRvAdapter
 import com.example.presentation.view.mypage.adapter.MyRestaurantRvAdapter
-import com.example.presentation.view.mypage.viewModel.MyRecipeViewModel
 import com.example.presentation.view.mypage.viewModel.MyRestaurantViewModel
-import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -105,7 +98,8 @@ class MypageMyRestaurantFragment : BaseFragment<FragmentMypageMyRestaurantBindin
 
     private fun setBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun setFabButton(){
@@ -116,7 +110,7 @@ class MypageMyRestaurantFragment : BaseFragment<FragmentMypageMyRestaurantBindin
     private fun setEmptyState(emptyState:Boolean){
         binding.llEmptyArea.isVisible = emptyState
         binding.btnMoveToMap.setOnClickListener {
-            mainNavigationHandler.navigateMyRestaurantToMainHome(true)
+            mainNavigationHandler.navigateMyRestaurantToMap()
         }
     }
 }

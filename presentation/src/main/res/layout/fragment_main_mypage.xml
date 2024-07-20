@@ -20,7 +20,6 @@
             layout="@layout/include_toolbar_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:backButtonVisible="@{true}"
             app:colorMode="@{false}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

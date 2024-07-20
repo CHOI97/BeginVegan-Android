@@ -32,14 +32,16 @@ class MagazineViewModel @Inject constructor(
 
     private val _isContinueGetList = MutableLiveData(true)
     val isContinueGetList: LiveData<Boolean> = _isContinueGetList
-    fun reSetIsContinueGetList(){
-        _isContinueGetList.value = true
-    }
 
     private val _magazineDetail = MutableLiveData<TipsMagazineDetail?>()
     val magazineDetail: LiveData<TipsMagazineDetail?> = _magazineDetail
     fun resetMagazineDetail(){
         _magazineDetail.value = null
+    }
+
+    fun resetViewModel(){
+        _isContinueGetList.value = true
+        addMagazineList(mutableListOf())
     }
 
     fun getMagazineList(page:Int) {

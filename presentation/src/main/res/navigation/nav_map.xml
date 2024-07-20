@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_map"
-    app:startDestination="@id/restaurantDetailFragment2">
+    app:startDestination="@id/veganMapDefaultFragment">
 
     <fragment
         android:id="@+id/veganMapResultFragment"
@@ -24,9 +24,5 @@
             android:id="@+id/action_veganMapDefaultFragment_to_veganMapSearchFragment"
             app:destination="@id/veganMapSearchFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/restaurantDetailFragment2"
-        android:name="com.example.presentation.view.map.restaurant.RestaurantDetailFragment"
-        android:label="RestaurantDetailFragment" />
 
 </navigation>

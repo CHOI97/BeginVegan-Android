@@ -3,12 +3,13 @@ package com.example.presentation.view.mypage.view
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MyReview
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.config.navigation.main.MainNavigationHandler
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyReviewBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.ReviewRecommendController
@@ -106,7 +107,8 @@ class MypageMyReviewFragment : BaseFragment<FragmentMypageMyReviewBinding>(R.lay
 
     private fun setBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-            mainNavigationHandler.popBackStack()
+//            mainNavigationHandler.popBackStack()
+            findNavController().popBackStack()
         }
     }
     private fun setFabButton(){

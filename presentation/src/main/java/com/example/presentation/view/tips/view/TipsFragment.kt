@@ -1,11 +1,12 @@
 package com.example.presentation.view.tips.view
 
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainTipsBinding
 import com.example.presentation.util.DrawerController
+import com.example.presentation.view.main.MainViewModel
 import com.example.presentation.view.tips.adapter.TipsVpAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -18,6 +19,7 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
     @Inject
     lateinit var drawerController: DrawerController
     private val recipeViewModel: RecipeViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
     override fun init() {
         binding.lifecycleOwner = this
 
@@ -32,7 +34,7 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
             }
         }.attach()
 
-        checkFromTest()
+        checkMainViewModel()
         setOpenDrawer()
     }
 
@@ -43,20 +45,19 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
         }
     }
 
-    private fun checkFromTest(){
-        val args: TipsFragmentArgs by navArgs()
-        Timber.d("args.fromTest:${args.fromTest}, args.fromMyRecipe:${args.fromMyRecipe}")
-        if(args.fromTest){
-            //나를 위한 레시피
+    private fun checkMainViewModel(){
+        //나를 위한 레시피
+        if(mainViewModel.fromTest.value!!){
             binding.vpViewpagerArea.post{
                 binding.vpViewpagerArea.currentItem = 1
                 recipeViewModel.setIsFromTest(true)
             }
-        }
-        if(args.fromMyRecipe){
+        }else if(mainViewModel.tipsMoveToRecipe.value!!){
             binding.vpViewpagerArea.post{
                 binding.vpViewpagerArea.currentItem = 1
             }
         }
+        mainViewModel.setFromTest(false)
+        mainViewModel.setTipsMoveToRecipe(false)
     }
 }

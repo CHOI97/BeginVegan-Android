@@ -1,10 +1,10 @@
-
 package com.example.presentation.view.map.view
+
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
+import com.example.presentation.databinding.FragmentMainMapVeganMapBinding
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
-import com.example.presentation.databinding.FragmentMainMapVeganMapBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -231,16 +231,24 @@ import dagger.hilt.android.AndroidEntryPoint
 //
 //}
 @AndroidEntryPoint
-class VeganMapResultFragment : BaseFragment<FragmentMainMapVeganMapBinding>(R.layout.fragment_main_map_vegan_map) {
+class VeganMapResultFragment :
+    BaseFragment<FragmentMainMapVeganMapBinding>(R.layout.fragment_main_map_vegan_map) {
     override fun init() {
         binding.ibBackUp.setOnClickListener {
             findNavController().popBackStack()
         }
         //나의 식당, 나의 리뷰에서 왔을 때 처리
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().popBackStack()
+//        checkFromMypage()
         }
     }
+}
+//    private fun setOnSearchBack() {
+//        binding.includedSearchToolbar.ibBack.setOnClickListener {
+//            it.visibility = View.GONE
+//        }
+//    }
 
 
 //    private fun setOnSearchFocus() {
@@ -254,6 +262,17 @@ class VeganMapResultFragment : BaseFragment<FragmentMainMapVeganMapBinding>(R.la
 //            }
 //    }
 
-    //나의 식당, 나의 리뷰에서 왔을 때 처리
+//나의 식당, 나의 리뷰에서 왔을 때 처리
+//    private fun checkFromMypage(){
+//        val args: VeganMapFragmentArgs by navArgs()
+//        Timber.d("args.fromMyRestaurant:${args.fromMyRestaurant}, args.fromMyReview:${args.fromMyReview}")
+//        if(args.fromMyRestaurant){
+//            //나의 식당
+//            //Mypage에서 이동할때 map의 viewModel에 식당 id 넣어서 처리
+//        }
+//        if(args.fromMyReview){
+//            //나의 리뷰
+//            //Mypage에서 이동할때 map의 viewModel에 리뷰 id 넣어서 처리
+//        }
+//    }
 
-}
