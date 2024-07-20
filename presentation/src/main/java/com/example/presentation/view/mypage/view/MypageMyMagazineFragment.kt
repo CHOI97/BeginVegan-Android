@@ -61,7 +61,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
             override fun onItemClick(id: Int) {
                 //Magazine Detail로 이동
                 mainNavigationHandler.navigateMyMagazineToMagazineDetail()
-                magazineViewModel.resetMagazineDetail()
+                magazineViewModel.setMagazineDetail(null)
                 magazineViewModel.getMagazineDetail(id)
             }
 

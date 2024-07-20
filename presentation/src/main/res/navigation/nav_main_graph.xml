@@ -73,7 +73,11 @@
     <fragment
         android:id="@+id/tipsMagazineDetailFragment"
         android:name="com.example.presentation.view.tips.view.TipsMagazineDetailFragment"
-        android:label="TipsMagazineDetailFragment" />
+        android:label="TipsMagazineDetailFragment" >
+        <action
+            android:id="@+id/action_tipsMagazineDetailFragment_to_mypageMyMagazineFragment"
+            app:destination="@id/mypageMyMagazineFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainHomeFragment"
         android:name="com.example.presentation.view.home.view.HomeFragment"
@@ -93,6 +97,12 @@
         <action
             android:id="@+id/action_tipsFragment_to_tipsMagazineDetailFragment"
             app:destination="@id/tipsMagazineDetailFragment" />
+        <action
+            android:id="@+id/action_mainTipsFragment_to_mypageMyMagazineFragment"
+            app:destination="@id/mypageMyMagazineFragment" />
+        <action
+            android:id="@+id/action_mainTipsFragment_to_mypageMyRecipeFragment"
+            app:destination="@id/mypageMyRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainMypageFragment"

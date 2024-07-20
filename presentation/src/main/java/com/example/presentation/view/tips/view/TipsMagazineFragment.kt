@@ -59,7 +59,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
             TipsMagazineRvAdapter.OnItemClickListener {
             override fun onItemClick(magazineId:Int) {
                 mainNavigationHandler.navigateTipsToMagazineDetail()
-                magazineViewModel.resetMagazineDetail()
+                magazineViewModel.setMagazineDetail(null)
                 magazineViewModel.getMagazineDetail(magazineId)
             }
 
@@ -73,7 +73,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
                             if(bookmarkController.postBookmark(data.id, "MAGAZINE")){
                                 Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
                                     .setAction(getString(R.string.toast_scrap_action)){
-
+                                        mainNavigationHandler.navigateTipsMagazineToMyMagazine()
                                     }
                                     .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                                     .show()
@@ -83,7 +83,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
                             if(bookmarkController.deleteBookmark(data.id, "MAGAZINE")){
                                 Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
                                     .setAction(getString(R.string.toast_scrap_action)){
-
+                                        mainNavigationHandler.navigateTipsMagazineDetailToMyMagazine()
                                     }
                                     .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                                     .show()

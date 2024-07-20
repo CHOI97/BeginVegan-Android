@@ -27,5 +27,9 @@ interface MainNavigationHandler {
     fun navigateMyMagazineToTips()
     fun navigateMyMagazineToMagazineDetail()
 
+    fun navigateTipsMagazineToMyMagazine()
+    fun navigateTipsMagazineDetailToMyMagazine()
+    fun navigateTipsRecipeToMyRecipe()
+
     fun navController():NavController
 }

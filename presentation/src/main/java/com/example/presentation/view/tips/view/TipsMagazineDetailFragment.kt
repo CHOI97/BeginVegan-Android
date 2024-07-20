@@ -16,6 +16,7 @@ import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentTipsMagazineDetailBinding
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -73,9 +74,23 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
             lifecycleScope.launch {
                 if(isChecked){
                     bookmarkController.postBookmark(it.id, "MAGAZINE")
+                    Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.toast_scrap_action)){
+                            mainNavigationHandler.navigateTipsMagazineDetailToMyMagazine()
+                        }
+                        .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                        .show()
                 }else{
                     bookmarkController.deleteBookmark(it.id, "MAGAZINE")
+                    Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.toast_scrap_action)){
+                            mainNavigationHandler.navigateTipsMagazineDetailToMyMagazine()
+                        }
+                        .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                        .show()
                 }
+                it.isBookmarked = isChecked
+                magazineViewModel.setMagazineDetail(it)
             }
         }
     }
