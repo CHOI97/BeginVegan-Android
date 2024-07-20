@@ -4,12 +4,12 @@
     <dimen name="splash_logo_width">104dp</dimen>
     <dimen name="splash_logo_height">104dp</dimen>
     <dimen name="side_margin">16dp</dimen>
-
     <!--  Global Margin(dp) (새로추가)-->
     <dimen name="global_margin">16dp</dimen>
     <dimen name="global_dialog_radius">5dp</dimen>
     <dimen name="global_toolbar_height">56dp</dimen>
     <dimen name="global_button_size">48dp</dimen>
+    <dimen name="global_zero">0dp</dimen>
     <!--  Margin(dp)-->
     <!-- 사용 예정 -->
     <dimen name="margin_stroke">0.5dp</dimen>

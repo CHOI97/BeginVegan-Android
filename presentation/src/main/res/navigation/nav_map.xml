@@ -7,22 +7,31 @@
     <fragment
         android:id="@+id/veganMapResultFragment"
         android:name="com.example.presentation.view.map.view.VeganMapResultFragment"
-        android:label="VeganMapFragment" />
+        android:label="VeganMapFragment">
+        <argument
+            android:name="contents"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
     <fragment
         android:id="@+id/veganMapSearchFragment"
         android:name="com.example.presentation.view.map.view.VeganMapSearchFragment"
-        android:label="VeganMapSearchFragment" >
+        android:label="VeganMapSearchFragment">
         <action
             android:id="@+id/action_veganMapSearchFragment_to_veganMapResultFragment"
             app:destination="@id/veganMapResultFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/veganMapDefaultFragment"
         android:name="com.example.presentation.view.map.view.VeganMapDefaultFragment"
-        android:label="VeganMapDefaultFragment" >
+        android:label="VeganMapDefaultFragment">
         <action
             android:id="@+id/action_veganMapDefaultFragment_to_veganMapSearchFragment"
-            app:destination="@id/veganMapSearchFragment" />
+            app:destination="@id/veganMapSearchFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
 </navigation>
