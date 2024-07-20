@@ -8,6 +8,7 @@ import com.example.presentation.databinding.ActivityLoginBinding
 import com.example.presentation.util.LoadingDialog
 import com.example.presentation.view.login.viewModel.LoginViewModel
 import com.example.presentation.view.main.MainActivity
+import com.example.presentation.view.restaurant.view.RestaurantModifyInformationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

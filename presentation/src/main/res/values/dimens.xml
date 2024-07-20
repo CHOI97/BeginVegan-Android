@@ -70,6 +70,7 @@
     <dimen name="btn_24">24dp</dimen>
     <dimen name="btn_32">32dp</dimen>
     <dimen name="btn_40">40dp</dimen>
+    <dimen name="btn_48">48dp</dimen>
     <dimen name="btn_148">148dp</dimen>
     <dimen name="btn_164">164dp</dimen>
     <!-- 새로 추가 -->
@@ -132,6 +133,7 @@
     <!--    Line Width(dp)-->
     <dimen name="line_1">1dp</dimen>
     <dimen name="line_4">4dp</dimen>
+    <dimen name="line_8">8dp</dimen>
 
     <!--    Dim(dp)-->
     <dimen name="dim_3">3dp</dimen>
