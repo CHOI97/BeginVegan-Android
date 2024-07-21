@@ -2,8 +2,10 @@ package com.example.data.retrofit
 
 import com.example.data.model.core.BaseResponse
 import com.example.data.model.userInfo.AddUserInfoReq
+import com.example.data.model.userInfo.HomeUserInfoResponse
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.PUT
@@ -17,5 +19,11 @@ interface UserInfoService {
         @Part("addUserInfoReq") addUserInfoReq: AddUserInfoReq,
         @Part("isDefaultImage") isDefaultImage: Boolean,
         @Part file: MultipartBody.Part?
-    ):ApiResponse<BaseResponse>
+    ): ApiResponse<BaseResponse>
+
+
+    @GET("/api/v1/users/home")
+    suspend fun getHomeUserInfo(
+        @Header("Authorization") token: String
+    ): ApiResponse<HomeUserInfoResponse>
 }

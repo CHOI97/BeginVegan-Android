@@ -1,9 +1,11 @@
 package com.example.presentation.view.map.view
 
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
+import com.example.presentation.view.map.viewModel.VeganMapViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.MapLifeCycleCallback
@@ -237,6 +239,8 @@ import timber.log.Timber
 @AndroidEntryPoint
 class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_main_map) {
     private lateinit var mapView: MapView
+
+    private val viewModel: VeganMapViewModel by viewModels()
     override fun init() {
         mapView = MapView(requireContext())
         binding.mapView.addView(mapView)
@@ -253,16 +257,28 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 // 인증 후 API 가 정상적으로 실행될 때 호출됨
             }
         })
-//        setOnSearchFocus()
         setOnSearchBack()
 
-        //나의 식당, 나의 리뷰에서 왔을 때 처리
-//        checkFromMypage()
     }
-
     private fun setOnSearchBack() {
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    private fun setOnSearchFocus() {
 //        binding.includedSearchToolbar..onFocusChangeListener =
