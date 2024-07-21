@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
-import com.example.domain.model.NearRestaurant
+import com.example.domain.model.map.NearRestaurant
 import com.example.presentation.databinding.ItemHomeRecommendRestaurantBinding
 
 class HomeRestaurantRVAdapter(

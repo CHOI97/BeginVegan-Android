@@ -8,14 +8,13 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.domain.model.NearRestaurant
+import com.example.domain.model.map.NearRestaurant
 import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
@@ -23,7 +22,6 @@ import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.view.main.MainViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,7 +30,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_main_home) {
     private lateinit var homeRestaurantRVAdapter: HomeRestaurantRVAdapter
-    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
+    private val mainViewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_main_graph)
 
     @Inject
     lateinit var drawerController: DrawerController

@@ -125,6 +125,7 @@ dependencies {
 
     // Hilt
     implementation(Dependencies.DAGGER_HILT)
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
     kapt(Dependencies.DAGGER_HILT_KAPT)
 
     // ViewModel delegate

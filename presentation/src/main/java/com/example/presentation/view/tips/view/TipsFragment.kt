@@ -1,6 +1,7 @@
 package com.example.presentation.view.tips.view
 
 import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.navGraphViewModels
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
@@ -19,7 +20,7 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
     @Inject
     lateinit var drawerController: DrawerController
     private val recipeViewModel: RecipeViewModel by activityViewModels()
-    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
+    private val mainViewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_main_graph)
     override fun init() {
         binding.lifecycleOwner = this
 
