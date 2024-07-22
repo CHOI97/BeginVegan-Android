@@ -28,33 +28,36 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         setBottomNav()
         setupOnBackPressedCallback()
     }
-    private fun setNavController(){
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcw_main_container) as NavHostFragment
+
+    private fun setNavController() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fcw_main_container) as NavHostFragment
         navController = navHostFragment.navController
         mainNavigationHandler = MainNavigationImpl(navController)
     }
 
-    private fun setBottomNav(){
+    private fun setBottomNav() {
         with(binding) {
             bnvMain.setupWithNavController(navController)
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if(destination.id == R.id.mainHomeFragment || destination.id == R.id.veganMapFragment ||
-                    destination.id == R.id.mainTipsFragment || destination.id == R.id.mainMypageFragment){
+                if (destination.id == R.id.mainHomeFragment || destination.id == R.id.veganMapFragment ||
+                    destination.id == R.id.mainTipsFragment || destination.id == R.id.mainMypageFragment
+                ) {
                     binding.bnvMain.visibility = View.VISIBLE
-                }
-                else binding.bnvMain.visibility = View.GONE
+                } else binding.bnvMain.visibility = View.GONE
                 when (destination.id) {
                     R.id.mainHomeFragment -> bnvMain.menu.findItem(R.id.item_home).isChecked = true
                     R.id.veganMapFragment -> bnvMain.menu.findItem(R.id.item_map).isChecked = true
                     R.id.mainTipsFragment -> bnvMain.menu.findItem(R.id.item_tips).isChecked = true
-                    R.id.mainMypageFragment -> bnvMain.menu.findItem(R.id.item_profile).isChecked = true
+                    R.id.mainMypageFragment -> bnvMain.menu.findItem(R.id.item_profile).isChecked =
+                        true
                 }
             }
 
             bnvMain.setOnItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.item_home -> mainNavigationHandler.navigateToHome()
-                    R.id.item_map ->  mainNavigationHandler.navigateToMap()
+                    R.id.item_map -> mainNavigationHandler.navigateToMap()
                     R.id.item_tips -> mainNavigationHandler.navigateToTips()
                     R.id.item_profile -> mainNavigationHandler.navigateToMypage()
                 }
@@ -64,16 +67,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
-    private fun setupOnBackPressedCallback(){
-        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
+    private fun setupOnBackPressedCallback() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-//                val navController = findNavController(R.id.fcw_main_container)
-
-                if(binding.dlDrawer.isDrawerOpen(GravityCompat.END)){
+                if (binding.dlDrawer.isDrawerOpen(GravityCompat.END)) {
                     binding.dlDrawer.closeDrawer(GravityCompat.END)
-                }else if(navController.backQueue.size > 2){
+                } else if (navController.backQueue.size > 2) {
                     navController.popBackStack()
-                }else{
+                } else {
                     isEnabled = false
                     finish()
                 }

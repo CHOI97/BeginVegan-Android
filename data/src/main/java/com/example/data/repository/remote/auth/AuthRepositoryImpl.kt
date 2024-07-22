@@ -16,26 +16,6 @@ class AuthRepositoryImpl @Inject constructor(
     private val authTokenDataSource: AuthTokenDataSource,
     private val authMapper: AuthMapper
 ) : AuthRepository {
-//    override suspend fun signUp(email: String, providerId: String): Result<Boolean> {
-//        return try {
-//            val authRequest = AuthRequest(email = email, providerId = providerId)
-//            val response = authRemoteDataSource.signUp(authRequest)
-//            when (response) {
-//                is ApiResponse.Success -> Result.success(response.data.check)
-//                is ApiResponse.Failure.Error -> {
-//                    Timber.e("SignUp error: ${response.errorBody}")
-//                    Result.failure(Exception("SignUp failed"))
-//                }
-//                is ApiResponse.Failure.Exception -> {
-//                    Timber.e("SignUp exception: ${response.message}")
-//                    Result.failure(response.throwable)
-//                }
-//            }
-//        } catch (e: Exception) {
-//            Timber.e(e, "SignUp exception")
-//            Result.failure(e)
-//        }
-//    }
 
     override suspend fun signIn(email: String, providerId: String): Result<AuthToken> {
         return try {

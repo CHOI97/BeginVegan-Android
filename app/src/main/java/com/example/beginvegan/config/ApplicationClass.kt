@@ -1,8 +1,11 @@
 package com.example.beginvegan.config
 
 import android.app.Application
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.beginvegan.BuildConfig
 import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
 import com.kakao.vectormap.KakaoMapSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -13,7 +16,7 @@ class ApplicationClass : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
-        KakaoSdk.init(this,BuildConfig.KAKAO_API_KEY_TEST)
+        KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
     }
 
     //    override fun onCreate() {

@@ -4,12 +4,12 @@
     <dimen name="splash_logo_width">104dp</dimen>
     <dimen name="splash_logo_height">104dp</dimen>
     <dimen name="side_margin">16dp</dimen>
-
     <!--  Global Margin(dp) (새로추가)-->
     <dimen name="global_margin">16dp</dimen>
     <dimen name="global_dialog_radius">5dp</dimen>
     <dimen name="global_toolbar_height">56dp</dimen>
     <dimen name="global_button_size">48dp</dimen>
+    <dimen name="global_zero">0dp</dimen>
     <!--  Margin(dp)-->
     <!-- 사용 예정 -->
     <dimen name="margin_stroke">0.5dp</dimen>
@@ -70,6 +70,7 @@
     <dimen name="btn_24">24dp</dimen>
     <dimen name="btn_32">32dp</dimen>
     <dimen name="btn_40">40dp</dimen>
+    <dimen name="btn_48">48dp</dimen>
     <dimen name="btn_148">148dp</dimen>
     <dimen name="btn_164">164dp</dimen>
     <!-- 새로 추가 -->
@@ -132,6 +133,7 @@
     <!--    Line Width(dp)-->
     <dimen name="line_1">1dp</dimen>
     <dimen name="line_4">4dp</dimen>
+    <dimen name="line_8">8dp</dimen>
 
     <!--    Dim(dp)-->
     <dimen name="dim_3">3dp</dimen>
@@ -160,4 +162,6 @@
     <dimen name="dialog_width_big">312dp</dimen>
     <dimen name="dialog_height">506dp</dimen>
     <dimen name="photo_select_dialog_radius">8dp</dimen>
+
+    <dimen name="restaurant_image_height">180dp</dimen>
 </resources>

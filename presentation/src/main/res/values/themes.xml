@@ -2,7 +2,7 @@
 
     <style name="Theme.Beginvegan" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/color_white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/launch_tranparent</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/launch_tranparent</item>01
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/color_white</item>
     </style>
@@ -115,6 +115,7 @@
     <style name="SearchOutlineBox">
         <item name="colorControlActivated">@color/color_text_01</item>
     </style>
+
     <style name="Widget.BeginVegan.TextInputEditText.OutlinedBox" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingTop">14dp</item>
@@ -141,4 +142,56 @@
         <item name="android:textColor">@color/color_white</item>
     </style>
 
+    <style name="AppSearchView" parent="Widget.Material3.SearchView">
+
+    </style>
+
+    <style name="AppSearchBar" parent="ShapeAppearanceOverlay.Material3.SearchBar"></style>
+
+    <style name="AppSearchBar.TextAppearance" parent="TextAppearance.Material3.SearchBar">
+        <item name="hintTextColor">@color/color_gray_02</item>
+    </style>
+
+    <style name="SearchViewToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:iconTint">@color/color_white</item>
+        <item name="navigationIconTint">@color/color_white</item>
+    </style>
+
+    <style name="RestaurantNavigationButton">
+        <item name="android:drawablePadding">@dimen/margin_4</item>
+        <item name="android:paddingTop">@dimen/margin_8</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/color_text_02</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ModifyTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="strokeColor">@color/color_black</item>
+        <item name="boxStrokeWidth">0.5dp</item>
+        <item name="boxStrokeWidthFocused">0.5dp</item>
+        <item name="boxStrokeColor">@drawable/onboarding_color</item>
+    </style>
+
+    <style name="ModifyTextInputEditText" parent="Widget.Material3.TextInputEditText.OutlinedBox.Dense">
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="CustomSearchViewTextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@style/body_1_regular</item>
+        <item name="hintTextColor">@color/color_gray_02</item>
+        <item name="android:textColor">@color/color_text_01</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="SearchViewLayout">
+        <item name="cardCornerRadius">@dimen/radius_8</item>
+        <item name="android:padding">@dimen/global_zero</item>
+        <item name="android:paddingTop">@dimen/global_zero</item>
+        <item name="android:paddingBottom">@dimen/global_zero</item>
+        <item name="android:paddingStart">@dimen/global_zero</item>
+        <item name="android:paddingEnd">@dimen/global_zero</item>
+        <item name="android:minWidth">@dimen/global_zero</item>
+        <item name="minHeight">@dimen/global_zero</item>
+    </style>
 </resources>
