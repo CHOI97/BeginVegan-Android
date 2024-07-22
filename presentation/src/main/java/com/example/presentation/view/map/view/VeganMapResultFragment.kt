@@ -240,7 +240,7 @@ class VeganMapResultFragment :
         binding.ibBackUp.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.ibBackUp.setOnClickListener {
+        binding.btnSearch.setOnClickListener {
             findNavController().popBackStack()
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

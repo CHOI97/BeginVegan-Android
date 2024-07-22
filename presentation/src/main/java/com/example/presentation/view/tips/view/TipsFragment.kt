@@ -16,7 +16,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main_tips) {
+class TipsFragment : BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main_tips) {
     @Inject
     lateinit var drawerController: DrawerController
     private val recipeViewModel: RecipeViewModel by activityViewModels()
@@ -26,10 +26,11 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
 
         setTipsTab()
     }
+
     private fun setTipsTab() {
         binding.vpViewpagerArea.adapter = TipsVpAdapter(childFragmentManager, lifecycle)
-        TabLayoutMediator(binding.tlTab, binding.vpViewpagerArea){ tab, position ->
-            when(position){
+        TabLayoutMediator(binding.tlTab, binding.vpViewpagerArea) { tab, position ->
+            when (position) {
                 0 -> tab.text = getString(R.string.magazine)
                 1 -> tab.text = getString(R.string.recipe)
             }
@@ -46,15 +47,15 @@ class TipsFragment: BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_main
         }
     }
 
-    private fun checkMainViewModel(){
+    private fun checkMainViewModel() {
         //나를 위한 레시피
-        if(mainViewModel.fromTest.value!!){
-            binding.vpViewpagerArea.post{
+        if (mainViewModel.fromTest.value!!) {
+            binding.vpViewpagerArea.post {
                 binding.vpViewpagerArea.currentItem = 1
                 recipeViewModel.setIsFromTest(true)
             }
-        }else if(mainViewModel.tipsMoveToRecipe.value!!){
-            binding.vpViewpagerArea.post{
+        } else if (mainViewModel.tipsMoveToRecipe.value!!) {
+            binding.vpViewpagerArea.post {
                 binding.vpViewpagerArea.currentItem = 1
             }
         }

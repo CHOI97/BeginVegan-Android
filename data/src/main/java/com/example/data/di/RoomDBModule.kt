@@ -3,7 +3,6 @@ package com.example.data.di
 import android.content.Context
 import androidx.room.Room
 import com.example.data.mapper.map.HistorySearchMapper
-import com.example.data.mapper.userInfo.HomeUserInfoMapper
 import com.example.data.repository.local.search.HistorySearchLocalDataSource
 import com.example.data.repository.local.search.HistorySearchLocalDataSourceImpl
 import com.example.data.repository.local.search.HistorySearchRepositoryImpl
@@ -24,23 +23,19 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object RoomDBModule {
+
     @Singleton
     @Provides
     fun provideHistorySearchDatabase(
         @ApplicationContext context: Context
-    ): HistorySearchDatabase = Room
-        .databaseBuilder(
-            context.applicationContext,
-            HistorySearchDatabase::class.java,
-            "beginvegan-search-history.db"
-        )
-        .build()
+    ): HistorySearchDatabase = HistorySearchDatabase.getInstance(context)
 
     @Provides
     @Singleton
-    fun provideHistorySearchDao(database: HistorySearchDatabase) = database.historySearchDao()
+    fun provideHistorySearchDao(database: HistorySearchDatabase): HistorySearchDao = database.historySearchDao()
 
     @Provides
+    @Singleton
     fun provideHistorySearchRepository(
         historyDataSource: HistorySearchLocalDataSource,
         historySearchMapper: HistorySearchMapper
@@ -49,6 +44,7 @@ object RoomDBModule {
     }
 
     @Provides
+    @Singleton
     fun provideHistorySearchLocalDataSource(
         historySearchDao: HistorySearchDao
     ): HistorySearchLocalDataSource {
@@ -56,7 +52,8 @@ object RoomDBModule {
     }
 
     @Provides
-    fun provideHistorySearchMapper(): HistorySearchMapper{
+    @Singleton
+    fun provideHistorySearchMapper(): HistorySearchMapper {
         return HistorySearchMapper()
     }
 }

@@ -1,11 +1,9 @@
 package com.example.presentation.view.map.view
 
 import android.content.Context
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,14 +12,11 @@ import com.example.domain.model.map.HistorySearch
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMapSearchBinding
-import com.example.presentation.view.map.adpater.VeganMapSearchRVAdapter
+import com.example.presentation.view.map.adapter.SearchAdapterDataObserver
+import com.example.presentation.view.map.adapter.VeganMapSearchRVAdapter
 import com.example.presentation.view.map.viewModel.VeganMapSearchViewModel
-import com.example.presentation.view.map.viewModel.VeganMapViewModel
-import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 @AndroidEntryPoint
 class VeganMapSearchFragment :
@@ -30,6 +25,8 @@ class VeganMapSearchFragment :
     private val viewModel: VeganMapSearchViewModel by viewModels()
     private lateinit var veganMapSearchRVAdapter: VeganMapSearchRVAdapter
     override fun init() {
+
+        viewModel.fetchAllHistory()
 
         showKeyBoard()
 
@@ -60,9 +57,13 @@ class VeganMapSearchFragment :
     }
 
     private fun setHistorySearchRVAdapter() {
+        val emptyObserver = SearchAdapterDataObserver(binding.rvSearch, binding.tvEmptyView)
+
         veganMapSearchRVAdapter = VeganMapSearchRVAdapter()
 
         binding.rvSearch.adapter = veganMapSearchRVAdapter
+        veganMapSearchRVAdapter.registerAdapterDataObserver(emptyObserver)
+
         logMessage("setHistorySearchRVAdapter value = ${viewModel.searchList.value}")
         veganMapSearchRVAdapter.submitList(viewModel.searchList.value)
 

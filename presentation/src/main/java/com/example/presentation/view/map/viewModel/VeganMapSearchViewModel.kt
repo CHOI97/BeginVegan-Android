@@ -27,23 +27,22 @@ class VeganMapSearchViewModel @Inject constructor(
     private val _searchList = MutableStateFlow<List<HistorySearch>>(emptyList())
     val searchList: StateFlow<List<HistorySearch>> get() = _searchList
 
-    private val _allDeleteState = MutableLiveData<Boolean>(false)
+    private val _allDeleteState = MutableLiveData(false)
     val allDeleteState: LiveData<Boolean> get() = _allDeleteState
 
-    init{
-        fetchAllHistory()
-    }
-    fun updateAllDeleteState(isBool: Boolean){
+    fun updateAllDeleteState(isBool: Boolean) {
         _allDeleteState.value = isBool
     }
-    private fun fetchAllHistory() {
-        viewModelScope.launch {
+
+    fun fetchAllHistory() {
+        viewModelScope.launch(Dispatchers.IO) {
             getAllHistorySearchUseCase.invoke()
                 .catch { e ->
-                    Timber.d(e, "Get HistorySearch Exception")
-                    _searchList.value = emptyList() // Handle the exception by setting an empty list
+                    Timber.d(e, "ViewModel Get HistorySearch Exception")
+                    _searchList.value = emptyList()
                 }
                 .collect { historySearchList ->
+                    Timber.d("collect search list $historySearchList")
                     _searchList.value = historySearchList
                 }
         }
