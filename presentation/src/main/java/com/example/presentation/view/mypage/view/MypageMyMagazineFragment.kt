@@ -5,6 +5,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MypageMyMagazineItem
@@ -14,6 +15,7 @@ import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyMagazineBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
+import com.example.presentation.view.main.MainViewModel
 import com.example.presentation.view.mypage.adapter.MyMagazineRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyMagazineViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
@@ -29,9 +31,11 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     lateinit var mainNavigationHandler: MainNavigationHandler
     @Inject
     lateinit var bookmarkController: BookmarkController
-    private val magazineViewModel:MagazineViewModel by activityViewModels()
 
+    private val magazineViewModel:MagazineViewModel by activityViewModels()
     private val myMagazineViewModel: MyMagazineViewModel by viewModels()
+    private val mainViewModel:MainViewModel by navGraphViewModels(R.id.nav_main_graph)
+
     private lateinit var myMagazineRvAdapter: MyMagazineRvAdapter
     private var myMagazineList = mutableListOf<MypageMyMagazineItem>()
     private var currentPage = 0
@@ -64,6 +68,7 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
                 mainNavigationHandler.navigateMyMagazineToMagazineDetail()
                 magazineViewModel.setMagazineDetail(null)
                 magazineViewModel.getMagazineDetail(id)
+                mainViewModel.setFromMyMagazine(true)
             }
 
             override fun setToggleButton(isChecked: Boolean, magazineId: Int) {
