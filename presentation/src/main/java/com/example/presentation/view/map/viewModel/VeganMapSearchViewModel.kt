@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -27,16 +28,10 @@ class VeganMapSearchViewModel @Inject constructor(
     private val _searchList = MutableStateFlow<List<HistorySearch>>(emptyList())
     val searchList: StateFlow<List<HistorySearch>> get() = _searchList
 
-    private val _allDeleteState = MutableLiveData(false)
-    val allDeleteState: LiveData<Boolean> get() = _allDeleteState
-
-    fun updateAllDeleteState(isBool: Boolean) {
-        _allDeleteState.value = isBool
-    }
-
     fun fetchAllHistory() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getAllHistorySearchUseCase.invoke()
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     Timber.d(e, "ViewModel Get HistorySearch Exception")
                     _searchList.value = emptyList()
@@ -47,6 +42,7 @@ class VeganMapSearchViewModel @Inject constructor(
                 }
         }
     }
+
 
     fun insertHistory(description: String) {
         viewModelScope.launch(Dispatchers.IO) {

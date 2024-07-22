@@ -334,6 +334,7 @@
     <!-- Toast Message -->
     <string name="toast_scrap_done">스크랩 되었어요!</string>
     <string name="toast_scrap_undo">스크랩이 해제되었어요!</string>
+    <string name="toast_scrap_action">스크랩 모아보기</string>
     <string name="toast_map_report_edit_restaurant">제보가 접수되었어요.</string>
     <string name="toast_map_report_review">신고가 접수되었어요.</string>
 

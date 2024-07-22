@@ -14,6 +14,7 @@ import com.example.presentation.view.home.adapter.HomeRecipeVpAdapter
 import com.example.presentation.view.home.viewModel.HomeTipsViewModel
 import com.example.presentation.view.tips.view.TipsRecipeDetailDialog
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,8 +55,23 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
                 data: TipsRecipeListItem
             ) {
                 lifecycleScope.launch {
-                    if(isBookmarked) bookmarkController.postBookmark(data.id, "RECIPE")
-                    else bookmarkController.deleteBookmark(data.id, "RECIPE")
+                    if(isBookmarked) {
+                        bookmarkController.postBookmark(data.id, "RECIPE")
+                        Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                            .setAction(getString(R.string.toast_scrap_action)){
+                                mainNavigationHandler.navigateHomeToMyRecipe()
+                            }
+                            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                            .show()
+                    } else {
+                        bookmarkController.deleteBookmark(data.id, "RECIPE")
+                        Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                            .setAction(getString(R.string.toast_scrap_action)){
+                                mainNavigationHandler.navigateHomeToMyRecipe()
+                            }
+                            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                            .show()
+                    }
                 }
             }
 

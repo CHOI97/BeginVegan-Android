@@ -12,6 +12,10 @@ interface MainNavigationHandler {
     fun navigateTestToVeganTestResult()
     fun navigateTestResultToTips()
 
+    fun navigateHomeToMagazineDetail()
+    fun navigateHomeToMyMagazine()
+    fun navigateHomeToMyRecipe()
+
     fun navigateTipsToMagazineDetail()
 
     fun navigateMypageToEditProfile()
@@ -26,6 +30,10 @@ interface MainNavigationHandler {
     fun navigateMyRecipeToTips()
     fun navigateMyMagazineToTips()
     fun navigateMyMagazineToMagazineDetail()
+
+    fun navigateTipsMagazineToMyMagazine()
+    fun navigateTipsMagazineDetailToMyMagazine()
+    fun navigateTipsRecipeToMyRecipe()
 
     fun navController():NavController
 }

@@ -12,7 +12,6 @@ import com.example.domain.model.map.HistorySearch
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMapSearchBinding
-import com.example.presentation.view.map.adapter.SearchAdapterDataObserver
 import com.example.presentation.view.map.adapter.VeganMapSearchRVAdapter
 import com.example.presentation.view.map.viewModel.VeganMapSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,31 +37,13 @@ class VeganMapSearchFragment :
             findNavController().popBackStack()
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.searchList.collect() {
-                if (it.isEmpty()) {
-                    viewModel.updateAllDeleteState(false)
-                } else {
-                    viewModel.updateAllDeleteState(true)
-                }
-            }
-        }
-        viewModel.allDeleteState.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.btnAllDelete.visibility = View.VISIBLE
-            } else {
-                binding.btnAllDelete.visibility = View.GONE
-            }
-        }
     }
 
     private fun setHistorySearchRVAdapter() {
-        val emptyObserver = SearchAdapterDataObserver(binding.rvSearch, binding.tvEmptyView)
 
         veganMapSearchRVAdapter = VeganMapSearchRVAdapter()
 
         binding.rvSearch.adapter = veganMapSearchRVAdapter
-        veganMapSearchRVAdapter.registerAdapterDataObserver(emptyObserver)
 
         logMessage("setHistorySearchRVAdapter value = ${viewModel.searchList.value}")
         veganMapSearchRVAdapter.submitList(viewModel.searchList.value)
@@ -72,8 +53,20 @@ class VeganMapSearchFragment :
             override fun onDelete(data: HistorySearch) {
                 viewModel.deleteHistory(data)
             }
-
         })
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.searchList.collect() {
+                if (it.isEmpty()) {
+                    binding.tvEmptyView.visibility = View.VISIBLE
+                    binding.btnAllDelete.visibility = View.GONE
+                } else {
+                    binding.tvEmptyView.visibility = View.GONE
+                    binding.btnAllDelete.visibility = View.VISIBLE
+                    veganMapSearchRVAdapter.submitList(viewModel.searchList.value)
+                }
+            }
+        }
     }
 
     private fun onSearch() {

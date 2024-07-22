@@ -25,7 +25,7 @@ class VeganMapSearchRVAdapter :
     inner class ViewHolder(val binding: ItemSearchHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: HistorySearch) {
-            binding.tvDescription.text = data.description
+            binding.btnDescription.text = data.description
             binding.btnDelete.setOnClickListener {
                 listener?.onDelete(data)
             }

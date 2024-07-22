@@ -5,6 +5,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.mypage.MypageMyMagazineItem
@@ -14,9 +15,11 @@ import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMypageMyMagazineBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
+import com.example.presentation.view.main.MainViewModel
 import com.example.presentation.view.mypage.adapter.MyMagazineRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyMagazineViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -28,9 +31,11 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     lateinit var mainNavigationHandler: MainNavigationHandler
     @Inject
     lateinit var bookmarkController: BookmarkController
-    private val magazineViewModel:MagazineViewModel by activityViewModels()
 
+    private val magazineViewModel:MagazineViewModel by activityViewModels()
     private val myMagazineViewModel: MyMagazineViewModel by viewModels()
+    private val mainViewModel:MainViewModel by navGraphViewModels(R.id.nav_main_graph)
+
     private lateinit var myMagazineRvAdapter: MyMagazineRvAdapter
     private var myMagazineList = mutableListOf<MypageMyMagazineItem>()
     private var currentPage = 0
@@ -61,14 +66,24 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
             override fun onItemClick(id: Int) {
                 //Magazine Detail로 이동
                 mainNavigationHandler.navigateMyMagazineToMagazineDetail()
-                magazineViewModel.resetMagazineDetail()
+                magazineViewModel.setMagazineDetail(null)
                 magazineViewModel.getMagazineDetail(id)
+                mainViewModel.setFromMyMagazine(true)
             }
 
             override fun setToggleButton(isChecked: Boolean, magazineId: Int) {
                 lifecycleScope.launch {
-                    if(isChecked) bookmarkController.postBookmark(magazineId, "MAGAZINE")
-                    else bookmarkController.deleteBookmark(magazineId, "MAGAZINE")
+                    if(isChecked) {
+                        if(bookmarkController.postBookmark(magazineId, "MAGAZINE")){
+                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                    } else {
+                        if(bookmarkController.deleteBookmark(magazineId, "MAGAZINE")){
+                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
                 }
             }
         })

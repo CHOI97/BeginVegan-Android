@@ -21,6 +21,7 @@ import com.example.presentation.view.mypage.adapter.MyRecipeRvAdapter
 import com.example.presentation.view.mypage.viewModel.MyRecipeViewModel
 import com.example.presentation.view.tips.view.TipsRecipeDetailDialog
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -70,8 +71,17 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
 
             override fun setToggleButton(isChecked: Boolean, recipeId: Int) {
                 lifecycleScope.launch {
-                    if(isChecked) bookmarkController.postBookmark(recipeId, "RECIPE")
-                    else bookmarkController.deleteBookmark(recipeId, "RECIPE")
+                    if(isChecked) {
+                        if(bookmarkController.postBookmark(recipeId, "RECIPE")){
+                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                    } else {
+                        if(bookmarkController.deleteBookmark(recipeId, "RECIPE")){
+                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
                 }
             }
         })

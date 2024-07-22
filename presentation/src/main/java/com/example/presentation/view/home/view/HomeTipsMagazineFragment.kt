@@ -13,6 +13,7 @@ import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.home.adapter.HomeMagazineVpAdapter
 import com.example.presentation.view.home.viewModel.HomeTipsViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,7 +46,7 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
         vpAdapter.setOnItemClickListener(object : HomeMagazineVpAdapter.OnItemClickListener{
             override fun onItemClick(magazineId: Int) {
                 magazineViewModel.getMagazineDetail(magazineId)
-                mainNavigationHandler.navigateTipsToMagazineDetail()
+                mainNavigationHandler.navigateHomeToMagazineDetail()
             }
 
             override fun changeBookmark(
@@ -54,8 +55,23 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
                 data: TipsMagazineItem
             ) {
                 lifecycleScope.launch {
-                    if(isBookmarked) bookmarkController.postBookmark(data.id, "MAGAZINE")
-                    else bookmarkController.deleteBookmark(data.id, "MAGAZINE")
+                    if(isBookmarked) {
+                        bookmarkController.postBookmark(data.id, "MAGAZINE")
+                        Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                            .setAction(getString(R.string.toast_scrap_action)){
+                                mainNavigationHandler.navigateHomeToMyMagazine()
+                            }
+                            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                            .show()
+                    } else {
+                        bookmarkController.deleteBookmark(data.id, "MAGAZINE")
+                        Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                            .setAction(getString(R.string.toast_scrap_action)){
+                                mainNavigationHandler.navigateHomeToMyMagazine()
+                            }
+                            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                            .show()
+                    }
                 }
             }
 

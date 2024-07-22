@@ -1,6 +1,7 @@
 package com.example.presentation.view.tips.view
 
 import android.widget.CompoundButton
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.adapter.TipsMagazineRvAdapter
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -58,7 +60,7 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
             TipsMagazineRvAdapter.OnItemClickListener {
             override fun onItemClick(magazineId:Int) {
                 mainNavigationHandler.navigateTipsToMagazineDetail()
-                magazineViewModel.resetMagazineDetail()
+                magazineViewModel.setMagazineDetail(null)
                 magazineViewModel.getMagazineDetail(magazineId)
             }
 
@@ -66,13 +68,29 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
                 toggleButton: CompoundButton,
                 isBookmarked: Boolean,
                 data: TipsMagazineItem
-            ) { when(isBookmarked){
-                true -> {
-                    lifecycleScope.launch {
-                        bookmarkController.postBookmark(data.id, "MAGAZINE") } }
-                false -> {
-                    lifecycleScope.launch {
-                        bookmarkController.deleteBookmark(data.id, "MAGAZINE") } }
+            ) { lifecycleScope.launch{
+                    when(isBookmarked){
+                        true -> {
+                            if(bookmarkController.postBookmark(data.id, "MAGAZINE")){
+                                Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                                    .setAction(getString(R.string.toast_scrap_action)){
+                                        mainNavigationHandler.navigateTipsMagazineToMyMagazine()
+                                    }
+                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                                    .show()
+                            }
+                        }
+                        false -> {
+                            if(bookmarkController.deleteBookmark(data.id, "MAGAZINE")){
+                                Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                                    .setAction(getString(R.string.toast_scrap_action)){
+                                        mainNavigationHandler.navigateTipsMagazineDetailToMyMagazine()
+                                    }
+                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                                    .show()
+                            }
+                        }
+                    }
             } }
         })
 

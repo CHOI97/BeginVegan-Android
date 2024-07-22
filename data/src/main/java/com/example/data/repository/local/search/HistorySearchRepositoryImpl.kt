@@ -38,25 +38,9 @@ class HistorySearchRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getHistorySearch(): Flow<List<HistorySearch>> = flow {
-        val historySearchEntities = mutableListOf<HistorySearch>()
-        try {
-            Timber.d("getHistorySearch Start")
-            historySearchDataSource.getHistorySearch().collect { historySearchEntity ->
-                Timber.d("getHistorySearch collect")
-                Timber.d("getHistorySearch collect data $historySearchEntity")
-                historySearchEntities.addAll(
-                    historySearchMapper.mapToSearchList(historySearchEntity)
-                )
-            }
-            Timber.d("getHistorySearch emit")
-            emit(historySearchEntities)
-        } catch (e: CancellationException) {
-            Timber.e(e,"RepositoryImpl Get HistorySearch Job was cancelled")
-            emit(emptyList())  // Optionally, you might not need this if you want to stop emission
-        } catch (e: Exception) {
-            Timber.e(e, "RepositoryImpl Get HistorySearch Exception")
-            emit(emptyList())
+    override suspend fun getHistorySearch(): Flow<List<HistorySearch>> {
+        return historySearchDataSource.getHistorySearch().map { entityList ->
+            historySearchMapper.mapToSearchList(entityList)
         }
     }
 

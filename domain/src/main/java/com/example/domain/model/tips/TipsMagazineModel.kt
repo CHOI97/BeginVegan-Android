@@ -20,7 +20,7 @@ data class TipsMagazineDetail(
     val editor: String,
     val source: String?,
     val thumbnail: String,
-    val isBookmarked: Boolean,
+    var isBookmarked: Boolean,
     val createdDate: String,
     val magazineContents: List<MagazineContent>
 )
