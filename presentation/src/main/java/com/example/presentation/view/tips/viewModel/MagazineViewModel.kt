@@ -35,8 +35,8 @@ class MagazineViewModel @Inject constructor(
 
     private val _magazineDetail = MutableLiveData<TipsMagazineDetail?>()
     val magazineDetail: LiveData<TipsMagazineDetail?> = _magazineDetail
-    fun resetMagazineDetail(){
-        _magazineDetail.value = null
+    fun setMagazineDetail(item:TipsMagazineDetail?){
+        _magazineDetail.value = item
     }
 
     fun resetViewModel(){

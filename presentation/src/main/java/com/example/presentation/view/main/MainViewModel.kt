@@ -17,6 +17,12 @@ class MainViewModel:ViewModel() {
         _fromTest.value = isMove
     }
 
+    private val _fromMyMagazine = MutableLiveData(false)
+    val fromMyMagazine: LiveData<Boolean> = _fromMyMagazine
+    fun setFromMyMagazine(isMove:Boolean){
+        _fromMyMagazine.value = isMove
+    }
+
     private val _mapMoveToReview = MutableLiveData(false)
     val mapMoveToReview:LiveData<Boolean> = _mapMoveToReview
     fun setMapMoveToReview(isMove:Boolean){

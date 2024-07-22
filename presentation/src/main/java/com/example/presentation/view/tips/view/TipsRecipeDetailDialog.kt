@@ -9,9 +9,11 @@ import com.example.domain.model.RecipeIngredient
 import com.example.domain.model.TipsRecipeDetail
 import com.example.presentation.R
 import com.example.presentation.base.BaseDialogFragment
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.DialogRecipeDetailBinding
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,6 +21,8 @@ import javax.inject.Inject
 class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.layout.dialog_recipe_detail) {
     @Inject
     lateinit var bookmarkController: BookmarkController
+    @Inject
+    lateinit var mainNavigationHandler: MainNavigationHandler
     private val recipeViewModel: RecipeViewModel by activityViewModels()
 
     private lateinit var veganTypesKr:Array<String>
@@ -60,6 +64,24 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
 
         binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
             recipeViewModel.setSelectedTbIsChecked(isChecked)
+//            when(isChecked){
+//                true -> {
+//                    Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_LONG)
+//                        .setAction(getString(R.string.toast_scrap_action)){
+//                            mainNavigationHandler.navigateTipsRecipeToMyRecipe()
+//                        }
+//                        .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+//                        .show()
+//                }
+//                false -> {
+//                    Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_LONG)
+//                        .setAction(getString(R.string.toast_scrap_action)){
+//                            mainNavigationHandler.navigateTipsRecipeToMyRecipe()
+//                        }
+//                        .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+//                        .show()
+//                }
+//            }
         }
     }
 

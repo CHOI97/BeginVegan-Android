@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
+import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentTipsRecipeBinding
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.adapter.TipsRecipeRvAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -22,6 +24,8 @@ import javax.inject.Inject
 class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.fragment_tips_recipe) {
     @Inject
     lateinit var bookmarkController:BookmarkController
+    @Inject
+    lateinit var mainNavigationHandler:MainNavigationHandler
     private lateinit var recipeRvAdapter: TipsRecipeRvAdapter
     private val recipeViewModel: RecipeViewModel by activityViewModels()
 
@@ -42,8 +46,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
     private fun reset(){
         recipeList = mutableListOf()
-//        currentPage = 0
-//        totalCount = 0
+        currentPage = 0
+        totalCount = 0
         isForMe = false
         recipeViewModel.reSetIsContinueGetList()
         recipeViewModel.addRecipeList(recipeList)
@@ -73,14 +77,31 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 isBookmarked: Boolean,
                 data: TipsRecipeListItem
             ) {
-                when(isBookmarked){
-                    true -> {
-                        lifecycleScope.launch {
-                            bookmarkController.postBookmark(data.id, "RECIPE") } }
-                    false -> {
-                        lifecycleScope.launch {
-                            bookmarkController.deleteBookmark(data.id, "RECIPE") } }
-                } }
+                lifecycleScope.launch {
+                    when(isBookmarked){
+                        true -> {
+                            if(bookmarkController.postBookmark(data.id, "RECIPE")){
+                                Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                                    .setAction(getString(R.string.toast_scrap_action)){
+                                        mainNavigationHandler.navigateTipsRecipeToMyRecipe()
+                                    }
+                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                                    .show()
+                            }
+                        }
+                        false -> {
+                            if(bookmarkController.deleteBookmark(data.id, "RECIPE")){
+                                Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                                    .setAction(getString(R.string.toast_scrap_action)){
+                                        mainNavigationHandler.navigateTipsRecipeToMyRecipe()
+                                    }
+                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+                                    .show()
+                            }
+                        }
+                    }
+                }
+             }
         })
     }
     private fun setListener(){
