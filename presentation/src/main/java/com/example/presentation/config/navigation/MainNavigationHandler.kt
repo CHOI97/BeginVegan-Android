@@ -14,6 +14,7 @@ interface MainNavigationHandler {
 
     fun navigateHomeToMagazineDetail()
     fun navigateHomeToMyMagazine()
+    fun navigateHomeToMyRecipe()
 
     fun navigateTipsToMagazineDetail()
 

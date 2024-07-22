@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_mainHomeFragment_to_mypageMyMagazineFragment"
             app:destination="@id/mypageMyMagazineFragment" />
+        <action
+            android:id="@+id/action_mainHomeFragment_to_mypageMyRecipeFragment"
+            app:destination="@id/mypageMyRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/veganMapFragment"
