@@ -27,6 +27,10 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
         navController.navigate(R.id.action_veganTestResultFragment_to_tipsFragment)
     }
 
+    override fun navigateHomeToMagazineDetail() {
+        navController.navigate(R.id.action_mainHomeFragment_to_tipsMagazineDetailFragment)
+    }
+
     override fun navigateTipsToMagazineDetail() {
         navController.navigate(R.id.action_tipsFragment_to_tipsMagazineDetailFragment)
     }

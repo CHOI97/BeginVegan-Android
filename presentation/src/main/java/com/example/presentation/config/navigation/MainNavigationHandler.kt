@@ -11,6 +11,7 @@ interface MainNavigationHandler {
     fun navigateHomeToVeganTest()
     fun navigateTestToVeganTestResult()
     fun navigateTestResultToTips()
+    fun navigateHomeToMagazineDetail()
 
     fun navigateTipsToMagazineDetail()
 
