@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -33,7 +34,7 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
     @Inject
     lateinit var bookmarkController: BookmarkController
     private val magazineViewModel:MagazineViewModel by activityViewModels()
-    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
+    private val mainViewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_main_graph)
 
     override fun init() {
         binding.lifecycleOwner = this

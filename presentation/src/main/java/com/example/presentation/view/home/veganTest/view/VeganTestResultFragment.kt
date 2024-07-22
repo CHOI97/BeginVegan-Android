@@ -1,6 +1,7 @@
 package com.example.presentation.view.home.veganTest.view
 
 import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -19,7 +20,7 @@ class VeganTestResultFragment : BaseFragment<FragmentVeganTestResultBinding>(R.l
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val viewModel: VeganTestViewModel by activityViewModels()
-    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
+    private val mainViewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_main_graph)
 
     private lateinit var veganTypes:Array<String>
     private lateinit var resultDescriptions:Array<String>
