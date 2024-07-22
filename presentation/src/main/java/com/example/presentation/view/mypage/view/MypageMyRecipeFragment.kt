@@ -4,6 +4,7 @@ import android.widget.CompoundButton
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -35,7 +36,7 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     lateinit var bookmarkController: BookmarkController
     private val myRecipeViewModel:MyRecipeViewModel by viewModels()
     private val recipeViewModel:RecipeViewModel by activityViewModels()
-    private val mainViewModel: MainViewModel by navGraphViewModels(R.id.nav_main_graph)
+    private val mainViewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_main_graph)
 
     private lateinit var myRecipeRvAdapter:MyRecipeRvAdapter
     private var myRecipeList = mutableListOf<MypageMyRecipeItem>()
