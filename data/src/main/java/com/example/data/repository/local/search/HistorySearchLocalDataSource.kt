@@ -8,4 +8,5 @@ interface HistorySearchLocalDataSource{
     suspend fun insertHistorySearch(historySearchEntity: HistorySearchEntity)
     suspend fun deleteHistorySearch(historySearchEntity: HistorySearchEntity)
     suspend fun getHistorySearch(): Flow<List<HistorySearchEntity>>
+    suspend fun deleteAllHistorySearch()
 }

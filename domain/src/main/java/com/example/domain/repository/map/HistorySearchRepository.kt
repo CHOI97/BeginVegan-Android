@@ -10,4 +10,6 @@ interface HistorySearchRepository {
     suspend fun deleteHistorySearch(historySearch: HistorySearch)
 
     suspend fun getHistorySearch(): Flow<List<HistorySearch>>
+
+    suspend fun deleteAllHistorySearch()
 }

@@ -150,18 +150,22 @@
     <dimen name="dialog_permission_logo_width">127dp</dimen>
     <dimen name="dialog_permission_logo_height">58dp</dimen>
 
-<!--    Vegan Map Bottom Sheet-->
+    <!--    Vegan Map Bottom Sheet-->
     <dimen name="bottomSheet_handle_height">24dp</dimen>
 
-<!--    User Info-->
+    <!--    User Info-->
     <dimen name="user_profile_size">88dp</dimen>
-    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_padding" tools:override="true">0dp</dimen>
+    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_padding" tools:override="true">0dp
+    </dimen>
 
-<!--    Photo Select-->
-    <dimen name="dialog_width">280dp</dimen> //dialog 공통으로 사용돼서 이름 변경했습니다.
+    <!--    Photo Select-->
+    <dimen name="dialog_width">280dp</dimen>
+    //dialog 공통으로 사용돼서 이름 변경했습니다.
     <dimen name="dialog_width_big">312dp</dimen>
     <dimen name="dialog_height">506dp</dimen>
     <dimen name="photo_select_dialog_radius">8dp</dimen>
-
     <dimen name="restaurant_image_height">180dp</dimen>
+
+    <!--    VeganMap & Restaurant -->
+    <dimen name="history_search_item_size">40dp</dimen>
 </resources>

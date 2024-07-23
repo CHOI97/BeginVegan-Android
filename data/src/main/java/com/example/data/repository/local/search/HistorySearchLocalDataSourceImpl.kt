@@ -17,7 +17,11 @@ class HistorySearchLocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getHistorySearch(): Flow<List<HistorySearchEntity>> {
-        return historySearchDao.getAllHistorySearch()
+        return historySearchDao.getAllHistory()
+    }
+
+    override suspend fun deleteAllHistorySearch() {
+        historySearchDao.deleteAllHistory()
     }
 
 }

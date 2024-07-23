@@ -1,5 +1,6 @@
 package com.example.presentation.view.map.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -55,12 +56,12 @@ class VeganMapSearchRVAdapter :
     }
 
     companion object {
-        private const val VIEW_TYPE_EMPTY = 0
-        private const val VIEW_TYPE_ITEM = 1
 
         val diffUtil = object : DiffUtil.ItemCallback<HistorySearch>() {
 
             override fun areItemsTheSame(oldItem: HistorySearch, newItem: HistorySearch): Boolean {
+                Log.d("diffutil","oldItem : $oldItem")
+                Log.d("diffutil","newItem : $newItem")
                 return oldItem.id == newItem.id
             }
 

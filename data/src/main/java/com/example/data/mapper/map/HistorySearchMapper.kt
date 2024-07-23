@@ -9,6 +9,7 @@ import com.example.domain.model.map.HistorySearch
 class HistorySearchMapper: DBMapper<HistorySearch, HistorySearchEntity> {
     override fun mapFromEntity(type: HistorySearch): HistorySearchEntity {
         return HistorySearchEntity(
+            id = type.id,
             description = type.description
         )
     }

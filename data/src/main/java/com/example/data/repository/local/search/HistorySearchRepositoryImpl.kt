@@ -44,4 +44,8 @@ class HistorySearchRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteAllHistorySearch() {
+        historySearchDataSource.deleteAllHistorySearch()
+    }
+
 }
