@@ -58,7 +58,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(R.layout.acti
 
     private fun updateUserInfo() {
         binding.btnOnboardingNext.setOnClickListener {
-            showToast("nick: ${binding.etOnboardingEditNick.text}\nveganType: ${binding.actvOnboardingEditDropdown.text}")
             val nickName = binding.etOnboardingEditNick.text.toString()
             val veganLevel = binding.actvOnboardingEditDropdown.text.toString()
             viewModel.saveUserInfo(nickName, veganLevel)

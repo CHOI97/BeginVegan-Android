@@ -53,7 +53,7 @@
                         android:paddingTop="0dp"
                         android:paddingEnd="0dp"
                         android:paddingBottom="0dp"
-                        app:endIconDrawable="@drawable/ic_search_clear"
+                        app:endIconDrawable="@drawable/ic_search_text_clear"
                         app:endIconMinSize="@dimen/global_button_size"
                         app:endIconMode="clear_text"
                         app:errorEnabled="false"

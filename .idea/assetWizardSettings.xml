@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_arrow_more" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../ic_arrow_more.svg" />
+                            <entry key="outputName" value="ic_search_text_clear" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../ic_search_text_clear.svg" />
                           </map>
                         </option>
                       </PersistentState>

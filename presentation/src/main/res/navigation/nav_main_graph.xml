@@ -38,17 +38,19 @@
         android:id="@+id/mypageMyReviewFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyReviewFragment"
         android:label="MypageMyReviewFragment" >
+
         <action
-            android:id="@+id/action_mypageMyReviewFragment_to_veganMapFragment"
-            app:destination="@id/veganMapFragment" />
+            android:id="@+id/action_mypageMyReviewFragment_to_nav_map_graph"
+            app:destination="@id/nav_map_graph" />
     </fragment>
     <fragment
         android:id="@+id/mypageMyRestaurantFragment"
         android:name="com.example.presentation.view.mypage.view.MypageMyRestaurantFragment"
         android:label="MypageMyRestaurantFragment" >
+
         <action
-            android:id="@+id/action_mypageMyRestaurantFragment_to_veganMapFragment"
-            app:destination="@id/veganMapFragment" />
+            android:id="@+id/action_mypageMyRestaurantFragment_to_nav_map_graph"
+            app:destination="@id/nav_map_graph" />
     </fragment>
     <fragment
         android:id="@+id/mypageMyMagazineFragment"
@@ -96,10 +98,6 @@
             app:destination="@id/mypageMyRecipeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/veganMapFragment"
-        android:name="com.example.presentation.view.map.view.VeganMapFragment"
-        android:label="VeganMapFragment" />
-    <fragment
         android:id="@+id/mainTipsFragment"
         android:name="com.example.presentation.view.tips.view.TipsFragment"
         android:label="TipsFragment" >
@@ -137,5 +135,24 @@
             android:id="@+id/action_mainMypageFragment_to_mypageMyMagazineFragment"
             app:destination="@id/mypageMyMagazineFragment" />
     </fragment>
+    <navigation android:id="@+id/nav_map_graph"
+        app:startDestination="@id/veganMapFragment">
+        <fragment
+            android:id="@+id/veganMapFragment"
+            android:name="com.example.presentation.view.map.view.VeganMapFragment"
+            android:label="VeganMapFragment">
+            <action
+                android:id="@+id/action_veganMapFragment_to_veganMapSearchFragment"
+                app:destination="@id/veganMapSearchFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/veganMapSearchFragment"
+            android:name="com.example.presentation.view.map.view.VeganMapSearchFragment"
+            android:label="VeganMapSearchFragment">
+            <action
+                android:id="@+id/action_veganMapSearchFragment_to_veganMapFragment"
+                app:destination="@id/veganMapFragment" />
+        </fragment>
+    </navigation>
 
 </navigation>

@@ -91,22 +91,14 @@ class VeganMapSearchFragment :
         binding.tieSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.insertHistory(v.text.toString())
-                navigateSearchResult(v.text.toString())
+                //데이터 넘기는 부분
+//                navigateSearchResult(v.text.toString())
                 true
             } else {
                 false
 
             }
         }
-    }
-
-    private fun navigateSearchResult(args: String) {
-        findNavController().navigate(
-            VeganMapSearchFragmentDirections.actionVeganMapSearchFragmentToVeganMapResultFragment(
-                args
-            )
-        )
-
     }
 
     private fun showKeyBoard() {

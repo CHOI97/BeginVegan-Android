@@ -13,7 +13,7 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
         navController.navigate(R.id.mainHomeFragment, null,
             NavOptions.Builder().setPopUpTo(currentId, true).build())
     }
-    override fun navigateToMap() { controlBackStack(R.id.veganMapFragment) }
+    override fun navigateToMap() { controlBackStack(R.id.nav_map_graph) }
     override fun navigateToTips() { controlBackStack(R.id.mainTipsFragment) }
     override fun navigateToMypage() { controlBackStack(R.id.mainMypageFragment) }
 
@@ -68,11 +68,11 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
     }
 
     override fun navigateMyReviewToMap() {
-        navController.navigate(R.id.action_mypageMyReviewFragment_to_veganMapFragment)
+        navController.navigate(R.id.action_mypageMyReviewFragment_to_nav_map_graph)
     }
 
     override fun navigateMyRestaurantToMap() {
-        navController.navigate(R.id.action_mypageMyRestaurantFragment_to_veganMapFragment)
+        navController.navigate(R.id.action_mypageMyRestaurantFragment_to_nav_map_graph)
     }
 
     override fun navigateMyRecipeToTips() {

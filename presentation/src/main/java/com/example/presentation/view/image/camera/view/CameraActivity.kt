@@ -183,9 +183,10 @@ class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_cam
                         "\n· Map 리뷰 작성 시, 이미지 등록 " +
                         "\n· Mypage 프로필 이미지 등록"
             )
-            .setPositiveButton("권한재요청") { _, _ ->
+            .setPositiveButton("권한재요청") { dialog, _ ->
                 isRetry = true
                 requestPermissionLauncher.launch(cameraPermission)
+                dialog.dismiss()
             }
             .setNegativeButton("닫기") { dialog, _ ->
                 dialog.dismiss()
