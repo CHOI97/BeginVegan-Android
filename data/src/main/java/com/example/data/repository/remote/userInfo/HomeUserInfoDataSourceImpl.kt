@@ -2,8 +2,7 @@ package com.example.data.repository.remote.userInfo
 
 import com.example.data.model.userInfo.HomeUserInfoResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.UserInfoService
-import com.example.data.retrofit.VeganMapService
+import com.example.data.retrofit.auth.UserInfoService
 import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject

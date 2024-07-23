@@ -2,7 +2,7 @@ package com.example.data.repository.remote.mypage
 
 import com.example.data.model.mypage.MypageUserInfoResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.MypageUserInfoService
+import com.example.data.retrofit.mypage.MypageUserInfoService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError

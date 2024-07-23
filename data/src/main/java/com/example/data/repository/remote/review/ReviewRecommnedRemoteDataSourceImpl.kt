@@ -2,7 +2,7 @@ package com.example.data.repository.remote.review
 
 import com.example.data.model.review.ReviewRecommendResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.ReviewService
+import com.example.data.retrofit.review.ReviewService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError

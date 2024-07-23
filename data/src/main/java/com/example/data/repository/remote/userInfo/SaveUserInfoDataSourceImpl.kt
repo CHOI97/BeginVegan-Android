@@ -3,7 +3,7 @@ package com.example.data.repository.remote.userInfo
 import com.example.data.model.core.BaseResponse
 import com.example.data.model.userInfo.AddUserInfoRequest
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.UserInfoService
+import com.example.data.retrofit.auth.UserInfoService
 import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

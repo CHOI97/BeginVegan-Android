@@ -5,7 +5,7 @@ import com.example.data.model.mypage.MyRecipeResponse
 import com.example.data.model.mypage.MyRestaurantResponse
 import com.example.data.model.mypage.MyReviewResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.MypageMyScrapService
+import com.example.data.retrofit.mypage.MypageMyScrapService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError

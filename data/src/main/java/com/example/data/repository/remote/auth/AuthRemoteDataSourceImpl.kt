@@ -2,7 +2,7 @@ package com.example.data.repository.remote.auth
 
 import com.example.data.model.auth.AuthRequest
 import com.example.data.model.auth.SignInResponse
-import com.example.data.retrofit.UserService
+import com.example.data.retrofit.auth.UserService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnSuccess
