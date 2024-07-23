@@ -3,7 +3,7 @@ package com.example.data.repository.remote.veganType
 import com.example.data.model.core.BaseResponse
 import com.example.data.model.veganTest.VeganTypeRequest
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.VeganTypeService
+import com.example.data.retrofit.veganTypes.VeganTypeService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError

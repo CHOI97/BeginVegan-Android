@@ -3,7 +3,7 @@ package com.example.data.repository.remote.tips
 import com.example.data.model.tips.MagazineDetailResponse
 import com.example.data.model.tips.MagazineResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.TipsMagazineService
+import com.example.data.retrofit.tips.TipsMagazineService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError

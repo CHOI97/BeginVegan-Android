@@ -3,7 +3,7 @@ package com.example.data.repository.remote.bookmarks
 import com.example.data.model.bookmarks.BookmarkRequest
 import com.example.data.model.core.BaseResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.BookmarkService
+import com.example.data.retrofit.bookMarks.BookmarkService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError

@@ -2,7 +2,7 @@ package com.example.data.repository.remote.alarms
 
 import com.example.data.model.alarms.GetAlarmResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.data.retrofit.AlarmService
+import com.example.data.retrofit.alarms.AlarmService
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError

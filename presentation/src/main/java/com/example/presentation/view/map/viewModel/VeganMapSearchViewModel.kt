@@ -1,13 +1,11 @@
 package com.example.presentation.view.map.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.map.HistorySearch
-import com.example.domain.useCase.map.DeleteHistorySearchUseCase
-import com.example.domain.useCase.map.GetAllHistorySearchUseCase
-import com.example.domain.useCase.map.InsertHistorySearchUseCase
+import com.example.domain.useCase.map.search.DeleteHistorySearchUseCase
+import com.example.domain.useCase.map.search.GetAllHistorySearchUseCase
+import com.example.domain.useCase.map.search.InsertHistorySearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
