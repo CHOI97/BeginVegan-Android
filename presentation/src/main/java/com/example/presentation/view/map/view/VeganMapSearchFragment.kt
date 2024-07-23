@@ -25,11 +25,13 @@ class VeganMapSearchFragment :
     private lateinit var veganMapSearchRVAdapter: VeganMapSearchRVAdapter
     override fun init() {
 
-        viewModel.fetchAllHistory()
+        initHistory()
 
         showKeyBoard()
 
         onSearch()
+
+        onAllDelete()
 
         setHistorySearchRVAdapter()
 
@@ -37,6 +39,17 @@ class VeganMapSearchFragment :
             findNavController().popBackStack()
         }
 
+    }
+
+    private fun onAllDelete() {
+        binding.btnAllDelete.setOnClickListener {
+            viewModel.deleteAllHistory()
+        }
+
+    }
+
+    private fun initHistory() {
+        viewModel.fetchAllHistory()
     }
 
     private fun setHistorySearchRVAdapter() {
@@ -58,9 +71,14 @@ class VeganMapSearchFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.searchList.collect() {
                 if (it.isEmpty()) {
+                    logMessage("search list empty")
                     binding.tvEmptyView.visibility = View.VISIBLE
                     binding.btnAllDelete.visibility = View.GONE
+                    binding.rvSearch.visibility = View.INVISIBLE
+                    veganMapSearchRVAdapter.submitList(viewModel.searchList.value)
                 } else {
+                    logMessage("search list not empty")
+                    binding.rvSearch.visibility = View.VISIBLE
                     binding.tvEmptyView.visibility = View.GONE
                     binding.btnAllDelete.visibility = View.VISIBLE
                     veganMapSearchRVAdapter.submitList(viewModel.searchList.value)
@@ -73,22 +91,14 @@ class VeganMapSearchFragment :
         binding.tieSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.insertHistory(v.text.toString())
-                navigateSearchResult(v.text.toString())
+                //데이터 넘기는 부분
+//                navigateSearchResult(v.text.toString())
                 true
             } else {
                 false
 
             }
         }
-    }
-
-    private fun navigateSearchResult(args: String) {
-        findNavController().navigate(
-            VeganMapSearchFragmentDirections.actionVeganMapSearchFragmentToVeganMapResultFragment(
-                args
-            )
-        )
-
     }
 
     private fun showKeyBoard() {

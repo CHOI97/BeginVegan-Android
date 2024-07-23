@@ -17,6 +17,9 @@ interface HistorySearchDao {
     suspend fun deleteHistory(historySearch: HistorySearchEntity)
 
     @Query("SELECT * FROM historySearch")
-    fun getAllHistorySearch(): Flow<List<HistorySearchEntity>>
+    fun getAllHistory(): Flow<List<HistorySearchEntity>>
+
+    @Query("DELETE FROM historySearch")
+    suspend fun deleteAllHistory()
 
 }

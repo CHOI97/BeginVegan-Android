@@ -2,6 +2,7 @@ package com.example.presentation.view.map.view
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
@@ -242,6 +243,15 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
 
     private val viewModel: VeganMapViewModel by viewModels()
     override fun init() {
+        initMap()
+
+        setOnSearchBack()
+
+        binding.btnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_veganMapFragment_to_veganMapSearchFragment)
+        }
+    }
+    private fun initMap(){
         mapView = MapView(requireContext())
         binding.mapView.addView(mapView)
         mapView.start(object : MapLifeCycleCallback() {
@@ -257,10 +267,14 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 // 인증 후 API 가 정상적으로 실행될 때 호출됨
             }
         })
-        setOnSearchBack()
+    }
+
+    private fun setOnSearchBack() {
 
     }
-    private fun setOnSearchBack() {
+    companion object{
+        const val SEARCH_DEFAULT = 0
+        const val SEARCH_RESULT = 1
     }
 }
 

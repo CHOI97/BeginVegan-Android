@@ -34,13 +34,14 @@
 
             <TextView
                 android:id="@+id/tv_headline_app_name"
+                style="@style/title_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/global_margin"
                 android:layout_marginTop="4dp"
                 android:text="@string/onboarding_description"
                 android:textColor="@color/color_black"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_20"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
@@ -80,10 +81,13 @@
 
                 <TextView
                     android:id="@+id/tv_onboarding_profile"
+                    style="@style/body_2_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/global_margin"
+                    android:includeFontPadding="false"
                     android:text="@string/onboarding_img"
+                    android:textSize="@dimen/text_14"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rl_create_user_profile" />
@@ -127,7 +131,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_onboarding_nick_headline">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_onboarding_edit_nick"
                         style="@style/Widget.BeginVegan.TextInputEditText.OutlinedBox"
                         android:layout_width="match_parent"
@@ -159,9 +163,7 @@
                     android:layout_marginTop="4dp"
                     app:endIconDrawable="@drawable/ic_arrow_dropdown"
                     app:endIconTint="@color/color_black"
-                    app:shapeAppearanceOverlay="@style/RoundedDropDown"
-
-                    >
+                    app:shapeAppearanceOverlay="@style/RoundedDropDown">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/actv_onboarding_edit_dropdown"

@@ -3,6 +3,7 @@ package com.example.presentation.view.map.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.map.HistorySearch
+import com.example.domain.useCase.map.search.DeleteAllHistorySearchUseCase
 import com.example.domain.useCase.map.search.DeleteHistorySearchUseCase
 import com.example.domain.useCase.map.search.GetAllHistorySearchUseCase
 import com.example.domain.useCase.map.search.InsertHistorySearchUseCase
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class VeganMapSearchViewModel @Inject constructor(
     private val insertHistorySearchUseCase: InsertHistorySearchUseCase,
     private val deleteHistorySearchUseCase: DeleteHistorySearchUseCase,
-    private val getAllHistorySearchUseCase: GetAllHistorySearchUseCase
+    private val getAllHistorySearchUseCase: GetAllHistorySearchUseCase,
+    private val deleteAllHistorySearchUseCase: DeleteAllHistorySearchUseCase
 ) : ViewModel() {
 
     private val _searchList = MutableStateFlow<List<HistorySearch>>(emptyList())
@@ -51,6 +53,12 @@ class VeganMapSearchViewModel @Inject constructor(
     fun deleteHistory(historySearch: HistorySearch) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteHistorySearchUseCase(historySearch)
+        }
+    }
+
+    fun deleteAllHistory(){
+        viewModelScope.launch (Dispatchers.IO){
+            deleteAllHistorySearchUseCase()
         }
     }
 }
