@@ -1,6 +1,9 @@
 package com.example.presentation.view.home.view
 
+import android.graphics.Typeface
 import android.widget.CompoundButton
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,8 +32,12 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
     private val viewModel:HomeTipsViewModel by viewModels()
     private val magazineViewModel:MagazineViewModel by activityViewModels()
 
+    private var typeface : Typeface? = null
+
     override fun init() {
         binding.lifecycleOwner = this
+        typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+
         viewModel.getHomeMagazineList()
         viewModel.homeMagazineList.observe(this){
             setAdapter(it)
@@ -57,20 +64,22 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
                 lifecycleScope.launch {
                     if(isBookmarked) {
                         bookmarkController.postBookmark(data.id, "MAGAZINE")
-                        Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                        val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
                             .setAction(getString(R.string.toast_scrap_action)){
                                 mainNavigationHandler.navigateHomeToMyMagazine()
                             }
                             .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                            .show()
+                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                        snackbar.show()
                     } else {
                         bookmarkController.deleteBookmark(data.id, "MAGAZINE")
-                        Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                        val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
                             .setAction(getString(R.string.toast_scrap_action)){
                                 mainNavigationHandler.navigateHomeToMyMagazine()
                             }
                             .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                            .show()
+                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                        snackbar.show()
                     }
                 }
             }
