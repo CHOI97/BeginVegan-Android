@@ -1,5 +1,8 @@
 package com.example.presentation.view.mypage.view
 
+import android.graphics.Typeface
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -42,8 +45,12 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
     private var totalCount = 0
     private var collectJob: Job? = null
 
+    private var typeface: Typeface?=null
+
     override fun init() {
         binding.lifecycleOwner = this
+        typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+
         setBackUp()
         setFabButton()
 
@@ -75,13 +82,15 @@ class MypageMyMagazineFragment : BaseFragment<FragmentMypageMyMagazineBinding>(R
                 lifecycleScope.launch {
                     if(isChecked) {
                         if(bookmarkController.postBookmark(magazineId, "MAGAZINE")){
-                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
-                                .show()
+                            val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                            snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                            snackbar.show()
                         }
                     } else {
                         if(bookmarkController.deleteBookmark(magazineId, "MAGAZINE")){
-                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
-                                .show()
+                            val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                            snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                            snackbar.show()
                         }
                     }
                 }

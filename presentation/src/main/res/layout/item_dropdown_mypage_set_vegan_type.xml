@@ -12,4 +12,5 @@
     android:textAlignment="center"
     android:textColor="@color/color_text_02"
     android:textSize="@dimen/text_12"
+    android:fontFamily="@font/pretendard_regular"
     android:text="234"/>

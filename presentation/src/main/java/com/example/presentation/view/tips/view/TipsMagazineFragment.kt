@@ -1,7 +1,10 @@
 package com.example.presentation.view.tips.view
 
+import android.graphics.Typeface
 import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,8 +39,12 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
     private var currentPage = 0
     private var totalCount = 0
 
+    private var typeface: Typeface? = null
+
     override fun init() {
         binding.lifecycleOwner = this
+        typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+
         reset()
         setRvAdapter()
         setListener()
@@ -72,22 +79,26 @@ class TipsMagazineFragment : BaseFragment<FragmentTipsMagazineBinding>(R.layout.
                     when(isBookmarked){
                         true -> {
                             if(bookmarkController.postBookmark(data.id, "MAGAZINE")){
-                                Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                                val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
                                     .setAction(getString(R.string.toast_scrap_action)){
                                         mainNavigationHandler.navigateTipsMagazineToMyMagazine()
                                     }
                                     .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                                    .show()
+                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
+                                snackbar.show()
                             }
                         }
                         false -> {
                             if(bookmarkController.deleteBookmark(data.id, "MAGAZINE")){
-                                Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                                val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
                                     .setAction(getString(R.string.toast_scrap_action)){
                                         mainNavigationHandler.navigateTipsMagazineDetailToMyMagazine()
                                     }
                                     .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                                    .show()
+                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
+                                snackbar.show()
                             }
                         }
                     }

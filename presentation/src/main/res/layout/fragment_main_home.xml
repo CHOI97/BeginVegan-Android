@@ -86,10 +86,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:drawableEnd="@drawable/ic_general_arrow_large"
+                    android:drawableEnd="@drawable/ic_arrow_more_home"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
                     android:text="@string/btn_more"
+                    android:textColor="@color/color_text_02"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -138,11 +139,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@color/color_white"
-                app:tabIndicatorColor="@color/color_black"
+                app:tabTextColor="@color/color_text_03"
+                app:tabIndicatorColor="@color/color_text_01"
                 app:tabIndicatorFullWidth="true"
                 app:tabIndicatorHeight="1dp"
                 app:tabSelectedTextAppearance="@style/heading_regular"
-                app:tabSelectedTextColor="@color/color_black"
+                app:tabSelectedTextColor="@color/color_text_01"
                 app:tabTextAppearance="@style/heading_regular">
 
                 <com.google.android.material.tabs.TabItem
@@ -162,10 +164,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:drawableEnd="@drawable/ic_general_arrow_large"
+                android:drawableEnd="@drawable/ic_arrow_more_home"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:text="@string/btn_more"
+                android:textColor="@color/color_text_02"
                 app:layout_constraintBottom_toTopOf="@id/fl_tips_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

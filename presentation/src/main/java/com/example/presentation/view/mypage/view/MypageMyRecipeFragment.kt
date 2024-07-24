@@ -1,6 +1,9 @@
 package com.example.presentation.view.mypage.view
 
+import android.graphics.Typeface
 import android.widget.CompoundButton
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -44,8 +47,12 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     private var totalCount = 0
     private var collectJob: Job? = null
 
+    private var typeface: Typeface?=null
+
     override fun init() {
         binding.lifecycleOwner = this
+        typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+
         setBackUp()
         setFabButton()
 
@@ -74,13 +81,15 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
                 lifecycleScope.launch {
                     if(isChecked) {
                         if(bookmarkController.postBookmark(recipeId, "RECIPE")){
-                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
-                                .show()
+                            val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
+                            snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                            snackbar.show()
                         }
                     } else {
                         if(bookmarkController.deleteBookmark(recipeId, "RECIPE")){
-                            Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
-                                .show()
+                            val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
+                            snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                            snackbar.show()
                         }
                     }
                 }
