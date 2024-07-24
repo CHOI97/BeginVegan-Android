@@ -12,6 +12,7 @@ import com.example.presentation.databinding.FragmentVeganTestResultBinding
 import com.example.presentation.view.home.veganTest.viewModel.VeganTestViewModel
 import com.example.presentation.view.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint

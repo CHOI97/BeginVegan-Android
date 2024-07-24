@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.useCase.veganType.PatchVeganTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,8 +16,8 @@ class VeganTestViewModel @Inject constructor(
     private val veganTypeUseCase: PatchVeganTypeUseCase
 ): ViewModel() {
 
-    private val _patchVeganTypeState = MutableLiveData<Boolean>()
-    val patchVeganTypeState:LiveData<Boolean> = _patchVeganTypeState
+    private val _patchVeganTypeState = MutableStateFlow(false)
+    val patchVeganTypeState:StateFlow<Boolean> = _patchVeganTypeState
 
     private val _userVeganTypeNum = MutableLiveData<Int>()
     val userVeganTypeNum: LiveData<Int> = _userVeganTypeNum
@@ -27,9 +29,9 @@ class VeganTestViewModel @Inject constructor(
     fun patchVeganType(type:String, veganType:String) {
         viewModelScope.launch {
             veganTypeUseCase.invoke(type, veganType).onSuccess {
-                _patchVeganTypeState.postValue(true)
+                _patchVeganTypeState.value = true
             }.onFailure {
-                _patchVeganTypeState.postValue(false)
+                _patchVeganTypeState.value = false
             }
         }
     }

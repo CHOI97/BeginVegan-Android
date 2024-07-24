@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
@@ -12,6 +13,8 @@ import com.example.presentation.databinding.FragmentVeganTestBinding
 import com.example.presentation.databinding.IncludeIllusVeganLevelBinding
 import com.example.presentation.view.home.veganTest.viewModel.VeganTestViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,7 +34,12 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     private lateinit var veganTestDescriptions:Array<String>
     private lateinit var veganTypes:Array<String>
 
+    private var patchJob:Job? = null
+
     override fun init() {
+        binding.lifecycleOwner = this
+        patchJob?.cancel()
+
         veganTestDescriptions = resources.getStringArray(R.array.vegan_test_descriptions)
         veganTypes = resources.getStringArray(R.array.vegan_types_eng)
 
@@ -113,14 +121,17 @@ class VeganTestFragment : BaseFragment<FragmentVeganTestBinding>(R.layout.fragme
     private fun goResult(){
         binding.tvGoResult.setOnClickListener {
             viewModel.setUserVeganTypeNum(selectedVeganTypeNum)
+
             patchVeganType(selectedVeganTypeNum)
-            viewModel.patchVeganTypeState.observe(this){
-                when(it){
-                    true ->{
-                        Timber.d("PatchVeganType Successful")
-                        mainNavigationHandler.navigateTestToVeganTestResult()
+            patchJob = lifecycleScope.launch {
+                viewModel.patchVeganTypeState.collect{
+                    when (it) {
+                        true -> {
+                            Timber.d("PatchVeganType Successful")
+                            mainNavigationHandler.navigateTestToVeganTestResult()
+                        }
+                        false -> Timber.e("PatchVeganType Failure")
                     }
-                    false -> Timber.e("PatchVeganType Failure")
                 }
             }
         }
