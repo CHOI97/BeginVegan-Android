@@ -3,6 +3,7 @@ package com.example.beginvegan.config
 import android.app.Application
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.beginvegan.BuildConfig
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
@@ -17,6 +18,7 @@ class ApplicationClass : Application() {
         Timber.plant(Timber.DebugTree())
         KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
         KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     //    override fun onCreate() {
