@@ -20,8 +20,8 @@
             android:id="@+id/ib_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_alram"
-            android:background="@android:color/transparent"
+            android:background="@drawable/ic_notification_stroke"
+            android:backgroundTint="@color/color_background"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/global_margin" />
     </Toolbar>
