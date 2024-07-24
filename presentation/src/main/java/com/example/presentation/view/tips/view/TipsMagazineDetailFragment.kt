@@ -20,6 +20,7 @@ import com.example.presentation.databinding.FragmentTipsMagazineDetailBinding
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.main.MainViewModel
 import com.example.presentation.view.tips.viewModel.MagazineViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -93,6 +94,7 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
                             }
                             .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
                         snackbar.show()
                     }
                 }else{
@@ -108,6 +110,7 @@ class TipsMagazineDetailFragment : BaseFragment<FragmentTipsMagazineDetailBindin
                             }
                             .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
                         snackbar.show()
                     }
                 }

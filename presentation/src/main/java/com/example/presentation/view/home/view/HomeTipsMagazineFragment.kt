@@ -70,6 +70,7 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
                             }
                             .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
                         snackbar.show()
                     } else {
                         bookmarkController.deleteBookmark(data.id, "MAGAZINE")
@@ -79,6 +80,7 @@ class HomeTipsMagazineFragment: BaseFragment<FragmentHomeTipsMagazineBinding>(R.
                             }
                             .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
                         snackbar.show()
                     }
                 }

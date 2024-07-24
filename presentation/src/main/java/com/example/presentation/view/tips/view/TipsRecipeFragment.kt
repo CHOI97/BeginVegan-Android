@@ -93,6 +93,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                                     }
                                     .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                                 snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
                                 snackbar.show()
                             }
                         }
@@ -104,6 +105,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                                     }
                                     .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
                                 snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
                                 snackbar.show()
                             }
                         }
