@@ -1,5 +1,6 @@
 package com.example.presentation.view.tips.view
 
+import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -15,6 +16,7 @@ import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,6 +39,7 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
         }
 
         setBtnClose()
+        onBackPressed()
     }
 
     private fun setBtnClose(){
@@ -64,24 +67,6 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
 
         binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
             recipeViewModel.setSelectedTbIsChecked(isChecked)
-//            when(isChecked){
-//                true -> {
-//                    Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_LONG)
-//                        .setAction(getString(R.string.toast_scrap_action)){
-//                            mainNavigationHandler.navigateTipsRecipeToMyRecipe()
-//                        }
-//                        .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-//                        .show()
-//                }
-//                false -> {
-//                    Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_LONG)
-//                        .setAction(getString(R.string.toast_scrap_action)){
-//                            mainNavigationHandler.navigateTipsRecipeToMyRecipe()
-//                        }
-//                        .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-//                        .show()
-//                }
-//            }
         }
     }
 
@@ -115,6 +100,18 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
                 }
             }
             parentLayout.addView(textView)
+        }
+    }
+
+    private fun onBackPressed(){
+        dialog?.setOnKeyListener { _, keyCode, keyEvent ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.action == KeyEvent.ACTION_UP) {
+                Timber.d("dialog onBackPressed: dismiss()")
+                dismiss()
+                true
+            } else {
+                false
+            }
         }
     }
 }
