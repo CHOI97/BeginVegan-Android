@@ -2,15 +2,10 @@
 
     <style name="Theme.Beginvegan" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/color_white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/launch_tranparent</item>01
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/color_white</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
-    <!--    <style name="Theme.App.Starting" parent="Theme.SplashScreen">-->
-    <!--        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>-->
-    <!--        <item name="android:windowIsTranslucent">true</item>-->
-    <!--        <item name="postSplashScreenTheme" tools:targetApi="s">@style/Theme.Beginvegan</item>-->
-    <!--    </style>-->
 
     <style name="ShapeAppearanceOverlay.App.CornerSize8Percent" parent="">
         <item name="cornerSize">8dp</item>
