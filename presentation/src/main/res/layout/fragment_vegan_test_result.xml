@@ -91,6 +91,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_36"
+                style="@style/body_1_regular"
+                android:textColor="@color/color_text_02"
                 android:gravity="center"/>
         </LinearLayout>
 
