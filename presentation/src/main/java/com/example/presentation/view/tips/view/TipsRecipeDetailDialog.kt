@@ -1,7 +1,9 @@
 package com.example.presentation.view.tips.view
 
 import android.graphics.Typeface
+import android.view.Gravity
 import android.view.KeyEvent
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -71,7 +73,12 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
         binding.tbInterest.isChecked = data.isBookmarked
 
         binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
-            recipeViewModel.setSelectedTbIsChecked(isChecked)
+//            recipeViewModel.setSelectedTbIsChecked(isChecked)
+            if(isChecked){
+                setSnackBar(getString(R.string.toast_scrap_done))
+            }else{
+                setSnackBar(getString(R.string.toast_scrap_undo))
+            }
         }
     }
 
@@ -120,5 +127,21 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
                 false
             }
         }
+    }
+
+    private fun setSnackBar(message:String){
+        val snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
+            .setAction(getString(R.string.toast_scrap_action)){
+                mainNavigationHandler.navigateTipsMagazineToMyMagazine()
+            }
+            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
+        val snackbarView = snackbar.view
+        val params = snackbarView.layoutParams as FrameLayout.LayoutParams
+        params.bottomMargin = 200
+        snackbarView.layoutParams = params
+
+        snackbar.show()
     }
 }
