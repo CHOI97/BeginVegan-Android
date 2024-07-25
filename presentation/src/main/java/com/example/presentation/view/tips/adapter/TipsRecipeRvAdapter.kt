@@ -56,7 +56,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
     }
 
     interface OnItemClickListener{
-        fun onItemClick(recipeId:Int, toggleButton: CompoundButton)
+        fun onItemClick(item:TipsRecipeListItem, position: Int)
         fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsRecipeListItem)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){

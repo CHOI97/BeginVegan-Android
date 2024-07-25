@@ -76,7 +76,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int, toggleButton: CompoundButton) {
-                openDialogRecipeDetail(recipeId, toggleButton) }
+                openDialogRecipeDetail(recipeId, toggleButton)
+            }
 
             override fun changeBookmark(
                 toggleButton: CompoundButton,
@@ -84,30 +85,13 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 data: TipsRecipeListItem
             ) {
                 lifecycleScope.launch {
-                    when(isBookmarked){
-                        true -> {
-                            if(bookmarkController.postBookmark(data.id, "RECIPE")){
-                                val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
-                                    .setAction(getString(R.string.toast_scrap_action)){
-                                        mainNavigationHandler.navigateTipsRecipeToMyRecipe()
-                                    }
-                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
-                                snackbar.show()
-                            }
+                    if(isBookmarked){
+                        if(bookmarkController.postBookmark(data.id, "RECIPE")){
+                            setSnackBar(getString(R.string.toast_scrap_done))
                         }
-                        false -> {
-                            if(bookmarkController.deleteBookmark(data.id, "RECIPE")){
-                                val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
-                                    .setAction(getString(R.string.toast_scrap_action)){
-                                        mainNavigationHandler.navigateTipsRecipeToMyRecipe()
-                                    }
-                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
-                                snackbar.show()
-                            }
+                    }else{
+                        if(bookmarkController.deleteBookmark(data.id, "RECIPE")){
+                            setSnackBar(getString(R.string.toast_scrap_undo))
                         }
                     }
                 }
@@ -186,6 +170,18 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.ibTooltipRecipeForMe.setOnClickListener {
             TipsRecipeForMeDialog().show(childFragmentManager, "TipsRecipeForMe")
         }
+    }
+
+    //SnackBar
+    private fun setSnackBar(message:String){
+        val snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
+            .setAction(getString(R.string.toast_scrap_action)){
+                mainNavigationHandler.navigateTipsRecipeToMyRecipe()
+            }
+            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
+        snackbar.show()
     }
 
 }
