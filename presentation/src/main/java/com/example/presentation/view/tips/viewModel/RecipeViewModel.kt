@@ -5,8 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.TipsRecipeDetail
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.RecipeDetailPosition
+import com.example.domain.model.tips.TipsRecipeDetail
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.domain.useCase.tips.TipsRecipeUseCase
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.tips.viewModel.state.RecipeListState
@@ -44,14 +45,20 @@ class RecipeViewModel @Inject constructor(
     private val _recipeDetailData = MutableLiveData<TipsRecipeDetail>()
     val recipeDetailData: LiveData<TipsRecipeDetail> = _recipeDetailData
 
-    private val _selectedTb = MutableLiveData<CompoundButton>()
-    val selectedTb: LiveData<CompoundButton> = _selectedTb
-    fun setSelectedTb(view: CompoundButton) {
-        _selectedTb.value = view
+    private val _recipeDetailPosition = MutableLiveData<RecipeDetailPosition>()
+    val recipeDetailPosition: LiveData<RecipeDetailPosition> = _recipeDetailPosition
+    fun setRecipeDetailPosition(recipeDetailPosition: RecipeDetailPosition){
+        val currentList = _recipeListState.value.data?.response!!
+        currentList[recipeDetailPosition.position] = recipeDetailPosition.item
+        addRecipeList(currentList)
+        Timber.d("setRecipeDetailPosition in viewModel: position:${recipeDetailPosition.position}")
+        _recipeDetailPosition.value = recipeDetailPosition
     }
 
-    fun setSelectedTbIsChecked(isChecked: Boolean) {
-        selectedTb.value!!.isChecked = isChecked
+    private val _nowFragment = MutableLiveData<String>()
+    val nowFragment:LiveData<String> = _nowFragment
+    fun setNowFragment(fragment:String){
+        _nowFragment.value = fragment
     }
 
     //From VeganTest

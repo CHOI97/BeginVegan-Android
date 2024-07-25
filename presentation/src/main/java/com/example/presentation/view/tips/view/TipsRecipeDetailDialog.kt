@@ -1,7 +1,6 @@
 package com.example.presentation.view.tips.view
 
 import android.graphics.Typeface
-import android.view.Gravity
 import android.view.KeyEvent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -9,17 +8,21 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
-import com.example.domain.model.RecipeBlock
-import com.example.domain.model.RecipeIngredient
-import com.example.domain.model.TipsRecipeDetail
+import androidx.lifecycle.lifecycleScope
+import com.example.domain.model.tips.RecipeBlock
+import com.example.domain.model.tips.RecipeDetailPosition
+import com.example.domain.model.tips.RecipeIngredient
+import com.example.domain.model.tips.TipsRecipeDetail
 import com.example.presentation.R
 import com.example.presentation.base.BaseDialogFragment
 import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.DialogRecipeDetailBinding
 import com.example.presentation.util.BookmarkController
+import com.example.presentation.view.home.viewModel.HomeTipsViewModel
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,16 +33,19 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val recipeViewModel: RecipeViewModel by activityViewModels()
+    private val homeViewModel: HomeTipsViewModel by activityViewModels()
 
     private lateinit var veganTypesKr:Array<String>
     private lateinit var veganTypesEng:Array<String>
 
     private var typeface: Typeface? = null
+    private lateinit var nowFragmet:String
 
     override fun init() {
         isCancelable = false
         binding.lifecycleOwner = this
         typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+        nowFragmet = recipeViewModel.nowFragment.value!!
 
         recipeViewModel.recipeDetailData.observe(this){
             setBinding(it)
@@ -73,11 +79,31 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
         binding.tbInterest.isChecked = data.isBookmarked
 
         binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
-//            recipeViewModel.setSelectedTbIsChecked(isChecked)
-            if(isChecked){
-                setSnackBar(getString(R.string.toast_scrap_done))
-            }else{
-                setSnackBar(getString(R.string.toast_scrap_undo))
+            when(nowFragmet){
+                "HOME" -> {
+                    val currentData = homeViewModel.recipeDetailPosition.value
+                    currentData?.item?.isBookmarked = isChecked
+                    homeViewModel.setRecipeDetailPosition(currentData!!)
+                }
+                "RECIPE" -> {
+                    val currentData = recipeViewModel.recipeDetailPosition.value
+                    currentData?.item?.isBookmarked = isChecked
+                    recipeViewModel.setRecipeDetailPosition(currentData!!)
+                }
+                "MYPAGE" -> {
+
+                }
+            }
+            lifecycleScope.launch {
+                if(isChecked){
+                    if(bookmarkController.postBookmark(data.id, "RECIPE")){
+                        setSnackBar(getString(R.string.toast_scrap_done))
+                    }
+                }else{
+                    if(bookmarkController.deleteBookmark(data.id, "RECIPE")){
+                        setSnackBar(getString(R.string.toast_scrap_undo))
+                    }
+                }
             }
         }
     }
@@ -130,11 +156,24 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
     }
 
     private fun setSnackBar(message:String){
-        val snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
-            .setAction(getString(R.string.toast_scrap_action)){
-                mainNavigationHandler.navigateTipsMagazineToMyMagazine()
-            }
-            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+        var snackbar:Snackbar
+        if(nowFragmet == "MYPAGE"){
+            snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
+        }else{
+            snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
+                .setAction(getString(R.string.toast_scrap_action)){
+                    when(recipeViewModel.nowFragment.value){
+                        "HOME"->{
+                            mainNavigationHandler.navigateHomeToMyRecipe()
+                        }
+                        "RECIPE"->{
+                            mainNavigationHandler.navigateTipsMagazineToMyMagazine()
+                        }
+                    }
+                }
+                .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+        }
+
         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
         val snackbarView = snackbar.view

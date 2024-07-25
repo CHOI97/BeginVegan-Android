@@ -8,11 +8,11 @@ data class MypageMyMagazineItem(
     val writeTime: String
 )
 
-data class MypageMyRecipeItem(
-    val foodId:Int,
-    val name:String,
-    val veganType:String
-)
+//data class MypageMyRecipeItem(
+//    val foodId:Int,
+//    val name:String,
+//    val veganType:String
+//)
 
 data class MypageMyRestaurantItem(
     val restaurantId:Int,

@@ -6,8 +6,8 @@ import com.example.data.mapper.mypage.MypageMyRestaurantMapper
 import com.example.data.mapper.mypage.MypageMyReviewMapper
 import com.example.domain.model.mypage.MyReview
 import com.example.domain.model.mypage.MypageMyMagazineItem
-import com.example.domain.model.mypage.MypageMyRecipeItem
 import com.example.domain.model.mypage.MypageMyRestaurantItem
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.domain.repository.mypage.MypageMyScrapRepository
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
@@ -50,7 +50,7 @@ class MypageMyScrapRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMyRecipeList(page: Int): Flow<Result<List<MypageMyRecipeItem>>> {
+    override suspend fun getMyRecipeList(page: Int): Flow<Result<List<TipsRecipeListItem>>> {
         return flow{
             try {
                 val response = mypageMyScrapRemoteDataSource.getMyRecipeList(page)

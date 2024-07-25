@@ -4,9 +4,9 @@ import com.example.data.model.tips.RecipeBlockDto
 import com.example.data.model.tips.RecipeIngredientDto
 import com.example.data.model.tips.TipsRecipeDetailDto
 import com.example.domain.mapper.Mapper
-import com.example.domain.model.RecipeBlock
-import com.example.domain.model.RecipeIngredient
-import com.example.domain.model.TipsRecipeDetail
+import com.example.domain.model.tips.RecipeBlock
+import com.example.domain.model.tips.RecipeIngredient
+import com.example.domain.model.tips.TipsRecipeDetail
 
 class TipsRecipeDetailMapper:Mapper<TipsRecipeDetailDto, TipsRecipeDetail> {
     override fun mapFromEntity(type: TipsRecipeDetailDto): TipsRecipeDetail = TipsRecipeDetail(

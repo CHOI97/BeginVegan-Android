@@ -1,7 +1,7 @@
 package com.example.domain.repository.tips
 
-import com.example.domain.model.TipsRecipeDetail
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.TipsRecipeDetail
+import com.example.domain.model.tips.TipsRecipeListItem
 import kotlinx.coroutines.flow.Flow
 
 interface TipsRecipeRepository {

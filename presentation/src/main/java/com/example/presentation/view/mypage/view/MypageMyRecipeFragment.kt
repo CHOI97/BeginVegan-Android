@@ -1,7 +1,6 @@
 package com.example.presentation.view.mypage.view
 
 import android.graphics.Typeface
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -10,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.mypage.MypageMyRecipeItem
+import com.example.domain.model.tips.RecipeDetailPosition
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.MainNavigationHandler
@@ -42,7 +41,7 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     private val mainViewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_main_graph)
 
     private lateinit var myRecipeRvAdapter:MyRecipeRvAdapter
-    private var myRecipeList = mutableListOf<MypageMyRecipeItem>()
+    private var myRecipeList = mutableListOf<TipsRecipeListItem>()
     private var currentPage = 0
     private var totalCount = 0
     private var collectJob: Job? = null
@@ -72,9 +71,9 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
         binding.rvMyRecipe.layoutManager = LinearLayoutManager(this.context)
 
         myRecipeRvAdapter.setOnItemClickListener(object : MyRecipeRvAdapter.OnItemClickListener{
-            override fun onItemClick(id: Int, toggleButton: CompoundButton) {
+            override fun onItemClick(item: TipsRecipeListItem, position: Int) {
                 //Magazine Detail로 이동
-                openDialogRecipeDetail(id, toggleButton)
+                openDialogRecipeDetail(item, position)
             }
 
             override fun setToggleButton(isChecked: Boolean, recipeId: Int) {
@@ -156,9 +155,10 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     }
 
     //Dialog
-    private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
-        recipeViewModel.getRecipeDetail(recipeId)
-        recipeViewModel.setSelectedTb(toggleButton)
+    private fun openDialogRecipeDetail(item: TipsRecipeListItem, position: Int){
+        recipeViewModel.getRecipeDetail(item.id)
+        recipeViewModel.setNowFragment("MYPAGE")
+        recipeViewModel.setRecipeDetailPosition(RecipeDetailPosition(position, item))
         TipsRecipeDetailDialog().show(childFragmentManager, "MyRecipeDetail")
     }
 }

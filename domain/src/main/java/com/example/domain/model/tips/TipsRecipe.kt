@@ -1,10 +1,10 @@
-package com.example.domain.model
+package com.example.domain.model.tips
 
 data class TipsRecipeListItem(
     val id: Int,
     val name: String,
     val veganType: String,
-    val isBookmarked: Boolean
+    var isBookmarked: Boolean
 )
 
 data class TipsRecipeDetail(
@@ -24,4 +24,9 @@ data class RecipeIngredient(
 data class RecipeBlock(
     val content: String,
     val sequence: Int
+)
+
+data class RecipeDetailPosition(
+    val position:Int,
+    val item:TipsRecipeListItem
 )

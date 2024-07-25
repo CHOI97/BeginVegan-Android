@@ -7,7 +7,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.RecipeDetailPosition
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.MainNavigationHandler
@@ -20,6 +21,7 @@ import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,7 +32,7 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
     @Inject
     lateinit var mainNavigationHandler: MainNavigationHandler
 
-    private val viewModel: HomeTipsViewModel by viewModels()
+    private val viewModel: HomeTipsViewModel by activityViewModels()
     private val recipeViewModel: RecipeViewModel by activityViewModels()
 
     private var typeface:Typeface? = null
@@ -40,8 +42,11 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
         typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
 
         viewModel.getHomeRecipeList()
-        viewModel.homeRecipeList.observe(this){
-            setAdapter(it)
+        viewModel.homeRecipeListGet.observe(this){
+            if(it) {
+                setAdapter(viewModel.homeRecipeList.value!!)
+                viewModel.setHomeRecipeListGet(false)
+            }
         }
     }
 
@@ -52,8 +57,8 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
         binding.ciTipsRecipe.setViewPager(binding.vpTipsRecipe)
 
         vpAdapter.setOnItemClickListener(object : HomeRecipeVpAdapter.OnItemClickListener{
-            override fun onItemClick(recipeId: Int,toggleButton: CompoundButton) {
-                openDialogRecipeDetail(recipeId, toggleButton)
+            override fun onItemClick(item: TipsRecipeListItem, position: Int) {
+                openDialogRecipeDetail(item, position)
             }
 
             override fun changeBookmark(
@@ -64,35 +69,37 @@ class HomeTipsRecipeFragment: BaseFragment<FragmentHomeTipsRecipeBinding>(R.layo
                 lifecycleScope.launch {
                     if(isBookmarked) {
                         bookmarkController.postBookmark(data.id, "RECIPE")
-                        val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
-                            .setAction(getString(R.string.toast_scrap_action)){
-                                mainNavigationHandler.navigateHomeToMyRecipe()
-                            }
-                            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
-                        snackbar.show()
+                        setSnackBar(getString(R.string.toast_scrap_done))
                     } else {
                         bookmarkController.deleteBookmark(data.id, "RECIPE")
-                        val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
-                            .setAction(getString(R.string.toast_scrap_action)){
-                                mainNavigationHandler.navigateHomeToMyRecipe()
-                            }
-                            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
-                        snackbar.show()
+                        setSnackBar(getString(R.string.toast_scrap_undo))
                     }
                 }
             }
-
         })
+
+        viewModel.recipeDetailPosition.observe(this){
+            vpAdapter.notifyItemChanged(it.position)
+        }
     }
 
     //Dialog
-    private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
-        recipeViewModel.getRecipeDetail(recipeId)
-        recipeViewModel.setSelectedTb(toggleButton)
+    private fun openDialogRecipeDetail(item: TipsRecipeListItem, position: Int){
+        recipeViewModel.getRecipeDetail(item.id)
+        recipeViewModel.setNowFragment("HOME")
+        viewModel.setRecipeDetailPosition(RecipeDetailPosition(position, item))
         TipsRecipeDetailDialog().show(childFragmentManager, "MyRecipeDetail")
+    }
+
+    //SnackBar
+    private fun setSnackBar(message:String){
+        val snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
+            .setAction(getString(R.string.toast_scrap_action)){
+                mainNavigationHandler.navigateHomeToMyRecipe()
+            }
+            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
+        snackbar.show()
     }
 }

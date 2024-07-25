@@ -8,7 +8,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.RecipeDetailPosition
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.MainNavigationHandler
@@ -75,8 +76,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         binding.rvRecipe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
-            override fun onItemClick(recipeId: Int, toggleButton: CompoundButton) {
-                openDialogRecipeDetail(recipeId, toggleButton)
+            override fun onItemClick(item: TipsRecipeListItem, position: Int) {
+                openDialogRecipeDetail(item, position)
             }
 
             override fun changeBookmark(
@@ -97,6 +98,10 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 }
              }
         })
+
+        recipeViewModel.recipeDetailPosition.observe(this){
+            recipeRvAdapter.notifyItemChanged(it.position)
+        }
     }
     private fun setListener(){
         //RecyclerView 페이징 처리
@@ -161,9 +166,10 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
 
     //Dialog
-    private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
-        recipeViewModel.getRecipeDetail(recipeId)
-        recipeViewModel.setSelectedTb(toggleButton)
+    private fun openDialogRecipeDetail(item: TipsRecipeListItem, position: Int){
+        recipeViewModel.getRecipeDetail(item.id)
+        recipeViewModel.setNowFragment("RECIPE")
+        recipeViewModel.setRecipeDetailPosition(RecipeDetailPosition(position, item))
         TipsRecipeDetailDialog().show(childFragmentManager, "TipsRecipeDetail")
     }
     private fun openDialogRecipeForMe(){

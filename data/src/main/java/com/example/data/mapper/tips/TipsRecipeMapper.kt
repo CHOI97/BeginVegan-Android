@@ -2,7 +2,7 @@ package com.example.data.mapper.tips
 
 import com.example.data.model.tips.TipsRecipeListItemDto
 import com.example.domain.mapper.Mapper
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.TipsRecipeListItem
 
 class TipsRecipeMapper: Mapper<TipsRecipeListItemDto, TipsRecipeListItem> {
     override fun mapFromEntity(type: TipsRecipeListItemDto): TipsRecipeListItem = TipsRecipeListItem(

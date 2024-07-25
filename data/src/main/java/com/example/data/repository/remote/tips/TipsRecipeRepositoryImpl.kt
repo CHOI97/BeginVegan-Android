@@ -2,9 +2,8 @@ package com.example.data.repository.remote.tips
 
 import com.example.data.mapper.tips.TipsRecipeDetailMapper
 import com.example.data.mapper.tips.TipsRecipeMapper
-import com.example.data.repository.local.auth.AuthTokenDataSource
-import com.example.domain.model.TipsRecipeDetail
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.TipsRecipeDetail
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.domain.repository.tips.TipsRecipeRepository
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
