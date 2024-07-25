@@ -82,7 +82,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 handlePermissionUpsideDownCake(isReadImages, isUserSelected)
             } else {
-                handlePermissionLegacy(isReadImages)
+                handlePermissionLegacy()
             }
         }
 
@@ -219,7 +219,12 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             logMessage("유저 선택 이미지만 승인")
         } else if (!isReadImages && !isUserSelected) {
             logMessage("사용자 거부 경험 없음")
-            showPermissionRationaleDialog(this)
+            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, READ_MEDIA_IMAGES)){
+                showPermissionDeniedDialog(this)
+            }else{
+                showPermissionRationaleDialog(this)
+            }
+
         } else {
             showToast("잘못된 요청입니다.")
             finish()
@@ -228,7 +233,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
     }
 
     // Handles permission denial for Android 13 and below
-    private fun handlePermissionLegacy(isReadImages: Boolean) {
+    private fun handlePermissionLegacy() {
         logMessage("handlePermissionLegacy")
         if (galleryPermissions.any {
                 ActivityCompat.shouldShowRequestPermissionRationale(this, it)

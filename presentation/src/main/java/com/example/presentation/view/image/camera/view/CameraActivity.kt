@@ -40,16 +40,38 @@ class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_cam
 
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
 
+
     private lateinit var imageAbsolutePath: String
     private var imageUri: Uri? = null
     private val requestPermissionLauncher: ActivityResultLauncher<String> =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
+            showToast("$isGranted")
             if (isGranted) {
+                showToast("registerForActivityResult:권한승인")
                 openCamera()
             } else {
-                showPermissionRationaleDialog(this)
+                logMessage(
+                    "requestPermissionLauncher 런처 = ${
+                        ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.CAMERA
+                        )
+                    } "
+                )
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        this,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    showPermissionDeniedDialog(this)
+                } else {
+
+                    showPermissionRationaleDialog(this)
+                }
+//                showToast("registerForActivityResult:권한")
+//                showPermissionRationaleDialog(this)
             }
         }
 
@@ -125,10 +147,17 @@ class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_cam
             logMessage("Camera Permission Granted")
             openCamera()
         } else {
+            logMessage(
+                "checkpermission 런처 = ${
+                    ActivityCompat.shouldShowRequestPermissionRationale(
+                        this,
+                        Manifest.permission.CAMERA
+                    )
+                } "
+            )
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSION_CAMERA)) {
                 showPermissionDeniedDialog(this)
             } else {
-                logMessage("Camera Permission Launcher start")
                 requestPermissionLauncher.launch(cameraPermission)
             }
         }
