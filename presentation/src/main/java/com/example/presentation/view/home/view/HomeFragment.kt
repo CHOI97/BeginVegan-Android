@@ -53,7 +53,8 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
             ) {
-                startLocationUpdates()
+               getLocation()
+//                startLocationUpdates()
             } else {
                 logMessage("Location permission denied")
             }
@@ -72,6 +73,8 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             requireContext(),
             LocationManager::class.java
         ) as LocationManager
+
+
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
@@ -96,6 +99,17 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
     private fun setOpenDrawer() {
         binding.includedToolbar.ibNotification.setOnClickListener {
             drawerController.openDrawer()
+        }
+    }
+
+    private fun getLocation() {
+        val location: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        location?.let {
+            val latitude = location.latitude
+            val longitude = location.longitude
+            val accuracy = location.accuracy
+            val time = location.time
+            logMessage("map_test, $latitude, $location, $accuracy, $time")
         }
     }
 
@@ -176,7 +190,8 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
                         requireContext(),
                         coarseLocationPermission
                     ) == PackageManager.PERMISSION_GRANTED -> {
-                startLocationUpdates()
+                getLocation()
+//                startLocationUpdates()
             }
 
             else -> {
@@ -185,18 +200,18 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
         }
     }
 
-    private fun startLocationUpdates() {
-        try {
-            locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                5000L, // 5초
-                10f, // 10미터
-                locationListener
-            )
-        } catch (e: SecurityException) {
-            logMessage("Location permission not granted")
-        }
-    }
+//    private fun startLocationUpdates() {
+//        try {
+//            locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER,
+//                5000L, // 5초
+//                10f, // 10미터
+//                locationListener
+//            )
+//        } catch (e: SecurityException) {
+//            logMessage("Location permission not granted")
+//        }
+//    }
 
     //     권한 재요청
     private fun showPermissionRationaleDialog(context: Context) {
@@ -240,7 +255,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
 
     override fun onDestroyView() {
         super.onDestroyView()
-        locationManager.removeUpdates(locationListener)
+//        locationManager.removeUpdates(locationListener)
     }
 
 

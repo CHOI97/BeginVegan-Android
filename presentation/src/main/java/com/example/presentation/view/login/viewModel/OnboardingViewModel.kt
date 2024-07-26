@@ -84,7 +84,7 @@ class OnboardingViewModel @Inject constructor(
         viewModelScope.launch {
             var isDefaultBoolean = false
             val imageUri: String? = profileImageUri.value?.imagePath.toString()
-            val type = VeganTypes.fromString(veganType)
+            val type = VeganTypes.fromEng(veganType)
             if (imageUri == null) {
                 isDefaultBoolean = true
             }
