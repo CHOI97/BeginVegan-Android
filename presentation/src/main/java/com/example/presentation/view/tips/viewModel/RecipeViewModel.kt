@@ -26,16 +26,10 @@ class RecipeViewModel @Inject constructor(
 ) : ViewModel() {
 
     //RecyclerView List
-    //page 기준으로 서버에서 호출
     private val _recipeListState =
         MutableStateFlow<NetworkResult<RecipeListState>>(NetworkResult.Loading())
     val recipeListState: StateFlow<NetworkResult<RecipeListState>> = _recipeListState
-    fun resetRecipeList(){
-        _recipeListState.value = NetworkResult.Success(
-            RecipeListState(response = mutableListOf(), isLoading = false)
-        )
-    }
-    fun addRecipeList(newList: MutableList<TipsRecipeListItem>){
+    private fun addRecipeList(newList: MutableList<TipsRecipeListItem>){
         var oldList = _recipeListState.value.data?.response
         if(oldList==null) oldList = newList
         else oldList.addAll(newList)
@@ -43,12 +37,12 @@ class RecipeViewModel @Inject constructor(
             RecipeListState(response = oldList, isLoading = false)
         )
     }
-
-    //데이터 변경시 사용하는 리스트
-    private val _newRecipeList = MutableStateFlow<MutableList<TipsRecipeListItem>?>(null)
-    val newRecipeList: StateFlow<MutableList<TipsRecipeListItem>?> = _newRecipeList
-    fun setNewRecipeList(list:MutableList<TipsRecipeListItem>){
-        _newRecipeList.value = list
+    fun setRecipeList(nowList: MutableList<TipsRecipeListItem>){
+        Timber.d("setRecipeList")
+        val newList = nowList.map { it.copy() }
+        _recipeListState.value = NetworkResult.Success(
+            RecipeListState(response = newList.toMutableList(), isLoading = false)
+        )
     }
 
     private val _isContinueGetList = MutableLiveData(true)
@@ -77,15 +71,9 @@ class RecipeViewModel @Inject constructor(
     private val _recipeDetailData = MutableLiveData<TipsRecipeDetail>()
     val recipeDetailData: LiveData<TipsRecipeDetail> = _recipeDetailData
 
-    private val _recipeDetailPosition = MutableStateFlow<RecipeDetailPosition?>(null)
-    val recipeDetailPosition: StateFlow<RecipeDetailPosition?> = _recipeDetailPosition
+    private val _recipeDetailPosition = MutableLiveData<RecipeDetailPosition?>(null)
+    val recipeDetailPosition: LiveData<RecipeDetailPosition?> = _recipeDetailPosition
     fun setRecipeDetailPosition(recipeDetailPosition: RecipeDetailPosition){
-        val currentList = _recipeListState.value.data?.response!!
-        currentList[recipeDetailPosition.position] = recipeDetailPosition.item
-//        addRecipeList(currentList)
-//        setRecipeList(currentList)
-        _newRecipeList.value = currentList
-        Timber.d("setRecipeDetailPosition in viewModel: position:${recipeDetailPosition.position}")
         _recipeDetailPosition.value = recipeDetailPosition
     }
 
@@ -106,14 +94,6 @@ class RecipeViewModel @Inject constructor(
     val nowFragment:LiveData<String> = _nowFragment
     fun setNowFragment(fragment:String){
         _nowFragment.value = fragment
-    }
-
-    private val _checkChange = MutableStateFlow(CheckChange(false, 0))
-    val checkChange:StateFlow<CheckChange> = _checkChange
-    fun setCheckChange(change:CheckChange){
-        val a = _recipeListState.value.data?.response?.get(change.position)
-        Timber.d("_recipeListState.value.data?.response?.get(change.position): ${a?.isBookmarked}")
-        _checkChange.value = change
     }
 
     //나를 위한 레시피

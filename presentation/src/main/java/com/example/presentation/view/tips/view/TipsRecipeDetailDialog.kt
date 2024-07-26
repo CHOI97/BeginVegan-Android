@@ -14,6 +14,7 @@ import com.example.domain.model.tips.RecipeBlock
 import com.example.domain.model.tips.RecipeDetailPosition
 import com.example.domain.model.tips.RecipeIngredient
 import com.example.domain.model.tips.TipsRecipeDetail
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseDialogFragment
 import com.example.presentation.config.navigation.MainNavigationHandler
@@ -87,13 +88,22 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
                     homeViewModel.setRecipeDetailPosition(currentData!!)
                 }
                 "RECIPE" -> {
-                    val currentData = recipeViewModel.recipeDetailPosition.value
-                    currentData?.item?.isBookmarked = isChecked
-                    recipeViewModel.setRecipeDetailPosition(currentData!!)
                     val detailData = recipeViewModel.recipeDetailData.value
                     detailData?.isBookmarked = isChecked
                     recipeViewModel.setRecipeDetail(detailData!!)
-                    recipeViewModel.setCheckChange(CheckChange(true, currentData.position))
+
+                    val currentData = recipeViewModel.recipeDetailPosition.value
+                    val oldItem = currentData?.item!!
+                    val newData = TipsRecipeListItem(
+                        id = oldItem.id,
+                        name = oldItem.name,
+                        veganType = oldItem.veganType,
+                        isBookmarked = isChecked
+                    )
+                    val oldList = recipeViewModel.recipeListState.value.data?.response
+                    oldList!![currentData.position] = newData
+
+                    recipeViewModel.setRecipeList(oldList)
                 }
                 "MYPAGE" -> {
 

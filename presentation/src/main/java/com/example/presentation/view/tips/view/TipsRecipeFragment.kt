@@ -37,7 +37,6 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
 
     private var currentPage = 0
     private var isForMe = false
-//    private var recipeList = mutableListOf<TipsRecipeListItem>()
     private var totalCount = 0
 
     private var typeface:Typeface? = null
@@ -56,14 +55,12 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         openDialogRecipeForMe()
     }
     private fun reset(){
-//        recipeList = mutableListOf()
         currentPage = 0
         totalCount = 0
         isForMe = false
         recipeViewModel.reSetIsContinueGetList()
-        recipeViewModel.resetRecipeList()
+        recipeViewModel.setRecipeList(mutableListOf())
         setAdapter()
-//        setAdapter(recipeList)
     }
     //api 호출
     private fun getRecipeList(page:Int){
@@ -76,9 +73,10 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
     //RecyclerView Adapter 설정
     private fun setAdapter(){
-        recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), mutableListOf())
+        recipeRvAdapter = TipsRecipeRvAdapter(requireContext())
         binding.rvRecipe.adapter = recipeRvAdapter
         binding.rvRecipe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recipeRvAdapter.submitList(mutableListOf())
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
             override fun onItemClick(item: TipsRecipeListItem, position: Int) {
@@ -111,7 +109,6 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 super.onScrolled(recyclerView, dx, dy)
                 val rvPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
                 totalCount = recyclerView.adapter?.itemCount?.minus(1)!!
-//                Timber.d("currentPAge: $currentPage, recipeViewModel.isContinueGetList.value!!: ${recipeViewModel.isContinueGetList.value!!}")
                 if(rvPosition == totalCount && recipeViewModel.isContinueGetList.value!!){
                     if(isForMe){
                         getRecipeForMeList(currentPage)
@@ -130,9 +127,10 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                     is NetworkResult.Success -> {
                         if(state.data?.response?.size != 0){
                             if(state.data?.response!!.isNotEmpty()){
-                                Timber.d("state.data?.response!!: ${state.data.response.size}")
-                                val newList = mutableListOf<TipsRecipeListItem>()
-                                newList.addAll(state.data.response)
+                                Timber.d("레시피 리스트 갱신!!!: ${state.data.response.size}")
+                                val newList = state.data.response.map { it.copy() }
+                                if(newList.size>1) Timber.d("newList[1].isBookmarked: ${newList[1].isBookmarked}")
+                                if(recipeRvAdapter.currentList.size > 1) Timber.d("recipeRvAdapter.currentList[1].isBookmarked: ${recipeRvAdapter.currentList[1].isBookmarked}")
                                 recipeRvAdapter.submitList(newList)
                             }
                         }
@@ -141,27 +139,6 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 }
             }
         }
-
-//        job = lifecycleScope.launch {
-//            recipeViewModel.checkChange.collect{
-//                Timber.d("recipeViewModel.checkChange.collect: ${it.check}")
-//                if(it.check) {
-//                    Timber.d("recipeViewModel.checkChange.collect: ${it.position}")
-////                    recipeRvAdapter.notifyItemChanged(it.position)
-////                    recipeRvAdapter.notifyChange(it.position)
-////                    recipeRvAdapter.updateRecipeList(recipeViewModel.newRecipeList.value!!)
-////                    recipeRvAdapter.submitList(recipeViewModel.newRecipeList.value!!)
-//                    recipeViewModel.setCheckChange(CheckChange(false, 0))
-//                }
-//            }
-//        }
-//        recipeViewModel.recipeListState.value.data.response.ob
-//        lifecycleScope.launch {
-//            recipeViewModel.recipeList.collect{
-//                Timber.d("recipeRvAdapter.differ.submitList(it) 실행")
-////                recipeRvAdapter.differ.submitList(it)
-//            }
-//        }
     }
 
     //나를 위한 레시피 토글 처리

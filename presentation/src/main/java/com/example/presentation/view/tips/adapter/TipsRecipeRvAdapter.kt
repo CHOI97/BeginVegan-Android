@@ -4,31 +4,38 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemRecipeBinding
 import timber.log.Timber
 
-class TipsRecipeRvAdapter(private val context: Context,private val list:MutableList<TipsRecipeListItem>): RecyclerView.Adapter<TipsRecipeRvAdapter.RecyclerViewHolder>() {
+class TipsRecipeRvAdapter(private val context: Context):
+    ListAdapter<TipsRecipeListItem, TipsRecipeRvAdapter.RecyclerViewHolder>(diffUtil)
+{
     private var listener: OnItemClickListener? = null
     private lateinit var veganTypesKr:Array<String>
     private lateinit var veganTypesEng:Array<String>
 
     // DiffUtil
-    private val differCallback = object : DiffUtil.ItemCallback<TipsRecipeListItem>() {
-        override fun areItemsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
-            return oldItem == newItem
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<TipsRecipeListItem>() {
+            override fun areItemsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+                return oldItem.name == newItem.name
+            }
+            override fun areContentsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+                return oldItem == newItem
+            }
         }
     }
-    val differ = AsyncListDiffer(this, differCallback)
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    //RecyclerViewHolder
     inner class RecyclerViewHolder(private val binding: ItemRecipeBinding):
         RecyclerView.ViewHolder(binding.root){
         fun bind(position:Int){
@@ -40,7 +47,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:MutableL
                 binding.tbVeganLevelMeat
             )
 
-            val item = differ.currentList[position]
+            val item = currentList[position]
             binding.tvRecipeName.text = item.name
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
 
@@ -58,17 +65,18 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:MutableL
         return RecyclerViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = differ.currentList.size
+    override fun getItemCount(): Int = currentList.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.bind(position)
         if(position != RecyclerView.NO_POSITION){
             holder.itemView.setOnClickListener{
-                listener?.onItemClick(list[position], position)
+                listener?.onItemClick(currentList[position], position)
             }
         }
     }
 
+    //OnItemClickListener
     interface OnItemClickListener{
         fun onItemClick(item: TipsRecipeListItem, position: Int)
         fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsRecipeListItem)
@@ -77,6 +85,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:MutableL
         this.listener = listener
     }
 
+    //Transfer Type
     private fun setVeganType(type:String, levels:List<CompoundButton>):String{
         veganTypesKr = context.resources.getStringArray(R.array.vegan_type)
         veganTypesEng = context.resources.getStringArray(R.array.vegan_types_eng)
@@ -95,9 +104,5 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:MutableL
                 else -> levels[i].isChecked = i<index-2
             }
         }
-    }
-
-    fun submitList(newList: List<TipsRecipeListItem>) {
-        differ.submitList(newList)
     }
 }
