@@ -77,14 +77,14 @@ class OnboardingViewModel @Inject constructor(
         return validNickName.value ?: false && validVeganLevel.value ?: false
     }
 
-    fun saveUserInfo(
+    suspend fun saveUserInfo(
         nickName: String,
         veganType: String,
     ) {
         viewModelScope.launch {
             var isDefaultBoolean = false
             val imageUri: String? = profileImageUri.value?.imagePath.toString()
-            val type = VeganTypes.fromString(veganType)
+            val type = VeganTypes.fromEng(veganType)
             if (imageUri == null) {
                 isDefaultBoolean = true
             }

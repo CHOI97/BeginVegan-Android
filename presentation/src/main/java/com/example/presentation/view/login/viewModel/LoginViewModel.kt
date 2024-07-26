@@ -40,7 +40,6 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             signInUseCase.invoke(email, providerId).onSuccess {
                 Timber.d("$it")
-              /** 카메라 테스트를 위해 막아둔 거 나중에 지워야함 **/
                 additionalInfoProvided = it.additionalInfo
                 _loginState.value = true
             }.onFailure {
@@ -85,7 +84,7 @@ class LoginViewModel @Inject constructor(
                 Timber.d(
                     "KaKao User 사용자 정보 요청 성공\n회원번호: ${user.id}\n이메일: ${user.kakaoAccount?.email}"
                 )
-                user.kakaoAccount?.email?.let { signIn(it,user.id.toString()) }
+                user.kakaoAccount?.email?.let { signIn(it, user.id.toString()) }
 
             }
         }

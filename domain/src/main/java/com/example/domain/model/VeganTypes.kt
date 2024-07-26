@@ -1,20 +1,24 @@
 package com.example.domain.model
 
 
-enum class VeganTypes(val veganType: String) {
-    UNKNOWN("알고 있지 않아요"),
-    VEGAN("비건"),
-    LACTO_VEGETARIAN("락토 베지테리언"),
-    OVO_VEGETARIAN("오보 베지테리언"),
-    LACTO_OVO_VEGETARIAN("락토 오보 베지테리언"),
-    PASCATARIAN("페스코 베지테리언"),
-    POLLOTARIAN("폴로 베지테리언"),
-    FLEXITARIAN("플렉시테리언");
+enum class VeganTypes(val kr: String, val eng: String) {
+    UNKNOWN("알고 있지 않아요","UNKNOWN"),
+    VEGAN("비건","VEGAN"),
+    LACTO_VEGETARIAN("락토 베지테리언","LACTO_VEGETARIAN"),
+    OVO_VEGETARIAN("오보 베지테리언","OVO_VEGETARIAN"),
+    LACTO_OVO_VEGETARIAN("락토 오보 베지테리언","LACTO_OVO_VEGETARIAN"),
+    PASCATARIAN("페스코 베지테리언","PASCATARIAN"),
+    POLLOTARIAN("폴로 베지테리언","POLLOTARIAN"),
+    FLEXITARIAN("플렉시테리언","FLEXITARIAN");
 
     companion object {
         fun getValues(): MutableList<VeganTypes> = values().toMutableList()
-        fun fromString(value: String): VeganTypes? {
-            return values().find { it.veganType == value }
+        fun fromKr(value: String): VeganTypes? {
+            return VeganTypes.values().find { it.kr == value }
+        }
+
+        fun fromEng(value: String): VeganTypes? {
+            return VeganTypes.values().find { it.eng == value }
         }
     }
 

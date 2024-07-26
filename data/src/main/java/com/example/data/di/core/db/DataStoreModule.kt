@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.repository.local.auth.AuthTokenDataSourceImpl
+import com.example.data.repository.local.user.UserDataSource
+import com.example.data.repository.local.user.UserDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,9 +28,12 @@ object DataStoreModule {
         }
     }
 
+
     @Provides
     @Singleton
     fun provideAuthTokenDataSource(authTokenDataSourceImpl: AuthTokenDataSourceImpl): AuthTokenDataSource {
         return authTokenDataSourceImpl
     }
+
+
 }
