@@ -31,10 +31,6 @@ class TipsRecipeRvAdapter(private val context: Context):
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
     //RecyclerViewHolder
     inner class RecyclerViewHolder(private val binding: ItemRecipeBinding):
         RecyclerView.ViewHolder(binding.root){
@@ -54,8 +50,8 @@ class TipsRecipeRvAdapter(private val context: Context):
             binding.tbInterest.setOnCheckedChangeListener(null)
             binding.tbInterest.isChecked = item.isBookmarked
 
-            binding.tbInterest.setOnCheckedChangeListener { buttonView, isChecked ->
-                listener?.changeBookmark(buttonView, isChecked, item)
+            binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
+                listener?.changeBookmark(isChecked, item, position)
             }
         }
     }
@@ -79,7 +75,7 @@ class TipsRecipeRvAdapter(private val context: Context):
     //OnItemClickListener
     interface OnItemClickListener{
         fun onItemClick(item: TipsRecipeListItem, position: Int)
-        fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsRecipeListItem)
+        fun changeBookmark(isBookmarked: Boolean, data: TipsRecipeListItem, position: Int)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener

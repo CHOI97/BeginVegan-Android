@@ -83,11 +83,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 openDialogRecipeDetail(item, position)
             }
 
-            override fun changeBookmark(
-                toggleButton: CompoundButton,
-                isBookmarked: Boolean,
-                data: TipsRecipeListItem
-            ) {
+            override fun changeBookmark(isBookmarked: Boolean, data: TipsRecipeListItem, position: Int) {
+                updateBookmark(isBookmarked, data, position)
                 lifecycleScope.launch {
                     if(isBookmarked){
                         if(bookmarkController.postBookmark(data.id, "RECIPE")){
@@ -125,15 +122,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 when(state){
                     is NetworkResult.Loading -> {}
                     is NetworkResult.Success -> {
-                        if(state.data?.response?.size != 0){
-                            if(state.data?.response!!.isNotEmpty()){
-                                Timber.d("레시피 리스트 갱신!!!: ${state.data.response.size}")
-                                val newList = state.data.response.map { it.copy() }
-                                if(newList.size>1) Timber.d("newList[1].isBookmarked: ${newList[1].isBookmarked}")
-                                if(recipeRvAdapter.currentList.size > 1) Timber.d("recipeRvAdapter.currentList[1].isBookmarked: ${recipeRvAdapter.currentList[1].isBookmarked}")
-                                recipeRvAdapter.submitList(newList)
-                            }
-                        }
+                        val newList = state.data?.response?.map { it.copy() }
+                        recipeRvAdapter.submitList(newList)
                     }
                     is NetworkResult.Error -> {}
                 }
@@ -196,4 +186,17 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         snackbar.show()
     }
 
+    //change Bookmark
+    private fun updateBookmark(isChecked:Boolean, oldItem:TipsRecipeListItem, position: Int){
+        val newData = TipsRecipeListItem(
+            id = oldItem.id,
+            name = oldItem.name,
+            veganType = oldItem.veganType,
+            isBookmarked = isChecked
+        )
+        val oldList = recipeViewModel.recipeListState.value.data?.response
+        oldList!![position] = newData
+
+        recipeViewModel.setRecipeList(oldList)
+    }
 }
