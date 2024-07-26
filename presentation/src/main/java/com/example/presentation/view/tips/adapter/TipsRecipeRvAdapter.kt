@@ -4,15 +4,30 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemRecipeBinding
+import timber.log.Timber
 
-class TipsRecipeRvAdapter(private val context: Context,private val list:List<TipsRecipeListItem>): RecyclerView.Adapter<TipsRecipeRvAdapter.RecyclerViewHolder>() {
+class TipsRecipeRvAdapter(private val context: Context,private val list:MutableList<TipsRecipeListItem>): RecyclerView.Adapter<TipsRecipeRvAdapter.RecyclerViewHolder>() {
     private var listener: OnItemClickListener? = null
     private lateinit var veganTypesKr:Array<String>
     private lateinit var veganTypesEng:Array<String>
+
+    // DiffUtil
+    private val differCallback = object : DiffUtil.ItemCallback<TipsRecipeListItem>() {
+        override fun areItemsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+            return oldItem == newItem
+        }
+    }
+    val differ = AsyncListDiffer(this, differCallback)
 
     inner class RecyclerViewHolder(private val binding: ItemRecipeBinding):
         RecyclerView.ViewHolder(binding.root){
@@ -25,7 +40,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
                 binding.tbVeganLevelMeat
             )
 
-            val item = list[position]
+            val item = differ.currentList[position]
             binding.tvRecipeName.text = item.name
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
 
@@ -43,7 +58,7 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
         return RecyclerViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.bind(position)
@@ -80,5 +95,9 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
                 else -> levels[i].isChecked = i<index-2
             }
         }
+    }
+
+    fun submitList(newList: List<TipsRecipeListItem>) {
+        differ.submitList(newList)
     }
 }

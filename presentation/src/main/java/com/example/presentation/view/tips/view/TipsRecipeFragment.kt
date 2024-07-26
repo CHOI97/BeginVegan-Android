@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.tips.CheckChange
 import com.example.domain.model.tips.RecipeDetailPosition
 import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
@@ -20,6 +21,7 @@ import com.example.presentation.view.tips.adapter.TipsRecipeRvAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -35,14 +37,16 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
 
     private var currentPage = 0
     private var isForMe = false
-    private var recipeList = mutableListOf<TipsRecipeListItem>()
+//    private var recipeList = mutableListOf<TipsRecipeListItem>()
     private var totalCount = 0
 
     private var typeface:Typeface? = null
+    private var job: Job? = null
 
     override fun init() {
         binding.lifecycleOwner = this
         typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+        job?.cancel()
 
         reset()
         setToggleRecipeForMe()
@@ -52,13 +56,14 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         openDialogRecipeForMe()
     }
     private fun reset(){
-        recipeList = mutableListOf()
+//        recipeList = mutableListOf()
         currentPage = 0
         totalCount = 0
         isForMe = false
         recipeViewModel.reSetIsContinueGetList()
-        recipeViewModel.addRecipeList(recipeList)
-        setAdapter(recipeList)
+        recipeViewModel.resetRecipeList()
+        setAdapter()
+//        setAdapter(recipeList)
     }
     //api 호출
     private fun getRecipeList(page:Int){
@@ -70,8 +75,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         currentPage++
     }
     //RecyclerView Adapter 설정
-    private fun setAdapter(list:MutableList<TipsRecipeListItem>){
-        recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), list)
+    private fun setAdapter(){
+        recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), mutableListOf())
         binding.rvRecipe.adapter = recipeRvAdapter
         binding.rvRecipe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
@@ -98,10 +103,6 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 }
              }
         })
-
-        recipeViewModel.recipeDetailPosition.observe(this){
-            recipeRvAdapter.notifyItemChanged(it.position)
-        }
     }
     private fun setListener(){
         //RecyclerView 페이징 처리
@@ -110,6 +111,7 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 super.onScrolled(recyclerView, dx, dy)
                 val rvPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
                 totalCount = recyclerView.adapter?.itemCount?.minus(1)!!
+//                Timber.d("currentPAge: $currentPage, recipeViewModel.isContinueGetList.value!!: ${recipeViewModel.isContinueGetList.value!!}")
                 if(rvPosition == totalCount && recipeViewModel.isContinueGetList.value!!){
                     if(isForMe){
                         getRecipeForMeList(currentPage)
@@ -126,13 +128,40 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 when(state){
                     is NetworkResult.Loading -> {}
                     is NetworkResult.Success -> {
-                        recipeList.addAll(state.data?.response!!)
-                        recipeRvAdapter.notifyItemRangeInserted(totalCount,state.data.response.size)
+                        if(state.data?.response?.size != 0){
+                            if(state.data?.response!!.isNotEmpty()){
+                                Timber.d("state.data?.response!!: ${state.data.response.size}")
+                                val newList = mutableListOf<TipsRecipeListItem>()
+                                newList.addAll(state.data.response)
+                                recipeRvAdapter.submitList(newList)
+                            }
+                        }
                     }
                     is NetworkResult.Error -> {}
                 }
             }
         }
+
+//        job = lifecycleScope.launch {
+//            recipeViewModel.checkChange.collect{
+//                Timber.d("recipeViewModel.checkChange.collect: ${it.check}")
+//                if(it.check) {
+//                    Timber.d("recipeViewModel.checkChange.collect: ${it.position}")
+////                    recipeRvAdapter.notifyItemChanged(it.position)
+////                    recipeRvAdapter.notifyChange(it.position)
+////                    recipeRvAdapter.updateRecipeList(recipeViewModel.newRecipeList.value!!)
+////                    recipeRvAdapter.submitList(recipeViewModel.newRecipeList.value!!)
+//                    recipeViewModel.setCheckChange(CheckChange(false, 0))
+//                }
+//            }
+//        }
+//        recipeViewModel.recipeListState.value.data.response.ob
+//        lifecycleScope.launch {
+//            recipeViewModel.recipeList.collect{
+//                Timber.d("recipeRvAdapter.differ.submitList(it) 실행")
+////                recipeRvAdapter.differ.submitList(it)
+//            }
+//        }
     }
 
     //나를 위한 레시피 토글 처리

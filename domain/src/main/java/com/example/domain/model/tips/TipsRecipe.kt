@@ -13,7 +13,7 @@ data class TipsRecipeDetail(
     val veganType: String,
     val ingredients: List<RecipeIngredient>,
     val blocks: List<RecipeBlock>,
-    val isBookmarked: Boolean
+    var isBookmarked: Boolean
 )
 
 data class RecipeIngredient(
@@ -29,4 +29,9 @@ data class RecipeBlock(
 data class RecipeDetailPosition(
     val position:Int,
     val item:TipsRecipeListItem
+)
+
+data class CheckChange(
+    val check: Boolean,
+    val position: Int
 )

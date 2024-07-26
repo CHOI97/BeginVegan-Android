@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
@@ -26,7 +28,7 @@ class MyRecipeRvAdapter(private val context: Context, private val list:List<Tips
                 binding.tbVeganLevelMeat
             )
 
-            val item = list[position]
+            val item = differ.currentList[position]
             binding.tvRecipeName.text = item.name
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
 
@@ -43,7 +45,7 @@ class MyRecipeRvAdapter(private val context: Context, private val list:List<Tips
         return RecyclerViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.bind(position)
@@ -81,4 +83,16 @@ class MyRecipeRvAdapter(private val context: Context, private val list:List<Tips
             }
         }
     }
+
+    // DiffUtil
+    private val differCallback = object : DiffUtil.ItemCallback<TipsRecipeListItem>() {
+        override fun areItemsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+            return oldItem == newItem
+        }
+    }
+    val differ = AsyncListDiffer(this, differCallback)
 }

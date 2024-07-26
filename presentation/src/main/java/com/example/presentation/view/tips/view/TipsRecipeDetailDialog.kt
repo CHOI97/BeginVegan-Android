@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.domain.model.tips.CheckChange
 import com.example.domain.model.tips.RecipeBlock
 import com.example.domain.model.tips.RecipeDetailPosition
 import com.example.domain.model.tips.RecipeIngredient
@@ -89,6 +90,10 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
                     val currentData = recipeViewModel.recipeDetailPosition.value
                     currentData?.item?.isBookmarked = isChecked
                     recipeViewModel.setRecipeDetailPosition(currentData!!)
+                    val detailData = recipeViewModel.recipeDetailData.value
+                    detailData?.isBookmarked = isChecked
+                    recipeViewModel.setRecipeDetail(detailData!!)
+                    recipeViewModel.setCheckChange(CheckChange(true, currentData.position))
                 }
                 "MYPAGE" -> {
 
@@ -167,7 +172,7 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
                             mainNavigationHandler.navigateHomeToMyRecipe()
                         }
                         "RECIPE"->{
-                            mainNavigationHandler.navigateTipsMagazineToMyMagazine()
+                            mainNavigationHandler.navigateTipsRecipeToMyRecipe()
                         }
                     }
                 }

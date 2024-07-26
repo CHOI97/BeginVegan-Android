@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -80,6 +79,7 @@ dependencies {
 
     // Moshi
     implementation(Dependencies.MOSHI)
+    implementation("org.chromium.net:cronet-embedded:119.6045.31")
     kapt(Dependencies.MOSHI_KAPT)
 
     // Okhttp
