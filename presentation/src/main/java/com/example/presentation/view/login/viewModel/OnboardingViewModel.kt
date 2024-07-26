@@ -77,7 +77,7 @@ class OnboardingViewModel @Inject constructor(
         return validNickName.value ?: false && validVeganLevel.value ?: false
     }
 
-    suspend fun saveUserInfo(
+    fun saveUserInfo(
         nickName: String,
         veganType: String,
     ) {

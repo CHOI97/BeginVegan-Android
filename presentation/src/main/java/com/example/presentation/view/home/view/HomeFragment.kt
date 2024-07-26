@@ -73,16 +73,16 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             LocationManager::class.java
         ) as LocationManager
 
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                // Handle location updates
-                logMessage("Location: ${location.latitude}, ${location.longitude}")
-            }
-
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-            override fun onProviderEnabled(provider: String) {}
-            override fun onProviderDisabled(provider: String) {}
-        }
+//        locationListener = object : LocationListener {
+//            override fun onLocationChanged(location: Location) {
+//                // Handle location updates
+//                logMessage("Location: ${location.latitude}, ${location.longitude}")
+//            }
+//
+//            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+//            override fun onProviderEnabled(provider: String) {}
+//            override fun onProviderDisabled(provider: String) {}
+//        }
 
         checkAndRequestPermissions()
     }
