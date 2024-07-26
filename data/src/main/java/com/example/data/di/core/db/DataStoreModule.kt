@@ -20,15 +20,31 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+    fun provideDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create {
+            context.preferencesDataStoreFile("user_data")
             context.preferencesDataStoreFile("auth_prefs")
         }
     }
 
+//    @Provides
+//    @Singleton
+//    fun provideAuthPrefsDataStore(
+//        @ApplicationContext context: Context
+//    ): DataStore<Preferences> {
+//        return PreferenceDataStoreFactory.create {
+//            context.preferencesDataStoreFile("auth_prefs")
+//        }
+//    }
+
     @Provides
     @Singleton
-    fun provideAuthTokenDataSource(authTokenDataSourceImpl: AuthTokenDataSourceImpl): AuthTokenDataSource {
-        return authTokenDataSourceImpl
+    fun provideAuthTokenDataSource(
+        provideDataStore: DataStore<Preferences>
+    ): AuthTokenDataSource {
+        return AuthTokenDataSourceImpl(provideDataStore)
     }
+
 }

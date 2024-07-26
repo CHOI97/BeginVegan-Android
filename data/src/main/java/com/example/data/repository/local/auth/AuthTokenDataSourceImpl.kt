@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -30,8 +31,10 @@ class AuthTokenDataSourceImpl @Inject constructor(
         .catch { exception ->
             // 데이터 접근 중 발생한 예외 처리
             if (exception is IOException) {
+                Timber.d("accessToken EmptyPreferences")
                 emit(emptyPreferences())
             } else {
+                Timber.d("accessToken exception $exception")
                 throw exception
             }
         }
@@ -43,8 +46,10 @@ class AuthTokenDataSourceImpl @Inject constructor(
         .catch { exception ->
             // 데이터 접근 중 발생한 예외 처리
             if (exception is IOException) {
+                Timber.d("refreshToken EmptyPreferences")
                 emit(emptyPreferences())
             } else {
+                Timber.d("refreshToken exception $exception")
                 throw exception
             }
         }
