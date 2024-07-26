@@ -1,7 +1,7 @@
 package com.example.domain.useCase.tips
 
-import com.example.domain.model.TipsRecipeDetail
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.TipsRecipeDetail
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.domain.repository.tips.TipsRecipeRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

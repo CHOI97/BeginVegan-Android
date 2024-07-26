@@ -8,7 +8,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.CheckChange
+import com.example.domain.model.tips.RecipeDetailPosition
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.MainNavigationHandler
@@ -19,6 +21,7 @@ import com.example.presentation.view.tips.adapter.TipsRecipeRvAdapter
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -34,14 +37,15 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
 
     private var currentPage = 0
     private var isForMe = false
-    private var recipeList = mutableListOf<TipsRecipeListItem>()
     private var totalCount = 0
 
     private var typeface:Typeface? = null
+    private var job: Job? = null
 
     override fun init() {
         binding.lifecycleOwner = this
         typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+        job?.cancel()
 
         reset()
         setToggleRecipeForMe()
@@ -51,13 +55,12 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         openDialogRecipeForMe()
     }
     private fun reset(){
-        recipeList = mutableListOf()
         currentPage = 0
         totalCount = 0
         isForMe = false
         recipeViewModel.reSetIsContinueGetList()
-        recipeViewModel.addRecipeList(recipeList)
-        setAdapter(recipeList)
+        recipeViewModel.setRecipeList(mutableListOf())
+        setAdapter()
     }
     //api 호출
     private fun getRecipeList(page:Int){
@@ -69,45 +72,27 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         currentPage++
     }
     //RecyclerView Adapter 설정
-    private fun setAdapter(list:MutableList<TipsRecipeListItem>){
-        recipeRvAdapter = TipsRecipeRvAdapter(requireContext(), list)
+    private fun setAdapter(){
+        recipeRvAdapter = TipsRecipeRvAdapter(requireContext())
         binding.rvRecipe.adapter = recipeRvAdapter
         binding.rvRecipe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recipeRvAdapter.submitList(mutableListOf())
 
         recipeRvAdapter.setOnItemClickListener(object : TipsRecipeRvAdapter.OnItemClickListener {
-            override fun onItemClick(recipeId: Int, toggleButton: CompoundButton) {
-                openDialogRecipeDetail(recipeId, toggleButton) }
+            override fun onItemClick(item: TipsRecipeListItem, position: Int) {
+                openDialogRecipeDetail(item, position)
+            }
 
-            override fun changeBookmark(
-                toggleButton: CompoundButton,
-                isBookmarked: Boolean,
-                data: TipsRecipeListItem
-            ) {
+            override fun changeBookmark(isBookmarked: Boolean, data: TipsRecipeListItem, position: Int) {
+                updateBookmark(isBookmarked, data, position)
                 lifecycleScope.launch {
-                    when(isBookmarked){
-                        true -> {
-                            if(bookmarkController.postBookmark(data.id, "RECIPE")){
-                                val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
-                                    .setAction(getString(R.string.toast_scrap_action)){
-                                        mainNavigationHandler.navigateTipsRecipeToMyRecipe()
-                                    }
-                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
-                                snackbar.show()
-                            }
+                    if(isBookmarked){
+                        if(bookmarkController.postBookmark(data.id, "RECIPE")){
+                            setSnackBar(getString(R.string.toast_scrap_done))
                         }
-                        false -> {
-                            if(bookmarkController.deleteBookmark(data.id, "RECIPE")){
-                                val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
-                                    .setAction(getString(R.string.toast_scrap_action)){
-                                        mainNavigationHandler.navigateTipsRecipeToMyRecipe()
-                                    }
-                                    .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                                snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
-                                snackbar.show()
-                            }
+                    }else{
+                        if(bookmarkController.deleteBookmark(data.id, "RECIPE")){
+                            setSnackBar(getString(R.string.toast_scrap_undo))
                         }
                     }
                 }
@@ -137,8 +122,8 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
                 when(state){
                     is NetworkResult.Loading -> {}
                     is NetworkResult.Success -> {
-                        recipeList.addAll(state.data?.response!!)
-                        recipeRvAdapter.notifyItemRangeInserted(totalCount,state.data.response.size)
+                        val newList = state.data?.response?.map { it.copy() }
+                        recipeRvAdapter.submitList(newList)
                     }
                     is NetworkResult.Error -> {}
                 }
@@ -177,9 +162,10 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
     }
 
     //Dialog
-    private fun openDialogRecipeDetail(recipeId:Int, toggleButton: CompoundButton){
-        recipeViewModel.getRecipeDetail(recipeId)
-        recipeViewModel.setSelectedTb(toggleButton)
+    private fun openDialogRecipeDetail(item: TipsRecipeListItem, position: Int){
+        recipeViewModel.getRecipeDetail(item.id)
+        recipeViewModel.setNowFragment("RECIPE")
+        recipeViewModel.setRecipeDetailPosition(RecipeDetailPosition(position, item))
         TipsRecipeDetailDialog().show(childFragmentManager, "TipsRecipeDetail")
     }
     private fun openDialogRecipeForMe(){
@@ -188,4 +174,29 @@ class TipsRecipeFragment : BaseFragment<FragmentTipsRecipeBinding>(R.layout.frag
         }
     }
 
+    //SnackBar
+    private fun setSnackBar(message:String){
+        val snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
+            .setAction(getString(R.string.toast_scrap_action)){
+                mainNavigationHandler.navigateTipsRecipeToMyRecipe()
+            }
+            .setActionTextColor(resources.getColor(R.color.color_primary_variant_02))
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action).setTypeface(typeface)
+        snackbar.show()
+    }
+
+    //change Bookmark
+    private fun updateBookmark(isChecked:Boolean, oldItem:TipsRecipeListItem, position: Int){
+        val newData = TipsRecipeListItem(
+            id = oldItem.id,
+            name = oldItem.name,
+            veganType = oldItem.veganType,
+            isBookmarked = isChecked
+        )
+        val oldList = recipeViewModel.recipeListState.value.data?.response
+        oldList!![position] = newData
+
+        recipeViewModel.setRecipeList(oldList)
+    }
 }

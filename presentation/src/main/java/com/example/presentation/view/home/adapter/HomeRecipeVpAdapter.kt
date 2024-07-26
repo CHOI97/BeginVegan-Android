@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemHomeRecipeBinding
-import com.kakao.vectormap.label.CompetitionUnit
+import timber.log.Timber
 
 class HomeRecipeVpAdapter(private val context: Context, private val list: List<TipsRecipeListItem>):
     RecyclerView.Adapter<HomeRecipeVpAdapter.ViewHolder>() {
@@ -18,7 +18,7 @@ class HomeRecipeVpAdapter(private val context: Context, private val list: List<T
 
     inner class ViewHolder(private val binding: ItemHomeRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int):CompoundButton{
+        fun bind(position: Int){
             val levels = listOf(
                 binding.tbVeganLevelMilk,
                 binding.tbVeganLevelEgg,
@@ -32,12 +32,12 @@ class HomeRecipeVpAdapter(private val context: Context, private val list: List<T
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
 
             binding.tbInterest.setOnCheckedChangeListener(null)
+            Timber.d("position$position, item.isBookmarked:${item.isBookmarked}")
             binding.tbInterest.isChecked = item.isBookmarked
 
             binding.tbInterest.setOnCheckedChangeListener { buttonView, isChecked ->
                 listener?.changeBookmark(buttonView, isChecked, item)
             }
-            return binding.tbInterest
         }
     }
 
@@ -49,16 +49,16 @@ class HomeRecipeVpAdapter(private val context: Context, private val list: List<T
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val toggleButton = holder.bind(position)
+        holder.bind(position)
         if(position != RecyclerView.NO_POSITION){
             holder.itemView.setOnClickListener{
-                listener?.onItemClick(list[position].id, toggleButton)
+                listener?.onItemClick(list[position], position)
             }
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClick(recipeId:Int, toggleButton: CompoundButton)
+        fun onItemClick(item: TipsRecipeListItem, position: Int)
         fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsRecipeListItem)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){

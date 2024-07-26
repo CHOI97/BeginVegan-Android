@@ -4,12 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.mypage.MypageMyRecipeItem
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemRecipeBinding
 
-class MyRecipeRvAdapter(private val context: Context, private val list:List<MypageMyRecipeItem>
+class MyRecipeRvAdapter(private val context: Context, private val list:List<TipsRecipeListItem>
 ) : RecyclerView.Adapter<MyRecipeRvAdapter.RecyclerViewHolder>(){
     private var listener: OnItemClickListener? = null
     private lateinit var veganTypesKr:Array<String>
@@ -17,7 +19,7 @@ class MyRecipeRvAdapter(private val context: Context, private val list:List<Mypa
 
     inner class RecyclerViewHolder(private val binding: ItemRecipeBinding):
         RecyclerView.ViewHolder(binding.root){
-        fun bind(position: Int):CompoundButton {
+        fun bind(position: Int) {
             val levels = listOf(
                 binding.tbVeganLevelMilk,
                 binding.tbVeganLevelEgg,
@@ -27,15 +29,15 @@ class MyRecipeRvAdapter(private val context: Context, private val list:List<Mypa
             )
 
             val item = list[position]
+//            val item = differ.currentList[position]
             binding.tvRecipeName.text = item.name
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
 
             binding.tbInterest.setOnCheckedChangeListener(null)
             binding.tbInterest.isChecked = true
             binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
-                listener?.setToggleButton(isChecked, item.foodId)
+                listener?.setToggleButton(isChecked, item.id)
             }
-            return binding.tbInterest
         }
     }
 
@@ -47,16 +49,16 @@ class MyRecipeRvAdapter(private val context: Context, private val list:List<Mypa
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        val toggleButton = holder.bind(position)
+        holder.bind(position)
         if(position != RecyclerView.NO_POSITION){
             holder.itemView.setOnClickListener {
-                listener?.onItemClick(list[position].foodId, toggleButton)
+                listener?.onItemClick(list[position], position)
             }
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClick(magazineId:Int, toggleButton: CompoundButton)
+        fun onItemClick(item: TipsRecipeListItem, position: Int)
         fun setToggleButton(isChecked:Boolean, recipeId:Int)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){

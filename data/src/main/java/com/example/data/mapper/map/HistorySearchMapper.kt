@@ -1,9 +1,7 @@
 package com.example.data.mapper.map
 
 import com.example.data.model.map.HistorySearchEntity
-import com.example.data.model.tips.TipsRecipeListItemDto
 import com.example.domain.mapper.DBMapper
-import com.example.domain.model.TipsRecipeListItem
 import com.example.domain.model.map.HistorySearch
 
 class HistorySearchMapper: DBMapper<HistorySearch, HistorySearchEntity> {

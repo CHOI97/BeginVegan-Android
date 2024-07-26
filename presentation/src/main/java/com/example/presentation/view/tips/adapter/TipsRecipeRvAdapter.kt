@@ -4,19 +4,37 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemRecipeBinding
+import timber.log.Timber
 
-class TipsRecipeRvAdapter(private val context: Context,private val list:List<TipsRecipeListItem>): RecyclerView.Adapter<TipsRecipeRvAdapter.RecyclerViewHolder>() {
+class TipsRecipeRvAdapter(private val context: Context):
+    ListAdapter<TipsRecipeListItem, TipsRecipeRvAdapter.RecyclerViewHolder>(diffUtil)
+{
     private var listener: OnItemClickListener? = null
     private lateinit var veganTypesKr:Array<String>
     private lateinit var veganTypesEng:Array<String>
 
+    // DiffUtil
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<TipsRecipeListItem>() {
+            override fun areItemsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+                return oldItem.name == newItem.name
+            }
+            override fun areContentsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+
+    //RecyclerViewHolder
     inner class RecyclerViewHolder(private val binding: ItemRecipeBinding):
         RecyclerView.ViewHolder(binding.root){
-        fun bind(position:Int): CompoundButton{
+        fun bind(position:Int){
             val levels = listOf(
                 binding.tbVeganLevelMilk,
                 binding.tbVeganLevelEgg,
@@ -25,17 +43,16 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
                 binding.tbVeganLevelMeat
             )
 
-            val item = list[position]
+            val item = currentList[position]
             binding.tvRecipeName.text = item.name
             binding.tvVeganType.text = setVeganType(item.veganType, levels)
 
             binding.tbInterest.setOnCheckedChangeListener(null)
             binding.tbInterest.isChecked = item.isBookmarked
 
-            binding.tbInterest.setOnCheckedChangeListener { buttonView, isChecked ->
-                listener?.changeBookmark(buttonView, isChecked, item)
+            binding.tbInterest.setOnCheckedChangeListener { _, isChecked ->
+                listener?.changeBookmark(isChecked, item, position)
             }
-            return binding.tbInterest
         }
     }
 
@@ -44,25 +61,27 @@ class TipsRecipeRvAdapter(private val context: Context,private val list:List<Tip
         return RecyclerViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = currentList.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        val toggleButton = holder.bind(position)
+        holder.bind(position)
         if(position != RecyclerView.NO_POSITION){
             holder.itemView.setOnClickListener{
-                listener?.onItemClick(list[position].id, toggleButton)
+                listener?.onItemClick(currentList[position], position)
             }
         }
     }
 
+    //OnItemClickListener
     interface OnItemClickListener{
-        fun onItemClick(recipeId:Int, toggleButton: CompoundButton)
-        fun changeBookmark(toggleButton: CompoundButton, isBookmarked: Boolean, data: TipsRecipeListItem)
+        fun onItemClick(item: TipsRecipeListItem, position: Int)
+        fun changeBookmark(isBookmarked: Boolean, data: TipsRecipeListItem, position: Int)
     }
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener = listener
     }
 
+    //Transfer Type
     private fun setVeganType(type:String, levels:List<CompoundButton>):String{
         veganTypesKr = context.resources.getStringArray(R.array.vegan_type)
         veganTypesEng = context.resources.getStringArray(R.array.vegan_types_eng)

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.mypage.MypageMyMagazineItem
-import com.example.domain.model.mypage.MypageMyRecipeItem
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.domain.useCase.mypage.MypageMyScrapUseCase
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.mypage.viewModel.state.MyMagazineState
@@ -23,7 +23,7 @@ class MyRecipeViewModel @Inject constructor(
 ):ViewModel(){
     private val _myRecipesState = MutableStateFlow<NetworkResult<MyRecipeState>>(NetworkResult.Loading())
     val myRecipesState: StateFlow<NetworkResult<MyRecipeState>> = _myRecipesState
-    fun setMyRecipeList(list:MutableList<MypageMyRecipeItem>){
+    fun setMyRecipeList(list:MutableList<TipsRecipeListItem>){
         _myRecipesState.value = NetworkResult.Success(
             MyRecipeState(list, false)
         )

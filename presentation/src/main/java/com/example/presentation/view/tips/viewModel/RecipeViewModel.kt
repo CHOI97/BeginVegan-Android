@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.TipsRecipeDetail
-import com.example.domain.model.TipsRecipeListItem
+import com.example.domain.model.tips.CheckChange
+import com.example.domain.model.tips.RecipeDetailPosition
+import com.example.domain.model.tips.TipsRecipeDetail
+import com.example.domain.model.tips.TipsRecipeListItem
 import com.example.domain.useCase.tips.TipsRecipeUseCase
 import com.example.presentation.network.NetworkResult
 import com.example.presentation.view.tips.viewModel.state.RecipeListState
@@ -27,10 +29,19 @@ class RecipeViewModel @Inject constructor(
     private val _recipeListState =
         MutableStateFlow<NetworkResult<RecipeListState>>(NetworkResult.Loading())
     val recipeListState: StateFlow<NetworkResult<RecipeListState>> = _recipeListState
-
-    fun addRecipeList(list: MutableList<TipsRecipeListItem>){
+    private fun addRecipeList(newList: MutableList<TipsRecipeListItem>){
+        var oldList = _recipeListState.value.data?.response
+        if(oldList==null) oldList = newList
+        else oldList.addAll(newList)
         _recipeListState.value = NetworkResult.Success(
-            RecipeListState(response = list, isLoading = false)
+            RecipeListState(response = oldList, isLoading = false)
+        )
+    }
+    fun setRecipeList(nowList: MutableList<TipsRecipeListItem>){
+        Timber.d("setRecipeList")
+        val newList = nowList.map { it.copy() }
+        _recipeListState.value = NetworkResult.Success(
+            RecipeListState(response = newList.toMutableList(), isLoading = false)
         )
     }
 
@@ -38,27 +49,6 @@ class RecipeViewModel @Inject constructor(
     val isContinueGetList: LiveData<Boolean> = _isContinueGetList
     fun reSetIsContinueGetList(){
         _isContinueGetList.value = true
-    }
-
-    //Recipe Detail
-    private val _recipeDetailData = MutableLiveData<TipsRecipeDetail>()
-    val recipeDetailData: LiveData<TipsRecipeDetail> = _recipeDetailData
-
-    private val _selectedTb = MutableLiveData<CompoundButton>()
-    val selectedTb: LiveData<CompoundButton> = _selectedTb
-    fun setSelectedTb(view: CompoundButton) {
-        _selectedTb.value = view
-    }
-
-    fun setSelectedTbIsChecked(isChecked: Boolean) {
-        selectedTb.value!!.isChecked = isChecked
-    }
-
-    //From VeganTest
-    private val _isFromTest = MutableLiveData(false)
-    val isFromTest: LiveData<Boolean> = _isFromTest
-    fun setIsFromTest(fromTest:Boolean){
-        _isFromTest.value = fromTest
     }
 
     fun getRecipeList(page: Int) {
@@ -77,6 +67,16 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
+    //Recipe Detail
+    private val _recipeDetailData = MutableLiveData<TipsRecipeDetail>()
+    val recipeDetailData: LiveData<TipsRecipeDetail> = _recipeDetailData
+
+    private val _recipeDetailPosition = MutableLiveData<RecipeDetailPosition?>(null)
+    val recipeDetailPosition: LiveData<RecipeDetailPosition?> = _recipeDetailPosition
+    fun setRecipeDetailPosition(recipeDetailPosition: RecipeDetailPosition){
+        _recipeDetailPosition.value = recipeDetailPosition
+    }
+
     fun getRecipeDetail(recipeId: Int) {
         viewModelScope.launch {
             recipeUseCase.getRecipeDetail(recipeId).onSuccess {
@@ -86,7 +86,17 @@ class RecipeViewModel @Inject constructor(
             }
         }
     }
+    fun setRecipeDetail(recipeDetail: TipsRecipeDetail){
+        _recipeDetailData.value = recipeDetail
+    }
 
+    private val _nowFragment = MutableLiveData<String>()
+    val nowFragment:LiveData<String> = _nowFragment
+    fun setNowFragment(fragment:String){
+        _nowFragment.value = fragment
+    }
+
+    //나를 위한 레시피
     fun getRecipeForMe(page: Int){
         viewModelScope.launch {
             recipeUseCase.getRecipeMy(page).collectLatest {
@@ -101,5 +111,12 @@ class RecipeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    //From VeganTest
+    private val _isFromTest = MutableLiveData(false)
+    val isFromTest: LiveData<Boolean> = _isFromTest
+    fun setIsFromTest(fromTest:Boolean){
+        _isFromTest.value = fromTest
     }
 }
