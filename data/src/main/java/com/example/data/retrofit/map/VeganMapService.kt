@@ -44,13 +44,13 @@ interface VeganMapService {
         @Query("longitude") longitude: String
     ): ApiResponse<RestaurantDetailResponse>
 
-    @GET("/api/v1/restaurants/search")
-    suspend fun getSearchRestaurant(
-        @Header("Authorization") token: String,
-        @Query("page") page: Int,
-        @Query("latitude") latitude: String,
-        @Query("longitude") longitude: String,
-        @Query("searchWord") searchWord: String,
-        @Query("filter") filter: String,
-    ): ApiResponse
+//    @GET("/api/v1/restaurants/search")
+//    suspend fun getSearchRestaurant(
+//        @Header("Authorization") token: String,
+//        @Query("page") page: Int,
+//        @Query("latitude") latitude: String,
+//        @Query("longitude") longitude: String,
+//        @Query("searchWord") searchWord: String,
+//        @Query("filter") filter: String,
+//    ): ApiResponse
 }
