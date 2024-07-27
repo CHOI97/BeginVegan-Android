@@ -235,7 +235,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_cam
             .setMessage(
                 "카메라 사용에 대한 권한 사용을 거부하셨어요. \n" +
                         "\n" +
-                        "기능 사용을 원하실 경우 ‘휴대폰 설정 > 애플리케이션 관리자’에서 해당 앱의 권한을 허용해 주세요."
+                        "기능 사용을 원하실 경우 [휴대폰 설정 > 애플리케이션 관리자]에서 해당 앱의 권한을 허용해 주세요."
             )
             .setNegativeButton("확인") { dialog, _ ->
                 dialog.dismiss()

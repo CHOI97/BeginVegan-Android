@@ -13,8 +13,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.example.presentation.databinding.ActivityGalleryBinding
+import com.example.presentation.util.PermissionDialog
 import com.example.presentation.view.image.gallery.viewModel.GalleryViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.security.Permission
 
 @AndroidEntryPoint
 class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_gallery) {
@@ -219,9 +221,9 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             logMessage("유저 선택 이미지만 승인")
         } else if (!isReadImages && !isUserSelected) {
             logMessage("사용자 거부 경험 없음")
-            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, READ_MEDIA_IMAGES)){
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, READ_MEDIA_IMAGES)) {
                 showPermissionDeniedDialog(this)
-            }else{
+            } else {
                 showPermissionRationaleDialog(this)
             }
 
@@ -249,6 +251,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
     // 권한 재요청
     private fun showPermissionRationaleDialog(context: Context) {
         var isRetry = false
+
         val dialog = AlertDialog.Builder(context)
             .setTitle("권한 재요청 안내")
             .setMessage(
@@ -276,7 +279,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
     private fun showPermissionDeniedDialog(context: Context) {
         val dialog = AlertDialog.Builder(context)
             .setTitle("기능 사용 불가 안내")
-            .setMessage("저장소에 대한 권한 사용을 거부하셨어요.\n\n기능사용을 원하실 경우 '휴대폰 설정 > 애플리케이션 관리자'에서 해당 앱의 권한을 허용해 주세요.")
+            .setMessage("저장소에 대한 권한 사용을 거부하셨어요.\n\n기능사용을 원하실 경우 [휴대폰 설정 > 애플리케이션 관리자]에서 해당 앱의 권한을 허용해 주세요.")
             .setNegativeButton("확인") { dialog, _ ->
                 dialog.dismiss()
             }
