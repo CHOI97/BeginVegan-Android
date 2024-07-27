@@ -2,28 +2,18 @@ package com.example.data.model.map
 
 import com.squareup.moshi.Json
 
-data class RestaurantDetailResponse (
+data class RestaurantDetailResponse(
     @Json(name = "check")
     val check: Boolean,
     @Json(name = "information")
-    val information: List<RestaurantDto>
-)
-data class AddressDto(
-    @Json(name = "province")
-    val province: String,
-    @Json(name = "city")
-    val city: String,
-    @Json(name = "roadName")
-    val roadName: String,
-    @Json(name = "detailAddress")
-    val detailAddress: String
+    val information: Information
 )
 
-data class MenuDto(
-    @Json(name = "id")
-    val id: Int,
-    @Json(name = "name")
-    val name: String
+data class Information(
+    @Json(name = "restaurant")
+    val restaurant: RestaurantDto,
+    @Json(name = "menus")
+    val menus: List<MenuDto>
 )
 
 data class RestaurantDto(
@@ -44,7 +34,23 @@ data class RestaurantDto(
     @Json(name = "contactNumber")
     val contactNumber: String,
     @Json(name = "bookmark")
-    val bookmark: Boolean,
-    @Json(name = "menus")
-    val menus: List<MenuDto>
+    val bookmark: Boolean
+)
+
+data class AddressDto(
+    @Json(name = "province")
+    val province: String,
+    @Json(name = "city")
+    val city: String,
+    @Json(name = "roadName")
+    val roadName: String,
+    @Json(name = "detailAddress")
+    val detailAddress: String
+)
+
+data class MenuDto(
+    @Json(name = "id")
+    val id: Int,
+    @Json(name = "name")
+    val name: String
 )
