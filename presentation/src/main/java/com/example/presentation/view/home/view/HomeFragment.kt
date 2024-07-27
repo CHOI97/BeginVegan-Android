@@ -217,7 +217,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             .setTitle("권한 재요청 안내")
             .setBody(
                 "해당 권한을 거부할 경우, 다음 기능의 사용이 불가능해요." +
-                        "\n· Map 기능 전체 "
+                        "\n · Map 기능 전체 "
             )
             .setPositiveButton("권한재요청") {
                 isRetry = true
