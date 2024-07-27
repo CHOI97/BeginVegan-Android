@@ -23,7 +23,7 @@ class TipsRecipeRvAdapter(private val context: Context):
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<TipsRecipeListItem>() {
             override fun areItemsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
-                return oldItem.name == newItem.name
+                return oldItem.id == newItem.id
             }
             override fun areContentsTheSame(oldItem: TipsRecipeListItem, newItem: TipsRecipeListItem): Boolean {
                 return oldItem == newItem
