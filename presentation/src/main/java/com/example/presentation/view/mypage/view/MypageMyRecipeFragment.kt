@@ -5,7 +5,6 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,12 +36,11 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     lateinit var mainNavigationHandler: MainNavigationHandler
     @Inject
     lateinit var bookmarkController: BookmarkController
-    private val myRecipeViewModel:MyRecipeViewModel by viewModels()
+    private val myRecipeViewModel:MyRecipeViewModel by activityViewModels()
     private val recipeViewModel:RecipeViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_main_graph)
 
     private lateinit var myRecipeRvAdapter:MyRecipeRvAdapter
-    private var myRecipeList = mutableListOf<TipsRecipeListItem>()
     private var currentPage = 0
     private var totalCount = 0
     private var collectJob: Job? = null
@@ -60,35 +59,30 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
     }
     private fun reset(){
         collectJob?.cancel()
-        myRecipeList = mutableListOf()
         myRecipeViewModel.resetViewModel()
         currentPage = 0
         totalCount = 0
     }
     private fun setRvAdapter(){
-        myRecipeRvAdapter = MyRecipeRvAdapter(requireContext(), myRecipeList)
+        myRecipeRvAdapter = MyRecipeRvAdapter(requireContext())
         binding.rvMyRecipe.adapter = myRecipeRvAdapter
         binding.rvMyRecipe.layoutManager = LinearLayoutManager(this.context)
 
         myRecipeRvAdapter.setOnItemClickListener(object : MyRecipeRvAdapter.OnItemClickListener{
             override fun onItemClick(item: TipsRecipeListItem, position: Int) {
-                //Magazine Detail로 이동
                 openDialogRecipeDetail(item, position)
             }
 
-            override fun setToggleButton(isChecked: Boolean, recipeId: Int) {
+            override fun setToggleButton(isBookmarked: Boolean, data: TipsRecipeListItem, position: Int) {
+                updateBookmark(isBookmarked, data, position)
                 lifecycleScope.launch {
-                    if(isChecked) {
-                        if(bookmarkController.postBookmark(recipeId, "RECIPE")){
-                            val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_done), Snackbar.LENGTH_SHORT)
-                            snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                            snackbar.show()
+                    if(isBookmarked) {
+                        if(bookmarkController.postBookmark(data.id, "RECIPE")){
+                            setSnackBar(getString(R.string.toast_scrap_done))
                         }
                     } else {
-                        if(bookmarkController.deleteBookmark(recipeId, "RECIPE")){
-                            val snackbar = Snackbar.make(binding.clLayout, getString(R.string.toast_scrap_undo), Snackbar.LENGTH_SHORT)
-                            snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
-                            snackbar.show()
+                        if(bookmarkController.deleteBookmark(data.id, "RECIPE")){
+                            setSnackBar(getString(R.string.toast_scrap_undo))
                         }
                     }
                 }
@@ -96,7 +90,6 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
         })
 
         setListener()
-        myRecipeViewModel.setMyRecipeList(myRecipeList)
         getMyRecipeList()
     }
     private fun getMyRecipeList(){
@@ -121,8 +114,8 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
                 when(state){
                     is NetworkResult.Loading -> {}
                     is NetworkResult.Success -> {
-                        myRecipeList.addAll(state.data?.response!!)
-                        myRecipeRvAdapter.notifyItemRangeInserted(totalCount,state.data.response.size)
+                        val newList = state.data?.response?.map { it.copy() }
+                        myRecipeRvAdapter.submitList(newList)
                     }
                     is NetworkResult.Error -> {}
                 }
@@ -134,9 +127,9 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
         }
     }
 
+    //BackUp
     private fun setBackUp(){
         binding.includedToolbar.ibBackUp.setOnClickListener {
-//            mainNavigationHandler.popBackStack()
             findNavController().popBackStack()
         }
     }
@@ -160,5 +153,25 @@ class MypageMyRecipeFragment : BaseFragment<FragmentMypageMyRecipeBinding>(R.lay
         recipeViewModel.setNowFragment("MYPAGE")
         recipeViewModel.setRecipeDetailPosition(RecipeDetailPosition(position, item))
         TipsRecipeDetailDialog().show(childFragmentManager, "MyRecipeDetail")
+    }
+    //SnackBar
+    private fun setSnackBar(message:String){
+        val snackbar = Snackbar.make(binding.clLayout, message, Snackbar.LENGTH_SHORT)
+        snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).setTypeface(typeface)
+        snackbar.show()
+    }
+
+    //update Bookmark
+    private fun updateBookmark(isChecked:Boolean, oldItem:TipsRecipeListItem, position: Int){
+        val newData = TipsRecipeListItem(
+            id = oldItem.id,
+            name = oldItem.name,
+            veganType = oldItem.veganType,
+            isBookmarked = isChecked
+        )
+        val oldList = myRecipeViewModel.myRecipesState.value.data?.response
+        oldList!![position] = newData
+
+        myRecipeViewModel.setMyRecipeList(oldList)
     }
 }

@@ -21,6 +21,7 @@ import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.DialogRecipeDetailBinding
 import com.example.presentation.util.BookmarkController
 import com.example.presentation.view.home.viewModel.HomeTipsViewModel
+import com.example.presentation.view.mypage.viewModel.MyRecipeViewModel
 import com.example.presentation.view.tips.viewModel.RecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +37,7 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
     lateinit var mainNavigationHandler: MainNavigationHandler
     private val recipeViewModel: RecipeViewModel by activityViewModels()
     private val homeViewModel: HomeTipsViewModel by activityViewModels()
+    private val myRecipeViewModel: MyRecipeViewModel by activityViewModels()
 
     private lateinit var veganTypesKr:Array<String>
     private lateinit var veganTypesEng:Array<String>
@@ -106,7 +108,18 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
                     recipeViewModel.setRecipeList(oldList)
                 }
                 "MYPAGE" -> {
+                    val currentData = recipeViewModel.recipeDetailPosition.value
+                    val oldItem = currentData?.item!!
+                    val newData = TipsRecipeListItem(
+                        id = oldItem.id,
+                        name = oldItem.name,
+                        veganType = oldItem.veganType,
+                        isBookmarked = isChecked
+                    )
+                    val oldList = myRecipeViewModel.myRecipesState.value.data?.response
+                    oldList!![currentData.position] = newData
 
+                    myRecipeViewModel.setMyRecipeList(oldList)
                 }
             }
             lifecycleScope.launch {
@@ -123,6 +136,7 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
         }
     }
 
+    //Transfer Type
     private fun setIngredients(list: List<RecipeIngredient>){
         val parentLayout = binding.llIngredients
         parentLayout.removeAllViews()
@@ -170,6 +184,7 @@ class TipsRecipeDetailDialog:BaseDialogFragment<DialogRecipeDetailBinding>(R.lay
         }
     }
 
+    //SnackBar
     private fun setSnackBar(message:String){
         var snackbar:Snackbar
         if(nowFragmet == "MYPAGE"){
