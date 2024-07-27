@@ -64,11 +64,25 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
     override fun init() {
         binding.lifecycleOwner = this
 
+        setUserInfo()
+
         setRestaurantRecyclerView()
+
         setTipsTab()
+
         setOpenDrawer()
+
         setBeganTest()
 
+        setLocationManager()
+
+        checkAndRequestPermissions()
+    }
+
+    private fun setUserInfo() {
+    }
+
+    private fun setLocationManager() {
         locationManager = ContextCompat.getSystemService(
             requireContext(),
             LocationManager::class.java
@@ -87,7 +101,6 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             override fun onProviderDisabled(provider: String) {}
         }
 
-        checkAndRequestPermissions()
     }
 
     private fun setBeganTest() {
@@ -199,19 +212,6 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             }
         }
     }
-
-//    private fun startLocationUpdates() {
-//        try {
-//            locationManager.requestLocationUpdates(
-//                LocationManager.GPS_PROVIDER,
-//                5000L, // 5초
-//                10f, // 10미터
-//                locationListener
-//            )
-//        } catch (e: SecurityException) {
-//            logMessage("Location permission not granted")
-//        }
-//    }
 
     //     권한 재요청
     private fun showPermissionRationaleDialog(context: Context) {

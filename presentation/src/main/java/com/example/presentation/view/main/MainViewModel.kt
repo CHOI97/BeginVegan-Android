@@ -44,8 +44,12 @@ class MainViewModel @Inject constructor(
     fun setMapMoveToReview(isMove: Boolean) {
         _mapMoveToReview.value = isMove
     }
+    fun getUserData(){
+        viewModelScope.launch {
 
-    fun fetchUserInfo() {
+        }
+    }
+    fun getUserInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             homeUserInfoUseCase.invoke().onSuccess {
 
