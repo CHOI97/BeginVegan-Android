@@ -57,13 +57,22 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             val isCoarseLocation = isGranted[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
 
             when {
-                isFineLocation || isCoarseLocation -> {
+                isFineLocation && isCoarseLocation -> {
                     // FineLoaction 승인 시, CoarseLoaction 자동 승인
+                    // 정확한 위치 권한 승인
                     logMessage("Location permission granted")
                     getLocation()
+                    getFineLocation()
+                }
+
+                !isFineLocation && isCoarseLocation -> {
+                    // 대략적인 위치 권한 승인
+                    getLocation()
+                    showFineLocationDialog()
                 }
 
                 else -> {
+                    // 위치 권한 승인하지 않음
                     logMessage("Location permission denied")
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(
                             requireActivity(),
@@ -127,6 +136,46 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             val time = location.time
             logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
         }
+        locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                // 위치 정보가 변경될 때 호출되는 콜백
+                val latitude = location.latitude
+                val longitude = location.longitude
+                // 위치 정보를 사용하여 원하는 작업 수행
+                logMessage("onLocationChanged")
+                logMessage("${location.latitude} ${location.latitude}")
+            }
+
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+                // 위치 제공자 상태 변경 시 호출되는 콜백
+                logMessage("onStatusChanged")
+            }
+
+            override fun onProviderEnabled(provider: String) {
+                // 위치 제공자가 사용 가능할 때 호출되는 콜백
+                logMessage("onProviderEnabled")
+            }
+
+            override fun onProviderDisabled(provider: String) {
+                // 위치 제공자가 사용 불가능할 때 호출되는 콜백
+                logMessage("onProviderDisabled")
+            }
+        }
+    }
+
+    private fun getFineLocation() {
+//        try {
+//            logMessage("getFineLocation granted")
+//            locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER,
+//                5000L, // 5초
+//                10f, // 10미터,
+//                locationListener
+//            )
+//        } catch (e: SecurityException) {
+//            logMessage("Location permission not granted")
+//            showPermissionDeniedDialog()
+//        }
     }
 
     private fun setTipsTab() {
@@ -194,6 +243,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
                         requireContext(),
                         ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED -> {
+                        logMessage("위치 권한 승인")
                 getLocation()
             }
 
@@ -243,8 +293,23 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
                         "기능 사용을 원하실 경우 [휴대폰 설정 > 애플리케이션 관리자]에서 해당 앱의 권한을 허용해 주세요."
             )
             .setPositiveButton("확인") {
-                logMessage("확인")
+                logMessage("showPermissionDeniedDialog 확인")
             }.show(childFragmentManager, "showPermissionDeniedDialog")
+    }
+
+    private fun showFineLocationDialog() {
+        val dialog = PermissionDialog.Builder()
+            .setTitle("정확한 위치 권한 요청 안내")
+            .setBody(
+                "Map 메뉴는 '정확한 위치' 권한으로만 사용 가능합니다.\n" +
+                        "'정확한 위치' 사용 권한을 허용해 주세요."
+            )
+            .setPositiveButton("설정") {
+                getFineLocation()
+            }.setNegativeButton("닫기") {
+                showPermissionDeniedDialog()
+                logMessage("showFineLocationDialog 닫기")
+            }.show(childFragmentManager, "showFineLocationDialog")
     }
 
     companion object {
