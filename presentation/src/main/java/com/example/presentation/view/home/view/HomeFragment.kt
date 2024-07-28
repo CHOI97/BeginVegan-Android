@@ -1,8 +1,6 @@
 package com.example.presentation.view.home.view
 
 import android.Manifest
-import android.app.AlertDialog
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -13,9 +11,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.domain.model.map.NearRestaurant
+import com.example.domain.model.map.VeganMapRestaurant
 import com.example.presentation.R
 import com.example.presentation.adapter.home.HomeRestaurantRVAdapter
 import com.example.presentation.base.BaseFragment
@@ -23,12 +20,10 @@ import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.util.DrawerController
 import com.example.presentation.util.PermissionDialog
-import com.example.presentation.view.image.gallery.view.GalleryActivity
 import com.example.presentation.view.main.MainViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.log
 
 
 @AndroidEntryPoint
@@ -43,7 +38,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
     lateinit var mainNavigationHandler: MainNavigationHandler
     private var tipsNowTab = "MAGAZINE"
 
-    private var list: ArrayList<NearRestaurant> = ArrayList()
+    private var list: ArrayList<VeganMapRestaurant> = ArrayList()
 
     private val permissions = arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
 
