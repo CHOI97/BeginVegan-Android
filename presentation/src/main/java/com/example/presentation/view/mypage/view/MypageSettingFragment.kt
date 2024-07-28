@@ -1,30 +1,34 @@
 package com.example.presentation.view.mypage.view
 
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMypageSettingBinding
+import com.example.presentation.view.mypage.viewModel.MypagePushViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
+@AndroidEntryPoint
 class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layout.fragment_mypage_setting) {
+    private val mypagePushViewModel: MypagePushViewModel by viewModels()
+
     override fun init() {
         setBackUp()
+        setPushToggle()
         setLogOut()
         setDeleteAccount()
-
     }
 
     //Push 알림 설정
     private fun setPushToggle(){
         binding.scPushSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){
-                
-            }else{
-
+            mypagePushViewModel.patchPush()
+            if(!isChecked){
+                //Dialog 처리
             }
         }
     }
-
-
 
     //backStack
     private fun setBackUp(){
