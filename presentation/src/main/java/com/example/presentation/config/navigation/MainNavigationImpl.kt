@@ -10,10 +10,16 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
 
     override fun navigateToHome() {
         val currentId = navController.currentDestination?.id!!
+        if(currentId == R.id.mainHomeFragment) return
+
         navController.navigate(R.id.mainHomeFragment, null,
             NavOptions.Builder().setPopUpTo(currentId, true).build())
     }
-    override fun navigateToMap() { controlBackStack(R.id.nav_map_graph) }
+    override fun navigateToMap() {
+        val currentId = navController.currentDestination?.id!!
+        if(currentId == R.id.veganMapFragment) return
+        controlBackStack(R.id.nav_map_graph) }
+
     override fun navigateToTips() { controlBackStack(R.id.mainTipsFragment) }
     override fun navigateToMypage() { controlBackStack(R.id.mainMypageFragment) }
 
@@ -105,6 +111,7 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
 
     private fun controlBackStack(destinationId:Int){
         val currentId = navController.currentDestination?.id!!
+
         if(currentId == R.id.mainHomeFragment){
             navController.navigate(destinationId)
         }else{
