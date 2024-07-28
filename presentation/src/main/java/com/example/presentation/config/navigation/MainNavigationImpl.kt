@@ -111,6 +111,7 @@ class MainNavigationImpl @Inject constructor(private val navController: NavContr
 
     private fun controlBackStack(destinationId:Int){
         val currentId = navController.currentDestination?.id!!
+        if(currentId == destinationId) return
 
         if(currentId == R.id.mainHomeFragment){
             navController.navigate(destinationId)
