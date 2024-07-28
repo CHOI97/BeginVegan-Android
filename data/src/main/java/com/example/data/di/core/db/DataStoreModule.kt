@@ -24,7 +24,6 @@ object DataStoreModule {
         @ApplicationContext context: Context
     ): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create {
-            context.preferencesDataStoreFile("user_data")
             context.preferencesDataStoreFile("auth_prefs")
         }
     }

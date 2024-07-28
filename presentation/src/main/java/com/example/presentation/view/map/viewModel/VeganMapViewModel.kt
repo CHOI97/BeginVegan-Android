@@ -10,8 +10,4 @@ import javax.inject.Inject
 @HiltViewModel
 class VeganMapViewModel @Inject constructor() : ViewModel() {
 
-    private val _searchList = MutableStateFlow<List<HistorySearch>>(emptyList())
-    val searchList: StateFlow<List<HistorySearch>> get() = _searchList
-
-
 }

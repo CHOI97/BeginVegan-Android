@@ -13,8 +13,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.example.presentation.databinding.ActivityGalleryBinding
+import com.example.presentation.util.PermissionDialog
 import com.example.presentation.view.image.gallery.viewModel.GalleryViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.security.Permission
 
 @AndroidEntryPoint
 class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_gallery) {
@@ -140,7 +142,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
                         )
                     }"
                 )
-                showPermissionDeniedDialog(this)
+                showPermissionDeniedDialog()
                 logMessage("사용자 거부 경험 있음 ")
             } else {
                 logMessage(
@@ -199,7 +201,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             // 권한이 허용되어있지 않은 상태
             if (isRequestRationale) {
                 // 사용자가 거부 경험이 있는 상태 - 권한 허용 x
-                showPermissionDeniedDialog(this)
+                showPermissionDeniedDialog()
             } else {
                 // 사용자 거부 경험이 없는 상태
                 // 권한 요청 런처 실행
@@ -219,10 +221,10 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             logMessage("유저 선택 이미지만 승인")
         } else if (!isReadImages && !isUserSelected) {
             logMessage("사용자 거부 경험 없음")
-            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, READ_MEDIA_IMAGES)){
-                showPermissionDeniedDialog(this)
-            }else{
-                showPermissionRationaleDialog(this)
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, READ_MEDIA_IMAGES)) {
+                showPermissionDeniedDialog()
+            } else {
+                showPermissionRationaleDialog()
             }
 
         } else {
@@ -239,51 +241,50 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
                 ActivityCompat.shouldShowRequestPermissionRationale(this, it)
             }
         ) {
-            showPermissionRationaleDialog(this)
+            showPermissionRationaleDialog()
         } else {
-            showPermissionDeniedDialog(this)
+            showPermissionDeniedDialog()
         }
         viewModel.updatePermissionState(true)
     }
 
     // 권한 재요청
-    private fun showPermissionRationaleDialog(context: Context) {
+    private fun showPermissionRationaleDialog() {
         var isRetry = false
-        val dialog = AlertDialog.Builder(context)
+
+        val dialog = PermissionDialog.Builder()
             .setTitle("권한 재요청 안내")
-            .setMessage(
+            .setBody(
                 "해당 권한을 거부할 경우, 다음 기능의 사용이 불가능해요." +
-                        "\n· Map 리뷰 작성 시, 이미지 등록 " +
-                        "\n· Mypage 프로필 이미지 등록"
+                        "\n · Map 리뷰 작성 시, 이미지 등록 " +
+                        "\n · Mypage 프로필 이미지 등록"
             )
-            .setPositiveButton("권한재요청") { dialog, _ ->
+            .setPositiveButton("권한재요청") {
                 isRetry = true
                 requestPermissionsLauncher.launch(galleryPermissions)
-                dialog.dismiss()
+            }.setNegativeButton("닫기") {
+                logMessage("닫기")
             }
-            .setNegativeButton("닫기") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-        dialog.setOnDismissListener {
-            if (!isRetry) {
-                showPermissionDeniedDialog(context)
-            }
-        }
+            .setOnDismissListener {
+                if (!isRetry) {
+                    showPermissionDeniedDialog()
+                }
+            }.show(supportFragmentManager, "showPermissionRationaleDialog")
+
     }
 
     // 권한 허용 안함
-    private fun showPermissionDeniedDialog(context: Context) {
-        val dialog = AlertDialog.Builder(context)
+    private fun showPermissionDeniedDialog() {
+        val dialog = PermissionDialog.Builder()
             .setTitle("기능 사용 불가 안내")
-            .setMessage("저장소에 대한 권한 사용을 거부하셨어요.\n\n기능사용을 원하실 경우 '휴대폰 설정 > 애플리케이션 관리자'에서 해당 앱의 권한을 허용해 주세요.")
-            .setNegativeButton("확인") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-        dialog.setOnDismissListener {
-            this@GalleryActivity.finish()
-        }
+            .setBody(
+                "저장소에 대한 권한 사용을 거부하셨어요.\n" +
+                        "\n" +
+                        "기능사용을 원하실 경우 [휴대폰 설정 > 애플리케이션 관리자]에서 해당 앱의 권한을 허용해 주세요."
+            ).setPositiveButton("확인") {
+                logMessage("확인")
+                this@GalleryActivity.finish()
+            }.show(supportFragmentManager, "showPermissionDeniedDialog")
     }
 
     companion object {

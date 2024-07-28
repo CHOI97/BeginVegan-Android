@@ -18,6 +18,7 @@ import androidx.core.content.FileProvider
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.databinding.ActivityCameraBinding
+import com.example.presentation.util.PermissionDialog
 import com.example.presentation.view.image.camera.viewModel.CameraViewModel
 import com.example.presentation.view.image.gallery.model.GalleryImage
 import com.takusemba.cropme.OnCropListener
@@ -65,10 +66,10 @@ class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_cam
                         Manifest.permission.CAMERA
                     )
                 ) {
-                    showPermissionDeniedDialog(this)
+                    showPermissionDeniedDialog()
                 } else {
 
-                    showPermissionRationaleDialog(this)
+                    showPermissionRationaleDialog()
                 }
 //                showToast("registerForActivityResult:권한")
 //                showPermissionRationaleDialog(this)
@@ -156,7 +157,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_cam
                 } "
             )
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSION_CAMERA)) {
-                showPermissionDeniedDialog(this)
+                showPermissionDeniedDialog()
             } else {
                 requestPermissionLauncher.launch(cameraPermission)
             }
@@ -203,47 +204,40 @@ class CameraActivity : BaseActivity<ActivityCameraBinding>(R.layout.activity_cam
 
 
     //     권한 재요청
-    private fun showPermissionRationaleDialog(context: Context) {
+    private fun showPermissionRationaleDialog() {
         var isRetry = false
-        val dialog = AlertDialog.Builder(context)
+        val dialog = PermissionDialog.Builder()
             .setTitle("권한 재요청 안내")
-            .setMessage(
+            .setBody(
                 "해당 권한을 거부할 경우, 다음 기능의 사용이 불가능해요." +
-                        "\n· Map 리뷰 작성 시, 이미지 등록 " +
-                        "\n· Mypage 프로필 이미지 등록"
+                        "\n · Map 리뷰 작성 시, 이미지 등록 " +
+                        "\n · Mypage 프로필 이미지 등록"
             )
-            .setPositiveButton("권한재요청") { dialog, _ ->
+            .setPositiveButton("권한재요청") {
                 isRetry = true
                 requestPermissionLauncher.launch(cameraPermission)
-                dialog.dismiss()
+            }.setNegativeButton("닫기") {
+                logMessage("닫기")
             }
-            .setNegativeButton("닫기") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-        dialog.setOnDismissListener {
-            if (!isRetry) {
-                showPermissionDeniedDialog(context)
-            }
-        }
+            .setOnDismissListener {
+                if (!isRetry) {
+                    showPermissionDeniedDialog()
+                }
+            }.show(supportFragmentManager, "showPermissionRationaleDialog")
     }
 
     // 권한 허용 안함
-    private fun showPermissionDeniedDialog(context: Context) {
-        val dialog = AlertDialog.Builder(context)
+    private fun showPermissionDeniedDialog() {
+        val dialog = PermissionDialog.Builder()
             .setTitle("기능 사용 불가 안내")
-            .setMessage(
+            .setBody(
                 "카메라 사용에 대한 권한 사용을 거부하셨어요. \n" +
                         "\n" +
-                        "기능 사용을 원하실 경우 ‘휴대폰 설정 > 애플리케이션 관리자’에서 해당 앱의 권한을 허용해 주세요."
-            )
-            .setNegativeButton("확인") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-        dialog.setOnDismissListener {
-            this@CameraActivity.finish()
-        }
+                        "기능 사용을 원하실 경우 [휴대폰 설정 > 애플리케이션 관리자]에서 해당 앱의 권한을 허용해 주세요."
+            ).setPositiveButton("확인") {
+                logMessage("확인")
+                this@CameraActivity.finish()
+            }.show(supportFragmentManager, "showPermissionDeniedDialog")
     }
 
     companion object {

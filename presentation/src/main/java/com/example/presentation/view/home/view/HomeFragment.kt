@@ -9,6 +9,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -21,10 +22,13 @@ import com.example.presentation.base.BaseFragment
 import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.databinding.FragmentMainHomeBinding
 import com.example.presentation.util.DrawerController
+import com.example.presentation.util.PermissionDialog
+import com.example.presentation.view.image.gallery.view.GalleryActivity
 import com.example.presentation.view.main.MainViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.math.log
 
 
 @AndroidEntryPoint
@@ -41,54 +45,84 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
 
     private var list: ArrayList<NearRestaurant> = ArrayList()
 
-    private val fineLocationPermission = Manifest.permission.ACCESS_FINE_LOCATION
-    private val coarseLocationPermission = Manifest.permission.ACCESS_COARSE_LOCATION
-    private val permissions = arrayOf(fineLocationPermission, coarseLocationPermission)
+    private val permissions = arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
 
     private lateinit var locationListener: LocationListener
+
     private lateinit var locationManager: LocationManager
 
     private val locationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-            ) {
-               getLocation()
-//                startLocationUpdates()
-            } else {
-                logMessage("Location permission denied")
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
+            val isFineLocation = isGranted[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+            val isCoarseLocation = isGranted[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+
+            when {
+                isFineLocation && isCoarseLocation -> {
+                    // FineLoaction 승인 시, CoarseLoaction 자동 승인
+                    // 정확한 위치 권한 승인
+                    logMessage("locationPermissionLauncher Fine Location, Coarse Location Granted 정확한 위치 권한 승인")
+                    getLocation()
+                    getFineLocation()
+                }
+
+                !isFineLocation && isCoarseLocation -> {
+                    // 대략적인 위치 권한 승인
+                    logMessage("locationPermissionLauncher Only Coarse Location Granted 대략적인 위치 권한 승인")
+                    getLocation()
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            requireActivity(),
+                            ACCESS_FINE_LOCATION
+                        )
+                    ) {
+                        logMessage("locationPermissionLauncher Fine Location 거부 경험 있음")
+                        showPermissionDeniedDialog()
+                    } else {
+                        logMessage("locationPermissionLauncher Fine Location 거부 경험 없음")
+                        showFineLocationDialog()
+                    }
+
+                }
+
+                else -> {
+                    // 위치 권한 승인하지 않음
+                    logMessage("locationPermissionLauncher Permission Denied 위치 권한 거부")
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            requireActivity(),
+                            ACCESS_COARSE_LOCATION
+                        )
+                    ) {
+                        logMessage("locationPermissionLauncher 위치 권한 거부 경험 없음")
+                        showPermissionRationaleDialog()
+                    } else {
+                        logMessage("locationPermissionLauncher 위치 권한 거부 경험 있음")
+                        showPermissionDeniedDialog()
+                    }
+                }
             }
+
+
         }
 
 
     override fun init() {
         binding.lifecycleOwner = this
 
+        setUserInfo()
+
         setRestaurantRecyclerView()
+
         setTipsTab()
+
         setOpenDrawer()
+
         setBeganTest()
-
-        locationManager = ContextCompat.getSystemService(
-            requireContext(),
-            LocationManager::class.java
-        ) as LocationManager
-
-
-
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                // Handle location updates
-                logMessage("Location: ${location.latitude}, ${location.longitude}")
-            }
-
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-            override fun onProviderEnabled(provider: String) {}
-            override fun onProviderDisabled(provider: String) {}
-        }
 
         checkAndRequestPermissions()
     }
+
+    private fun setUserInfo() {
+    }
+
 
     private fun setBeganTest() {
         binding.ivBannerVeganTest.setOnClickListener {
@@ -103,14 +137,56 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
     }
 
     private fun getLocation() {
+        locationManager = ContextCompat.getSystemService(
+            requireContext(),
+            LocationManager::class.java
+        ) as LocationManager
+
         val location: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         location?.let {
             val latitude = location.latitude
             val longitude = location.longitude
             val accuracy = location.accuracy
             val time = location.time
-            logMessage("map_test, $latitude, $location, $accuracy, $time")
+            logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
         }
+        locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                // 위치 정보가 변경될 때 호출되는 콜백
+                logMessage("onLocationChanged")
+                logMessage("${location.latitude} ${location.latitude}")
+            }
+
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+                // 위치 제공자 상태 변경 시 호출되는 콜백
+                logMessage("onStatusChanged")
+            }
+
+            override fun onProviderEnabled(provider: String) {
+                // 위치 제공자가 사용 가능할 때 호출되는 콜백
+                logMessage("onProviderEnabled")
+            }
+
+            override fun onProviderDisabled(provider: String) {
+                // 위치 제공자가 사용 불가능할 때 호출되는 콜백
+                logMessage("onProviderDisabled")
+            }
+        }
+    }
+
+    private fun getFineLocation() {
+//        try {
+//            logMessage("getFineLocation granted")
+//            locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER,
+//                5000L, // 5초
+//                10f, // 10미터,
+//                locationListener
+//            )
+//        } catch (e: SecurityException) {
+//            logMessage("Location permission not granted")
+//            showPermissionDeniedDialog()
+//        }
     }
 
     private fun setTipsTab() {
@@ -159,20 +235,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             .commit()
     }
 
-
-    // ViewModel 분리
-    private fun testData() {
-        list.add(NearRestaurant(0, "식당1", "null"))
-        list.add(NearRestaurant(0, "식당2", "null"))
-        list.add(NearRestaurant(0, "식당3", "null"))
-        list.add(NearRestaurant(0, "식당4", "null"))
-        list.add(NearRestaurant(0, "식당5", "null"))
-        list.add(NearRestaurant(0, "식당6", "null"))
-        list.add(NearRestaurant(0, "식당7", "null"))
-    }
-
     private fun setRestaurantRecyclerView() {
-        testData()
         homeRestaurantRVAdapter = HomeRestaurantRVAdapter(requireContext())
         binding.rvRestaurantList.adapter = homeRestaurantRVAdapter
         homeRestaurantRVAdapter.submitList(list.toMutableList())
@@ -182,81 +245,102 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
 
     private fun checkAndRequestPermissions() {
         when {
-            ContextCompat.checkSelfPermission(
+            ActivityCompat.checkSelfPermission(
                 requireContext(),
-                fineLocationPermission
-            ) == PackageManager.PERMISSION_GRANTED ||
+                ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission(
                         requireContext(),
-                        coarseLocationPermission
+                        ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED -> {
+                logMessage("checkAndRequestPermissions 정확한 위치 권한 승인")
                 getLocation()
-//                startLocationUpdates()
+            }
+
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                logMessage("checkAndRequestPermissions 대략적인 위치 권한 승인")
+                getLocation()
             }
 
             else -> {
-                locationPermissionLauncher.launch(permissions)
+                logMessage("checkAndRequestPermissions 위치 권한 없음")
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        ACCESS_COARSE_LOCATION
+                    )
+                ) {
+                    logMessage(
+                        "shouldShowRequestPermissionRationale = true"
+                    )
+                } else {
+                    logMessage(
+                        "shouldShowRequestPermissionRationale = false"
+                    )
+                    locationPermissionLauncher.launch(permissions)
+                }
+
             }
         }
     }
 
-//    private fun startLocationUpdates() {
-//        try {
-//            locationManager.requestLocationUpdates(
-//                LocationManager.GPS_PROVIDER,
-//                5000L, // 5초
-//                10f, // 10미터
-//                locationListener
-//            )
-//        } catch (e: SecurityException) {
-//            logMessage("Location permission not granted")
-//        }
-//    }
-
     //     권한 재요청
-    private fun showPermissionRationaleDialog(context: Context) {
+    private fun showPermissionRationaleDialog() {
         var isRetry = false
-        val dialog = AlertDialog.Builder(context)
+        PermissionDialog.Builder()
             .setTitle("권한 재요청 안내")
-            .setMessage(
+            .setBody(
                 "해당 권한을 거부할 경우, 다음 기능의 사용이 불가능해요." +
-                        "\n· Map 리뷰 작성 시, 이미지 등록 " +
-                        "\n· Mypage 프로필 이미지 등록"
+                        "\n · Map 기능 전체 "
             )
-            .setPositiveButton("권한재요청") { _, _ ->
+            .setPositiveButton("권한재요청") {
                 isRetry = true
                 locationPermissionLauncher.launch(permissions)
+            }.setNegativeButton("닫기") {
+                logMessage("닫기")
             }
-            .setNegativeButton("닫기") { dialog, _ ->
-                dialog.dismiss()
+            .setOnDismissListener {
+                if (!isRetry) {
+                    showPermissionDeniedDialog()
+                }
             }
-            .show()
-        dialog.setOnDismissListener {
-            if (!isRetry) {
-                showPermissionDeniedDialog(context)
-            }
-        }
+            .show(childFragmentManager, "showPermissionRationaleDialog")
     }
 
     // 권한 허용 안함
-    private fun showPermissionDeniedDialog(context: Context) {
-        val dialog = AlertDialog.Builder(context)
+    private fun showPermissionDeniedDialog() {
+        PermissionDialog.Builder()
             .setTitle("기능 사용 불가 안내")
-            .setMessage(
-                "카메라 사용에 대한 권한 사용을 거부하셨어요. \n" +
+            .setBody(
+                "위치 정보에 대한 권한 사용을 거부하셨어요.\n" +
                         "\n" +
-                        "기능 사용을 원하실 경우 ‘휴대폰 설정 > 애플리케이션 관리자’에서 해당 앱의 권한을 허용해 주세요."
+                        "기능 사용을 원하실 경우 [휴대폰 설정 > 애플리케이션 관리자]에서 해당 앱의 권한을 허용해 주세요."
             )
-            .setNegativeButton("확인") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+            .setPositiveButton("확인") {
+                logMessage("showPermissionDeniedDialog 확인")
+            }.show(childFragmentManager, "showPermissionDeniedDialog")
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-//        locationManager.removeUpdates(locationListener)
+    private fun showFineLocationDialog() {
+        val dialog = PermissionDialog.Builder()
+            .setTitle("정확한 위치 권한 요청 안내")
+            .setBody(
+                "Map 메뉴는 '정확한 위치' 권한으로만 사용 가능합니다.\n" +
+                        "'정확한 위치' 사용 권한을 허용해 주세요."
+            )
+            .setPositiveButton("설정") {
+                locationPermissionLauncher.launch(permissions)
+            }.setNegativeButton("닫기") {
+                showPermissionDeniedDialog()
+                logMessage("showFineLocationDialog 닫기")
+            }.show(childFragmentManager, "showFineLocationDialog")
     }
 
+    companion object {
+        private const val ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
+        private const val ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION
+    }
 
 }
