@@ -33,9 +33,7 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
             //Patch
             binding.scPushSwitch.setOnCheckedChangeListener { _, isChecked ->
                 mypagePushViewModel.patchPush()
-                if(!isChecked){
-                    //Dialog 처리
-                }
+                MypagePushAlertDialog(isChecked).show(childFragmentManager, "RefusePushDialog")
             }
         }
     }
