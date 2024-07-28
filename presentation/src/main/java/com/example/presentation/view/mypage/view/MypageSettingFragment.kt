@@ -14,6 +14,8 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
     private val mypagePushViewModel: MypagePushViewModel by viewModels()
 
     override fun init() {
+        binding.lifecycleOwner = this
+
         setBackUp()
         setPushToggle()
         setLogOut()
@@ -22,10 +24,18 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
     //Push 알림 설정
     private fun setPushToggle(){
-        binding.scPushSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            mypagePushViewModel.patchPush()
-            if(!isChecked){
-                //Dialog 처리
+        mypagePushViewModel.getPushState()
+
+        mypagePushViewModel.userPushState.observe(this){
+            binding.scPushSwitch.setOnCheckedChangeListener(null)
+            binding.scPushSwitch.isChecked = it
+
+            //Patch
+            binding.scPushSwitch.setOnCheckedChangeListener { _, isChecked ->
+                mypagePushViewModel.patchPush()
+                if(!isChecked){
+                    //Dialog 처리
+                }
             }
         }
     }

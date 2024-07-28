@@ -15,6 +15,18 @@ class MypagePushRemoteDataSourceImpl @Inject constructor(
     private val mypagePushService: MypagePushService,
     private val authTokenDataSource: AuthTokenDataSource,
 ):MypagePushRemoteDataSource {
+    override suspend fun getPushState(): ApiResponse<MypagePushResponse> {
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+        return mypagePushService.getPushState(authHeader).suspendOnSuccess {
+            Timber.d("getPushState successful")
+            ApiResponse.Success(this.data)
+        }.suspendOnError {
+            Timber.e("getPushState error: ${this.errorBody}")
+            ApiResponse.Failure.Error(this.errorBody)
+        }
+    }
+
     override suspend fun patchPush(): ApiResponse<MypagePushResponse> {
         val accessToken = authTokenDataSource.accessToken.first()
         val authHeader = "Bearer $accessToken"

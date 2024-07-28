@@ -9,6 +9,27 @@ import javax.inject.Inject
 class MypagePushRepositoryImpl @Inject constructor(
     private val mypagePushRemoteDataSource: MypagePushRemoteDataSource
 ):MypagePushRepository {
+    override suspend fun getPushState(): Result<Boolean> {
+        return try {
+            when (val response = mypagePushRemoteDataSource.getPushState()) {
+                is ApiResponse.Success -> {
+                    Result.success(response.data.information.alarmSetting)
+                }
+                is ApiResponse.Failure.Error -> {
+                    Timber.e("getPushState error: ${response.errorBody}")
+                    Result.failure(Exception("getPushState failed"))
+                }
+                is ApiResponse.Failure.Exception -> {
+                    Timber.e("getPushState exception: ${response.message}")
+                    Result.failure(response.throwable)
+                }
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "getPushState exception")
+            Result.failure(e)
+        }
+    }
+
     override suspend fun patchPush(): Result<Boolean> {
         return try {
             when (val response = mypagePushRemoteDataSource.patchPush()) {
