@@ -1,26 +1,44 @@
 package com.example.presentation.view.mypage.view
 
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMypageSettingBinding
 
 class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layout.fragment_mypage_setting) {
     override fun init() {
-        binding.ibBackUp.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
+        setBackUp()
+        setLogOut()
+        setDeleteAccount()
 
-        //로그아웃
-        binding.tvLogout.onThrottleClick{
-            openDialogLogout()
-        }
+    }
 
-        //계정 삭제
-        binding.tvDeleteAccount.onThrottleClick {
-            openDialogDeleteAccount()
+    //Push 알림 설정
+    private fun setPushToggle(){
+        binding.scPushSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                
+            }else{
+
+            }
         }
     }
 
+
+
+    //backStack
+    private fun setBackUp(){
+        binding.ibBackUp.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    //로그아웃
+    private fun setLogOut(){
+        binding.tvLogout.onThrottleClick{
+            openDialogLogout()
+        }
+    }
     private fun openDialogLogout(){
         MypageLogoutDialog().show(childFragmentManager, "LogoutDialog")
         MypageLogoutDialog().setOnConfirm(object : MypageLogoutDialog.OnBtnClickListener {
@@ -30,6 +48,12 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
         })
     }
 
+    //계정삭제
+    private fun setDeleteAccount(){
+        binding.tvDeleteAccount.onThrottleClick {
+            openDialogDeleteAccount()
+        }
+    }
     private fun openDialogDeleteAccount(){
         MypageDeleteAccountDialog().show(childFragmentManager, "DeleteAccountDialog")
         MypageDeleteAccountDialog().setOnConfirm(object :
