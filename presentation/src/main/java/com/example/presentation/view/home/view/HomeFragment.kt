@@ -60,28 +60,42 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
                 isFineLocation && isCoarseLocation -> {
                     // FineLoaction 승인 시, CoarseLoaction 자동 승인
                     // 정확한 위치 권한 승인
-                    logMessage("Location permission granted")
+                    logMessage("locationPermissionLauncher Fine Location, Coarse Location Granted 정확한 위치 권한 승인")
                     getLocation()
                     getFineLocation()
                 }
 
                 !isFineLocation && isCoarseLocation -> {
                     // 대략적인 위치 권한 승인
+                    logMessage("locationPermissionLauncher Only Coarse Location Granted 대략적인 위치 권한 승인")
                     getLocation()
-                    showFineLocationDialog()
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            requireActivity(),
+                            ACCESS_FINE_LOCATION
+                        )
+                    ) {
+                        logMessage("locationPermissionLauncher Fine Location 거부 경험 있음")
+                        showPermissionDeniedDialog()
+                    } else {
+                        logMessage("locationPermissionLauncher Fine Location 거부 경험 없음")
+                        showFineLocationDialog()
+                    }
+
                 }
 
                 else -> {
                     // 위치 권한 승인하지 않음
-                    logMessage("Location permission denied")
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                    logMessage("locationPermissionLauncher Permission Denied 위치 권한 거부")
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
                             requireActivity(),
-                            Manifest.permission.ACCESS_COARSE_LOCATION
+                            ACCESS_COARSE_LOCATION
                         )
                     ) {
-                        showPermissionDeniedDialog()
-                    } else {
+                        logMessage("locationPermissionLauncher 위치 권한 거부 경험 없음")
                         showPermissionRationaleDialog()
+                    } else {
+                        logMessage("locationPermissionLauncher 위치 권한 거부 경험 있음")
+                        showPermissionDeniedDialog()
                     }
                 }
             }
@@ -139,9 +153,6 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 // 위치 정보가 변경될 때 호출되는 콜백
-                val latitude = location.latitude
-                val longitude = location.longitude
-                // 위치 정보를 사용하여 원하는 작업 수행
                 logMessage("onLocationChanged")
                 logMessage("${location.latitude} ${location.latitude}")
             }
@@ -225,7 +236,6 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
     }
 
     private fun setRestaurantRecyclerView() {
-//        testData()
         homeRestaurantRVAdapter = HomeRestaurantRVAdapter(requireContext())
         binding.rvRestaurantList.adapter = homeRestaurantRVAdapter
         homeRestaurantRVAdapter.submitList(list.toMutableList())
@@ -235,24 +245,40 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
 
     private fun checkAndRequestPermissions() {
         when {
-            ContextCompat.checkSelfPermission(
+            ActivityCompat.checkSelfPermission(
                 requireContext(),
                 ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED ||
+            ) == PackageManager.PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission(
                         requireContext(),
                         ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED -> {
-                        logMessage("위치 권한 승인")
+                logMessage("checkAndRequestPermissions 정확한 위치 권한 승인")
+                getLocation()
+            }
+
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                logMessage("checkAndRequestPermissions 대략적인 위치 권한 승인")
                 getLocation()
             }
 
             else -> {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                logMessage("checkAndRequestPermissions 위치 권한 없음")
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
                         requireActivity(),
                         ACCESS_COARSE_LOCATION
                     )
                 ) {
+                    logMessage(
+                        "shouldShowRequestPermissionRationale = true"
+                    )
+                } else {
+                    logMessage(
+                        "shouldShowRequestPermissionRationale = false"
+                    )
                     locationPermissionLauncher.launch(permissions)
                 }
 
@@ -263,7 +289,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
     //     권한 재요청
     private fun showPermissionRationaleDialog() {
         var isRetry = false
-        val dialog = PermissionDialog.Builder()
+        PermissionDialog.Builder()
             .setTitle("권한 재요청 안내")
             .setBody(
                 "해당 권한을 거부할 경우, 다음 기능의 사용이 불가능해요." +
@@ -285,7 +311,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
 
     // 권한 허용 안함
     private fun showPermissionDeniedDialog() {
-        val dialog = PermissionDialog.Builder()
+        PermissionDialog.Builder()
             .setTitle("기능 사용 불가 안내")
             .setBody(
                 "위치 정보에 대한 권한 사용을 거부하셨어요.\n" +
@@ -305,7 +331,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
                         "'정확한 위치' 사용 권한을 허용해 주세요."
             )
             .setPositiveButton("설정") {
-                getFineLocation()
+                locationPermissionLauncher.launch(permissions)
             }.setNegativeButton("닫기") {
                 showPermissionDeniedDialog()
                 logMessage("showFineLocationDialog 닫기")
