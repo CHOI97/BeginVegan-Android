@@ -8,7 +8,7 @@ class MypageLogoutDialog:BaseDialogFragment<DialogWithoutTitleBinding>(R.layout.
     private var listener: OnBtnClickListener? = null
 
     override fun init() {
-        isCancelable =false
+//        isCancelable =false
 
         binding.content = getString(R.string.dialog_mypage_setting_logout)
         binding.btnCancel.text = getString(R.string.btn_cancel)
