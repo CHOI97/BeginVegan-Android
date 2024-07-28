@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/dialog_width"
@@ -21,7 +20,6 @@
                 android:layout_height="wrap_content"
                 style="@style/heading_bold"
                 android:textColor="@color/color_text_01"
-                android:text="@string/permission_refuse_notification_title"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginHorizontal="@dimen/margin_24"
                 android:layout_marginTop="@dimen/margin_24" />

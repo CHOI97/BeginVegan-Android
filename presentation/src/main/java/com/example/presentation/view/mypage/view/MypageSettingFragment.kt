@@ -1,26 +1,56 @@
 package com.example.presentation.view.mypage.view
 
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMypageSettingBinding
+import com.example.presentation.view.mypage.viewModel.MypagePushViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
+@AndroidEntryPoint
 class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layout.fragment_mypage_setting) {
+    private val mypagePushViewModel: MypagePushViewModel by viewModels()
+
     override fun init() {
-        binding.ibBackUp.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
+        binding.lifecycleOwner = this
 
-        //로그아웃
-        binding.tvLogout.onThrottleClick{
-            openDialogLogout()
-        }
+        setBackUp()
+        setPushToggle()
+        setLogOut()
+        setDeleteAccount()
+    }
 
-        //계정 삭제
-        binding.tvDeleteAccount.onThrottleClick {
-            openDialogDeleteAccount()
+    //Push 알림 설정
+    private fun setPushToggle(){
+        mypagePushViewModel.getPushState()
+
+        mypagePushViewModel.userPushState.observe(this){
+            binding.scPushSwitch.setOnCheckedChangeListener(null)
+            binding.scPushSwitch.isChecked = it
+
+            //Patch
+            binding.scPushSwitch.setOnCheckedChangeListener { _, isChecked ->
+                mypagePushViewModel.patchPush()
+                MypagePushAlertDialog(isChecked).show(childFragmentManager, "RefusePushDialog")
+            }
         }
     }
 
+    //backStack
+    private fun setBackUp(){
+        binding.ibBackUp.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    //로그아웃
+    private fun setLogOut(){
+        binding.tvLogout.onThrottleClick{
+            openDialogLogout()
+        }
+    }
     private fun openDialogLogout(){
         MypageLogoutDialog().show(childFragmentManager, "LogoutDialog")
         MypageLogoutDialog().setOnConfirm(object : MypageLogoutDialog.OnBtnClickListener {
@@ -30,6 +60,12 @@ class MypageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
         })
     }
 
+    //계정삭제
+    private fun setDeleteAccount(){
+        binding.tvDeleteAccount.onThrottleClick {
+            openDialogDeleteAccount()
+        }
+    }
     private fun openDialogDeleteAccount(){
         MypageDeleteAccountDialog().show(childFragmentManager, "DeleteAccountDialog")
         MypageDeleteAccountDialog().setOnConfirm(object :

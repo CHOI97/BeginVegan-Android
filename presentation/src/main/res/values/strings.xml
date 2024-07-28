@@ -235,9 +235,9 @@
     <string name="permission_unusable_storage">저장소 사용</string>
     <string name="permission_unusable_call">전화</string>
 
-    <string name="permission_refuse_notification_title">광고성 정보 수신거부 처리 결과</string>
-    <string name="permission_refuse_notification_content">수신거부 처리 완료</string>
-    <string name="permission_refuse_notification_description">수신 동의는 [mypage > 설정]에서 변경할 수 있어요.</string>
+    <string name="permission_refuse_notification_title">광고성 정보 수신%1$s 처리 결과</string>
+    <string name="permission_refuse_notification_content">수신%1$s 처리 완료</string>
+    <string name="permission_refuse_notification_description">수신%1$s는 [mypage > 설정]에서 변경할 수 있어요.</string>
     <string name="permission_refuse_sender">전송자</string>
     <string name="permission_refuse_date">일시</string>
     <string name="permission_refuse_content">내용</string>

@@ -15,9 +15,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MypageUserInfoViewModel @Inject constructor(
     private val mypageUserInfoUseCase: MypageUserInfoUseCase,
-    private val patchVeganTypeUseCase: PatchVeganTypeUseCase
+    private val patchVeganTypeUseCase: PatchVeganTypeUseCase,
 ):ViewModel(){
 
+    //Mypage 유저 정보
     private val _userInfo = MutableLiveData<MypageUserInfo>()
     val userInfo:LiveData<MypageUserInfo> = _userInfo
 
@@ -33,6 +34,8 @@ class MypageUserInfoViewModel @Inject constructor(
             }
         }
     }
+
+    //patchUserVeganType
     fun patchUserVeganType(veganType:String){
         viewModelScope.launch {
             patchVeganTypeUseCase.invoke("MYPAGE",veganType).onSuccess {
