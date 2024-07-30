@@ -22,7 +22,8 @@ class VeganMapViewModel @Inject constructor(
     private val _restaurantList = MutableStateFlow<List<VeganMapRestaurant>>(mutableListOf())
     val restaurantList: StateFlow<List<VeganMapRestaurant>> get() = _restaurantList
 
-    fun fetchNearRestaurantMap(page: Int, latitude: Float, longitude: Float) {
+    fun fetchNearRestaurantMap(page: Int, latitude: Double, longitude: Double) {
+        Timber.d("fetchNearRestaurantMap")
         viewModelScope.launch {
             getNearRestaurantMapUseCase.invoke(page, latitude.toString(), longitude.toString())
                 .flowOn(Dispatchers.IO)

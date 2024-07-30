@@ -25,10 +25,10 @@ class VeganMapRemoteDataSourceImpl @Inject constructor(
         val authHeader = "Bearer $accessToken"
         return veganMapService.getNearRestaurantMap(authHeader, page, latitude, longitude)
             .suspendOnSuccess {
-                Timber.d("postBookmark successful")
+                Timber.d("getNearRestaurantMap successful")
                 ApiResponse.Success(data)
             }.suspendOnError {
-            Timber.e("postBookmark error: ${this.errorBody}")
+            Timber.e("getNearRestaurantMap error: ${this.errorBody}")
             ApiResponse.Failure.Error(this)
         }
     }

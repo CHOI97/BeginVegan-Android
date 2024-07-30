@@ -272,7 +272,6 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                     // 정확한 위치 권한 승인
                     logMessage("locationPermissionLauncher Fine Location, Coarse Location Granted 정확한 위치 권한 승인")
                     getLocation()
-                    getFineLocation()
                 }
 
                 !isFineLocation && isCoarseLocation -> {
@@ -314,34 +313,11 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         }
 
     override fun init() {
-
         initMap()
-
-        binding.btnSearch.setOnClickListener {
-            findNavController().navigate(R.id.action_veganMapFragment_to_veganMapSearchFragment)
-        }
-
-        locationManager = ContextCompat.getSystemService(
-            requireContext(),
-            LocationManager::class.java
-        ) as LocationManager
-
-
-
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                // Handle location updates
-                logMessage("Location: ${location.latitude}, ${location.longitude}")
-            }
-
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-            override fun onProviderEnabled(provider: String) {}
-            override fun onProviderDisabled(provider: String) {}
-        }
-
         checkAndRequestPermissions()
-
+        setBackUp()
     }
+
 
     private fun initMap() {
         mapView = MapView(requireContext())
@@ -362,6 +338,7 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
     }
 
     private fun getLocation() {
+        logMessage("getLocation")
         locationManager = ContextCompat.getSystemService(
             requireContext(),
             LocationManager::class.java
@@ -374,11 +351,13 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
             val accuracy = location.accuracy
             val time = location.time
             logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
+//            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
         }
+
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 // 위치 정보가 변경될 때 호출되는 콜백
-                logMessage("onLocationChanged")
+                logMessage("onLocationChangㅋed")
                 logMessage("${location.latitude} ${location.latitude}")
             }
 
@@ -397,21 +376,6 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 logMessage("onProviderDisabled")
             }
         }
-    }
-
-    private fun getFineLocation() {
-//        try {
-//            logMessage("getFineLocation granted")
-//            locationManager.requestLocationUpdates(
-//                LocationManager.GPS_PROVIDER,
-//                5000L, // 5초
-//                10f, // 10미터,
-//                locationListener
-//            )
-//        } catch (e: SecurityException) {
-//            logMessage("Location permission not granted")
-//            showPermissionDeniedDialog()
-//        }
     }
 
     private fun startLocationUpdates() {
@@ -528,6 +492,12 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         const val SEARCH_RESULT = 1
         private const val ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
         private const val ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION
+    }
+
+    private fun setBackUp() {
+        binding.btnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_veganMapFragment_to_veganMapSearchFragment)
+        }
     }
 
     override fun onDestroyView() {
