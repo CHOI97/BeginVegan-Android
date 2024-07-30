@@ -139,7 +139,28 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_current_location"
+                android:layout_width="@dimen/item_40"
+                android:layout_height="@dimen/item_40"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/included_bottom_sheet"
+                android:src="@drawable/ic_btn_location"
+                android:scaleType="centerInside"
+                android:background="@drawable/shape_fab_map_location"
+                android:layout_marginStart="@dimen/global_margin"
+                android:layout_marginBottom="@dimen/margin_20"/>
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_map_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/included_bottom_sheet"
+                android:text="제보하기"
+                android:minHeight="38dp"
+                android:textColor="@color/color_primary"
+                android:layout_marginEnd="@dimen/global_margin"
+                android:layout_marginBottom="@dimen/margin_20"/>
             <include
                 android:id="@+id/included_bottom_sheet"
                 layout="@layout/bottom_sheet_vegan_map"

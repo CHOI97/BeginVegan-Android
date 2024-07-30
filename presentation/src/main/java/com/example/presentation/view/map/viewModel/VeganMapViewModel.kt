@@ -24,8 +24,11 @@ class VeganMapViewModel @Inject constructor(
 
     fun fetchNearRestaurantMap(page: Int, latitude: Double, longitude: Double) {
         Timber.d("fetchNearRestaurantMap")
+        val formattedLatitude = String.format("%.6f", latitude)
+        val formattedLongitude = String.format("%.6f", longitude)
+
         viewModelScope.launch {
-            getNearRestaurantMapUseCase.invoke(page, latitude.toString(), longitude.toString())
+            getNearRestaurantMapUseCase.invoke(page, formattedLatitude, formattedLongitude)
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
                     Timber.d(e, "fetchNearRestaurantMap Exception")
@@ -36,5 +39,6 @@ class VeganMapViewModel @Inject constructor(
                 }
         }
     }
+
 
 }

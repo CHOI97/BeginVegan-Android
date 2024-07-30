@@ -11,15 +11,15 @@ data class VeganMapRestaurantResponse(
 
 data class VeganMapRestaurantDto(
     @Json(name = "restaurantId")
-    val restaurantId: Long,
+    val restaurantId: Int,
     @Json(name = "restaurantName")
     val restaurantName: String,
     @Json(name = "restaurantType")
     val restaurantType: String?,
     @Json(name = "distance")
-    val distance: Long,
+    val distance: Double,
     @Json(name = "rate")
-    val rate: Float,
+    val rate: Double,
     @Json(name = "thumbnail")
     val thumbnail: String,
     @Json(name = "latitude")

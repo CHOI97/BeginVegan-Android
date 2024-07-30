@@ -18,12 +18,17 @@ import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
 import com.example.presentation.util.PermissionDialog
+import com.example.presentation.util.RestaurantReportDialog
 import com.example.presentation.view.home.view.HomeFragment
 import com.example.presentation.view.map.viewModel.VeganMapViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
+import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
+import com.kakao.vectormap.label.LabelOptions
+import com.kakao.vectormap.label.LabelStyle
+import com.kakao.vectormap.label.LabelStyles
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -316,8 +321,23 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         initMap()
         checkAndRequestPermissions()
         setBackUp()
+
+        // 제보하기 버튼
+        reportRestaurant()
     }
 
+
+    private fun reportRestaurant() {
+        binding.fabMapReport.setOnClickListener {
+            RestaurantReportDialog().show(childFragmentManager, "RestaurantReportDialog")
+        }
+    }
+
+    private fun findCurrentLocation() {
+        binding.fabCurrentLocation.setOnClickListener {
+            showToast("현재 위치 찾기")
+        }
+    }
 
     private fun initMap() {
         mapView = MapView(requireContext())
@@ -333,6 +353,21 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaoMap: KakaoMap) {
                 // 인증 후 API 가 정상적으로 실행될 때 호출됨
+                val layer = kakaoMap.labelManager?.layer
+                val centerLabel =
+                    layer?.addLabel(LabelOptions.from("centerLabel", position))?.setStyles(
+                        LabelStyle.from(R.drawable.ic_checkbox_on).setAnchorPoint(0.5f, 1.0f)
+                    )
+                val trackingManager = kakaoMap.trackingManager
+                trackingManager?.setTrackingRotation(true)
+            }
+
+            override fun getPosition(): LatLng {
+                return super.getPosition()
+            }
+
+            override fun getZoomLevel(): Int {
+                return 16
             }
         })
     }
@@ -351,13 +386,13 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
             val accuracy = location.accuracy
             val time = location.time
             logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
-//            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
+            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
         }
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 // 위치 정보가 변경될 때 호출되는 콜백
-                logMessage("onLocationChangㅋed")
+                logMessage("onLocationChanged")
                 logMessage("${location.latitude} ${location.latitude}")
             }
 
