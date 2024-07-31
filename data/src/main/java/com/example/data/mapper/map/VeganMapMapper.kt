@@ -13,7 +13,7 @@ class VeganMapMapper : Mapper<List<VeganMapRestaurantDto>, List<VeganMapRestaura
                 id = it.restaurantId,
                 name = it.restaurantName,
                 rate = it.rate,
-                type = it.restaurantType,
+                type = it.restaurantType.toString(),
                 distance = it.distance,
                 latitude = it.latitude,
                 longitude = it.longitude,

@@ -15,7 +15,7 @@ data class VeganMapRestaurantDto(
     @Json(name = "restaurantName")
     val restaurantName: String,
     @Json(name = "restaurantType")
-    val restaurantType: String?,
+    val restaurantType: RestaurantType?,
     @Json(name = "distance")
     val distance: Double,
     @Json(name = "rate")

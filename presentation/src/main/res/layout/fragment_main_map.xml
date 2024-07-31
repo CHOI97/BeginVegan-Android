@@ -7,12 +7,15 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.kakao.vectormap.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
         <Toolbar
             android:id="@+id/tb_search"
             android:layout_width="match_parent"
@@ -69,6 +72,7 @@
 
 
             </androidx.cardview.widget.CardView>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_search_view_result"
                 android:layout_width="match_parent"
@@ -136,40 +140,67 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </Toolbar>
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="400dp"
+            android:layout_gravity="top"
+            android:paddingBottom="20dp"
+            app:layout_anchor="@id/included_bottom_sheet"
+            app:layout_anchorGravity="top">
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_current_location"
-                android:layout_width="@dimen/item_40"
-                android:layout_height="@dimen/item_40"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/included_bottom_sheet"
-                android:src="@drawable/ic_btn_location"
-                android:scaleType="centerInside"
-                android:background="@drawable/shape_fab_map_location"
-                android:layout_marginStart="@dimen/global_margin"
-                android:layout_marginBottom="@dimen/margin_20"/>
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/fab_map_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/included_bottom_sheet"
-                android:text="제보하기"
-                android:minHeight="38dp"
-                android:textColor="@color/color_primary"
-                android:layout_marginEnd="@dimen/global_margin"
-                android:layout_marginBottom="@dimen/margin_20"/>
-            <include
-                android:id="@+id/included_bottom_sheet"
-                layout="@layout/bottom_sheet_vegan_map"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/global_margin"
+                android:backgroundTint="@color/color_white"
+                android:minWidth="40dp"
+                android:minHeight="40dp"
+                android:padding="0dp"
+                android:paddingStart="0dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="0dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_btn_location"
+                app:elevation="0dp"
+                app:fabCustomSize="40dp"
+                app:fabSize="normal"
+                app:backgroundTint="@color/color_gray_00"
+                app:borderWidth="0.1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_map_report"
+                style="@style/body_2_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/global_margin"
+                android:backgroundTint="@color/color_white"
+                app:strokeColor="@color/color_gray_00"
+                app:strokeWidth="1dp"
+                android:minWidth="80dp"
+                android:minHeight="40dp"
+                android:padding="0dp"
+                android:paddingStart="0dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="0dp"
+                android:text="제보하기"
+                android:textColor="@color/color_primary"
+                app:backgroundTint="@color/color_gray_00"
+                app:elevation="0dp"
+                android:stateListAnimator="@null"
+                app:layout_constraintBottom_toBottomOf="@id/fab_current_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/fab_current_location"
+                app:shapeAppearanceOverlay="@style/FloatingButtonShapeAppearanceOverlay" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/included_bottom_sheet"
+            layout="@layout/bottom_sheet_vegan_map" />
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

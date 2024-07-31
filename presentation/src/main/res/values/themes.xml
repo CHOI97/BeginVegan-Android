@@ -208,4 +208,9 @@
         <item name="android:minWidth">@dimen/global_zero</item>
         <item name="minHeight">@dimen/global_zero</item>
     </style>
+
+    <style name="FloatingButtonShapeAppearanceOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>

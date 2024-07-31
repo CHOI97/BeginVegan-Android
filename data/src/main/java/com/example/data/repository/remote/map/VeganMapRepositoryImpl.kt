@@ -28,6 +28,7 @@ class VeganMapRepositoryImpl @Inject constructor(
     ): Flow<List<VeganMapRestaurant>> = flow {
         val response = veganMapRemoteDataSource.getNearRestaurantMap(page, latitude, longitude)
         response.suspendOnSuccess {
+            Timber.d("getNearRestaurantMap successful")
             val restaurants = veganMapMapper.mapFromEntity(data.information)
             emit(restaurants)
         }.suspendOnError {

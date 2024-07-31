@@ -1,25 +1,28 @@
 package com.example.presentation.view.map.view
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.util.DisplayMetrics
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
 import com.example.presentation.util.PermissionDialog
 import com.example.presentation.util.RestaurantReportDialog
-import com.example.presentation.view.home.view.HomeFragment
+import com.example.presentation.view.map.adapter.VeganMapRestaurantRVAdapter
 import com.example.presentation.view.map.viewModel.VeganMapViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
@@ -28,9 +31,8 @@ import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
-import com.kakao.vectormap.label.LabelStyles
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 
 //
@@ -261,6 +263,8 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
 
     private val viewModel: VeganMapViewModel by viewModels()
 
+    private lateinit var veganMapRestaurantRVAdapter: VeganMapRestaurantRVAdapter
+
     private val permissions = arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
 
     private lateinit var locationListener: LocationListener
@@ -318,12 +322,35 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         }
 
     override fun init() {
-        initMap()
+
+        // 권한 체크
         checkAndRequestPermissions()
+
+        // MapView
+        initMap()
+
+        // BottomSheet Recyclerview
+        setRVAdapter()
+
+        //뒤로가기
         setBackUp()
 
         // 제보하기 버튼
         reportRestaurant()
+
+
+    }
+
+    private fun setRVAdapter() {
+        veganMapRestaurantRVAdapter = VeganMapRestaurantRVAdapter()
+        binding.includedBottomSheet.rvBottomSheetRestaurantList.adapter =
+            veganMapRestaurantRVAdapter
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.restaurantList.collect { restaurantList ->
+                logMessage("viewLifecycleOwner collect restaurantList $restaurantList")
+                veganMapRestaurantRVAdapter.submitList(restaurantList)
+            }
+        }
     }
 
 
@@ -410,6 +437,26 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 // 위치 제공자가 사용 불가능할 때 호출되는 콜백
                 logMessage("onProviderDisabled")
             }
+        }
+    }
+
+    // BottomSheet Sizing | Height 70%
+    private fun getBottomSheetDialogDefaultHeight(): Int {
+        return getWindowHeight() * 70 / 100
+        // 위 수치는 기기 높이 대비 70%로 높이를 설정
+    }
+
+    private fun getWindowHeight(): Int {
+        val wm = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = wm.currentWindowMetrics
+            val insets = windowMetrics.windowInsets
+                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            windowMetrics.bounds.height() - insets.bottom - insets.top
+        } else {
+            val displayMetrics = DisplayMetrics()
+            wm.defaultDisplay.getMetrics(displayMetrics)
+            displayMetrics.heightPixels
         }
     }
 
@@ -533,6 +580,16 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         binding.btnSearch.setOnClickListener {
             findNavController().navigate(R.id.action_veganMapFragment_to_veganMapSearchFragment)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.pause()
     }
 
     override fun onDestroyView() {
