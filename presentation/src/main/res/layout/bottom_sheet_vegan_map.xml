@@ -5,16 +5,17 @@
     <data>
 
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_bottom_sheet"
+        app:behavior_halfExpandedRatio="0.7"
+        app:behavior_skipCollapsed="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shape_veganmap_bottom_sheet"
         android:clickable="true"
         android:focusable="true"
         app:behavior_draggable="true"
-        app:behavior_halfExpandedRatio="0.4"
+        app:behavior_fitToContents="false"
         app:behavior_hideable="false"
         app:behavior_peekHeight="@dimen/bottomSheet_handle_height"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
