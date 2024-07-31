@@ -9,7 +9,6 @@ plugins {
     id(Plugins.SAFEARGS)
     id(Plugins.PARCELIZE)
     id(Plugins.DAGGER_HILT)
-    id("com.google.gms.google-services") version "4.4.2"
 //    id(Plugins.KSP)
 }
 
@@ -66,6 +65,7 @@ dependencies {
     implementation(project(":presentation"))
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":core-fcm"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APP_COMPAT)
@@ -142,13 +142,7 @@ dependencies {
     // KAKAO LOGIN API
     implementation("com.kakao.sdk:v2-user:2.4.0") // 카카오 로그인
 
-    //FCM
-    // Import the BoM for the Firebase platform
-    platform("com.google.firebase:firebase-bom:33.1.1")
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-messaging:24.0.0")
-    // Add the dependencies for the Firebase Cloud Messaging and Analytics libraries
-    implementation("com.google.firebase:firebase-analytics:22.0.0")
+
 
     //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
