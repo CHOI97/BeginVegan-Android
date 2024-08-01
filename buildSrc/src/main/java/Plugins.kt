@@ -11,5 +11,5 @@ object Plugins {
     const val KAPT = "kotlin-kapt"
     const val KSP ="com.google.devtools.ksp"
     const val KOTLIN = "kotlin"
-//    const val FCM = "com.google.gms.google-services"
+    const val GOOGLE_SERVICE = "com.google.gms.google-services"
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777604599789",
+    "project_id": "begin-vegan",
+    "storage_bucket": "begin-vegan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777604599789:android:5acb7c6b1981e2f10a21e4",
+        "android_client_info": {
+          "package_name": "com.example.beginvegan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKhK6eCwVl1HXYZ17aipg5D6osXI5vg-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

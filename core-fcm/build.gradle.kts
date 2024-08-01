@@ -1,11 +1,9 @@
-import org.gradle.api.artifacts.dsl.Dependencies
-
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KAPT)
     id(Plugins.DAGGER_HILT)
-    id("com.google.gms.google-services") version "4.4.2"
+//    id("com.google.gms.google-services") version "4.4.2"
 }
 
 android {

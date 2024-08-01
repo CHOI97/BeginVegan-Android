@@ -12,12 +12,12 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/common_google_signin_btn_icon_dark" />
+            android:resource="@drawable/ic_fcm" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/material_dynamic_primary0" />
+            android:resource="@color/color_primary" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/common_google_play_services_notification_channel_name" />
+            android:value="@string/app_name_kr" />
     </application>
 </manifest>

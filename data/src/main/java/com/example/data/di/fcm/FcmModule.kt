@@ -1,8 +1,7 @@
 package com.example.data.di.fcm
 
+
 import com.example.core_fcm.repository.FcmTokenRepository
-import com.example.core_fcm.useCase.FcmTokenUseCase
-import com.example.core_fcm.useCase.FcmTokenUseCase_Factory
 import com.example.data.di.core.db.DataStoreModule
 import com.example.data.di.core.network.NetworkModule
 import com.example.data.repository.local.auth.AuthTokenDataSource
@@ -34,13 +33,7 @@ class FcmModule{
 
     @Singleton
     @Provides
-    fun provideFcmTokenRepository(fcmRemoteDataSource: FcmRemoteDataSource): FcmTokenRepository{
+    fun provideFcmTokenRepository(fcmRemoteDataSource: FcmRemoteDataSource): FcmTokenRepository {
         return FcmTokenRepositoryImpl(fcmRemoteDataSource)
-    }
-
-    @Singleton
-    @Provides
-    fun provideFcmUseCase(fcmTokenRepository: FcmTokenRepository): FcmTokenUseCase{
-        return FcmTokenUseCase(fcmTokenRepository)
     }
 }

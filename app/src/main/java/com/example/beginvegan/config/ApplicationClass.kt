@@ -3,15 +3,18 @@ package com.example.beginvegan.config
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.beginvegan.BuildConfig
+import com.example.core_fcm.useCase.FcmTokenUseCase
+import com.google.firebase.FirebaseApp
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.vectormap.KakaoMapSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class ApplicationClass : Application() {
-//    @Inject
-//    lateinit var fcmRepository: FcmRepository
+    @Inject
+    lateinit var fcmTokenUseCase: FcmTokenUseCase
 
     override fun onCreate() {
         super.onCreate()
@@ -20,7 +23,9 @@ class ApplicationClass : Application() {
         KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-//        FcmTokenManager().initialize(fcmRepository)
+        // Firebase 초기화
+        FirebaseApp.initializeApp(this)
+        fcmTokenUseCase.test()
     }
 
     //    override fun onCreate() {

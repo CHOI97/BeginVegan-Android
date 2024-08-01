@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class FcmTokenRepositoryImpl @Inject constructor(
     private val fcmRemoteDataSource: FcmRemoteDataSource
-):FcmTokenRepository {
+): FcmTokenRepository {
     override suspend fun saveToken(token: String) {
         fcmRemoteDataSource.patchFcmToken(token)
     }
