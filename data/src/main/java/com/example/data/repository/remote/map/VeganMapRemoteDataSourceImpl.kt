@@ -25,8 +25,8 @@ class VeganMapRemoteDataSourceImpl @Inject constructor(
         val authHeader = "Bearer $accessToken"
         return veganMapService.getNearRestaurantMap(authHeader, page, latitude, longitude)
             .suspendOnSuccess {
-                Timber.d("getNearRestaurantMap successful")
-                ApiResponse.Success(data)
+                Timber.d("getNearRestaurantMap successful${this.data}")
+                ApiResponse.Success(this.data)
             }.suspendOnError {
             Timber.e("getNearRestaurantMap error: ${this.errorBody}")
             ApiResponse.Failure.Error(this)

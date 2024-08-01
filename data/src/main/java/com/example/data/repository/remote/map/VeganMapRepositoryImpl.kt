@@ -3,6 +3,7 @@ package com.example.data.repository.remote.map
 import com.example.data.mapper.map.VeganMapMapper
 import com.example.domain.model.map.VeganMapRestaurant
 import com.example.domain.repository.map.VeganMapRepository
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.errorBody
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnSuccess
@@ -25,15 +26,32 @@ class VeganMapRepositoryImpl @Inject constructor(
         page: Int,
         latitude: String,
         longitude: String
-    ): Flow<List<VeganMapRestaurant>> = flow {
-        val response = veganMapRemoteDataSource.getNearRestaurantMap(page, latitude, longitude)
-        response.suspendOnSuccess {
-            Timber.d("getNearRestaurantMap successful")
-            val restaurants = veganMapMapper.mapFromEntity(data.information)
-            emit(restaurants)
-        }.suspendOnError {
-            Timber.e("Error fetching restaurants: ${this.errorBody}")
-            emit(emptyList())
+    ): Flow<List<VeganMapRestaurant>> {
+        return flow {
+            try {
+                val response =
+                    veganMapRemoteDataSource.getNearRestaurantMap(page, latitude, longitude)
+                when (response) {
+                    is ApiResponse.Success -> {
+                        Timber.e("Success fetching restaurants: $response")
+                        val restaurants = veganMapMapper.mapFromEntity(response.data.information)
+                        emit(restaurants)
+                    }
+
+                    is ApiResponse.Failure.Error -> {
+                        Timber.e("Error fetching restaurants: ${response.errorBody}")
+                        emit(emptyList())
+                    }
+
+                    is ApiResponse.Failure.Exception -> {
+                        Timber.e("getNearRestaurantMap exception: ${response.message}")
+                        emit(emptyList())
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "getMagazineList exception")
+                emit(emptyList())
+            }
         }
     }
 

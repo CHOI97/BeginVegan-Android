@@ -5,7 +5,7 @@ data class VeganMapRestaurant(
     val name: String,
     val type: String?,
     val distance: Double,
-    val rate: Double,
+    val rate: Double?,
     val latitude: String,
     val longitude: String,
     val thumbnail: String
