@@ -1,12 +1,16 @@
+import org.gradle.api.artifacts.dsl.Dependencies
+
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugins.ANDROID_LIBRARY)
+    id(Plugins.KOTLIN_ANDROID)
+    id(Plugins.KAPT)
+    id(Plugins.DAGGER_HILT)
     id("com.google.gms.google-services") version "4.4.2"
 }
 
 android {
     namespace = "com.example.core_fcm"
-    compileSdk = 34
+    compileSdk = DefaultConfig.COMPILE_SDK_VERSION
 
     defaultConfig {
         minSdk = 29
@@ -31,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -41,6 +48,14 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:24.0.0")
     // Add the dependencies for the Firebase Cloud Messaging and Analytics libraries
     implementation("com.google.firebase:firebase-analytics:22.0.0")
+
+    // Timber
+    implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:${Versions.HILT}")
+    kapt("com.google.dagger:hilt-compiler:${Versions.HILT}")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")

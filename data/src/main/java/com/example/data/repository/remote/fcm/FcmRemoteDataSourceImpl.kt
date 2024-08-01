@@ -1,0 +1,29 @@
+package com.example.data.repository.remote.fcm
+
+import com.example.data.model.core.BaseResponse
+import com.example.data.repository.local.auth.AuthTokenDataSource
+import com.example.data.retrofit.fcm.FcmService
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.retrofit.errorBody
+import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnSuccess
+import kotlinx.coroutines.flow.first
+import timber.log.Timber
+import javax.inject.Inject
+
+class FcmRemoteDataSourceImpl @Inject constructor(
+    private val fcmService: FcmService,
+    private val authTokenDataSource: AuthTokenDataSource,
+):FcmRemoteDataSource {
+    override suspend fun patchFcmToken(token: String): ApiResponse<BaseResponse> {
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+        return fcmService.patchFcmToken(authHeader, token).suspendOnSuccess {
+            Timber.d("patchFcmToken successful")
+            ApiResponse.Success(this.data)
+        }.suspendOnError {
+            Timber.e("patchFcmToken error: ${this.errorBody}")
+            ApiResponse.Failure.Error(this.errorBody)
+        }
+    }
+}
