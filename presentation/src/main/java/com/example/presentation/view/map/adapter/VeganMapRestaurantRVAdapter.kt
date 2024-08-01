@@ -1,8 +1,6 @@
 package com.example.presentation.view.map.adapter
 
 import android.content.Context
-import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,11 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.domain.model.map.HistorySearch
+import com.example.data.model.map.RestaurantType
 import com.example.domain.model.map.VeganMapRestaurant
-import com.example.presentation.R
 import com.example.presentation.databinding.ItemRestaurantBinding
-import com.example.presentation.databinding.ItemSearchHistoryBinding
+import timber.log.Timber
 
 
 class VeganMapRestaurantRVAdapter :
@@ -38,7 +35,7 @@ class VeganMapRestaurantRVAdapter :
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(binding.ivRestaurantImg)
             binding.tvRestaurantName.text = data.name
-            binding.tvRestaurantType.text = data.type
+            binding.tvRestaurantType.text = RestaurantType.getKoreanNameFromEng(data.type.toString())
 
             binding.tvRating.text = if (data.rate == null) {
                 "0.0"
@@ -53,9 +50,9 @@ class VeganMapRestaurantRVAdapter :
             } else {
                 String.format("%.1fkm", data.distance)
             }
+//            val distanceText = context.getString(R.string.map_how_far, formattedDistance)
+            binding.tvHowFar.text = formattedDistance
 
-            val distanceText = context.getString(R.string.map_how_far, formattedDistance)
-            binding.tvHowFar.text = Html.fromHtml(distanceText, Html.FROM_HTML_MODE_LEGACY)
 
         }
     }
@@ -73,6 +70,10 @@ class VeganMapRestaurantRVAdapter :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val context = holder.itemView.context
         (holder as ViewHolder).bind(context, getItem(position))
+        holder.itemView.setOnClickListener {
+            listener?.onClick(getItem(position))
+            Timber.d("onClick Item: ${getItem(position)}")
+        }
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.domain.model.map.VeganMapRestaurant
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
@@ -191,6 +192,13 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 veganMapRestaurantRVAdapter.submitList(restaurantList)
             }
         }
+        veganMapRestaurantRVAdapter.setOnItemClickListener(object: VeganMapRestaurantRVAdapter.OnItemClickListener{
+            override fun onClick(data: VeganMapRestaurant) {
+                logMessage("VeganMap onClick: $data")
+                showToast("${data.name}")
+            }
+
+        })
     }
 
 
