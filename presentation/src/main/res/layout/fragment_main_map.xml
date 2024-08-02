@@ -142,8 +142,9 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_collapse"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:paddingBottom="20dp"
             app:layout_anchor="@id/included_bottom_sheet"

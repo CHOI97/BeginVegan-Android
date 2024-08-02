@@ -1,5 +1,6 @@
 package com.example.data.repository.remote.map
 
+import com.example.data.model.map.RestaurantDetailResponse
 import com.example.data.model.map.VeganMapRestaurantResponse
 import com.example.data.repository.local.auth.AuthTokenDataSource
 import com.example.data.retrofit.map.VeganMapService
@@ -31,5 +32,22 @@ class VeganMapRemoteDataSourceImpl @Inject constructor(
             Timber.e("getNearRestaurantMap error: ${this.errorBody}")
             ApiResponse.Failure.Error(this)
         }
+    }
+
+    override suspend fun getRestaurantDetail(
+        restaurantId: Long,
+        latitude: String,
+        longitude: String
+    ): ApiResponse<RestaurantDetailResponse> {
+        val accessToken = authTokenDataSource.accessToken.first()
+        val authHeader = "Bearer $accessToken"
+        return veganMapService.getRestaurantDetail(authHeader, restaurantId, latitude, longitude)
+            .suspendOnSuccess {
+                Timber.d("getNearRestaurantMap successful${this.data}")
+                ApiResponse.Success(this.data)
+            }.suspendOnError {
+                Timber.e("getNearRestaurantMap error: ${this.errorBody}")
+                ApiResponse.Failure.Error(this)
+            }
     }
 }

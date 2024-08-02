@@ -34,6 +34,7 @@
                     android:tint="@color/color_white" />
 
                 <TextView
+                    android:id="@+id/tv_title_restaurant_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -147,6 +148,7 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_ic_rating">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_nav_find"
                     style="@style/RestaurantNavigationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,6 +161,7 @@
                     android:background="@color/color_gray_00" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_nav_like"
                     style="@style/RestaurantNavigationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -171,6 +174,7 @@
                     android:background="@color/color_gray_00" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_nav_call"
                     style="@style/RestaurantNavigationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -183,6 +187,7 @@
                     android:background="@color/color_gray_00" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_nav_edit"
                     style="@style/RestaurantNavigationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

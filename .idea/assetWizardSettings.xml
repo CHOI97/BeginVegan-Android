@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_text_report" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../제보하기.svg" />
+                            <entry key="outputName" value="ic_red_dot" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../crack/ic_red_dot.svg" />
                           </map>
                         </option>
                       </PersistentState>

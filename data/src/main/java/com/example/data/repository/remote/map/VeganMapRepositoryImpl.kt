@@ -1,6 +1,8 @@
 package com.example.data.repository.remote.map
 
+import com.example.data.mapper.map.RestaurantDetailMapper
 import com.example.data.mapper.map.VeganMapMapper
+import com.example.domain.model.map.RestaurantDetail
 import com.example.domain.model.map.VeganMapRestaurant
 import com.example.domain.repository.map.VeganMapRepository
 import com.skydoves.sandwich.ApiResponse
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 class VeganMapRepositoryImpl @Inject constructor(
     private val veganMapRemoteDataSource: VeganMapRemoteDataSource,
-    private val veganMapMapper: VeganMapMapper
+    private val veganMapMapper: VeganMapMapper,
+    private val restaurantDetailMapper: RestaurantDetailMapper
 ) : VeganMapRepository {
     override suspend fun getNearRestaurantWithPermission() {
     }
@@ -55,7 +58,35 @@ class VeganMapRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getRestaurantDetail(
+        restaurantId: Long,
+        latitude: String,
+        longitude: String
+    ): Flow<RestaurantDetail> {
+        return flow {
+            try {
+                val response =
+                    veganMapRemoteDataSource.getRestaurantDetail(restaurantId, latitude, longitude)
+                when (response) {
+                    is ApiResponse.Success -> {
+                        Timber.e("Success fetching restaurants: $response")
+                        val restaurants = restaurantDetailMapper.mapFromEntity(response.data.information)
+                        emit(restaurants)
+                    }
 
-    override suspend fun getRestaurantDetail() {
+                    is ApiResponse.Failure.Error -> {
+                        Timber.e("Error fetching restaurants: ${response.errorBody}")
+                    }
+
+                    is ApiResponse.Failure.Exception -> {
+                        Timber.e("getNearRestaurantMap exception: ${response.message}")
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "getMagazineList exception")
+            }
+        }
     }
+
+
 }

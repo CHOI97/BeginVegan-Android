@@ -1,7 +1,8 @@
 package com.example.domain.model.map
 
+
 data class VeganMapRestaurant(
-    val id: Int,
+    val id: Long,
     val name: String,
     val type: String?,
     val distance: Double,
