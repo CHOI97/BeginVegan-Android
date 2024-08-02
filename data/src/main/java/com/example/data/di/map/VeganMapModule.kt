@@ -2,6 +2,7 @@ package com.example.data.di.map
 
 import com.example.data.di.core.db.DataStoreModule
 import com.example.data.di.core.network.NetworkModule
+import com.example.data.mapper.map.RestaurantDetailMapper
 import com.example.data.mapper.map.VeganMapMapper
 import com.example.data.mapper.tips.TipsRecipeDetailMapper
 import com.example.data.repository.local.auth.AuthTokenDataSource
@@ -40,15 +41,26 @@ class VeganMapModule {
     @Singleton
     fun provideVeganMapRepository(
         veganMapRemoteDataSource: VeganMapRemoteDataSource,
-        veganMapMapper: VeganMapMapper
+        veganMapMapper: VeganMapMapper,
+        restaurantDetailMapper: RestaurantDetailMapper
     ): VeganMapRepository {
-        return VeganMapRepositoryImpl(veganMapRemoteDataSource, veganMapMapper)
+        return VeganMapRepositoryImpl(
+            veganMapRemoteDataSource,
+            veganMapMapper,
+            restaurantDetailMapper
+        )
     }
 
     @Provides
     @Singleton
     fun provideVeganMapMapper(): VeganMapMapper {
         return VeganMapMapper()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRestaurantDetailMapper(): RestaurantDetailMapper {
+        return RestaurantDetailMapper()
     }
 
 }

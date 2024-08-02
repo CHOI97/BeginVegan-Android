@@ -11,7 +11,7 @@ data class VeganMapRestaurantResponse(
 
 data class VeganMapRestaurantDto(
     @Json(name = "restaurantId")
-    val restaurantId: Int,
+    val restaurantId: Long,
     @Json(name = "restaurantName")
     val restaurantName: String,
     @Json(name = "restaurantType")
