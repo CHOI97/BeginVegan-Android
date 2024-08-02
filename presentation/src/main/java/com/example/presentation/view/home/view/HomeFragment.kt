@@ -7,7 +7,9 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -343,4 +345,29 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
         private const val ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION
     }
 
+
+    //알림 권한 설정
+//    private fun checkPermissionNotification(){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            // Android API level이 TIRAMISU (33) 이상인 경우에만 실행
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) ==
+//                PackageManager.PERMISSION_GRANTED
+//            ) {
+//                // 이미 권한이 부여된 경우
+//            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+//                // 사용자에게 이미 거부한 이력이 있는 경우
+//                if (!isPermissionDenied){
+//                    Log.d("requestPermissionLauncher", "사용자에게 이미 거부한 이력이 있는 경우")
+//                    //다이얼로그 띄우기
+//                    showFcmDialog(supportFragmentManager)
+//                    prefs.setIsAllowNotify(true)
+//                }
+//            } else {
+//                // 권한을 요청하는 경우
+//                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+//            }
+//        }else{
+//            //권한 필요 없음
+//        }
+//    }
 }

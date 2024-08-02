@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.beginvegan.BuildConfig
 import com.example.core_fcm.useCase.FcmTokenUseCase
 import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.vectormap.KakaoMapSdk
 import dagger.hilt.android.HiltAndroidApp
@@ -25,7 +26,7 @@ class ApplicationClass : Application() {
 
         // Firebase 초기화
         FirebaseApp.initializeApp(this)
-        fcmTokenUseCase.test()
+        fcmTokenUseCase.resetToken()
     }
 
     //    override fun onCreate() {
