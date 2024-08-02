@@ -177,6 +177,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/color_text_02</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@color/color_transparent</item>
     </style>
 
     <style name="ModifyTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">

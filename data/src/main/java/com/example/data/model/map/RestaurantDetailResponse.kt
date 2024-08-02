@@ -45,7 +45,7 @@ data class AddressDto(
     @Json(name = "roadName")
     val roadName: String,
     @Json(name = "detailAddress")
-    val detailAddress: String
+    val detailAddress: String?
 )
 
 data class MenuDto(

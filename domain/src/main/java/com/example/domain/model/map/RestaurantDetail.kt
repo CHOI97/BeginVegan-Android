@@ -18,7 +18,7 @@ data class Address(
     val province: String = "",
     val city: String = "",
     val roadName: String = "",
-    val detailAddress: String = ""
+    val detailAddress: String? = null
 )
 
 data class Menus(

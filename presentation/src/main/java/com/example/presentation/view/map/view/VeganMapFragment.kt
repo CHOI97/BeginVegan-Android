@@ -268,46 +268,48 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         })
     }
 
-    private fun getLocation() {
-        logMessage("getLocation")
-        locationManager = ContextCompat.getSystemService(
-            requireContext(),
-            LocationManager::class.java
-        ) as LocationManager
-
-        val location: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        location?.let {
-            val latitude = location.latitude
-            val longitude = location.longitude
-            val accuracy = location.accuracy
-            val time = location.time
-            logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
-            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
-        }
-
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                // 위치 정보가 변경될 때 호출되는 콜백
-                logMessage("onLocationChanged")
-                logMessage("${location.latitude} ${location.latitude}")
-            }
-
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-                // 위치 제공자 상태 변경 시 호출되는 콜백
-                logMessage("onStatusChanged")
-            }
-
-            override fun onProviderEnabled(provider: String) {
-                // 위치 제공자가 사용 가능할 때 호출되는 콜백
-                logMessage("onProviderEnabled")
-            }
-
-            override fun onProviderDisabled(provider: String) {
-                // 위치 제공자가 사용 불가능할 때 호출되는 콜백
-                logMessage("onProviderDisabled")
-            }
-        }
-    }
+//    private fun getLocation() {
+//        logMessage("getLocation")
+//        locationManager = ContextCompat.getSystemService(
+//            requireContext(),
+//            LocationManager::class.java
+//        ) as LocationManager
+//
+//        val location: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+//        logMessage("location = $location")
+//        location?.let {
+//            val latitude = it.latitude
+//            val longitude = it.longitude
+//            val accuracy = it.accuracy
+//            val time = it.time
+//            logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
+//            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
+//        }
+//
+//        locationListener = object : LocationListener {
+//            override fun onLocationChanged(location: Location) {
+//                // 위치 정보가 변경될 때 호출되는 콜백
+//                logMessage("onLocationChanged")
+//                logMessage("${location.latitude} ${location.latitude}")
+//            }
+//
+//            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+//                // 위치 제공자 상태 변경 시 호출되는 콜백
+//                logMessage("onStatusChanged")
+//            }
+//
+//            override fun onProviderEnabled(provider: String) {
+//                // 위치 제공자가 사용 가능할 때 호출되는 콜백
+//                logMessage("onProviderEnabled")
+//            }
+//
+//            override fun onProviderDisabled(provider: String) {
+//                // 위치 제공자가 사용 불가능할 때 호출되는 콜백
+//                logMessage("onProviderDisabled")
+//            }
+//        }
+//        startLocationUpdates()
+//    }
 
     // BottomSheet Sizing | Height 70%
     private fun getBottomSheetDialogDefaultHeight(per: Int): Int {
@@ -329,6 +331,64 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         }
     }
 
+    private fun getLocation() {
+        logMessage("getLocation")
+        locationManager = ContextCompat.getSystemService(
+            requireContext(),
+            LocationManager::class.java
+        ) as LocationManager
+
+        locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                logMessage("onLocationChanged")
+                logMessage("${location.latitude} ${location.longitude}")
+
+                val latitude = location.latitude
+                val longitude = location.longitude
+                val accuracy = location.accuracy
+                val time = location.time
+                logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
+                viewModel.fetchNearRestaurantMap(0, latitude, longitude)
+
+                locationManager.removeUpdates(this) // 위치 업데이트 중지
+            }
+
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+                logMessage("onStatusChanged")
+            }
+
+            override fun onProviderEnabled(provider: String) {
+                logMessage("onProviderEnabled")
+            }
+
+            override fun onProviderDisabled(provider: String) {
+                logMessage("onProviderDisabled")
+            }
+        }
+
+        // 위치 정보 제공자 설정
+        val providers = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
+        var location: Location? = null
+
+        for (provider in providers) {
+            location = locationManager.getLastKnownLocation(provider)
+            if (location != null) break
+        }
+
+        if (location != null) {
+            logMessage("location = $location")
+            val latitude = location.latitude
+            val longitude = location.longitude
+            val accuracy = location.accuracy
+            val time = location.time
+            logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
+            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
+        } else {
+            logMessage("location is null, requesting location updates")
+            startLocationUpdates()
+        }
+    }
+
     private fun startLocationUpdates() {
         try {
             locationManager.requestLocationUpdates(
@@ -337,11 +397,16 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 10f, // 10미터
                 locationListener
             )
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                5000L, // 5초
+                10f, // 10미터
+                locationListener
+            )
         } catch (e: SecurityException) {
             logMessage("Location permission not granted")
         }
     }
-
 
     private fun checkAndRequestPermissions() {
         when {
@@ -463,6 +528,6 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
 
     override fun onDestroyView() {
         super.onDestroyView()
-//        locationManager.removeUpdates(locationListener)
+        locationManager.removeUpdates(locationListener)
     }
 }
