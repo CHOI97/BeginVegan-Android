@@ -276,9 +276,9 @@
     <string name="dialog_report_warning">작성하신 내용은 저장되지 않아요.</string>
 
     <string name="dialog_map_report_restaurant_title">식당 제보하기</string>
-    <string name="dialog_map_report_restaurant_name">식당 이름</string>
-    <string name="dialog_map_report_restaurant_location">식당 위치</string>
-    <string name="dialog_map_report_restaurant_explanation">식당 설명</string>
+    <string name="dialog_map_report_restaurant_name">식당 이름 <font color='#FF009861'>*</font>"</string>
+    <string name="dialog_map_report_restaurant_location">식당 위치 <font color='#FF009861'>*</font>"</string>
+    <string name="dialog_map_report_restaurant_explanation">식당 설명 <font color='#FF009861'>*</font>"</string>
     <string name="dialog_map_search_history_delete">검색 기록을 삭제하시겠어요?</string>
 
     <string name="dialog_map_edit_restaurant_title">식당 정보 수정하기</string>
@@ -404,8 +404,10 @@
 
     <!-- Map -->
     <string name="map_search_hint">검색어 입력 (ex.강남, 한식)</string>
-    <string name="map_bottom_sheet_title_nearby">&lt;%1$s&gt; 님의 주변에 위치한 식당이에요.</string>
-    <string name="map_how_far">"내 위치로부터 <font color='#FF005536'>%dkm</font>"</string>
+    <string name="map_bottom_sheet_title_nearby"><font color='#FF009861'>%1$s</font> 님의 주변에 위치한 식당이에요.</string>
+    <!--    <string name="map_how_far">내 위치로부터 <font color="#FF005536">%1$s</font></string>-->
+    <string name="map_how_far">내 위치로부터</string>
+    <!--    <string name="map_how_far">내 위치로부터 &lt;font color="#FF005536">%1$s&lt;/font></string>-->
     <string name="map_search_history">최근 검색 기록</string>
     <string name="map_search_result_order_review">리뷰 많은 순</string>
     <string name="map_search_result_order_scrap">스크랩 많은 순</string>

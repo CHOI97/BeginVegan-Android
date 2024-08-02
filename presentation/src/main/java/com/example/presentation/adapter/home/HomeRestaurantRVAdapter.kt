@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.map.NearRestaurant
+import com.example.domain.model.map.VeganMapRestaurant
 import com.example.presentation.databinding.ItemHomeRecommendRestaurantBinding
 
 class HomeRestaurantRVAdapter(
     private val context: Context
 ) :
-    ListAdapter<NearRestaurant, RecyclerView.ViewHolder>(AsyncDifferConfig.Builder(diffUtil).build()) {
+    ListAdapter<VeganMapRestaurant, RecyclerView.ViewHolder>(AsyncDifferConfig.Builder(diffUtil).build()) {
     private var listener: OnItemClickListener? = null
 
     inner class ViewHolder(val binding: ItemHomeRecommendRestaurantBinding):
     RecyclerView.ViewHolder(binding.root){
-        fun bind(data: NearRestaurant){
+        fun bind(data: VeganMapRestaurant){
 //            Glide.with(context).load(data.imageUrl).override(Target.SIZE_ORIGINAL)
 //                .into(binding.ivItemRestaurantImage)
             binding.tvRestaurantName.text = data.name
@@ -38,7 +38,7 @@ class HomeRestaurantRVAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = holder as ViewHolder
-        val nearRestaurant = getItem(position) as NearRestaurant
+        val nearRestaurant = getItem(position) as VeganMapRestaurant
         viewHolder.bind(nearRestaurant)
     }
 
@@ -51,7 +51,7 @@ class HomeRestaurantRVAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(v: View, data: NearRestaurant, position: Int)
+        fun onItemClick(v: View, data: VeganMapRestaurant, position: Int)
 
     }
 
@@ -60,18 +60,18 @@ class HomeRestaurantRVAdapter(
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<NearRestaurant>() {
+        val diffUtil = object : DiffUtil.ItemCallback<VeganMapRestaurant>() {
 
             override fun areItemsTheSame(
-                oldItem: NearRestaurant,
-                newItem: NearRestaurant
+                oldItem: VeganMapRestaurant,
+                newItem: VeganMapRestaurant
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: NearRestaurant,
-                newItem: NearRestaurant
+                oldItem: VeganMapRestaurant,
+                newItem: VeganMapRestaurant
             ): Boolean {
                 return oldItem == newItem
             }

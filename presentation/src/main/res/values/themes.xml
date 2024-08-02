@@ -177,6 +177,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/color_text_02</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@color/color_transparent</item>
     </style>
 
     <style name="ModifyTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
@@ -207,5 +208,10 @@
         <item name="android:paddingEnd">@dimen/global_zero</item>
         <item name="android:minWidth">@dimen/global_zero</item>
         <item name="minHeight">@dimen/global_zero</item>
+    </style>
+
+    <style name="FloatingButtonShapeAppearanceOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 </resources>

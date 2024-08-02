@@ -1,260 +1,54 @@
 package com.example.presentation.view.map.view
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.domain.model.map.VeganMapRestaurant
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentMainMapBinding
 import com.example.presentation.util.PermissionDialog
-import com.example.presentation.view.home.view.HomeFragment
+import com.example.presentation.util.RestaurantReportDialog
+import com.example.presentation.view.map.adapter.VeganMapRestaurantRVAdapter
 import com.example.presentation.view.map.viewModel.VeganMapViewModel
+import com.example.presentation.view.mypage.view.MypageMyRestaurantFragmentDirections
+import com.example.presentation.view.restaurant.view.RestaurantDetailFragmentArgs
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
+import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
+import com.kakao.vectormap.label.LabelOptions
+import com.kakao.vectormap.label.LabelStyle
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
-
-//
-//import android.app.Activity
-//import android.content.Context
-//import android.os.Build
-//import android.os.Bundle
-//import android.util.DisplayMetrics
-//import android.util.Log
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import android.widget.Toast
-//import androidx.constraintlayout.widget.ConstraintLayout
-//import androidx.core.os.bundleOf
-//import androidx.recyclerview.widget.LinearLayoutManager
-//import com.example.beginvegan.R
-//import com.example.beginvegan.config.ApplicationClass
-//import com.example.beginvegan.config.BaseFragment
-//import com.example.beginvegan.databinding.FragmentVeganMapBinding
-//import com.example.beginvegan.src.data.model.recipe.RecipeThree
-//import com.example.beginvegan.src.data.model.restaurant.Coordinate
-//import com.example.beginvegan.src.data.model.restaurant.NearRestaurant
-//import com.example.beginvegan.src.data.model.restaurant.RestaurantFindInterface
-//import com.example.beginvegan.src.data.model.restaurant.RestaurantFindResponse
-//import com.example.beginvegan.src.data.model.restaurant.RestaurantFindService
-//import com.example.beginvegan.src.ui.adapter.map.VeganMapBottomSheetRVAdapter
-//import com.example.beginvegan.src.ui.view.main.MainActivity
-//import com.example.beginvegan.src.ui.view.map.restaurant.RestaurantDetailFragment
-//import com.example.beginvegan.util.Constants
-//import com.example.beginvegan.util.Constants.RECOMMENDED_RESTAURANT
-//import com.example.beginvegan.util.Constants.RESTAURANT_ID
-//import com.google.android.material.bottomsheet.BottomSheetBehavior
-//import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
-//import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HALF_EXPANDED
-//import net.daum.mf.map.api.MapPOIItem
-//import net.daum.mf.map.api.MapPoint
-//import net.daum.mf.map.api.MapView
-//
-///*
-//* 추천 식당 클릭후 어댑터 연결 문제
-//* */
-//
-//class VeganMapFragment : BaseFragment<FragmentVeganMapBinding>(
-//    FragmentVeganMapBinding::bind,
-//    R.layout.fragment_vegan_map
-//), RestaurantFindInterface, MapView.POIItemEventListener {
-//    private lateinit var dataList: ArrayList<NearRestaurant>
-//    private lateinit var mapView: MapView
-//    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-//    private lateinit var bottomSheetAdapter: VeganMapBottomSheetRVAdapter
-//    private lateinit var recommendRestaurantData: NearRestaurant
-//    private var recommendRestaurantTrigger = true
-//    private var mContext: Context? = null
-//
-//    // Android Lifecycle
-//    override fun onPause() {
-//        super.onPause()
-//        binding.mvVeganMap.removeAllViews()
-//    }
-//
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        mContext = context
-//    }
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        // case: Recommend restaurant click
-//        if (arguments != null) {
-//            val d
-//            ata = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//                arguments?.getSerializable(RECOMMENDED_RESTAURANT, NearRestaurant::class.java)
-//            } else {
-//                arguments?.getSerializable(RECOMMENDED_RESTAURANT) as? NearRestaurant
-//            }
-//            if (data != null) {
-//                recommendRestaurantData = data
-//                recommendRestaurantTrigger = false
-//            }
-//        }
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        mContext = null
-//    }
-//
-//    override fun init() {
-//        showLoadingDialog(requireContext())
-//        initializeMapView()
-//        binding.veganmapBottomSheet.clBottomSheet.maxHeight = getBottomSheetDialogDefaultHeight()
-//        RestaurantFindService(this).tryPostFindRestaurant(
-//            Coordinate(
-//                ApplicationClass.xLatitude,
-//                ApplicationClass.xLongitude
-//            )
-//        )
-//    }
-//
-//    // Initialize MapView & MapView Click
-//    private fun initializeMapView() {
-//        mapView = MapView(this@VeganMapFragment.activity)
-//        binding.mvVeganMap.addView(mapView)
-//        bottomSheetBehavior = BottomSheetBehavior.from(binding.veganmapBottomSheet.clBottomSheet)
-//        mapView.setMapCenterPointAndZoomLevel(
-//            MapPoint.mapPointWithGeoCoord(
-//                ApplicationClass.xLatitude.toDouble(),
-//                ApplicationClass.xLongitude.toDouble()
-//            ), 4, true
-//        )
-//        mapView.currentLocationTrackingMode =
-//            MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving
-//        mapView.setOnTouchListener { _, _ ->
-//            if (bottomSheetBehavior.state != STATE_COLLAPSED) {
-//                bottomSheetBehavior.state = STATE_COLLAPSED
-//            }
-//            false
-//        }
-//
-//    }
-//
-//    // BottomSheet Sizing | Height 70%
-//    private fun getBottomSheetDialogDefaultHeight(): Int {
-//        return getWindowHeight() * 70 / 100
-//        // 위 수치는 기기 높이 대비 70%로 높이를 설정
-//    }
-//
-//    private fun getWindowHeight(): Int {
-//        val displayMetrics = DisplayMetrics()
-//        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
-//        return displayMetrics.heightPixels
-//    }
-//
-//    // Restaurant's pin setting and connect MapView
-//    private fun setMapViewRestaurantMarker() {
-//        dataList.forEachIndexed { index, info ->
-//            val marker = MapPOIItem().apply {
-//                itemName = info.name
-//                mapPoint = MapPoint.mapPointWithGeoCoord(
-//                    info.latitude.toDouble(),
-//                    info.longitude.toDouble()
-//                )
-//                userObject = dataList[index]
-//                markerType = MapPOIItem.MarkerType.CustomImage
-//                tag = index
-//                customImageResourceId = R.drawable.marker_spot
-//                isShowCalloutBalloonOnTouch = false
-//            }
-//            mapView.addPOIItem(marker)
-//        }
-//        mapView.setPOIItemEventListener(this)
-//    }
-//
-//
-//    private fun setBottomSheetRVAdapter() {
-//        binding.veganmapBottomSheet.rvBottomSheetRestaurantList.adapter = bottomSheetAdapter
-//        binding.veganmapBottomSheet.rvBottomSheetRestaurantList.layoutManager =
-//            LinearLayoutManager(mContext)
-//        bottomSheetAdapter.setOnItemClickListener(object :
-//            VeganMapBottomSheetRVAdapter.OnItemClickListener {
-//            override fun onItemClick(v: View, data: NearRestaurant, position: Int) {
-//                moveRestaurantDetail(data)
-//            }
-//        })
-//        bottomSheetBehavior.state = STATE_HALF_EXPANDED
-//    }
-//
-//    private fun setAdapterBottomSheet() {
-//        bottomSheetAdapter = VeganMapBottomSheetRVAdapter(mContext!!, dataList)
-//        setBottomSheetRVAdapter()
-//    }
-//
-//    private fun setAdapterSingleBottomSheet(data: NearRestaurant) {
-//        var selectedRestaurant: ArrayList<NearRestaurant> = arrayListOf()
-//        selectedRestaurant.add(data)
-//        bottomSheetAdapter = VeganMapBottomSheetRVAdapter(mContext!!, selectedRestaurant)
-//        mapView.setMapCenterPoint(
-//            MapPoint.mapPointWithGeoCoord(
-//                data.latitude.toDouble(),
-//                data.longitude.toDouble()
-//            ), true
-//        )
-//        setBottomSheetRVAdapter()
-//    }
-//
-//    private fun moveRestaurantDetail(data: NearRestaurant) {
-//        parentFragmentManager.setFragmentResult(RESTAURANT_ID, bundleOf(RESTAURANT_ID to data.id))
-//        parentFragmentManager.beginTransaction().hide(this@VeganMapFragment)
-//            .add(R.id.fl_main, RestaurantDetailFragment()).addToBackStack(null).commit()
-//    }
-//
-//    override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-//        setAdapterSingleBottomSheet(p1?.userObject as NearRestaurant)
-//    }
-//
-//    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {}
-//    override fun onCalloutBalloonOfPOIItemTouched(
-//        p0: MapView?,
-//        p1: MapPOIItem?,
-//        p2: MapPOIItem.CalloutBalloonButtonType?
-//    ) {
-//    }
-//
-//    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {}
-//
-//
-//    override fun onPostFindRestaurantSuccess(response: RestaurantFindResponse) {
-//        dataList = ArrayList(response.information)
-//        setMapViewRestaurantMarker()
-//        if (recommendRestaurantTrigger) {
-//            setAdapterBottomSheet()
-//        } else {
-//            setAdapterSingleBottomSheet(recommendRestaurantData)
-//        }
-//        dismissLoadingDialog()
-//    }
-//
-//    override fun onPostFindRestaurantFailure(message: String) {
-//        Log.d("onPostFindRestaurantFailure", message)
-//    }
-//
-//
-//}
 @AndroidEntryPoint
 class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_main_map) {
     private lateinit var mapView: MapView
 
     private val viewModel: VeganMapViewModel by viewModels()
+
+    private lateinit var veganMapRestaurantRVAdapter: VeganMapRestaurantRVAdapter
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     private val permissions = arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
 
@@ -272,7 +66,6 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                     // 정확한 위치 권한 승인
                     logMessage("locationPermissionLauncher Fine Location, Coarse Location Granted 정확한 위치 권한 승인")
                     getLocation()
-                    getFineLocation()
                 }
 
                 !isFineLocation && isCoarseLocation -> {
@@ -315,32 +108,129 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
 
     override fun init() {
 
-        initMap()
-
-        binding.btnSearch.setOnClickListener {
-            findNavController().navigate(R.id.action_veganMapFragment_to_veganMapSearchFragment)
-        }
-
-        locationManager = ContextCompat.getSystemService(
-            requireContext(),
-            LocationManager::class.java
-        ) as LocationManager
-
-
-
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                // Handle location updates
-                logMessage("Location: ${location.latitude}, ${location.longitude}")
-            }
-
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-            override fun onProviderEnabled(provider: String) {}
-            override fun onProviderDisabled(provider: String) {}
-        }
-
+        // 권한 체크
         checkAndRequestPermissions()
 
+        // Floating button layer
+        setFloatingLayer()
+        // MapView
+        initMap()
+
+        // BottomSheet Recyclerview
+        setRVAdapter()
+
+        //뒤로가기
+        setBackUp()
+
+        // 제보하기 버튼
+        reportRestaurant()
+
+        setBottomSheet()
+
+
+    }
+
+    // 40%대에서 floating 멈춤
+    private fun setFloatingLayer() {
+        val height = getBottomSheetDialogDefaultHeight(60)
+        val layoutParams = binding.clCollapse.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.height = height
+        binding.clCollapse.layoutParams = layoutParams
+    }
+
+    private fun setBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.includedBottomSheet.clBottomSheet)
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, state: Int) {
+                when (state) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        logMessage("BottomSheetBehavior 접힘")
+                    } // 접힘
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        logMessage("BottomSheetBehavior 펼쳐짐")
+                    } // 펼쳐짐
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        logMessage("BottomSheetBehavior 숨겨짐")
+                    }    // 숨겨짐
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        logMessage("BottomSheetBehavior 절반 펼쳐짐")
+                    } // 절반 펼쳐짐
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        logMessage("BottomSheetBehavior 드래그하는 중")
+                    }  // 드래그하는 중
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                        logMessage("BottomSheetBehavior 안정화 단계")
+                    }  // 안정화 단계
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                logMessage("slideOffset $slideOffset")
+                // 비율에 따라 상태를 조정합니다.
+            }
+
+        })
+    }
+
+    fun setBottomSheetState(behavior: BottomSheetBehavior<*>, targetState: Int) {
+        val bottomSheet = binding.includedBottomSheet.clBottomSheet
+        bottomSheet.post {
+            when (targetState) {
+                1 -> behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                2 -> {
+                    // 중간 상태 1로 설정 (비율 0.3)
+                    behavior.peekHeight = (bottomSheet.height * 0.3).toInt()
+                    behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                }
+
+                3 -> {
+                    // 중간 상태 2로 설정 (비율 0.7)
+                    behavior.peekHeight = (bottomSheet.height * 0.7).toInt()
+                    behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                }
+
+                4 -> {
+                    behavior.peekHeight = (bottomSheet.height * 0.9).toInt()
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+            }
+        }
+    }
+
+    private fun setRVAdapter() {
+        veganMapRestaurantRVAdapter = VeganMapRestaurantRVAdapter()
+        binding.includedBottomSheet.rvBottomSheetRestaurantList.adapter =
+            veganMapRestaurantRVAdapter
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.restaurantList.collect { restaurantList ->
+                logMessage("viewLifecycleOwner collect restaurantList $restaurantList")
+                veganMapRestaurantRVAdapter.submitList(restaurantList)
+            }
+        }
+        veganMapRestaurantRVAdapter.setOnItemClickListener(object :
+            VeganMapRestaurantRVAdapter.OnItemClickListener {
+            override fun onClick(data: VeganMapRestaurant) {
+                logMessage("VeganMap onClick: $data")
+                showToast("${data.name}")
+                val action = VeganMapFragmentDirections.actionVeganMapFragmentToRestaurantDetailFragment(restaurantId = data.id, latitude = data.latitude, longitude = data.longitude, imgUrl = data.thumbnail)
+                findNavController().navigate(action)
+            }
+
+        })
+    }
+
+
+    private fun reportRestaurant() {
+        binding.fabMapReport.setOnClickListener {
+            RestaurantReportDialog().show(childFragmentManager, "RestaurantReportDialog")
+        }
+    }
+
+    private fun findCurrentLocation() {
+        binding.fabCurrentLocation.setOnClickListener {
+            showToast("현재 위치 찾기")
+        }
     }
 
     private fun initMap() {
@@ -357,61 +247,146 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaoMap: KakaoMap) {
                 // 인증 후 API 가 정상적으로 실행될 때 호출됨
+                val layer = kakaoMap.labelManager?.layer
+                val centerLabel =
+                    layer?.addLabel(LabelOptions.from("centerLabel", position))?.setStyles(
+                        LabelStyle.from(R.drawable.ic_red_dot).setAnchorPoint(0.5f, 1.0f)
+                    )
+                val trackingManager = kakaoMap.trackingManager
+                trackingManager?.setTrackingRotation(true)
+
+            }
+
+            override fun getPosition(): LatLng {
+                return super.getPosition()
+            }
+
+            // Default Zoom Level 15
+            override fun getZoomLevel(): Int {
+                return 15
             }
         })
     }
 
+//    private fun getLocation() {
+//        logMessage("getLocation")
+//        locationManager = ContextCompat.getSystemService(
+//            requireContext(),
+//            LocationManager::class.java
+//        ) as LocationManager
+//
+//        val location: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+//        logMessage("location = $location")
+//        location?.let {
+//            val latitude = it.latitude
+//            val longitude = it.longitude
+//            val accuracy = it.accuracy
+//            val time = it.time
+//            logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
+//            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
+//        }
+//
+//        locationListener = object : LocationListener {
+//            override fun onLocationChanged(location: Location) {
+//                // 위치 정보가 변경될 때 호출되는 콜백
+//                logMessage("onLocationChanged")
+//                logMessage("${location.latitude} ${location.latitude}")
+//            }
+//
+//            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+//                // 위치 제공자 상태 변경 시 호출되는 콜백
+//                logMessage("onStatusChanged")
+//            }
+//
+//            override fun onProviderEnabled(provider: String) {
+//                // 위치 제공자가 사용 가능할 때 호출되는 콜백
+//                logMessage("onProviderEnabled")
+//            }
+//
+//            override fun onProviderDisabled(provider: String) {
+//                // 위치 제공자가 사용 불가능할 때 호출되는 콜백
+//                logMessage("onProviderDisabled")
+//            }
+//        }
+//        startLocationUpdates()
+//    }
+
+    // BottomSheet Sizing | Height 70%
+    private fun getBottomSheetDialogDefaultHeight(per: Int): Int {
+        return getWindowHeight() * per / 100
+        // 위 수치는 기기 높이 대비 70%로 높이를 설정
+    }
+
+    private fun getWindowHeight(): Int {
+        val wm = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = wm.currentWindowMetrics
+            val insets = windowMetrics.windowInsets
+                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            windowMetrics.bounds.height() - insets.bottom - insets.top
+        } else {
+            val displayMetrics = DisplayMetrics()
+            wm.defaultDisplay.getMetrics(displayMetrics)
+            displayMetrics.heightPixels
+        }
+    }
+
     private fun getLocation() {
+        logMessage("getLocation")
         locationManager = ContextCompat.getSystemService(
             requireContext(),
             LocationManager::class.java
         ) as LocationManager
 
-        val location: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        location?.let {
+        locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                logMessage("onLocationChanged")
+                logMessage("${location.latitude} ${location.longitude}")
+
+                val latitude = location.latitude
+                val longitude = location.longitude
+                val accuracy = location.accuracy
+                val time = location.time
+                logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
+                viewModel.fetchNearRestaurantMap(0, latitude, longitude)
+
+                locationManager.removeUpdates(this) // 위치 업데이트 중지
+            }
+
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+                logMessage("onStatusChanged")
+            }
+
+            override fun onProviderEnabled(provider: String) {
+                logMessage("onProviderEnabled")
+            }
+
+            override fun onProviderDisabled(provider: String) {
+                logMessage("onProviderDisabled")
+            }
+        }
+
+        // 위치 정보 제공자 설정
+        val providers = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
+        var location: Location? = null
+
+        for (provider in providers) {
+            location = locationManager.getLastKnownLocation(provider)
+            if (location != null) break
+        }
+
+        if (location != null) {
+            logMessage("location = $location")
             val latitude = location.latitude
             val longitude = location.longitude
             val accuracy = location.accuracy
             val time = location.time
             logMessage("getLocation\nlatitude = $latitude,\nlongitude = $longitude\nlocation = $location,\naccuracy = $accuracy,\ntime = $time")
+            viewModel.fetchNearRestaurantMap(0, latitude, longitude)
+        } else {
+            logMessage("location is null, requesting location updates")
+            startLocationUpdates()
         }
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                // 위치 정보가 변경될 때 호출되는 콜백
-                logMessage("onLocationChanged")
-                logMessage("${location.latitude} ${location.latitude}")
-            }
-
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-                // 위치 제공자 상태 변경 시 호출되는 콜백
-                logMessage("onStatusChanged")
-            }
-
-            override fun onProviderEnabled(provider: String) {
-                // 위치 제공자가 사용 가능할 때 호출되는 콜백
-                logMessage("onProviderEnabled")
-            }
-
-            override fun onProviderDisabled(provider: String) {
-                // 위치 제공자가 사용 불가능할 때 호출되는 콜백
-                logMessage("onProviderDisabled")
-            }
-        }
-    }
-
-    private fun getFineLocation() {
-//        try {
-//            logMessage("getFineLocation granted")
-//            locationManager.requestLocationUpdates(
-//                LocationManager.GPS_PROVIDER,
-//                5000L, // 5초
-//                10f, // 10미터,
-//                locationListener
-//            )
-//        } catch (e: SecurityException) {
-//            logMessage("Location permission not granted")
-//            showPermissionDeniedDialog()
-//        }
     }
 
     private fun startLocationUpdates() {
@@ -422,11 +397,16 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
                 10f, // 10미터
                 locationListener
             )
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                5000L, // 5초
+                10f, // 10미터
+                locationListener
+            )
         } catch (e: SecurityException) {
             logMessage("Location permission not granted")
         }
     }
-
 
     private fun checkAndRequestPermissions() {
         when {
@@ -530,34 +510,24 @@ class VeganMapFragment : BaseFragment<FragmentMainMapBinding>(R.layout.fragment_
         private const val ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION
     }
 
+    private fun setBackUp() {
+        binding.btnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_veganMapFragment_to_veganMapSearchFragment)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.pause()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-//        locationManager.removeUpdates(locationListener)
+        locationManager.removeUpdates(locationListener)
     }
 }
-
-
-//    private fun setOnSearchFocus() {
-//        binding.includedSearchToolbar..onFocusChangeListener =
-//            OnFocusChangeListener { v, hasFocus ->
-//                if(hasFocus){
-//                    binding.includedSearchToolbar.ibBack.visibility = View.VISIBLE
-//                }else{
-//                    binding.includedSearchToolbar.ibBack.visibility = View.GONE
-//                }
-//            }
-//    }
-
-//나의 식당, 나의 리뷰에서 왔을 때 처리
-//    private fun checkFromMypage(){
-//        val args: VeganMapFragmentArgs by navArgs()
-//        Timber.d("args.fromMyRestaurant:${args.fromMyRestaurant}, args.fromMyReview:${args.fromMyReview}")
-//        if(args.fromMyRestaurant){
-//            //나의 식당
-//            //Mypage에서 이동할때 map의 viewModel에 식당 id 넣어서 처리
-//        }
-//        if(args.fromMyReview){
-//            //나의 리뷰
-//            //Mypage에서 이동할때 map의 viewModel에 리뷰 id 넣어서 처리
-//        }
-//    }

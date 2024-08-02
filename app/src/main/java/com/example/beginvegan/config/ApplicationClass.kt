@@ -19,6 +19,8 @@ class ApplicationClass : Application() {
         KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
         KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        var keyHash = Utility.getKeyHash(this)
+        Log.i("GlobalApplication", "$keyHash")
     }
 
     //    override fun onCreate() {
