@@ -4,25 +4,36 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.core_fcm.useCase.FcmTokenUseCase
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.config.navigation.MainNavigationHandler
 import com.example.presentation.config.navigation.MainNavigationImpl
 import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     lateinit var mainNavigationHandler: MainNavigationHandler
     lateinit var navController: NavController
 
+    @Inject
+    lateinit var fcmTokenUseCase: FcmTokenUseCase
+
     override fun initViewModel() {
     }
 
     override fun init() {
+//        fcmTokenUseCase.resetToken()
+        checkHasFcmToken()
+
         binding.dlDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         setNavController()
         setBottomNav()
@@ -67,6 +78,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
+    //HasFcmToken 체크
+    private fun checkHasFcmToken(){
+        lifecycleScope.launch {
+            fcmTokenUseCase.getHasFcmToken().onSuccess {
+                if(!it) fcmTokenUseCase.resetToken()
+            }.onFailure {
+                Timber.e("getHasFcmToken 에러")
+            }
+        }
+    }
+
+    //BackStack
     private fun setupOnBackPressedCallback() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

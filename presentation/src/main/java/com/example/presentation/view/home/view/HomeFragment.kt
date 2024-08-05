@@ -27,8 +27,10 @@ import com.example.presentation.util.DrawerController
 import com.example.presentation.util.PermissionDialog
 import com.example.presentation.view.image.gallery.view.GalleryActivity
 import com.example.presentation.view.main.MainViewModel
+import com.example.presentation.view.mypage.view.MypagePushAlertDialog
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.log
 
@@ -50,8 +52,9 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
     private val permissions = arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
 
     private lateinit var locationListener: LocationListener
-
     private lateinit var locationManager: LocationManager
+
+    private val REQUEST_NOTIFICATION_PERMISSION = 2
 
     private val locationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
@@ -120,6 +123,7 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
         setBeganTest()
 
         checkAndRequestPermissions()
+        requestNotificationPermission()
     }
 
     private fun setUserInfo() {
@@ -347,27 +351,62 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
 
 
     //알림 권한 설정
-//    private fun checkPermissionNotification(){
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            // Android API level이 TIRAMISU (33) 이상인 경우에만 실행
-//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) ==
-//                PackageManager.PERMISSION_GRANTED
-//            ) {
-//                // 이미 권한이 부여된 경우
-//            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-//                // 사용자에게 이미 거부한 이력이 있는 경우
-//                if (!isPermissionDenied){
-//                    Log.d("requestPermissionLauncher", "사용자에게 이미 거부한 이력이 있는 경우")
-//                    //다이얼로그 띄우기
-//                    showFcmDialog(supportFragmentManager)
-//                    prefs.setIsAllowNotify(true)
-//                }
-//            } else {
-//                // 권한을 요청하는 경우
-//                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    private fun requestNotificationPermission() {
+        // Android 13 이상일 경우에만 알림 권한 요청
+        Timber.d("requestNotificationPermission 알림 권한 요청 실행 ")
+        Timber.d("Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU: ${Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU}")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                // 이미 권한이 부여된 경우
+                // 권한이 이미 부여된 경우 처리할 로직
+                Timber.d("이미 권한이 부여된 경우")
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            ) {
+                // 권한 요청의 필요성을 설명하는 다이얼로그를 표시
+                Timber.d("권한 요청의 필요성을 설명하는 다이얼로그를 표시")
+                showPermissionRationale()
+            } else {
+                // 권한 요청
+                Timber.d("권한 요청")
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_NOTIFICATION_PERMISSION
+                )
+            }
+        }
+    }
+    private fun showPermissionRationale() {
+//        AlertDialog.Builder(requireContext())
+//            .setTitle("알림 권한 요청")
+//            .setMessage("'비긴, 비건'에서 알림을 보내도록 허용하시겠습니까?")
+//            .setPositiveButton("허용") { _, _ ->
+//                ActivityCompat.requestPermissions(
+//                    requireActivity(),
+//                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+//                    REQUEST_NOTIFICATION_PERMISSION
+//                )
 //            }
-//        }else{
-//            //권한 필요 없음
-//        }
-//    }
+//            .setNegativeButton("허용 안함"){ _, _ ->
+//                MypagePushAlertDialog(permit = false, mypage = false).show(childFragmentManager, "RefusePushDialog")
+//            }
+//            .show()
+        PermissionDialog.Builder()
+            .setTitle("알림 권한 요청")
+            .setBody("'비긴, 비건'에서 알림을 보내도록 허용하시겠습니까?")
+            .setPositiveButton("허용") {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_NOTIFICATION_PERMISSION
+                )
+            }.setNegativeButton("허용 안함") {
+                MypagePushAlertDialog(permit = false, mypage = false).show(childFragmentManager, "RefusePushDialog")
+            }.show(childFragmentManager, "RefusePushDialog")
+    }
 }

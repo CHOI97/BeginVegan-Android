@@ -35,4 +35,8 @@ class FcmTokenUseCase @Inject constructor(
     suspend fun saveToken(token: String) {
         fcmTokenRepository.saveToken(token)
     }
+
+    suspend fun getHasFcmToken():Result<Boolean>{
+        return fcmTokenRepository.getHasFcmToken()
+    }
 }

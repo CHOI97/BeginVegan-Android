@@ -14,8 +14,6 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class ApplicationClass : Application() {
-    @Inject
-    lateinit var fcmTokenUseCase: FcmTokenUseCase
 
     override fun onCreate() {
         super.onCreate()
@@ -26,7 +24,6 @@ class ApplicationClass : Application() {
 
         // Firebase 초기화
         FirebaseApp.initializeApp(this)
-        fcmTokenUseCase.resetToken()
     }
 
     //    override fun onCreate() {
