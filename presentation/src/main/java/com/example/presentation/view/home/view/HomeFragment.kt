@@ -124,6 +124,8 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
 
         checkAndRequestPermissions()
         requestNotificationPermission()
+
+//        mainViewModel.postFcmPush()
     }
 
     private fun setUserInfo() {
@@ -249,6 +251,12 @@ class HomeFragment : BaseFragment<FragmentMainHomeBinding>(R.layout.fragment_mai
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
+    /**
+     * 권한 요청
+     */
+    private fun checkPermissions(permissionList:List<String>){
+
+    }
     private fun checkAndRequestPermissions() {
         when {
             ActivityCompat.checkSelfPermission(

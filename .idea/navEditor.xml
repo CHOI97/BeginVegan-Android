@@ -328,7 +328,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_mypageMyRestaurantFragment_to_veganMapFragment">
+                            <entry key="action_mypageMyRestaurantFragment_to_nav_map_graph">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -349,7 +349,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_mypageMyReviewFragment_to_veganMapFragment">
+                            <entry key="action_mypageMyReviewFragment_to_nav_map_graph">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -371,13 +371,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="navigation">
+                  <entry key="nav_map_graph">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="874" />
-                            <option name="y" value="1835" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -385,15 +385,9 @@
                             <entry key="veganMapFragment">
                               <value>
                                 <LayoutPositions>
-                                  <option name="myPosition">
-                                    <Point>
-                                      <option name="x" value="256" />
-                                      <option name="y" value="12" />
-                                    </Point>
-                                  </option>
                                   <option name="myPositions">
                                     <map>
-                                      <entry key="action_veganMapFragment_to_veganMapSearchFragment2">
+                                      <entry key="action_veganMapFragment_to_veganMapSearchFragment">
                                         <value>
                                           <LayoutPositions />
                                         </value>
@@ -403,18 +397,12 @@
                                 </LayoutPositions>
                               </value>
                             </entry>
-                            <entry key="veganMapSearchFragment2">
+                            <entry key="veganMapSearchFragment">
                               <value>
                                 <LayoutPositions>
-                                  <option name="myPosition">
-                                    <Point>
-                                      <option name="x" value="12" />
-                                      <option name="y" value="12" />
-                                    </Point>
-                                  </option>
                                   <option name="myPositions">
                                     <map>
-                                      <entry key="action_veganMapSearchFragment2_to_veganMapFragment">
+                                      <entry key="action_veganMapSearchFragment_to_veganMapFragment">
                                         <value>
                                           <LayoutPositions />
                                         </value>

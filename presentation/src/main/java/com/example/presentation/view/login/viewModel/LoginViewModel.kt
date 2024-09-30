@@ -1,12 +1,11 @@
 package com.example.presentation.view.login.viewModel
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.icu.text.TimeZoneNames
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core_fcm.useCase.FcmTokenUseCase
 import com.example.domain.useCase.auth.SignInUseCase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -20,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase
+    private val signInUseCase: SignInUseCase,
+    private val fcmTokenUseCase: FcmTokenUseCase
 ) : ViewModel() {
 
     private val mCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -87,6 +87,20 @@ class LoginViewModel @Inject constructor(
                     "KaKao User 사용자 정보 요청 성공\n회원번호: ${user.id}\n이메일: ${user.kakaoAccount?.email}"
                 )
                 user.kakaoAccount?.email?.let { signIn(it, user.id.toString()) }
+            }
+        }
+        checkHasFcmToken()
+    }
+
+    /**
+     * HasFcmToken 체크
+     */
+    private fun checkHasFcmToken(){
+        viewModelScope.launch {
+            fcmTokenUseCase.getHasFcmToken().onSuccess {
+                if(!it) fcmTokenUseCase.resetToken()
+            }.onFailure {
+                Timber.e("getHasFcmToken 에러")
             }
         }
     }

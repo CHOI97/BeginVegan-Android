@@ -44,11 +44,11 @@ class FcmRemoteDataSourceImpl @Inject constructor(
     override suspend fun postFcmMessage(requestBody:FcmMessageRequest): ApiResponse<BaseResponse> {
         val accessToken = authTokenDataSource.accessToken.first()
         val authHeader = "Bearer $accessToken"
-        return fcmService.postFcmMessage(authHeader, requestBody).suspendOnSuccess {
-            Timber.d("patchFcmToken successful")
+        return fcmService.postFcmMessage(requestBody).suspendOnSuccess {
+            Timber.d("postFcmMessage successful")
             ApiResponse.Success(this.data)
         }.suspendOnError {
-            Timber.e("patchFcmToken error: ${this.errorBody}")
+            Timber.e("postFcmMessage error: ${this.errorBody}")
             ApiResponse.Failure.Error(this.errorBody)
         }
     }

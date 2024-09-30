@@ -23,9 +23,9 @@ interface FcmService {
         @Body fcmToken: String
     ): ApiResponse<BaseResponse>
 
-    @POST("/api/v1/users/fcm/send")
+    @POST("/api/v1/fcm/send")
     suspend fun postFcmMessage(
-        @Header("Authorization") token: String,
+//        @Header("Authorization") token: String,
         @Body postFcmMessageRequest: FcmMessageRequest
     ): ApiResponse<BaseResponse>
 }

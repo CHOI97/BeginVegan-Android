@@ -3,6 +3,7 @@ plugins {
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KAPT)
     id(Plugins.DAGGER_HILT)
+    id("kotlin-parcelize")
 //    id("com.google.gms.google-services") version "4.4.2"
 }
 

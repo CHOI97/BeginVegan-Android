@@ -1,13 +1,17 @@
 package com.example.presentation.view.main
 
+import android.content.Context
+import android.content.Intent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.core_fcm.model.FcmData
 import com.example.core_fcm.useCase.FcmTokenUseCase
 import com.example.presentation.R
 import com.example.presentation.base.BaseActivity
@@ -24,20 +28,32 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     lateinit var mainNavigationHandler: MainNavigationHandler
     lateinit var navController: NavController
 
-    @Inject
-    lateinit var fcmTokenUseCase: FcmTokenUseCase
-
     override fun initViewModel() {
     }
 
     override fun init() {
-//        fcmTokenUseCase.resetToken()
-        checkHasFcmToken()
-
         binding.dlDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         setNavController()
         setBottomNav()
         setupOnBackPressedCallback()
+
+        checkFcmType()
+    }
+
+    /**
+     * FCM Push 알림 클릭 시 분기 처리
+     */
+    private fun checkFcmType(){
+        val fcmData = intent.getParcelableExtra<FcmData>("fcmData")
+        fcmData?.alarmType.let{
+            Timber.d("fcmData?.alarmType.let: $it")
+            when(it){
+                "MYPAGE" -> mainNavigationHandler.navigateToMypage()
+                "MAP" -> mainNavigationHandler.navigateToMap()
+                "TIPS" -> mainNavigationHandler.navigateToTips()
+                "INFORMATION" -> {}
+            }
+        }
     }
 
     private fun setNavController() {
@@ -78,17 +94,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
-    //HasFcmToken 체크
-    private fun checkHasFcmToken(){
-        lifecycleScope.launch {
-            fcmTokenUseCase.getHasFcmToken().onSuccess {
-                if(!it) fcmTokenUseCase.resetToken()
-            }.onFailure {
-                Timber.e("getHasFcmToken 에러")
-            }
-        }
-    }
-
     //BackStack
     private fun setupOnBackPressedCallback() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -103,5 +108,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 }
             }
         })
+    }
+
+    /**
+     * FCM Intent 주입
+     */
+    companion object{
+        fun createIntent(
+            context: Context,
+            fcmData: FcmData
+        ) = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            this.putExtra("fcmData",fcmData)
+        }
     }
 }

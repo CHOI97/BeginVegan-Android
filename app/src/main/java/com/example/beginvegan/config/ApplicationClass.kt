@@ -1,6 +1,10 @@
 package com.example.beginvegan.config
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.beginvegan.BuildConfig
 import com.example.core_fcm.useCase.FcmTokenUseCase
@@ -24,6 +28,20 @@ class ApplicationClass : Application() {
 
         // Firebase 초기화
         FirebaseApp.initializeApp(this)
+
+        createNotificationChannel()
+    }
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+            val channel = NotificationChannel(
+                "channelId",
+                "CHANNEL_NAME",
+                NotificationManager.IMPORTANCE_HIGH,
+            )
+            notificationManager?.createNotificationChannel(channel)
+        }
     }
 
     //    override fun onCreate() {

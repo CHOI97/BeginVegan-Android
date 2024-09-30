@@ -5,6 +5,7 @@ import com.example.core_fcm.repository.FcmTokenRepository
 import com.example.data.di.core.db.DataStoreModule
 import com.example.data.di.core.network.NetworkModule
 import com.example.data.repository.local.auth.AuthTokenDataSource
+import com.example.data.repository.local.fcm.FcmTokenDataSource
 import com.example.data.repository.remote.fcm.FcmRemoteDataSource
 import com.example.data.repository.remote.fcm.FcmRemoteDataSourceImpl
 import com.example.data.repository.remote.fcm.FcmTokenRepositoryImpl
@@ -33,7 +34,7 @@ class FcmModule{
 
     @Singleton
     @Provides
-    fun provideFcmTokenRepository(fcmRemoteDataSource: FcmRemoteDataSource): FcmTokenRepository {
-        return FcmTokenRepositoryImpl(fcmRemoteDataSource)
+    fun provideFcmTokenRepository(fcmRemoteDataSource: FcmRemoteDataSource, fcmTokenDataSource: FcmTokenDataSource): FcmTokenRepository {
+        return FcmTokenRepositoryImpl(fcmRemoteDataSource, fcmTokenDataSource)
     }
 }

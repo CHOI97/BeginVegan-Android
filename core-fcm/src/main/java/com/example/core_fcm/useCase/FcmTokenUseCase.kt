@@ -39,4 +39,13 @@ class FcmTokenUseCase @Inject constructor(
     suspend fun getHasFcmToken():Result<Boolean>{
         return fcmTokenRepository.getHasFcmToken()
     }
+
+    suspend fun postFcmMessage(
+        title: String,
+        body: String,
+        alarmType: String?,
+        itemId: Int?,
+        messageType: String?,
+        userLevel: String?
+    ) = fcmTokenRepository.postFcmMessage(title, body, alarmType, itemId, messageType, userLevel)
 }
