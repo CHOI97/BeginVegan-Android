@@ -25,7 +25,8 @@ class TipsFragment : BaseFragment<FragmentMainTipsBinding>(R.layout.fragment_mai
         binding.lifecycleOwner = this
 
         setTipsTab()
-        mainViewModel.postFcmPush()
+        //fcm 테스트
+        //mainViewModel.postFcmPush()
     }
 
     private fun setTipsTab() {
