@@ -3,6 +3,7 @@ package com.example.presentation.view.image.gallery.view
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.presentation.R
 import com.example.presentation.base.BaseFragment
 import com.example.presentation.databinding.FragmentGallerySelectImageBinding
@@ -21,6 +22,9 @@ class SelectImageFragment :
     override fun init() {
         viewModel.selectImage.value?.let { selectedImage ->
             selectedImage.imageUri?.let { binding.clCropper.setUri(it) }
+        }
+        binding.ibBackUp.setOnClickListener {
+            findNavController().popBackStack()
         }
         binding.ibDone.setOnClickListener {
             binding.clCropper.crop()

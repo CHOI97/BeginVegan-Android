@@ -5,12 +5,14 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.beginvegan.BuildConfig
 import com.example.core_fcm.useCase.FcmTokenUseCase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
 import com.kakao.vectormap.KakaoMapSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -42,6 +44,11 @@ class ApplicationClass : Application() {
             )
             notificationManager?.createNotificationChannel(channel)
         }
+        /**
+         * 이부분 확인 부탁드립니다. 위 코드는 제가 추가한겁니다.
+         */
+        var keyHash = Utility.getKeyHash(this)
+        Log.i("GlobalApplication", "$keyHash")
     }
 
     //    override fun onCreate() {

@@ -56,7 +56,10 @@ class VeganMapSearchFragment :
 
         veganMapSearchRVAdapter = VeganMapSearchRVAdapter()
 
-        binding.rvSearch.adapter = veganMapSearchRVAdapter
+        binding.rvSearch.apply{
+            adapter = veganMapSearchRVAdapter
+            itemAnimator = null
+        }
 
         logMessage("setHistorySearchRVAdapter value = ${viewModel.searchList.value}")
         veganMapSearchRVAdapter.submitList(viewModel.searchList.value)

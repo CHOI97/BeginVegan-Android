@@ -144,6 +144,9 @@
             <action
                 android:id="@+id/action_veganMapFragment_to_veganMapSearchFragment"
                 app:destination="@id/veganMapSearchFragment" />
+            <action
+                android:id="@+id/action_veganMapFragment_to_restaurantDetailFragment"
+                app:destination="@id/restaurantDetailFragment" />
         </fragment>
         <fragment
             android:id="@+id/veganMapSearchFragment"
@@ -153,6 +156,24 @@
                 android:id="@+id/action_veganMapSearchFragment_to_veganMapFragment"
                 app:destination="@id/veganMapFragment" />
         </fragment>
+        <fragment
+            android:id="@+id/restaurantDetailFragment"
+            android:name="com.example.presentation.view.restaurant.view.RestaurantDetailFragment"
+            android:label="RestaurantDetailFragment" >
+            <argument
+                android:name="restaurantId"
+                app:argType="long" />
+            <argument
+                android:name="latitude"
+                app:argType="string" />
+            <argument
+                android:name="longitude"
+                app:argType="string" />
+            <argument
+                android:name="imgUrl"
+                app:argType="string" />
+        </fragment>
     </navigation>
+
 
 </navigation>

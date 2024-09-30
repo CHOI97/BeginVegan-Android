@@ -2,6 +2,8 @@ package com.example.data.retrofit.map
 
 import com.example.data.model.map.NearRestaurantResponse
 import com.example.data.model.map.RestaurantDetailResponse
+import com.example.data.model.map.VeganMapRestaurantResponse
+import com.example.domain.model.map.VeganMapRestaurant
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -27,13 +29,13 @@ interface VeganMapService {
     ): ApiResponse<NearRestaurantResponse>
 
     //    // Map 1depth - 식당 리스트 조회 : 가까운 순
-//    @GET("/api/v1/restaurants/around")
-//    suspend fun getNearRestaurantMap(
-//        @Header("Authorization") token: String,
-//        @Query("page") page: Int,
-//        @Query("latitude") latitude: String,
-//        @Query("longitude") longitude: String
-//    ): ApiResponse<>
+    @GET("/api/v1/restaurants/around")
+    suspend fun getNearRestaurantMap(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int,
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String
+    ): ApiResponse<VeganMapRestaurantResponse>
 
     // 식당 상세 조회 (메뉴 포함)
     @GET("/api/v1/restaurants/{restaurant-id}")

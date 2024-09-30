@@ -6,10 +6,10 @@ data class RestaurantDetailResponse(
     @Json(name = "check")
     val check: Boolean,
     @Json(name = "information")
-    val information: Information
+    val information: RestaurantInformation
 )
 
-data class Information(
+data class RestaurantInformation(
     @Json(name = "restaurant")
     val restaurant: RestaurantDto,
     @Json(name = "menus")
@@ -18,7 +18,7 @@ data class Information(
 
 data class RestaurantDto(
     @Json(name = "restaurantId")
-    val restaurantId: Int,
+    val restaurantId: Long,
     @Json(name = "name")
     val name: String,
     @Json(name = "restaurantType")
@@ -28,7 +28,7 @@ data class RestaurantDto(
     @Json(name = "distance")
     val distance: Double,
     @Json(name = "rate")
-    val rate: Double,
+    val rate: Double?,
     @Json(name = "reviewCount")
     val reviewCount: Int,
     @Json(name = "contactNumber")
@@ -45,7 +45,7 @@ data class AddressDto(
     @Json(name = "roadName")
     val roadName: String,
     @Json(name = "detailAddress")
-    val detailAddress: String
+    val detailAddress: String?
 )
 
 data class MenuDto(

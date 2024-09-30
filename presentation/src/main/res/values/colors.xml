@@ -46,7 +46,7 @@
 
     <color name="color_progress_bar">#FFA2D33F</color>
 
-
+    <color name="kakao_map_red_dot">#EC422D</color>
 
     <drawable name="onboarding_color">@drawable/selector_outline_box_color</drawable>
 </resources>
