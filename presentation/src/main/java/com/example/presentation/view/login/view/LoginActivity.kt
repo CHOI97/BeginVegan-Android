@@ -26,8 +26,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     }
 
     override fun init() {
-        NoticePermissionDialog().show(supportFragmentManager, "PermissionDialog")
+        setNoticeDialog()
         setOnClickLogin()
+    }
+
+    private fun setNoticeDialog(){
+        NoticePermissionDialog().show(supportFragmentManager, "PermissionDialog")
     }
 
     private fun setOnClickLogin() {
@@ -44,5 +48,4 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         val intent = Intent(this, OnboardingActivity::class.java)
         startActivity(intent)
     }
-
 }

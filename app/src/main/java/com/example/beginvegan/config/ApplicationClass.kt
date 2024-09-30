@@ -1,24 +1,52 @@
 package com.example.beginvegan.config
 
 import android.app.Application
-import android.content.ContentValues.TAG
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.beginvegan.BuildConfig
+import com.example.core_fcm.useCase.FcmTokenUseCase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import com.kakao.vectormap.KakaoMapSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class ApplicationClass : Application() {
+
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
         KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY_TEST)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        // Firebase 초기화
+        FirebaseApp.initializeApp(this)
+
+        createNotificationChannel()
+    }
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+            val channel = NotificationChannel(
+                "channelId",
+                "CHANNEL_NAME",
+                NotificationManager.IMPORTANCE_HIGH,
+            )
+            notificationManager?.createNotificationChannel(channel)
+        }
+        /**
+         * 이부분 확인 부탁드립니다. 위 코드는 제가 추가한겁니다.
+         */
         var keyHash = Utility.getKeyHash(this)
         Log.i("GlobalApplication", "$keyHash")
     }

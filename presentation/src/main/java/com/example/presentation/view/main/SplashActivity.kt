@@ -15,7 +15,6 @@ import com.example.presentation.databinding.ActivitySplashBinding
 import com.example.presentation.view.login.view.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,5 +38,4 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }, 5000) // 3초
     }
-
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core_fcm.useCase.FcmTokenUseCase
 import com.example.domain.useCase.userInfo.HomeUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val homeUserInfoUseCase: HomeUserInfoUseCase
+    private val homeUserInfoUseCase: HomeUserInfoUseCase,
+    private val fcmTokenUseCase: FcmTokenUseCase
 ) : ViewModel() {
 
     private val _nickName = MutableStateFlow<String>("")
@@ -60,4 +62,11 @@ class MainViewModel @Inject constructor(
 
     }
 
+    fun postFcmPush(){
+        viewModelScope.launch(Dispatchers.IO) {
+            fcmTokenUseCase.postFcmMessage(
+                "가나다라마바사","테스트 메시지 입니다.","MYPAGE",1,"REVIEW_RECOMMEND",userLevel = null
+            )
+        }
+    }
 }
