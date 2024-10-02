@@ -185,7 +185,14 @@ dependencies {
     implementation ("androidx.camera:camera-view:1.3.4")
     implementation ("androidx.camera:camera-extensions:1.3.4")
 
-
+    val flowPermissionVersion="1.2.0"
+    val lifecycleVersion="2.8.5"
+    /**
+     * StateFlow 기반 퍼미션 라이브러리
+     */
+    implementation("dev.shreyaspatil.permission-flow:permission-flow-android:$flowPermissionVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
 
 //    implementation 'androidx.core:core-ktx:1.8.0'
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
