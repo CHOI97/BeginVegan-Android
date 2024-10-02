@@ -50,8 +50,6 @@ abstract class BaseFragment<T : ViewDataBinding>(@LayoutRes private val layoutRe
         Timber.tag(tag).d(message)
     }
 
-
-
     protected fun View.onThrottleClick(action: (v: View) -> Unit) {
         val listener = View.OnClickListener { action(it) }
         setOnClickListener(OnThrottleClickListener(listener))
